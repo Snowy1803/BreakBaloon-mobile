@@ -1,0 +1,14 @@
+/* 
+  InfoPlist.strings
+  BreakBaloon
+
+  Created by Emil on 02/07/2016.
+  Copyright © 2016 Snowy_1803. All rights reserved.
+*/
+
+"singleplayer" = "Singleplayer";
+"singleplayer.subtitle" = "Spille selv";
+"computer" = "Mod computeren";
+"computer.subtitle" = "Spille mod computeren";
+"time" = "Mod tiden";
+"time.subtitle" = "Spille mod tiden";
