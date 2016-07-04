@@ -42,3 +42,6 @@
 "back" = "Tilbage";
 "setting.category.music" = "Musik";
 "setting.category.other" = "Andet";
+"level.label" = "Niveau %d";
+"level.title" = "Niveau op!";
+"level.text" = "Du er nu niveau %d!";

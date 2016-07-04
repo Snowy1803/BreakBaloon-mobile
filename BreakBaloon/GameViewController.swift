@@ -182,6 +182,33 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    class func getLevel() -> Int {
+        return getTotalXP() / 250
+    }
+    
+    class func getTotalXP() -> Int {
+        return NSUserDefaults.standardUserDefaults().integerForKey("exp")
+    }
+    
+    class func getLevelXP() -> Int {
+        return getTotalXP() % 250
+    }
+    
+    class func getLevelXPFloat() -> Float {
+        return Float(getLevelXP()) / 250
+    }
+    
+    func addXP(xp:Int) {
+        let levelBefore = GameViewController.getLevel()
+        NSUserDefaults.standardUserDefaults().setInteger(GameViewController.getTotalXP() + xp, forKey: "exp")
+        print("Added \(xp) XP")
+        if levelBefore < GameViewController.getLevel() {
+            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), GameViewController.getLevel()), preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 extension NSURL {

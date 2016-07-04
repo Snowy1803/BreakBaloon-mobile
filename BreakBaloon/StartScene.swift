@@ -36,6 +36,9 @@ class StartScene: SKScene {
     var tprefsButton = SKLabelNode()
     var tbbstoreButton = SKLabelNode()
     
+    var xpLabel = SKShapeNode()
+    var txpLabel = SKLabelNode()
+    
     var actualPane:Int = 0
     var touchesBegan:CGPoint?
     var gametype:Int8 = -1
@@ -84,6 +87,15 @@ class StartScene: SKScene {
         bsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 95)
         bsLabel.fontColor = SKColor.orangeColor()
         self.addChild(bsLabel)
+        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15))
+        xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+        xpLabel.strokeColor = SKColor.clearColor()
+        self.addChild(xpLabel)
+        txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), GameViewController.getLevel()))
+        txpLabel.fontSize = 10
+        txpLabel.fontColor = SKColor.whiteColor()
+        txpLabel.position = CGPointMake(size.width / 2, 3)
+        self.addChild(txpLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
