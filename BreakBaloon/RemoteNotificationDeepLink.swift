@@ -91,22 +91,22 @@ class RemoteNotificationDeepLinkNewGame : RemoteNotificationDeepLink {
                 //let start = StartScene(size: gvc.view!.frame.size)
                 var scene:SKScene?
                 if self.param == "singleplayer" {
-                    scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_SOLO, width: Int(gvc.view!.frame.size.width / 70), height: Int((gvc.view!.frame.size.height - 20) / 70))
+                    scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_SOLO, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
                 } else if self.param == "computer" {
-                    scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_COMPUTER, width: Int(gvc.view!.frame.size.width / 70), height: Int((gvc.view!.frame.size.height - 20) / 70))
+                    scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_COMPUTER, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
                 } else if self.param == "time" {
-                    scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: Int(gvc.view!.frame.size.width / 70), height: Int((gvc.view!.frame.size.height - 20) / 70))
+                    scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
                 } else if self.param.hasPrefix("singleplayer") {
                     let ints = self.param.componentsSeparatedByString("ingleplayer")[1].componentsSeparatedByString("x")
-                    let width = Int(ints[0])!, height = Int(ints[1])!
+                    let width = UInt(ints[0])!, height = UInt(ints[1])!
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_SOLO, width: width, height: height)
                 } else if self.param.hasPrefix("computer") {
                     let ints = self.param.componentsSeparatedByString("omputer")[1].componentsSeparatedByString("x")
-                    let width = Int(ints[0])!, height = Int(ints[1])!
+                    let width = UInt(ints[0])!, height = UInt(ints[1])!
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_COMPUTER, width: width, height: height)
                 } else if self.param.hasPrefix("time") {
                     let ints = self.param.componentsSeparatedByString("ime")[1].componentsSeparatedByString("x")
-                    let width = Int(ints[0])!, height = Int(ints[1])!
+                    let width = UInt(ints[0])!, height = UInt(ints[1])!
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: width, height: height)
                 }
                 

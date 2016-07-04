@@ -58,7 +58,6 @@ class MusicSelector: Selector, MPMediaPickerControllerDelegate {
         if mediaItemCollection.count == 1 {
             gvc.dismissViewControllerAnimated(true, completion: nil)
             let item = mediaItemCollection.items.first!
-            print(item.title)
             NSUserDefaults.standardUserDefaults().setObject(item.title, forKey: "usermusicName")
             NSUserDefaults.standardUserDefaults().setURL(item.assetURL, forKey: "usermusic")
             setSelectorValue(maxValue())

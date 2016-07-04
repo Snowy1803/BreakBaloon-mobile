@@ -240,6 +240,8 @@ class IPhoneOtherSettingScene: SKScene {
                 resetSettings()
             } else if onNode(audioSetting, point: point) {
                 audioSetting.calculateVolume(touch)
+            } else if onNode(themeIndexSetting, point: point) {
+                themeIndexSetting.click(touch)
             }
         }
     }

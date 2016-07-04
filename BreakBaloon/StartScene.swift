@@ -297,7 +297,7 @@ class StartScene: SKScene {
                     showAlert()
                 }
             } else if onNode(adaptButton, point: point) {
-                newGame(gametype, width: Int(self.frame.size.width / 70), height: Int((self.frame.size.height - 20) / 70))
+                newGame(gametype, width: UInt(self.frame.size.width / 70), height: UInt((self.frame.size.height - 20) / 70))
             } else if onNode(prefsButton, point: point) {
                 if littleScreen() {
                     self.view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontalWithDuration(NSTimeInterval(1)))
@@ -324,7 +324,7 @@ class StartScene: SKScene {
         showDialog("Erreur", message: "Cette résolution ne tient pas sur votre écran")
     }
     
-    func newGame(gametype:Int8, width:Int, height:Int) {
+    func newGame(gametype:Int8, width:UInt, height:UInt) {
         self.view?.presentScene(GameScene(view: self.view!, gametype: gametype, width: width, height: height), transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
     }
     

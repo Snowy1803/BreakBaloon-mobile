@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SpriteKit
+import UIKit
 
 class ThemeSelector: Selector {
     init(gvc:GameViewController) {
@@ -19,16 +19,18 @@ class ThemeSelector: Selector {
     }
     
     override func updateAfterValueChange() {
-        NSUserDefaults.standardUserDefaults().setInteger(value, forKey: "musicIndex")
+        print("The theme was", gvc.currentTheme.name)
+        gvc.currentThemeInt = value
+        print("The theme is now", gvc.currentTheme.name)
+        NSUserDefaults.standardUserDefaults().setObject(gvc.currentTheme.themeID, forKey: "currentTheme")
         super.updateAfterValueChange()
-        gvc.reloadBackgroundMusic()
     }
     
     override func maxValue() -> Int {
-        return 0
+        return Theme.themeList.count - 1
     }
     
     override func text() -> String {
-        return String(format: NSLocalizedString("theme.selector.text", comment: "Theme format"), NSLocalizedString("theme.default.name", comment: "Default theme name"))
+        return String(format: NSLocalizedString("theme.selector.text", comment: "Theme format"), gvc.currentTheme.name)
     }
 }

@@ -97,6 +97,8 @@ class SettingScene:SKScene {
                 musicIndexSetting.showImportDialog()
             } else if onNode(musicIndexSetting, point: point) {
                 musicIndexSetting.click(touch)
+            } else if onNode(themeIndexSetting, point: point) {
+                themeIndexSetting.click(touch)
             }
         }
     }

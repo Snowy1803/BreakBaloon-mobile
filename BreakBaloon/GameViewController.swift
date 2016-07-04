@@ -20,7 +20,7 @@ class GameViewController: UIViewController {
     var audioPlayer:AVAudioPlayer = AVAudioPlayer()
     var audioVolume:Float = GameViewController.DEFAULT_AUDIO
     var currentGame:GameScene?
-    var currentMusicFileName:String = "Race.m4a"
+    var currentMusicFileName = "Race.m4a"
     var currentMusicInt:Int {
         get {
             for i in 0 ..< GameViewController.getMusicURLs().count {
@@ -39,9 +39,21 @@ class GameViewController: UIViewController {
             }
         }
     }
+    var currentTheme:Theme = Theme.themeList.first!
+    var currentThemeInt:Int {
+        get {
+            return Theme.themeList.indexOf({theme in
+                return theme.equals(currentTheme)
+            })!
+        }
+        set(value) {
+            currentTheme = Theme.themeList[value]
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Path:", FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
         loadMusicAndStartScene()
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).triggerDeepLinkIfPresent()
@@ -60,6 +72,9 @@ class GameViewController: UIViewController {
         if data.stringForKey("currentMusic") == nil {
             data.setObject("Race.m4a", forKey: "currentMusic")
         }
+        if data.stringForKey("currentTheme") == nil {
+            data.setObject("/Default", forKey: "currentTheme")
+        }
         if data.objectForKey("audio-true") == nil {
             data.setFloat(GameViewController.DEFAULT_MUSIC, forKey: "audio-true")
         }
@@ -67,6 +82,8 @@ class GameViewController: UIViewController {
             data.setFloat(GameViewController.DEFAULT_AUDIO, forKey: "audio-false")
         }
         currentMusicFileName = NSUserDefaults.standardUserDefaults().stringForKey("currentMusic")!
+        currentTheme = Theme.withID(NSUserDefaults.standardUserDefaults().stringForKey("currentTheme")!)!
+        print(currentTheme.themeID)
         let welcome:NSURL = NSBundle.mainBundle().URLForResource("Welcome", withExtension: "wav")!
         let bgMusicURL:NSURL = GameViewController.getMusicURL(currentMusicFileName)!
         
@@ -124,15 +141,9 @@ class GameViewController: UIViewController {
             }
         }
         return urls
-        /*OLD
-        for stringUrl in musicURL {
-            urls.append(NSBundle.mainBundle().URLForResource(stringUrl, withExtension: "m4a")!)
-        }
-        return urls*/
     }
     
     class func getMusicURL(fileName:String) -> NSURL? {
-        print("FILENAME:", fileName)
         if fileName == "_personnal" {
             return NSUserDefaults.standardUserDefaults().URLForKey("usermusic")
         }
@@ -142,6 +153,11 @@ class GameViewController: UIViewController {
             }
         }
         return nil
+    }
+    
+    class func getExternalThemes() -> [NSURL] {
+        let path = NSURL(fileURLWithPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
+        return path.subdirectories
     }
 
     override func shouldAutorotate() -> Bool {
@@ -165,5 +181,34 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+}
+
+extension NSURL {
+    var isDirectory: Bool {
+        guard let path = path where fileURL else { return false }
+        var bool: ObjCBool = false
+        return NSFileManager().fileExistsAtPath(path, isDirectory: &bool) ? bool.boolValue : false
+    }
+    var subdirectories: [NSURL] {
+        guard isDirectory else { return [] }
+        do {
+            return try NSFileManager.defaultManager()
+                .contentsOfDirectoryAtURL(self, includingPropertiesForKeys: nil, options: [])
+                .filter{ $0.isDirectory }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return []
+        }
+    }
+    var content: [NSURL] {
+        guard isDirectory else { return [] }
+        do {
+            return try NSFileManager.defaultManager()
+                .contentsOfDirectoryAtURL(self, includingPropertiesForKeys: nil, options: [])
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return []
+        }
     }
 }

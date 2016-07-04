@@ -54,7 +54,7 @@ class FileSaveHelper {
     
     init(fileName:String, fileExtension:FileExtension, subDirectory:String?, directory:NSSearchPathDirectory) {
         self.fileName = fileName + fileExtension.rawValue
-        self.subDirectory = (subDirectory == nil ? "" : "/\(subDirectory)")
+        self.subDirectory = (subDirectory == nil ? "" : "/\(subDirectory!)")
         self.directory = directory
         self.directoryPath = NSSearchPathForDirectoriesInDomains(directory, .UserDomainMask, true)[0]
         self.filePath = directoryPath + self.subDirectory

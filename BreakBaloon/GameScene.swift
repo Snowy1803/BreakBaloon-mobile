@@ -24,20 +24,20 @@ class GameScene:SKScene {
     var pauseTime:NSTimeInterval?
     var waitingForComputer:Bool = false
     
-    init(view:SKView, gametype:Int8, width:Int, height:Int) {
+    init(view:SKView, gametype:Int8, width:UInt, height:UInt) {
         self.gametype = gametype
-        self.width = width
-        self.height = height
-        cases = NSMutableArray(capacity: width * height)
+        self.width = Int(width)
+        self.height = Int(height)
+        cases = NSMutableArray(capacity: self.width * self.height)
         super.init(size: view.bounds.size)
-        self.backgroundColor = SKColor.whiteColor()
-        construct()
+        construct(view.window!.rootViewController as! GameViewController)
         (view.window!.rootViewController as! GameViewController).currentGame = self
     }
     
-    func construct() {
+    func construct(gvc: GameViewController) {
+        self.backgroundColor = gvc.currentTheme.background
         for i in 0 ..< (width * height) {
-            let theCase = Case(index: i)
+            let theCase = Case(gvc: gvc, index: i)
             theCase.position = CGPointMake(CGFloat(i / height * 70 + 35), self.frame.size.height - CGFloat(i % height * 70 + 35))
             theCase.zPosition = 1
             addChild(theCase)
@@ -77,7 +77,7 @@ class GameScene:SKScene {
         if (cases.objectAtIndex(index) as! Case).breaked {
             return
         }
-        (cases.objectAtIndex(index) as! Case).breakBaloon();
+        (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber);
         var pumpURL:NSURL = NSBundle.mainBundle().URLForResource("pump", withExtension: "wav")!
         if gametype != StartScene.GAMETYPE_TIMED && index == winCaseNumber {
             if computer {
