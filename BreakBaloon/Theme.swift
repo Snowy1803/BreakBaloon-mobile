@@ -33,6 +33,7 @@ class Theme {
     }
     
     convenience init(_ name:String, id:String, author:String, description:String, version:String, baloons:String, background:String, dbfpg:Bool) {
+        print("New theme:", id)
         self.init(name, id: id, author: author, description: description, version: version,
                   baloons: UInt(baloons)!,
                   background: UInt(background)!, dbfpg: dbfpg)
@@ -61,6 +62,10 @@ class Theme {
         return SKTexture()
     }
     
+    func pumpSound(winner:Bool) -> NSURL {
+        return NSURL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID).fullyQualifiedPath)
+    }
+    
     class func colorFromRGB(rgbValue: UInt) -> SKColor {
         return SKColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
@@ -71,6 +76,7 @@ class Theme {
     }
     
     private class func getThemeList() -> [Theme] {
+        print("Theme list init")
         var list = [Theme](arrayLiteral: DefaultTheme())
         for url in GameViewController.getExternalThemes() {
             let theme = Theme.parse(directoryUrl: url)
@@ -83,6 +89,7 @@ class Theme {
     }
     
     class func parse(directoryUrl url:NSURL) -> Theme? {
+        print("Parsing 1")
         if url.isDirectory {//isDirectory is defined in GameViewController
             let file = FileSaveHelper(fileName: url.lastPathComponent!, fileExtension: .BBTHEME, subDirectory: url.lastPathComponent!)
             do {
@@ -95,29 +102,34 @@ class Theme {
     }
     
     private class func parse(id id:String, bbtheme file:String) -> Theme {
+        print("Parsing 2")
         let lines = file.componentsSeparatedByString("\n")
         var name = "", author = "", desc = "", version = "", baloons = "", background = "16777215", dbfpg = false
         for line in lines {
             if line.componentsSeparatedByString("=").count > 1 {
                 let value = line.componentsSeparatedByString("=")[1].stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\r\n\t "))
-                if line.hasPrefix("NAME=") {
+                if isMetadata(line, metadata: "NAME") {
                     name = value
-                } else if line.hasPrefix("DESCRIPTION=") {
+                } else if isMetadata(line, metadata: "DESCRIPTION") {
                     desc = value
-                } else if line.hasPrefix("AUTHOR=") {
+                } else if isMetadata(line, metadata: "AUTHOR") {
                     author = value
-                } else if line.hasPrefix("VERSION=") {
+                } else if isMetadata(line, metadata: "VERSION") {
                     version = value
-                } else if line.hasPrefix("BALOONS=") {
+                } else if isMetadata(line, metadata: "BALOONS") {
                     baloons = value
-                } else if line.hasPrefix("BACKGROUND=") {
+                } else if isMetadata(line, metadata: "BACKGROUND") {
                     background = value
-                } else if line.hasPrefix("DIFFERENT-BALOON-PUMPED-GOOD=") {
+                } else if isMetadata(line, metadata: "DIFFERENT-BALOON-PUMPED-GOOD") {
                     dbfpg = value == "true"
                 }
             }
         }
         return Theme(name, id: id, author: author, description: desc, version: version, baloons: baloons, background: background, dbfpg: dbfpg)
+    }
+    
+    private class func isMetadata(line:String, metadata:String) -> Bool {
+        return line.hasPrefix("\(metadata)=") || line.hasPrefix("\(metadata)_\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))=")
     }
     
     class func withID(id:String) -> Theme? {
@@ -140,5 +152,9 @@ class DefaultTheme: Theme {
         } else {
             return SKTexture(imageNamed: "opened\(type)")
         }
+    }
+    
+    override func pumpSound(winner:Bool) -> NSURL {
+        return NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!
     }
 }

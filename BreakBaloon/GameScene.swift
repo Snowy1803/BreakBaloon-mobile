@@ -78,7 +78,7 @@ class GameScene:SKScene {
             return
         }
         (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber);
-        var pumpURL:NSURL = NSBundle.mainBundle().URLForResource("pump", withExtension: "wav")!
+        var pumpURL:NSURL
         if gametype != StartScene.GAMETYPE_TIMED && index == winCaseNumber {
             if computer {
                 computerpoints += 1
@@ -117,7 +117,7 @@ class GameScene:SKScene {
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
             } while (cases.objectAtIndex(winCaseNumber) as! Case).breaked
-            pumpURL = NSBundle.mainBundle().URLForResource("wpump", withExtension: "wav")!
+            pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
         } else if gametype == StartScene.GAMETYPE_TIMED {
             var isThereUnbreakedBaloons = false
             for aCase in cases {
@@ -130,6 +130,9 @@ class GameScene:SKScene {
                 gameEnd()
                 return
             }
+            pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
+        } else {
+            pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
         }
         
         do {
