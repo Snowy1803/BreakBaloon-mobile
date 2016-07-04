@@ -12,6 +12,7 @@ import UIKit
 class ThemeSelector: Selector {
     init(gvc:GameViewController) {
         super.init(gvc: gvc, value: 0)
+        setSelectorValue(gvc.currentThemeInt)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -19,9 +20,7 @@ class ThemeSelector: Selector {
     }
     
     override func updateAfterValueChange() {
-        print("The theme was", gvc.currentTheme.name)
         gvc.currentThemeInt = value
-        print("The theme is now", gvc.currentTheme.name)
         NSUserDefaults.standardUserDefaults().setObject(gvc.currentTheme.themeID, forKey: "currentTheme")
         super.updateAfterValueChange()
     }
