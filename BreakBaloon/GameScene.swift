@@ -195,7 +195,9 @@ class GameScene:SKScene {
             }
             let gvc = self.view!.window!.rootViewController as! GameViewController
             gvc.currentGame = nil
-            gvc.addXP(5 * max(10 - GameViewController.getLevel(), 1) * Int(Float(max((self.width * self.height),  100)) / 100))
+            let levelModifier = Float(max(10 - GameViewController.getLevel(), 1))
+            let sizeModifier = Float(min(self.width * self.height, 100)) / 100
+            gvc.addXP(Int(5 * levelModifier * sizeModifier))
             let scene:StartScene = StartScene(size: self.frame.size)
             scene.lastGameInfo = NSLocalizedString(self.label.text!, comment: "Last game info")
             self.view!.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
