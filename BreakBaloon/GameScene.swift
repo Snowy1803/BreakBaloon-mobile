@@ -146,7 +146,7 @@ class GameScene:SKScene {
         
         if !computer && gametype == StartScene.GAMETYPE_COMPUTER {
             waitingForComputer = true
-            self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
+            self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.25)), SKAction.runBlock({
                 var wherebreak:Int
                 repeat {
                     wherebreak = Int(arc4random_uniform(UInt32(self.width) * UInt32(self.height)))
