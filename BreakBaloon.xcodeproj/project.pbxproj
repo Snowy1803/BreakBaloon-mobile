@@ -27,6 +27,7 @@
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
 		20B0042D1D2BC2CF005F706F /* level.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B0042C1D2BC2CF005F706F /* level.png */; };
 		20B004BD1D2BEF04005F706F /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 20B004BC1D2BEF04005F706F /* LICENSE.md */; };
+		20B004BF1D2BF952005F706F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 20B004BE1D2BF952005F706F /* README.md */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20C000941D1930A700CBA51E /* buttonminibg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C000931D1930A700CBA51E /* buttonminibg.png */; };
 		20C000971D193A3600CBA51E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C000951D193A3600CBA51E /* Main.storyboard */; };
@@ -82,6 +83,7 @@
 		206736941D16FA5100FB9FFF /* buttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonbg.png; sourceTree = "<group>"; };
 		20B0042C1D2BC2CF005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
 		20B004BC1D2BEF04005F706F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		20B004BE1D2BF952005F706F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20C000931D1930A700CBA51E /* buttonminibg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonminibg.png; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			children = (
 				20F1881E1D27D7580099F717 /* libz.tbd */,
 				20B004BC1D2BEF04005F706F /* LICENSE.md */,
+				20B004BE1D2BF952005F706F /* README.md */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
 				206736761D16E26300FB9FFF /* Products */,
 			);
@@ -366,6 +369,7 @@
 				20B004BD1D2BEF04005F706F /* LICENSE.md in Sources */,
 				201F4D6C1D180F9F00EB894A /* Case.swift in Sources */,
 				20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */,
+				20B004BF1D2BF952005F706F /* README.md in Sources */,
 				20C995861D23EC7C0029312F /* ThemeSelector.swift in Sources */,
 				206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */,
 				20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */,
