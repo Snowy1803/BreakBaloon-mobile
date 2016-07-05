@@ -26,6 +26,7 @@
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
 		20B0042D1D2BC2CF005F706F /* level.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B0042C1D2BC2CF005F706F /* level.png */; };
+		20B004BD1D2BEF04005F706F /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 20B004BC1D2BEF04005F706F /* LICENSE.md */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20C000941D1930A700CBA51E /* buttonminibg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C000931D1930A700CBA51E /* buttonminibg.png */; };
 		20C000971D193A3600CBA51E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C000951D193A3600CBA51E /* Main.storyboard */; };
@@ -46,7 +47,6 @@
 		20E877391D25B1B500CCBA1A /* import.png in Resources */ = {isa = PBXBuildFile; fileRef = 20E877381D25B1B500CCBA1A /* import.png */; };
 		20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */; };
 		20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */; };
-		20F1881D1D27D2B20099F717 /* Deflate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1881C1D27D2B20099F717 /* Deflate.swift */; };
 		20F1881F1D27D7580099F717 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F1881E1D27D7580099F717 /* libz.tbd */; };
 		20F188221D2821C30099F717 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20F188241D2821C30099F717 /* InfoPlist.strings */; };
 		20F1882A1D2830470099F717 /* quick_singleplayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F188271D2830470099F717 /* quick_singleplayer.png */; };
@@ -81,6 +81,7 @@
 		206736881D16E26300FB9FFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		206736941D16FA5100FB9FFF /* buttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonbg.png; sourceTree = "<group>"; };
 		20B0042C1D2BC2CF005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
+		20B004BC1D2BEF04005F706F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20C000931D1930A700CBA51E /* buttonminibg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonminibg.png; sourceTree = "<group>"; };
@@ -102,7 +103,6 @@
 		20E877381D25B1B500CCBA1A /* import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import.png; sourceTree = "<group>"; };
 		20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneSettingScene.swift; sourceTree = "<group>"; };
 		20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationDeepLink.swift; sourceTree = "<group>"; };
-		20F1881C1D27D2B20099F717 /* Deflate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deflate.swift; sourceTree = "<group>"; };
 		20F1881E1D27D7580099F717 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		20F188231D2821C30099F717 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		20F188251D2821C90099F717 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -153,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				20F1881E1D27D7580099F717 /* libz.tbd */,
+				20B004BC1D2BEF04005F706F /* LICENSE.md */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
 				206736761D16E26300FB9FFF /* Products */,
 			);
@@ -239,7 +240,6 @@
 			children = (
 				20C9958B1D23ECE90029312F /* BBStoreScene.swift */,
 				20C9958E1D23ED100029312F /* Downloadable.swift */,
-				20F1881C1D27D2B20099F717 /* Deflate.swift */,
 			);
 			name = bbstore;
 			sourceTree = "<group>";
@@ -363,9 +363,9 @@
 				20C9957E1D23EC2F0029312F /* StartScene.swift in Sources */,
 				20C9958F1D23ED100029312F /* Downloadable.swift in Sources */,
 				20F188301D2A62C70099F717 /* Theme.swift in Sources */,
+				20B004BD1D2BEF04005F706F /* LICENSE.md in Sources */,
 				201F4D6C1D180F9F00EB894A /* Case.swift in Sources */,
 				20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */,
-				20F1881D1D27D2B20099F717 /* Deflate.swift in Sources */,
 				20C995861D23EC7C0029312F /* ThemeSelector.swift in Sources */,
 				206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */,
 				20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */,

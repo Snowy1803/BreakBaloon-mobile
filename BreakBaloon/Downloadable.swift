@@ -163,17 +163,9 @@ class Downloadable: SKNode {
         if dltype == .Theme {
             //let dir = "\(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])/\(dlid.substringToIndex(dlid.endIndex.advancedBy(-4))))"
             print("Data is from", file.fullyQualifiedPath)
-            do {
-                let compressedData = try file.getData()
-                let (data, err) = InflateStream(windowBits: -1).write(Array(UnsafeBufferPointer(start: UnsafePointer<UInt8>(compressedData.bytes), count: compressedData.length)), flush: true)
-                if err != nil {
-                    throw err!
-                }
-                try FileSaveHelper(fileName: dlid, fileExtension: .TXT).saveFile(data: NSData(bytes: data, length: data.count))
+            //SSZipArchive.unzipFileAtPath(file.fullyQualifiedPath, toDestination: dir)
+            //try FileSaveHelper(fileName: dlid, fileExtension: .TXT).saveFile(data: NSData(bytes: data, length: data.count))
                 // TODO data to dir
-            } catch {
-                print("Error:", error)
-            }
         }
     }
     
