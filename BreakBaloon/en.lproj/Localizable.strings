@@ -43,5 +43,6 @@
 "setting.category.music" = "Music";
 "setting.category.other" = "Other";
 "level.label" = "Level %d";
-"level.title" = "Level up!";
-"level.text" = "You are now level %d!";
+"level.up.title" = "Level up!";
+"level.up.text" = "You are now level %d!";
+"level.new" = "NEW";

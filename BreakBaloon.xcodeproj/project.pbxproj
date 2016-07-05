@@ -25,6 +25,7 @@
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
+		20B0042D1D2BC2CF005F706F /* level.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B0042C1D2BC2CF005F706F /* level.png */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20C000941D1930A700CBA51E /* buttonminibg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C000931D1930A700CBA51E /* buttonminibg.png */; };
 		20C000971D193A3600CBA51E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C000951D193A3600CBA51E /* Main.storyboard */; };
@@ -79,6 +80,7 @@
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
 		206736881D16E26300FB9FFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		206736941D16FA5100FB9FFF /* buttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonbg.png; sourceTree = "<group>"; };
+		20B0042C1D2BC2CF005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20C000931D1930A700CBA51E /* buttonminibg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonminibg.png; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				20F188271D2830470099F717 /* quick_singleplayer.png */,
 				20F188281D2830470099F717 /* quick_computer.png */,
 				20F188291D2830470099F717 /* quick_time.png */,
+				20B0042C1D2BC2CF005F706F /* level.png */,
 			);
 			name = sprites;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				20F188221D2821C30099F717 /* InfoPlist.strings in Resources */,
 				20F1882C1D2830470099F717 /* quick_time.png in Resources */,
 				20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */,
+				20B0042D1D2BC2CF005F706F /* level.png in Resources */,
 				201F4D811D1812DE00EB894A /* closed1.png in Resources */,
 				201F4D821D1812DE00EB894A /* closed2.png in Resources */,
 				201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */,

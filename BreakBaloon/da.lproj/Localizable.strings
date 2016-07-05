@@ -43,5 +43,6 @@
 "setting.category.music" = "Musik";
 "setting.category.other" = "Andet";
 "level.label" = "Niveau %d";
-"level.title" = "Niveau op!";
-"level.text" = "Du er nu niveau %d!";
+"level.up.title" = "Niveau op!";
+"level.up.text" = "Du er nu niveau %d!";
+"level.new" = "NYT";

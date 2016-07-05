@@ -43,5 +43,6 @@
 "setting.category.music" = "Musique";
 "setting.category.other" = "Autres";
 "level.label" = "Niveau %d";
-"level.title" = "Niveau supérieur !";
-"level.text" = "Vous passez niveau %d !";
+"level.up.title" = "Niveau supérieur !";
+"level.up.text" = "Vous passez niveau %d !";
+"level.new" = "NOUVEAU";
