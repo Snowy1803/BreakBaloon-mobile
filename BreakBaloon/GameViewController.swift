@@ -161,9 +161,7 @@ class GameViewController: UIViewController {
     }
 
     override func shouldAutorotate() -> Bool {
-        return false //else this is buggy
-        //let skView:SKView = self.view as! SKView
-        //return !(skView.scene is GameScene)
+        return skView!.scene is StartScene
     }
 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -184,7 +182,7 @@ class GameViewController: UIViewController {
     }
     
     class func getLevel() -> Int {
-        return getTotalXP() / 250
+        return getTotalXP() / 250 + 1
     }
     
     class func getTotalXP() -> Int {
@@ -208,6 +206,18 @@ class GameViewController: UIViewController {
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        coordinator.animateAlongsideTransition(nil, completion: {
+            _ in
+            if self.skView!.scene! is StartScene {
+                self.skView!.scene!.size = size
+                (self.skView!.scene! as! StartScene).adjustPosition(false)
+            }
+            
+        })
     }
 }
 

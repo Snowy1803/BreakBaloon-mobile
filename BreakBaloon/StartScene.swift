@@ -16,6 +16,11 @@ class StartScene: SKScene {
     let buttonTexture = SKTexture(imageNamed: "buttonbg")
     let minibuttonTexture = SKTexture(imageNamed: "buttonminibg")
     
+    var bbLabel = SKLabelNode()
+    var cLabel = SKLabelNode()
+    var hsLabel = SKLabelNode()
+    var bsLabel = SKLabelNode()
+    
     var soloButton = SKSpriteNode()
     var multiButton = SKSpriteNode()
     var timedButton = SKSpriteNode()
@@ -59,43 +64,42 @@ class StartScene: SKScene {
         self.backgroundColor = SKColor.brownColor()
         initFirstPane(false)
         
-        let bbLabel = SKLabelNode()
+        bbLabel = SKLabelNode()
         bbLabel.text = "BreakBaloon"
         bbLabel.fontSize = 45
         bbLabel.fontName = "Chalkduster"
-        bbLabel.position = CGPointMake(CGRectGetMidX(self.frame), 40)
         bbLabel.fontColor = SKColor.whiteColor()
         self.addChild(bbLabel)
-        let cLabel = SKLabelNode()
+        cLabel = SKLabelNode()
         cLabel.text = "© Snowy_1803"
         cLabel.fontSize = 10
         cLabel.fontName = "ChalkboardSE-Regular"
-        cLabel.position = CGPointMake(CGRectGetMidX(self.frame), 20)
         cLabel.fontColor = SKColor.whiteColor()
         self.addChild(cLabel)
-        let hsLabel = SKLabelNode()
+        hsLabel = SKLabelNode()
         hsLabel.text = String(format: NSLocalizedString("highscore.score", comment: "Highscore"), NSUserDefaults.standardUserDefaults().integerForKey("highscore"))
         hsLabel.fontSize = 25
         hsLabel.fontName = "ChalkboardSE-Regular"
-        hsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 120)
         hsLabel.fontColor = SKColor.orangeColor()
         self.addChild(hsLabel)
-        let bsLabel = SKLabelNode()
+        bsLabel = SKLabelNode()
         bsLabel.text = String(format: NSLocalizedString("highscore.time", comment: "Best timed score"), NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore"))
         bsLabel.fontSize = 25
         bsLabel.fontName = "ChalkboardSE-Regular"
-        bsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 95)
         bsLabel.fontColor = SKColor.orangeColor()
         self.addChild(bsLabel)
         xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15))
         xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
         xpLabel.strokeColor = SKColor.clearColor()
+        xpLabel.zPosition = 2
         self.addChild(xpLabel)
         txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), GameViewController.getLevel()))
-        txpLabel.fontSize = 10
+        txpLabel.fontSize = 13
+        txpLabel.fontName = "AppleSDGothicNeo-Bold"
         txpLabel.fontColor = SKColor.whiteColor()
-        txpLabel.position = CGPointMake(size.width / 2, 3)
+        txpLabel.zPosition = 3
         self.addChild(txpLabel)
+        adjustPosition(false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,71 +108,96 @@ class StartScene: SKScene {
     
     func initFirstPane(cancelled:Bool) {
         soloButton = SKSpriteNode(texture: buttonTexture)
-        soloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: false))
         soloButton.zPosition = 1
         self.addChild(soloButton)
         tsoloButton.text = NSLocalizedString("gametype.singleplayer", comment: "Singleplayer")
         tsoloButton.fontSize = 35
         tsoloButton.fontName = BUTTON_FONT
-        tsoloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: true))
         tsoloButton.fontColor = SKColor.blackColor()
         tsoloButton.zPosition = 2
         self.addChild(tsoloButton)
         
         multiButton = SKSpriteNode(texture: buttonTexture)
-        multiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: false))
         multiButton.zPosition = 1
         self.addChild(multiButton)
         tmultiButton.text = NSLocalizedString("gametype.computer", comment: "Versus computer")
         tmultiButton.fontSize = 35
         tmultiButton.fontName = BUTTON_FONT
-        tmultiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: true))
         tmultiButton.fontColor = SKColor.blackColor()
         tmultiButton.zPosition = 2
         self.addChild(tmultiButton)
         
         timedButton = SKSpriteNode(texture: buttonTexture)
-        timedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: false))
         timedButton.zPosition = 1
         self.addChild(timedButton)
         ttimedButton.text = NSLocalizedString("gametype.timed", comment: "Timed game")
         ttimedButton.fontSize = 35
         ttimedButton.fontName = BUTTON_FONT
-        ttimedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: true))
         ttimedButton.fontColor = SKColor.blackColor()
         ttimedButton.zPosition = 2
         self.addChild(ttimedButton)
         
         prefsButton = SKSpriteNode(texture: minibuttonTexture)
-        prefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 170)
         prefsButton.zPosition = 1
         self.addChild(prefsButton)
         tprefsButton.text = NSLocalizedString("settings.title", comment: "Settings")
         tprefsButton.fontSize = 20
         tprefsButton.fontName = BUTTON_FONT
-        tprefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 160)
         tprefsButton.fontColor = SKColor.blackColor()
         tprefsButton.zPosition = 2
         self.addChild(tprefsButton)
         
         bbstoreButton = SKSpriteNode(texture: minibuttonTexture)
-        bbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 170)
         bbstoreButton.zPosition = 1
         self.addChild(bbstoreButton)
         tbbstoreButton.text = NSLocalizedString("bbstore.button", comment: "BBStore")
         tbbstoreButton.fontSize = 20
         tbbstoreButton.fontName = BUTTON_FONT
-        tbbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 160)
         tbbstoreButton.fontColor = SKColor.blackColor()
         tbbstoreButton.zPosition = 2
         self.addChild(tbbstoreButton)
 
         actualPane = 1;
+        adjustPosition(cancelled)
+    }
+    
+    func adjustPosition(cancelled:Bool) -> Bool {
+        bbLabel.position = CGPointMake(CGRectGetMidX(self.frame), 40)
+        cLabel.position = CGPointMake(CGRectGetMidX(self.frame), 20)
+        hsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 120)
+        bsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 95)
+        xpLabel.path = CGPathCreateWithRect(CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), nil)
+        txpLabel.position = CGPointMake(size.width / 2, 0)
+        if actualPane == 1 {
+            soloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: false))
+            multiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: false))
+            timedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: false))
+            prefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 170)
+            bbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 170)
+            
+            tsoloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: true))
+            tmultiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: true))
+            ttimedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: true))
+            tprefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 160)
+            tbbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 160)
+        } else if actualPane == 2 {
+            smallButton.position = CGPointMake(self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: false))
+            mediumButton.position = CGPointMake(self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: false))
+            bigButton.position = CGPointMake(self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: false))
+            adaptButton.position = CGPointMake(self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: false))
+            
+            tsmallButton.position = CGPointMake(self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: true))
+            tmediumButton.position = CGPointMake(self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: true))
+            tbigButton.position = CGPointMake(self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: true))
+            tadaptButton.position = CGPointMake(self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: true))
+        } else {
+            return false
+        }
+        return true
     }
     
     func initSecondPane() {
         smallButton = SKSpriteNode(texture: buttonTexture)
-        smallButton.position = CGPointMake(self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: false))
         smallButton.zPosition = 1
         greyIfNotFill(smallButton, size: 5)
         self.addChild(smallButton)
@@ -176,13 +205,11 @@ class StartScene: SKScene {
         tsmallButton.text = NSLocalizedString("gamesize.small", comment: "Small")
         tsmallButton.fontSize = 35
         tsmallButton.fontName = BUTTON_FONT
-        tsmallButton.position = CGPointMake(self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: true))
         tsmallButton.fontColor = SKColor.blackColor()
         tsmallButton.zPosition = 2
         self.addChild(tsmallButton)
         
         mediumButton = SKSpriteNode(texture: buttonTexture)
-        mediumButton.position = CGPointMake(self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: false))
         mediumButton.zPosition = 1
         greyIfNotFill(mediumButton, size: 7)
         self.addChild(mediumButton)
@@ -190,13 +217,11 @@ class StartScene: SKScene {
         tmediumButton.text = NSLocalizedString("gamesize.medium", comment: "Normal")
         tmediumButton.fontSize = 35
         tmediumButton.fontName = BUTTON_FONT
-        tmediumButton.position = CGPointMake(self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: true))
         tmediumButton.fontColor = SKColor.blackColor()
         tmediumButton.zPosition = 2
         self.addChild(tmediumButton)
         
         bigButton = SKSpriteNode(texture: buttonTexture)
-        bigButton.position = CGPointMake(self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: false))
         bigButton.zPosition = 1
         greyIfNotFill(bigButton, size: 10)
         self.addChild(bigButton)
@@ -204,23 +229,23 @@ class StartScene: SKScene {
         tbigButton.text = NSLocalizedString("gamesize.large", comment: "Large")
         tbigButton.fontSize = 35
         tbigButton.fontName = BUTTON_FONT
-        tbigButton.position = CGPointMake(self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: true))
         tbigButton.fontColor = SKColor.blackColor()
         tbigButton.zPosition = 2
         self.addChild(tbigButton)
         
         adaptButton = SKSpriteNode(texture: buttonTexture)
-        adaptButton.position = CGPointMake(self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: false))
         adaptButton.zPosition = 1
         self.addChild(adaptButton)
         tadaptButton = SKLabelNode()
         tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int((self.frame.size.width - 35) / 70), Int(self.frame.size.height / 70))
         tadaptButton.fontSize = 35
         tadaptButton.fontName = BUTTON_FONT
-        tadaptButton.position = CGPointMake(self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: true))
         tadaptButton.fontColor = SKColor.blackColor()
         tadaptButton.zPosition = 2
         self.addChild(tadaptButton)
+        
+        actualPane = 2
+        adjustPosition(false)
     }
     
     func grey(sprite:SKSpriteNode) {
@@ -361,6 +386,7 @@ class StartScene: SKScene {
         transitionQuit(tprefsButton, relativeTo: prefsButton)
         transitionQuit(tbbstoreButton, relativeTo: bbstoreButton)
         initSecondPane()
+        actualPane = -1
         transitionJoinCenter(smallButton)
         transitionJoinCenter(mediumButton)
         transitionJoinCenter(bigButton)
@@ -385,6 +411,7 @@ class StartScene: SKScene {
         transitionQuitRight(tbigButton, relativeTo: bigButton)
         transitionQuitRight(tadaptButton, relativeTo: adaptButton)
         initFirstPane(true)
+        actualPane = -1
         transitionJoinCenter(soloButton)
         transitionJoinCenter(multiButton)
         transitionJoinCenter(timedButton)
