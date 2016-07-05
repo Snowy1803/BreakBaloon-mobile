@@ -22,7 +22,7 @@ class Downloadable: SKNode {
     let dlversion:String
     let levelRequirement:Int
     
-    init(type:DownloadType, name:String, author:String, id:String, version:String, description:String, levelRequirement:Int, gvc:GameViewController) {
+    init(type:DownloadType, name:String, author:String, id:String, version:String, description:String, levelRequirement:Int) {
         self.dltype = type
         self.dlname = name
         self.dlauthor = author
@@ -32,7 +32,6 @@ class Downloadable: SKNode {
         self.levelRequirement = levelRequirement
         rect = SKShapeNode()
         super.init()
-        construct(gvc)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,9 +83,13 @@ class Downloadable: SKNode {
             addChild(tttext)
         }
         if levelRequirement > GameViewController.getLevel() {
+            let disable = SKShapeNode(rect: rect.frame)
+            disable.fillColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+            disable.zPosition = 10
+            addChild(disable)
             let level = SKSpriteNode(imageNamed: "level")
             level.position = CGPointMake(rect.frame.maxX - 24, rect.frame.minY + 24)
-            level.zPosition = 3
+            level.zPosition = 11
             level.setScale(1.5)
             addChild(level)
             let tlevel = SKLabelNode(text: "\(levelRequirement)")
@@ -94,7 +97,7 @@ class Downloadable: SKNode {
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
             tlevel.fontColor = SKColor.whiteColor()
-            tlevel.zPosition = 4
+            tlevel.zPosition = 12
             addChild(tlevel)
         } else if levelRequirement == GameViewController.getLevel() && !isInPossession() {
             let tlevel = SKLabelNode(text: NSLocalizedString("level.new", comment: ""))
@@ -207,14 +210,13 @@ class Downloadable: SKNode {
         }
         let lines = file.componentsSeparatedByString("\n")
         var currentName:String = "", currentId:String = "", currentDescription:String = "", currentAuthor:String = "", currentVersion:String = "", currentType:Int = -1, currentLevelRequirement = 0
-        var i:Int = 0
         let /*rows:Int = Int((viewSize.width - 30) % (Downloadable.WIDTH + 5)), */cols:Int = Int(viewSize.width / Downloadable.WIDTH)
         for line in lines {
             if line == "===============COCH===============" {
                 if DownloadType.getType(currentType, id: currentId).isSupported() {
-                    let dl = Downloadable(type: DownloadType.getType(currentType, id: currentId), name: currentName, author: currentAuthor, id: currentId, version: currentVersion, description: currentDescription, levelRequirement: currentLevelRequirement, gvc: gvc)
+                    let dl = Downloadable(type: DownloadType.getType(currentType, id: currentId), name: currentName, author: currentAuthor, id: currentId, version: currentVersion, description: currentDescription, levelRequirement: currentLevelRequirement)
                     //dl.position = CGPointMake(viewSize.width/2, viewSize.height/2)
-                    dl.position = CGPointMake(CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+                    
                     list.addObject(dl)
                     currentName = ""
                     currentId = ""
@@ -223,7 +225,6 @@ class Downloadable: SKNode {
                     currentVersion = ""
                     currentLevelRequirement = 0
                     currentType = -1
-                    i += 1
                 }
             } else if line.hasPrefix("ID=") {
                 currentId = line.componentsSeparatedByString("=")[1]
@@ -240,6 +241,23 @@ class Downloadable: SKNode {
             } else if line.hasPrefix("LEVEL-REQUIREMENT=") {
                 currentLevelRequirement = Int(line.componentsSeparatedByString("=")[1])!
             }
+        }
+        list.sortUsingComparator({
+            dl1, dl2 in
+            if dl1.levelRequirement >= GameViewController.getLevel() && dl2.levelRequirement >= GameViewController.getLevel() {
+                return .OrderedSame
+            } else if dl1.levelRequirement > dl2.levelRequirement {
+                return .OrderedDescending
+            } else if dl1.levelRequirement < dl2.levelRequirement {
+                return .OrderedAscending
+            }
+            return .OrderedSame
+        })
+        var i = 0
+        for dl in list {//Setting position after sorting
+            (dl as! Downloadable).construct(gvc)
+            (dl as! Downloadable).position = CGPointMake(CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+            i += 1
         }
         if let array = list as NSArray as? [Downloadable] {
             return array

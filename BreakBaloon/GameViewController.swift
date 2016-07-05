@@ -62,7 +62,7 @@ class GameViewController: UIViewController {
     func loadMusicAndStartScene() {
         if GameViewController.getMusicURLs().isEmpty {
             do {
-                try Downloadable(type: .M4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0, gvc: self).download(nil, wait: true)
+                try Downloadable(type: .M4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
             } catch {
                 print("Couldn't download content")
                 getNil()! //Crash
