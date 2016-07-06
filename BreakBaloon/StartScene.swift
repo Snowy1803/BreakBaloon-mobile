@@ -161,7 +161,7 @@ class StartScene: SKScene {
         adjustPosition(cancelled)
     }
     
-    func adjustPosition(cancelled:Bool) -> Bool {
+    func adjustPosition(cancelled:Bool, sizeChange:Bool = false) -> Bool {
         bbLabel.position = CGPointMake(CGRectGetMidX(self.frame), 40)
         cLabel.position = CGPointMake(CGRectGetMidX(self.frame), 20)
         hsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 120)
@@ -181,15 +181,15 @@ class StartScene: SKScene {
             tprefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 160)
             tbbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 160)
         } else if actualPane == 2 {
-            smallButton.position = CGPointMake(self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: false))
-            mediumButton.position = CGPointMake(self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: false))
-            bigButton.position = CGPointMake(self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: false))
-            adaptButton.position = CGPointMake(self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: false))
+            smallButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: false))
+            mediumButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: false))
+            bigButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: false))
+            adaptButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: false))
             
-            tsmallButton.position = CGPointMake(self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: true))
-            tmediumButton.position = CGPointMake(self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: true))
-            tbigButton.position = CGPointMake(self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: true))
-            tadaptButton.position = CGPointMake(self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: true))
+            tsmallButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: true))
+            tmediumButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: true))
+            tbigButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: true))
+            tadaptButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: true))
         } else {
             return false
         }

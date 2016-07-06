@@ -161,7 +161,7 @@ class GameViewController: UIViewController {
     }
 
     override func shouldAutorotate() -> Bool {
-        return skView!.scene is StartScene
+        return skView!.scene is StartScene && self.view.frame.width > 400
     }
 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -214,7 +214,7 @@ class GameViewController: UIViewController {
             _ in
             if self.skView!.scene! is StartScene {
                 self.skView!.scene!.size = size
-                (self.skView!.scene! as! StartScene).adjustPosition(false)
+                (self.skView!.scene! as! StartScene).adjustPosition(false, sizeChange: true)
             }
             
         })
