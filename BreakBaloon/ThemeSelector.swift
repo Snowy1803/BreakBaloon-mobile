@@ -30,6 +30,6 @@ class ThemeSelector: Selector {
     }
     
     override func text() -> String {
-        return String(format: NSLocalizedString("theme.selector.text", comment: "Theme format"), gvc.currentTheme.name)
+        return gvc.currentTheme.name
     }
 }
