@@ -133,9 +133,14 @@ class Theme {
     }
     
     class func withID(id:String) -> Theme? {
-        return themeList[themeList.indexOf({theme in
+        let index = themeList.indexOf({theme in
             return theme.themeID == id
-        })!]
+        })
+        if index != nil {
+            return themeList[!]
+        } else {
+            return nil
+        }
     }
 }
 
