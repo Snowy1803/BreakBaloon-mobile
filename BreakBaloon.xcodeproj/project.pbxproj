@@ -131,8 +131,8 @@
 		20B004E31D2C0336005F706F /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		20B004E41D2C0336005F706F /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		20B004E51D2C0336005F706F /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
-		20B004F51D2C2611005F706F /* BreakBaloon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BreakBaloon-Bridging-Header.h"; sourceTree = "<group>"; };
 		20B004F61D2C4B59005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
+		20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BreakBaloon-Bridging-Header.h"; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20C000931D1930A700CBA51E /* buttonminibg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonminibg.png; sourceTree = "<group>"; };
@@ -206,7 +206,6 @@
 				20F1881E1D27D7580099F717 /* libz.tbd */,
 				20B004BC1D2BEF04005F706F /* LICENSE.md */,
 				20B004BE1D2BF952005F706F /* README.md */,
-				20B004F51D2C2611005F706F /* BreakBaloon-Bridging-Header.h */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
 				206736761D16E26300FB9FFF /* Products */,
 			);
@@ -223,6 +222,7 @@
 		206736771D16E26300FB9FFF /* BreakBaloon */ = {
 			isa = PBXGroup;
 			children = (
+				20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */,
 				20BEA4391D193D4A00DE74FB /* Translations */,
 				2067368F1D16E59F00FB9FFF /* sounds */,
 				2067368E1D16E57F00FB9FFF /* sprites */,
@@ -625,6 +625,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "BreakBaloon/BreakBaloon-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -642,6 +643,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "BreakBaloon/BreakBaloon-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
