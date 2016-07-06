@@ -137,7 +137,7 @@ class Theme {
             return theme.themeID == id
         })
         if index != nil {
-            return themeList[!]
+            return themeList[index!]
         } else {
             return nil
         }
