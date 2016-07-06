@@ -180,7 +180,7 @@ class Downloadable: SKNode {
                 }
             }
         } else if dltype == .Theme {
-            return Theme.withID(dlid) != nil
+            return Theme.withID(dlid.componentsSeparatedByString(".").first!) != nil
         }
         return false
     }
