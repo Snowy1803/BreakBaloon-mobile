@@ -179,6 +179,8 @@ class Downloadable: SKNode {
                     return true
                 }
             }
+        } else if dltype == .Theme {
+            return Theme.withID(dlid) != nil
         }
         return false
     }
