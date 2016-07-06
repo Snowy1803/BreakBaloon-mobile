@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class Theme {
-    static let themeList = Theme.getThemeList()
+    static var themeList = Theme.getThemeList()
     
     let name:String
     let author:String
@@ -84,6 +84,10 @@ class Theme {
         }
         print(list)
         return list
+    }
+    
+    class func reloadThemeList() {
+        themeList = getThemeList()
     }
     
     class func parse(directoryUrl url:NSURL) -> Theme? {
