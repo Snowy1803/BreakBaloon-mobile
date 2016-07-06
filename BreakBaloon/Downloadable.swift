@@ -167,8 +167,7 @@ class Downloadable: SKNode {
             let dir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
             print("Data is from", file.fullyQualifiedPath)
             SSZipArchive.unzipFileAtPath(file.fullyQualifiedPath, toDestination: dir)
-            //try FileSaveHelper(fileName: dlid, fileExtension: .TXT).saveFile(data: NSData(bytes: data, length: data.count))
-                // TODO data to dir
+            Theme.reloadThemeList()
         }
     }
     
