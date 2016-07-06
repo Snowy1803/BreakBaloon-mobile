@@ -79,6 +79,7 @@ class GameScene:SKScene {
         }
         (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber);
         var pumpURL:NSURL
+        var gameEnded = false
         if gametype != StartScene.GAMETYPE_TIMED && index == winCaseNumber {
             if computer {
                 computerpoints += 1
@@ -112,11 +113,11 @@ class GameScene:SKScene {
             }
             if !isThereUnbreakedBaloons {
                 gameEnd()
-                return
+                gameEnded = true
             }
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
-            } while (cases.objectAtIndex(winCaseNumber) as! Case).breaked
+            } while (cases.objectAtIndex(winCaseNumber) as! Case).breaked && !gameEnded
             pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
         } else if gametype == StartScene.GAMETYPE_TIMED {
             var isThereUnbreakedBaloons = false
@@ -128,7 +129,6 @@ class GameScene:SKScene {
             }
             if !isThereUnbreakedBaloons {
                 gameEnd()
-                return
             }
             pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
         } else {
@@ -144,7 +144,7 @@ class GameScene:SKScene {
             print("Error playing sound at \(pumpURL)")
         }
         
-        if !computer && gametype == StartScene.GAMETYPE_COMPUTER {
+        if !gameEnded && !computer && gametype == StartScene.GAMETYPE_COMPUTER {
             waitingForComputer = true
             self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.25)), SKAction.runBlock({
                 var wherebreak:Int
