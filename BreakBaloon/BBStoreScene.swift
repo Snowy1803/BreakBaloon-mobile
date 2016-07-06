@@ -109,7 +109,9 @@ class BBStoreScene: SKScene {
         }
         if touches.count == 1 {
             let point = touches.first!.locationInNode(self)
-            if downloads != nil && point.x + 10 > touchBegin!.x && point.x - 10 < touchBegin!.x && point.y + 10 > touchBegin!.y && point.y - 10 < touchBegin!.y {
+            if back.frame.contains(point) {
+                goBack()
+            } else if downloads != nil && point.x + 10 > touchBegin!.x && point.x - 10 < touchBegin!.x && point.y + 10 > touchBegin!.y && point.y - 10 < touchBegin!.y {
                 for dl in downloads! {
                     if dl.rect.frame.contains(touches.first!.locationInNode(dl)) {
                         dl.click(self)
@@ -117,9 +119,7 @@ class BBStoreScene: SKScene {
                     }
                 }
             }
-            if back.frame.contains(point) {
-                goBack()
-            }
+            
         }
     }
     
