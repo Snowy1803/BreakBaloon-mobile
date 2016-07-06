@@ -33,7 +33,6 @@ class Theme {
     }
     
     convenience init(_ name:String, id:String, author:String, description:String, version:String, baloons:String, background:String, dbfpg:Bool) {
-        print("New theme:", id)
         self.init(name, id: id, author: author, description: description, version: version,
                   baloons: UInt(baloons)!,
                   background: UInt(background)!, dbfpg: dbfpg)
@@ -57,7 +56,7 @@ class Theme {
                 return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .PNG, subDirectory: self.themeID).getImage())
             }
         } catch {
-            print("Error:", error)
+            print("Error reading baloon texture of type \(type):", error)
         }
         return SKTexture()
     }
@@ -76,7 +75,6 @@ class Theme {
     }
     
     private class func getThemeList() -> [Theme] {
-        print("Theme list init")
         var list = [Theme](arrayLiteral: DefaultTheme())
         for url in GameViewController.getExternalThemes() {
             let theme = Theme.parse(directoryUrl: url)
@@ -89,7 +87,6 @@ class Theme {
     }
     
     class func parse(directoryUrl url:NSURL) -> Theme? {
-        print("Parsing 1")
         if url.isDirectory {//isDirectory is defined in GameViewController
             let file = FileSaveHelper(fileName: url.lastPathComponent!, fileExtension: .BBTHEME, subDirectory: url.lastPathComponent!)
             do {
@@ -102,7 +99,6 @@ class Theme {
     }
     
     private class func parse(id id:String, bbtheme file:String) -> Theme {
-        print("Parsing 2")
         let lines = file.componentsSeparatedByString("\n")
         var name = "", author = "", desc = "", version = "", baloons = "", background = "16777215", dbfpg = false
         for line in lines {
