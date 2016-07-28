@@ -245,11 +245,9 @@ class Downloadable: SKNode {
         }
         list.sortUsingComparator({
             dl1, dl2 in
-            if dl1.levelRequirement >= GameViewController.getLevel() && dl2.levelRequirement >= GameViewController.getLevel() {
-                return .OrderedSame
-            } else if dl1.levelRequirement > dl2.levelRequirement {
+            if dl1.levelRequirement > GameViewController.getLevel() && dl1.levelRequirement > dl2.levelRequirement {
                 return .OrderedDescending
-            } else if dl1.levelRequirement < dl2.levelRequirement {
+            } else if dl2.levelRequirement > GameViewController.getLevel() && dl1.levelRequirement < dl2.levelRequirement {
                 return .OrderedAscending
             }
             return .OrderedSame
