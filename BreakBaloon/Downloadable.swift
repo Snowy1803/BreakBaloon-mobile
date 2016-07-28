@@ -101,9 +101,9 @@ class Downloadable: SKNode {
             addChild(tlevel)
         } else if levelRequirement == GameViewController.getLevel() && !isInPossession() {
             let tlevel = SKLabelNode(text: NSLocalizedString("level.new", comment: ""))
-            tlevel.position = CGPointMake(rect.frame.maxX - 24, rect.frame.minY + 12)
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
+            tlevel.position = CGPointMake(rect.frame.maxX - tlevel.frame.width, rect.frame.minY + 12)
             tlevel.fontColor = SKColor(red: 1, green: 170/255, blue: 85/255, alpha: 1)
             tlevel.zPosition = 4
             addChild(tlevel)

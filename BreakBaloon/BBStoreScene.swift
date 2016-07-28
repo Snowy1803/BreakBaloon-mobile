@@ -61,7 +61,7 @@ class BBStoreScene: SKScene {
                     self.title.fontSize = 20
                     self.title.position = CGPointMake(self.title.frame.width/2 + 5, self.frame.height - 25)
                     self.title.alpha = 0
-                    self.title.zPosition = 5
+                    self.title.zPosition = 6
                     self.addChild(self.title)
                     self.title.runAction(SKAction.fadeInWithDuration(1))
                     self.back.text = NSLocalizedString("back", comment: "")
@@ -69,13 +69,13 @@ class BBStoreScene: SKScene {
                     self.back.fontSize = 20
                     self.back.position = CGPointMake(self.frame.width - self.back.frame.width/2 - 5, self.frame.height - 25)
                     self.back.alpha = 0
-                    self.back.zPosition = 6
+                    self.back.zPosition = 7
                     self.addChild(self.back)
                     self.back.runAction(SKAction.fadeInWithDuration(1))
                     self.upper = SKShapeNode(rect: CGRectMake(0, self.frame.height - 30, self.frame.width, 30))
                     self.upper.fillColor = SKColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
                     self.upper.alpha = 0.75
-                    self.upper.zPosition = 4
+                    self.upper.zPosition = 5
                     self.addChild(self.upper)
                 }
             } catch {
