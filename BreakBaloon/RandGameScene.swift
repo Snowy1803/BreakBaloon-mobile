@@ -82,7 +82,7 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
-        nextBaloon = NSDate().timeIntervalSince1970 + (NSTimeInterval(arc4random_uniform(4000)) / 1000)
+        nextBaloon = NSDate().timeIntervalSince1970 + (NSTimeInterval(arc4random_uniform(1500)) / 1000)
         baloonsToSpawn -= 1
         
     }
@@ -91,7 +91,7 @@ class RandGameScene: AbstractGameScene {
         let aCase = Case(gvc: gvc, index: -1)
         aCase.position = point
         aCase.zPosition = CGFloat(30 - baloonsToSpawn)
-        aCase.runAction(SKAction.sequence([SKAction.waitForDuration(1), SKAction.fadeOutWithDuration(1), SKAction.removeFromParent()]))
+        aCase.runAction(SKAction.sequence([SKAction.waitForDuration(0.75), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))
         spawnBaloon(case: aCase)
     }
     
