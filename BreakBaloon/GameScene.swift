@@ -24,11 +24,10 @@ class GameScene:AbstractGameScene {
         self.height = Int(height)
         cases = NSMutableArray(capacity: self.width * self.height)
         super.init(view: view, gametype: gametype)
-        construct(view.window!.rootViewController as! GameViewController)
     }
     
-    func construct(gvc: GameViewController) {
-        self.backgroundColor = gvc.currentTheme.background
+    override func construct(gvc: GameViewController) {
+        super.construct(gvc)
         for i in 0 ..< (width * height) {
             let theCase = Case(gvc: gvc, index: i)
             theCase.position = CGPointMake(CGFloat(i / height * 70 + 35), self.frame.size.height - CGFloat(i % height * 70 + 35))

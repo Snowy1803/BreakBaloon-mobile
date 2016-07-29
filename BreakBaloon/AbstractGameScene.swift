@@ -22,12 +22,16 @@ class AbstractGameScene: SKScene {
     init(view:SKView, gametype:Int8) {
         self.gametype = gametype
         super.init(size: view.bounds.size)
-        
+        construct(view.window!.rootViewController as! GameViewController)
         (view.window!.rootViewController as! GameViewController).currentGame = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func construct(gvc: GameViewController) {
+        self.backgroundColor = gvc.currentTheme.background
     }
     
     func pauseGame() {
