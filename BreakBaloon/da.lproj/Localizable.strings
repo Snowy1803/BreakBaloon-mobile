@@ -2,7 +2,7 @@
 "gametype.singleplayer" = "Singleplayer";
 "gametype.computer" = "Mod computeren";
 "gametype.timed" = "Mod tiden";
-"gametype.rand" = "Tilfældig balloner";
+"gametype.rand" = "Tilfældige balloner";
 "gamesize.small" = "Lille (5x5)";
 "gamesize.medium" = "Mellem (7x7)";
 "gamesize.large" = "Stor (10x10)";
