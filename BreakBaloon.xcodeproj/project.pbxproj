@@ -26,6 +26,8 @@
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
 		20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20A335A61D4BD33E00B54FBE /* Main.storyboard */; };
+		20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */; };
+		20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335B01D4BDE4000B54FBE /* RandGameScene.swift */; };
 		20B004E61D2C0336005F706F /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 20B004C41D2C0336005F706F /* aescrypt.c */; };
 		20B004E71D2C0336005F706F /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 20B004C51D2C0336005F706F /* aeskey.c */; };
 		20B004E81D2C0336005F706F /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = 20B004C71D2C0336005F706F /* aestab.c */; };
@@ -100,6 +102,8 @@
 		20A335AA1D4BD36200B54FBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20A335AB1D4BD37000B54FBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		20A335AD1D4BD38700B54FBE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractGameScene.swift; sourceTree = "<group>"; };
+		20A335B01D4BDE4000B54FBE /* RandGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameScene.swift; sourceTree = "<group>"; };
 		20B004BC1D2BEF04005F706F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		20B004BE1D2BF952005F706F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20B004C21D2C0336005F706F /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
@@ -242,6 +246,8 @@
 				20C995871D23EC9A0029312F /* MusicSelector.swift */,
 				20F1882F1D2A62C70099F717 /* Theme.swift */,
 				20C995851D23EC7C0029312F /* ThemeSelector.swift */,
+				20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */,
+				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
 				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				201F4D6B1D180F9F00EB894A /* Case.swift */,
 				20C9957F1D23EC4E0029312F /* FileSaveHelper.swift */,
@@ -487,6 +493,7 @@
 				20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */,
 				20C995841D23EC710029312F /* Selector.swift in Sources */,
 				20B004F01D2C0336005F706F /* ioapi.c in Sources */,
+				20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */,
 				20C995911D23ED300029312F /* GameViewController.swift in Sources */,
 				20C9957E1D23EC2F0029312F /* StartScene.swift in Sources */,
 				20B004F11D2C0336005F706F /* mztools.c in Sources */,
@@ -495,6 +502,7 @@
 				20B004E91D2C0336005F706F /* entropy.c in Sources */,
 				20B004E81D2C0336005F706F /* aestab.c in Sources */,
 				201F4D6C1D180F9F00EB894A /* Case.swift in Sources */,
+				20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */,
 				20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */,
 				20C995861D23EC7C0029312F /* ThemeSelector.swift in Sources */,
 				206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */,

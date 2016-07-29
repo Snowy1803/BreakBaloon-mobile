@@ -13,6 +13,7 @@ class StartScene: SKScene {
     static let GAMETYPE_SOLO:Int8 = 0
     static let GAMETYPE_COMPUTER:Int8 = 1
     static let GAMETYPE_TIMED:Int8 = 2
+    static let GAMETYPE_RAND:Int8 = 3
     let buttonTexture = SKTexture(imageNamed: "buttonbg")
     let minibuttonTexture = SKTexture(imageNamed: "buttonminibg")
     
@@ -24,6 +25,7 @@ class StartScene: SKScene {
     var soloButton = SKSpriteNode()
     var multiButton = SKSpriteNode()
     var timedButton = SKSpriteNode()
+    var randButton = SKSpriteNode()
     var smallButton = SKSpriteNode()
     var mediumButton = SKSpriteNode()
     var bigButton = SKSpriteNode()
@@ -34,6 +36,7 @@ class StartScene: SKScene {
     var tsoloButton = SKLabelNode()
     var tmultiButton = SKLabelNode()
     var ttimedButton = SKLabelNode()
+    var trandButton = SKLabelNode()
     var tsmallButton = SKLabelNode()
     var tmediumButton = SKLabelNode()
     var tbigButton = SKLabelNode()
@@ -137,6 +140,19 @@ class StartScene: SKScene {
         ttimedButton.zPosition = 2
         self.addChild(ttimedButton)
         
+        randButton = SKSpriteNode(texture: buttonTexture)
+        randButton.zPosition = 1
+        if GameViewController.getLevel() < RandGameScene.REQUIREMENT {
+            grey(randButton)
+        }
+        self.addChild(randButton)
+        trandButton.text = NSLocalizedString("gametype.rand", comment: "Game with random baloons spawning")
+        trandButton.fontSize = 35
+        trandButton.fontName = BUTTON_FONT
+        trandButton.fontColor = SKColor.blackColor()
+        trandButton.zPosition = 2
+        self.addChild(trandButton)
+        
         prefsButton = SKSpriteNode(texture: minibuttonTexture)
         prefsButton.zPosition = 1
         self.addChild(prefsButton)
@@ -172,12 +188,14 @@ class StartScene: SKScene {
             soloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: false))
             multiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: false))
             timedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: false))
+            randButton.position = CGPointMake(cancelled ? -randButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(3, text: false))
             prefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 170)
             bbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 170)
             
             tsoloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: true))
             tmultiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: true))
             ttimedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: true))
+            trandButton.position = CGPointMake(cancelled ? -randButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(3, text: true))
             tprefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 160)
             tbbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 160)
         } else if actualPane == 2 {
@@ -277,23 +295,6 @@ class StartScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        /*
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }*/
         if touches.count == 1 {
             touchesBegan = touches.first?.locationInNode(self)
         }
@@ -315,23 +316,29 @@ class StartScene: SKScene {
             } else if onNode(timedButton, point: point) {
                 gametype = StartScene.GAMETYPE_TIMED
                 transitionFirstToSecond()
+            } else if onNode(randButton, point: point) {
+                if randButton.colorBlendFactor != 0.5 {
+                    self.view?.presentScene(RandGameScene(view: self.view!), transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
+                } else {
+                    showLevelAlert()
+                }
             } else if onNode(smallButton, point: point) {
                 if smallButton.colorBlendFactor != 0.5 {
                     newGame(gametype, width: 5, height: 5)
                 } else {
-                    showAlert()
+                    showResolutionAlert()
                 }
             } else if onNode(mediumButton, point: point) {
                 if smallButton.colorBlendFactor != 0.5 {
                     newGame(gametype, width: 7, height: 7)
                 } else {
-                    showAlert()
+                    showResolutionAlert()
                 }
             } else if onNode(bigButton, point: point) {
                 if smallButton.colorBlendFactor != 0.5 {
                     newGame(gametype, width: 10, height: 10)
                 } else {
-                    showAlert()
+                    showResolutionAlert()
                 }
             } else if onNode(adaptButton, point: point) {
                 newGame(gametype, width: UInt(self.frame.size.width / 70), height: UInt((self.frame.size.height - 20) / 70))
@@ -357,8 +364,12 @@ class StartScene: SKScene {
         self.view!.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showAlert() {
+    func showResolutionAlert() {
         showDialog("Erreur", message: "Cette résolution ne tient pas sur votre écran")
+    }
+    
+    func showLevelAlert() {
+        showDialog("Erreur", message: "Vous devez jouer aux autres modes pour débloquer celui-ci")
     }
     
     func newGame(gametype:Int8, width:UInt, height:UInt) {
@@ -378,11 +389,13 @@ class StartScene: SKScene {
         transitionQuit(soloButton, relativeTo: soloButton)
         transitionQuit(multiButton, relativeTo: multiButton)
         transitionQuit(timedButton, relativeTo: timedButton)
+        transitionQuit(randButton, relativeTo: randButton)
         transitionQuit(prefsButton, relativeTo: prefsButton)
         transitionQuit(bbstoreButton, relativeTo: bbstoreButton)
         transitionQuit(tsoloButton, relativeTo: soloButton)
         transitionQuit(tmultiButton, relativeTo: multiButton)
         transitionQuit(ttimedButton, relativeTo: timedButton)
+        transitionQuit(trandButton, relativeTo: randButton)
         transitionQuit(tprefsButton, relativeTo: prefsButton)
         transitionQuit(tbbstoreButton, relativeTo: bbstoreButton)
         initSecondPane()
@@ -415,11 +428,13 @@ class StartScene: SKScene {
         transitionJoinCenter(soloButton)
         transitionJoinCenter(multiButton)
         transitionJoinCenter(timedButton)
+        transitionJoinCenter(randButton)
         transitionJoinAt(prefsButton, at: CGPointMake(self.frame.width / 4, 170))
         transitionJoinAt(bbstoreButton, at: CGPointMake(self.frame.width / 4 * 3, 170))
         transitionJoinCenter(tsoloButton)
         transitionJoinCenter(tmultiButton)
         transitionJoinCenter(ttimedButton)
+        transitionJoinCenter(trandButton)
         transitionJoinAt(tprefsButton, at: CGPointMake(self.frame.width / 4, 160))
         transitionJoinAt(tbbstoreButton, at: CGPointMake(self.frame.width / 4 * 3, 160))
         self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({

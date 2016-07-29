@@ -2,6 +2,7 @@
 "gametype.singleplayer" = "Solo";
 "gametype.computer" = "Contre l'ordinateur";
 "gametype.timed" = "Contre la montre";
+"gametype.rand" = "Ballons aléatoires";
 "gamesize.small" = "Petit (5x5)";
 "gamesize.medium" = "Normal (7x7)";
 "gamesize.large" = "Grand (10x10)";

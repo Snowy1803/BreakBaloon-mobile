@@ -2,6 +2,7 @@
 "gametype.singleplayer" = "Singleplayer";
 "gametype.computer" = "Against the computer";
 "gametype.timed" = "Against the time";
+"gametype.rand" = "Random baloons";
 "gamesize.small" = "Small (5x5)";
 "gamesize.medium" = "Medium (7x7)";
 "gamesize.large" = "Large (10x10)";

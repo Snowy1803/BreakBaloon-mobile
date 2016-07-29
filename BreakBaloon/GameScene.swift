@@ -9,29 +9,22 @@
 import AVFoundation
 import SpriteKit
 
-class GameScene:SKScene {
-    var gametype:Int8
+class GameScene:AbstractGameScene {
+    
     var width:Int
     var height:Int
     var cases:NSMutableArray
     var label:SKLabelNode = SKLabelNode()
     var winCaseNumber:Int = -1
-    var points:Int = 0
     var computerpoints:Int = 0
-    var avplayer:AVAudioPlayer = AVAudioPlayer()
-    var beginTime:NSTimeInterval?
-    var endTime:NSTimeInterval?
-    var pauseTime:NSTimeInterval?
     var waitingForComputer:Bool = false
     
     init(view:SKView, gametype:Int8, width:UInt, height:UInt) {
-        self.gametype = gametype
         self.width = Int(width)
         self.height = Int(height)
         cases = NSMutableArray(capacity: self.width * self.height)
-        super.init(size: view.bounds.size)
+        super.init(view: view, gametype: gametype)
         construct(view.window!.rootViewController as! GameViewController)
-        (view.window!.rootViewController as! GameViewController).currentGame = self
     }
     
     func construct(gvc: GameViewController) {
@@ -209,17 +202,5 @@ class GameScene:SKScene {
             label.text = String(format: NSLocalizedString("game.time", comment: "Time"), (beginTime == nil ? 0 : Int(NSDate().timeIntervalSince1970 - beginTime!)))
             label.position = CGPointMake(label.frame.width/2, 5)
         }
-    }
-    
-    func pauseGame() {
-        pauseTime = NSDate().timeIntervalSince1970
-    }
-    
-    func quitPause() {
-        if beginTime != nil {
-            let pauseLenght = NSDate().timeIntervalSince1970 - pauseTime!
-            beginTime! += pauseLenght
-        }
-        pauseTime = nil
     }
 }

@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
     var backgroundMusicPlayer:AVAudioPlayer = AVAudioPlayer()
     var audioPlayer:AVAudioPlayer = AVAudioPlayer()
     var audioVolume:Float = GameViewController.DEFAULT_AUDIO
-    var currentGame:GameScene?
+    var currentGame:AbstractGameScene?
     var currentMusicFileName = "Race.m4a"
     var currentMusicInt:Int {
         get {
