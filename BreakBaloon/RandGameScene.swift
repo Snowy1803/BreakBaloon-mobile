@@ -31,7 +31,7 @@ class RandGameScene: AbstractGameScene {
         }
         label.fontName = "Verdana-Bold"
         label.position = CGPointMake(label.frame.width/2, 5)
-        label.zPosition = 2
+        label.zPosition = CGFloat(RandGameScene.BALOONS) + 1
         updateLabel()
         addChild(label)
         beginTime = NSDate().timeIntervalSince1970
