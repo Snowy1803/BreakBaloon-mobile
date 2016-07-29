@@ -145,13 +145,13 @@ class StartScene: SKScene {
         if GameViewController.getLevel() < RandGameScene.REQUIREMENT {
             grey(randButton)
             let level = SKSpriteNode(imageNamed: "level")
-            level.position = CGPointMake(randButton.frame.width / 2 - 30, CGRectGetMidY(randButton.frame))
+            level.position = CGPointMake(min(randButton.frame.width / 2, self.frame.width / 2) - 30, CGRectGetMidY(randButton.frame))
             print(level.position)
             level.zPosition = 1
             level.setScale(1.5)
             randButton.addChild(level)
             let tlevel = SKLabelNode(text: "\(RandGameScene.REQUIREMENT)")
-            tlevel.position = CGPointMake(randButton.frame.width / 2 - 30, CGRectGetMidY(randButton.frame) - 12)
+            tlevel.position = CGPointMake(min(randButton.frame.width / 2, self.frame.width / 2) - 30, CGRectGetMidY(randButton.frame) - 12)
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
             tlevel.fontColor = SKColor.whiteColor()
