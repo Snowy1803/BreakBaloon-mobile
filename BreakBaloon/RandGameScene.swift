@@ -11,10 +11,10 @@ import SpriteKit
 
 class RandGameScene: AbstractGameScene {
     static let REQUIREMENT = 6
-    static let BALOONS = 30
     
     let gvc:GameViewController
-    let numberOfBaloons = BALOONS
+    let numberOfBaloons = 30
+    let baloonTime:NSTimeInterval = 0.75
     var label:SKLabelNode = SKLabelNode()
     
     var baloonsToSpawn:Int
@@ -93,7 +93,7 @@ class RandGameScene: AbstractGameScene {
         let aCase = Case(gvc: gvc, index: -1)
         aCase.position = point
         aCase.zPosition = CGFloat(numberOfBaloons - baloonsToSpawn)
-        aCase.runAction(SKAction.sequence([SKAction.waitForDuration(0.75), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))
+        aCase.runAction(SKAction.sequence([SKAction.waitForDuration(baloonTime), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))
         spawnBaloon(case: aCase)
     }
     
