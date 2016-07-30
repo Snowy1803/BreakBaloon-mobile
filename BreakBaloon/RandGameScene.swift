@@ -50,10 +50,12 @@ class RandGameScene: AbstractGameScene {
     }
     
     override func update(currentTime: NSTimeInterval) {
-        if nextBaloon == nil || (baloonsToSpawn > 0 && NSDate().timeIntervalSince1970 >= nextBaloon) {
-            spawnBaloon()
-        } else if baloonsToSpawn == 0 && isEmpty() && endTime == nil {
-            gameEnd()
+        if pauseTime == nil {
+            if nextBaloon == nil || (baloonsToSpawn > 0 && NSDate().timeIntervalSince1970 >= nextBaloon) {
+                spawnBaloon()
+            } else if baloonsToSpawn == 0 && isEmpty() && endTime == nil {
+                gameEnd()
+            }
         }
     }
     
@@ -78,6 +80,18 @@ class RandGameScene: AbstractGameScene {
         }
     }
     
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if touches.count == 1 {
+            for child in children {
+                if child is RandGameLevelInfoNode {
+                    quitPause()
+                    child.removeFromParent()
+                    break
+                }
+            }
+        }
+    }
+    
     func breakBaloon(case aCase: Case, touch: CGPoint) {
         print("HEY?")
         if aCase.status == .Closed {
@@ -89,7 +103,6 @@ class RandGameScene: AbstractGameScene {
     }
     
     func spawnBaloon(case aCase: Case) {
-        print("SPAWN")
         addChild(aCase)
         nextBaloon = NSDate().timeIntervalSince1970 + NSTimeInterval(arc4random_uniform(UInt32(nextBaloonMax * 1000)) / 1000)
         print(nextBaloonMax)

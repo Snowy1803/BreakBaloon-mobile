@@ -26,6 +26,13 @@
 "game.score.time" = "Vous avez un score de %d points, avec un temps de %d secondes !";
 "game.time" = "Temps : %d secondes";
 "gameinfo.title" = "Dernière partie";
+"gameinfo.level" = "NIVEAU %d";
+"gameinfo.baloons" = "Ballons : %d";
+"gameinfo.speed.low" = "Vitesse : Basse";
+"gameinfo.speed.medium" = "Vitesse : Normale";
+"gameinfo.speed.high" = "Vitesse : Haute";
+"gameinfo.speed.extreme" = "Vitesse : Extrème";
+"gameinfo.requirePoints" = "%d points pour gagner";
 "settings.title" = "Réglages";
 "settings.audio" = "Effets sonores";
 "settings.music" = "Musique";

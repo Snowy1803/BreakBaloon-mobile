@@ -75,6 +75,7 @@
 		20F1882C1D2830470099F717 /* quick_time.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F188291D2830470099F717 /* quick_time.png */; };
 		20F1882E1D29A5300099F717 /* ImportMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1882D1D29A5300099F717 /* ImportMusic.swift */; };
 		20F188301D2A62C70099F717 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1882F1D2A62C70099F717 /* Theme.swift */; };
+		20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */; };
 		20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */; };
 		20FF80DF1D197E4800E5A9EF /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80DE1D197E4800E5A9EF /* slider.png */; };
 		20FF80E11D197EFB00E5A9EF /* slidericon.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80E01D197EFB00E5A9EF /* slidericon.png */; };
@@ -182,6 +183,7 @@
 		20F188291D2830470099F717 /* quick_time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quick_time.png; sourceTree = "<group>"; };
 		20F1882D1D29A5300099F717 /* ImportMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportMusic.swift; sourceTree = "<group>"; };
 		20F1882F1D2A62C70099F717 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelInfoNode.swift; sourceTree = "<group>"; };
 		20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSlider.swift; sourceTree = "<group>"; };
 		20FF80DE1D197E4800E5A9EF /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		20FF80E01D197EFB00E5A9EF /* slidericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slidericon.png; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
 				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
+				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
 				201F4D6B1D180F9F00EB894A /* Case.swift */,
 				20C9957F1D23EC4E0029312F /* FileSaveHelper.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
@@ -510,6 +513,7 @@
 				20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */,
 				20ED216B1D4CDC1600DA86AF /* zip.c in Sources */,
 				20C995821D23EC620029312F /* SettingScene.swift in Sources */,
+				20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */,
 				20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */,
 				20C995841D23EC710029312F /* Selector.swift in Sources */,
 				20ED21681D4CDC1600DA86AF /* ioapi.c in Sources */,

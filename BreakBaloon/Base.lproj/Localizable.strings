@@ -26,6 +26,13 @@
 "game.score.time" = "You have %d points with a time of %d seconds";
 "game.time" = "Time: %d seconds";
 "gameinfo.title" = "Last game";
+"gameinfo.level" = "LEVEL %d";
+"gameinfo.baloons" = "Baloons: %d";
+"gameinfo.speed.low" = "Speed : Low";
+"gameinfo.speed.medium" = "Speed : Medium";
+"gameinfo.speed.high" = "Speed : High";
+"gameinfo.speed.extreme" = "Speed : Extreme";
+"gameinfo.requirePoints" = "%d points for win";
 "settings.title" = "Settings";
 "settings.audio" = "Sound effects";
 "settings.music" = "Music";

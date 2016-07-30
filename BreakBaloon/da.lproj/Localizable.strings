@@ -26,6 +26,13 @@
 "game.score.time" = "Du har %d points med en tid på %d sekunder";
 "game.time" = "Tid: %d sekunder";
 "gameinfo.title" = "Sidste spil";
+"gameinfo.level" = "NIVEAU %d";
+"gameinfo.baloons" = "Balloner: %d";
+"gameinfo.speed.low" = "Hastighed : Lav";
+"gameinfo.speed.medium" = "Hastighed : Medium";
+"gameinfo.speed.high" = "Hastighed : Høj";
+"gameinfo.speed.extreme" = "Hastighed : Ekstrem";
+"gameinfo.requirePoints" = "%d points til at vinde";
 "settings.title" = "Indstillinger";
 "settings.audio" = "Lyd effekter";
 "settings.music" = "Musik";

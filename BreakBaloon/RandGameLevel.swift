@@ -57,7 +57,10 @@ class RandGameLevel: SKSpriteNode {
     }
     
     private func start(view: SKView) {
-        view.presentScene(RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, completion: end), transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
+        let scene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, completion: end)
+        scene.pauseGame()
+        view.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
+        scene.addChild(RandGameLevelInfoNode(level: self, scene: scene))
     }
     
     private func end(missing: UInt) {
