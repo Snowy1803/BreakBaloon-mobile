@@ -15,15 +15,17 @@ class RandGameScene: AbstractGameScene {
     let gvc:GameViewController
     let numberOfBaloons:UInt
     let baloonTime:NSTimeInterval
+    let vanishSpeed:NSTimeInterval
     var label:SKLabelNode = SKLabelNode()
     
     var baloonsToSpawn:UInt
     var nextBaloon:NSTimeInterval?
     
-    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval) {
+    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval) {
         gvc = view.window?.rootViewController as! GameViewController
         self.numberOfBaloons = numberOfBaloons
         self.baloonTime = baloonTime
+        self.vanishSpeed = speed
         baloonsToSpawn = numberOfBaloons
         super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
         label = SKLabelNode()
@@ -86,7 +88,7 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
-        nextBaloon = NSDate().timeIntervalSince1970 + (NSTimeInterval(arc4random_uniform(1500)) / 1000)
+        nextBaloon = NSDate().timeIntervalSince1970 + (NSTimeInterval(arc4random_uniform(UInt32(vanishSpeed * 1000))) / 1000)
         baloonsToSpawn -= 1
         
     }

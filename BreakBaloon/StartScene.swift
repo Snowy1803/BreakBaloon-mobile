@@ -331,7 +331,7 @@ class StartScene: SKScene {
                 transitionFirstToSecond()
             } else if onNode(randButton, point: point) {
                 if randButton.colorBlendFactor != 0.5 {
-                    self.view?.presentScene(RandGameScene(view: self.view!, numberOfBaloons: 30, baloonTime: 0.75), transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
+                    self.view?.presentScene(RandGameScene(view: self.view!, numberOfBaloons: 30, baloonTime: 0.75, speed: 1500), transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
                 } else {
                     showLevelAlert()
                 }
