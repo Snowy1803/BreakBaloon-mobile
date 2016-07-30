@@ -14,13 +14,15 @@ class RandGameScene: AbstractGameScene {
     static let BALOONS = 30
     
     let gvc:GameViewController
+    let numberOfBaloons = BALOONS
     var label:SKLabelNode = SKLabelNode()
     
-    var baloonsToSpawn:Int = BALOONS
+    var baloonsToSpawn:Int
     var nextBaloon:NSTimeInterval?
     
     init(view: SKView) {
         gvc = view.window?.rootViewController as! GameViewController
+        baloonsToSpawn = numberOfBaloons
         super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
         label = SKLabelNode()
         label.fontColor = SKColor.blackColor()
@@ -31,7 +33,7 @@ class RandGameScene: AbstractGameScene {
         }
         label.fontName = "Verdana-Bold"
         label.position = CGPointMake(label.frame.width/2, 5)
-        label.zPosition = CGFloat(RandGameScene.BALOONS) + 1
+        label.zPosition = CGFloat(numberOfBaloons) + 1
         updateLabel()
         addChild(label)
         beginTime = NSDate().timeIntervalSince1970
@@ -90,7 +92,7 @@ class RandGameScene: AbstractGameScene {
     func spawnBaloon(point point: CGPoint) {
         let aCase = Case(gvc: gvc, index: -1)
         aCase.position = point
-        aCase.zPosition = CGFloat(30 - baloonsToSpawn)
+        aCase.zPosition = CGFloat(numberOfBaloons - baloonsToSpawn)
         aCase.runAction(SKAction.sequence([SKAction.waitForDuration(0.75), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))
         spawnBaloon(case: aCase)
     }
