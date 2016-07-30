@@ -125,7 +125,7 @@ class SettingScene:SKScene {
         self.view?.presentScene(previous, transition: SKTransition.doorsCloseHorizontalWithDuration(NSTimeInterval(1)))
     }
     
-    func onNode(node:SKSpriteNode, point:CGPoint) -> Bool {
+    func onNode(node:SKNode, point:CGPoint) -> Bool {
         return node.frame.contains(point)
     }
 }

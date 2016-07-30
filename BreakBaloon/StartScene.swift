@@ -221,6 +221,12 @@ class StartScene: SKScene {
             tmediumButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: true))
             tbigButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: true))
             tadaptButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: true))
+        } else if actualPane == 3 {
+            for child in children {
+                if child is RandGameLevel {
+                    child.position = CGPointMake(sizeChange ? (child as! RandGameLevel).realPosition.x : self.frame.size.width + adaptButton.size.width, (child as! RandGameLevel).realPosition.y)
+                }
+            }
         } else {
             return false
         }
@@ -268,7 +274,7 @@ class StartScene: SKScene {
         adaptButton.zPosition = 1
         self.addChild(adaptButton)
         tadaptButton = SKLabelNode()
-        tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int((self.frame.size.width - 35) / 70), Int(self.frame.size.height / 70))
+        tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int(self.frame.size.width / 75), Int((self.frame.size.height - 35) / 75))
         tadaptButton.fontSize = 35
         tadaptButton.fontName = BUTTON_FONT
         tadaptButton.fontColor = SKColor.blackColor()
@@ -276,6 +282,25 @@ class StartScene: SKScene {
         self.addChild(tadaptButton)
         
         actualPane = 2
+        adjustPosition(false)
+    }
+    
+    func initThirdPane() {
+        var pre:RandGameLevel? = nil
+        var i:Int = 0
+        let w = Int(self.frame.size.width / 64)
+        for tuple in RandGameLevel.levels {
+            let node = RandGameLevel(index: i, level: tuple)
+            node.realPosition = CGPointMake(CGFloat(i % w * 70 + 35), self.frame.size.height - CGFloat(i / w * 70 + 35))
+            addChild(node)
+            if pre != nil {
+                pre?.next = node
+            }
+            pre = node
+            i += 1
+        }
+        
+        actualPane = 3;
         adjustPosition(false)
     }
     
@@ -330,11 +355,12 @@ class StartScene: SKScene {
                 gametype = StartScene.GAMETYPE_TIMED
                 transitionFirstToSecond()
             } else if onNode(randButton, point: point) {
-                if randButton.colorBlendFactor != 0.5 {
+                /*if randButton.colorBlendFactor != 0.5 {
                     self.view?.presentScene(RandGameScene(view: self.view!, numberOfBaloons: 30, baloonTime: 0.75, speed: 1500), transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
                 } else {
                     showLevelAlert()
-                }
+                }*/
+                transitionFirstToThird()
             } else if onNode(smallButton, point: point) {
                 if smallButton.colorBlendFactor != 0.5 {
                     newGame(gametype, width: 5, height: 5)
@@ -363,6 +389,13 @@ class StartScene: SKScene {
                 }
             } else if onNode(bbstoreButton, point: point) {
                 self.view?.presentScene(BBStoreScene(start: self), transition: SKTransition.doorsCloseVerticalWithDuration(NSTimeInterval(1)))
+            } else if actualPane == 3 {
+                for child in children {
+                    if child is RandGameLevel && onNode(child, point: point) {
+                        (child as! RandGameLevel).click(self.view!)
+                        break
+                    }
+                }
             }
         }
     }
@@ -426,6 +459,32 @@ class StartScene: SKScene {
         })]))
     }
     
+    func transitionFirstToThird() {
+        actualPane = -1
+        transitionQuit(soloButton, relativeTo: soloButton)
+        transitionQuit(multiButton, relativeTo: multiButton)
+        transitionQuit(timedButton, relativeTo: timedButton)
+        transitionQuit(randButton, relativeTo: randButton)
+        transitionQuit(prefsButton, relativeTo: prefsButton)
+        transitionQuit(bbstoreButton, relativeTo: bbstoreButton)
+        transitionQuit(tsoloButton, relativeTo: soloButton)
+        transitionQuit(tmultiButton, relativeTo: multiButton)
+        transitionQuit(ttimedButton, relativeTo: timedButton)
+        transitionQuit(trandButton, relativeTo: randButton)
+        transitionQuit(tprefsButton, relativeTo: prefsButton)
+        transitionQuit(tbbstoreButton, relativeTo: bbstoreButton)
+        initThirdPane()
+        actualPane = -1
+        for child in children {
+            if child is RandGameLevel {
+                child.runAction(SKAction.moveTo((child as! RandGameLevel).realPosition, duration: NSTimeInterval(0.5)))
+            }
+        }
+        self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
+            self.actualPane = 3;
+        })]))
+    }
+    
     func transitionSecondToFirst() {
         actualPane = -1
         transitionQuitRight(smallButton, relativeTo: smallButton)
@@ -473,7 +532,7 @@ class StartScene: SKScene {
         node.runAction(SKAction.sequence(actionArray))
     }
     
-    func onNode(node:SKSpriteNode, point:CGPoint) -> Bool {
+    func onNode(node:SKNode, point:CGPoint) -> Bool {
         return node.frame.contains(point)
     }
    

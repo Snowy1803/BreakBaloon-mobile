@@ -30,6 +30,9 @@
 		20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335B01D4BDE4000B54FBE /* RandGameScene.swift */; };
 		20B004F71D2C4B59005F706F /* level.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B004F61D2C4B59005F706F /* level.png */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
+		20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */; };
+		20BFC0881D4D0AEE000B7A6A /* levelbuttonbg-finished.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0871D4D0AEE000B7A6A /* levelbuttonbg-finished.png */; };
+		20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */; };
 		20C000941D1930A700CBA51E /* buttonminibg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C000931D1930A700CBA51E /* buttonminibg.png */; };
 		20C995711D23EBA20029312F /* Welcome.wav in Resources */ = {isa = PBXBuildFile; fileRef = 20C995651D23EBA20029312F /* Welcome.wav */; };
 		20C9957C1D23EBA20029312F /* wpump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 20C995701D23EBA20029312F /* wpump.wav */; };
@@ -43,6 +46,8 @@
 		20C9958C1D23ECE90029312F /* BBStoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C9958B1D23ECE90029312F /* BBStoreScene.swift */; };
 		20C9958F1D23ED100029312F /* Downloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C9958E1D23ED100029312F /* Downloadable.swift */; };
 		20C995911D23ED300029312F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C995901D23ED300029312F /* GameViewController.swift */; };
+		20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */; };
+		20CB89D01D4CE82600A0408C /* levelbuttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */; };
 		20E877331D23EDED00CCBA1A /* pump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 20E877321D23EDED00CCBA1A /* pump.wav */; };
 		20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E877361D25AD9D00CCBA1A /* GameScene.swift */; };
 		20E877391D25B1B500CCBA1A /* import.png in Resources */ = {isa = PBXBuildFile; fileRef = 20E877381D25B1B500CCBA1A /* import.png */; };
@@ -110,6 +115,9 @@
 		20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BreakBaloon-Bridging-Header.h"; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-locked.png"; sourceTree = "<group>"; };
+		20BFC0871D4D0AEE000B7A6A /* levelbuttonbg-finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished.png"; sourceTree = "<group>"; };
+		20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-unlockable.png"; sourceTree = "<group>"; };
 		20C000931D1930A700CBA51E /* buttonminibg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonminibg.png; sourceTree = "<group>"; };
 		20C995651D23EBA20029312F /* Welcome.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Welcome.wav; sourceTree = "<group>"; };
 		20C995701D23EBA20029312F /* wpump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wpump.wav; sourceTree = "<group>"; };
@@ -123,6 +131,8 @@
 		20C9958B1D23ECE90029312F /* BBStoreScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBStoreScene.swift; sourceTree = "<group>"; };
 		20C9958E1D23ED100029312F /* Downloadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloadable.swift; sourceTree = "<group>"; };
 		20C995901D23ED300029312F /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevel.swift; sourceTree = "<group>"; };
+		20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelbuttonbg.png; sourceTree = "<group>"; };
 		20E877321D23EDED00CCBA1A /* pump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pump.wav; sourceTree = "<group>"; };
 		20E877361D25AD9D00CCBA1A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		20E877381D25B1B500CCBA1A /* import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import.png; sourceTree = "<group>"; };
@@ -249,6 +259,7 @@
 				20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */,
 				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
+				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
 				201F4D6B1D180F9F00EB894A /* Case.swift */,
 				20C9957F1D23EC4E0029312F /* FileSaveHelper.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
@@ -268,6 +279,10 @@
 				201F4D6D1D18122F00EB894A /* baloons */,
 				206736941D16FA5100FB9FFF /* buttonbg.png */,
 				20C000931D1930A700CBA51E /* buttonminibg.png */,
+				20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */,
+				20BFC0871D4D0AEE000B7A6A /* levelbuttonbg-finished.png */,
+				20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */,
+				20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */,
 				20FF80DE1D197E4800E5A9EF /* slider.png */,
 				20FF80E01D197EFB00E5A9EF /* slidericon.png */,
 				20C995891D23ECC50029312F /* select.png */,
@@ -440,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20F1882A1D2830470099F717 /* quick_singleplayer.png in Resources */,
+				20CB89D01D4CE82600A0408C /* levelbuttonbg.png in Resources */,
 				20E877331D23EDED00CCBA1A /* pump.wav in Resources */,
 				206736951D16FA5100FB9FFF /* buttonbg.png in Resources */,
 				20E877391D25B1B500CCBA1A /* import.png in Resources */,
@@ -455,6 +471,7 @@
 				201F4D601D17275600EB894A /* AppIcon.xcassets in Resources */,
 				201F4D851D1812DE00EB894A /* closed5.png in Resources */,
 				201F4D8D1D1812DE00EB894A /* opened4.png in Resources */,
+				20BFC0881D4D0AEE000B7A6A /* levelbuttonbg-finished.png in Resources */,
 				201F4D8A1D1812DE00EB894A /* opened1.png in Resources */,
 				20F188221D2821C30099F717 /* InfoPlist.strings in Resources */,
 				20F1882C1D2830470099F717 /* quick_time.png in Resources */,
@@ -466,9 +483,11 @@
 				20C9957C1D23EBA20029312F /* wpump.wav in Resources */,
 				20C995711D23EBA20029312F /* Welcome.wav in Resources */,
 				201F4D891D1812DE00EB894A /* opened0.png in Resources */,
+				20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */,
 				201F4D8E1D1812DE00EB894A /* opened5.png in Resources */,
 				201F4D831D1812DE00EB894A /* closed3.png in Resources */,
 				20F1882B1D2830470099F717 /* quick_computer.png in Resources */,
+				20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */,
 				201F4D841D1812DE00EB894A /* closed4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +519,7 @@
 				20C9957E1D23EC2F0029312F /* StartScene.swift in Sources */,
 				20C9958F1D23ED100029312F /* Downloadable.swift in Sources */,
 				20ED21611D4CDC1600DA86AF /* entropy.c in Sources */,
+				20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */,
 				20ED21601D4CDC1600DA86AF /* aestab.c in Sources */,
 				20F188301D2A62C70099F717 /* Theme.swift in Sources */,
 				201F4D6C1D180F9F00EB894A /* Case.swift in Sources */,
