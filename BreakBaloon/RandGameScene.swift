@@ -17,13 +17,13 @@ class RandGameScene: AbstractGameScene {
     let baloonTime:NSTimeInterval
     let nextBaloonMax:NSTimeInterval
     let maxBaloons: UInt
-    let completion:((UInt) -> Void)?
+    let completion:((Int) -> Void)?
     var label:SKLabelNode = SKLabelNode()
     
     var baloonsToSpawn:UInt
     var nextBaloon:NSTimeInterval?
     
-    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, maxBaloons: UInt, completion:((UInt) -> Void)?) {
+    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, maxBaloons: UInt, completion:((Int) -> Void)?) {
         gvc = view.window?.rootViewController as! GameViewController
         self.numberOfBaloons = numberOfBaloons
         self.baloonTime = baloonTime
@@ -99,6 +99,8 @@ class RandGameScene: AbstractGameScene {
                     quitPause()
                     child.removeFromParent()
                     break
+                } else if child is RandGameLevelEndNode {
+                    (child as! RandGameLevelEndNode).click(touches.first!.locationInNode(self))
                 }
             }
         }
@@ -135,7 +137,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     func gameEnd() {
-        completion!(numberOfBaloons - UInt(points))
+        completion!(Int(numberOfBaloons) - points)
         endTime = NSDate().timeIntervalSince1970 - beginTime!
         updateLabel()
 
@@ -150,9 +152,6 @@ class RandGameScene: AbstractGameScene {
             let gvc = self.view!.window!.rootViewController as! GameViewController
             gvc.currentGame = nil
             gvc.addXP(Int(5))
-            let scene:StartScene = StartScene(size: self.frame.size)
-            scene.lastGameInfo = NSLocalizedString(self.label.text!, comment: "Last game info")
-            self.view!.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
         })]))
     }
     

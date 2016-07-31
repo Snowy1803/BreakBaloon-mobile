@@ -33,6 +33,9 @@
 "gameinfo.speed.high" = "Vitesse : Haute";
 "gameinfo.speed.extreme" = "Vitesse : Extrème";
 "gameinfo.requirePoints" = "%d points pour gagner";
+"gameinfo.end.finished" = "TERMINÉ";
+"gameinfo.end.failed" = "ÉCHOUÉ";
+"gameinfo.complete" = "%d / %d";
 "settings.title" = "Réglages";
 "settings.audio" = "Effets sonores";
 "settings.music" = "Musique";

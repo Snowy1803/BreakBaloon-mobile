@@ -30,6 +30,7 @@ class RandGameLevel: SKSpriteNode {
     let level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)
     var realPosition:CGPoint = CGPointZero
     var status:RandGameLevelStatus
+    var gamescene:RandGameScene?
     
     init(index:Int, pre: RandGameLevel?, level: (UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)) {
         self.index = index
@@ -70,20 +71,20 @@ class RandGameLevel: SKSpriteNode {
     }
     
     private func start(view: SKView) {
-        let scene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, maxBaloons: level.4, completion: end)
-        scene.pauseGame()
-        view.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
-        scene.addChild(RandGameLevelInfoNode(level: self, scene: scene))
+        gamescene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, maxBaloons: level.4, completion: end)
+        gamescene!.pauseGame()
+        view.presentScene(gamescene!, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
+        gamescene!.addChild(RandGameLevelInfoNode(level: self, scene: gamescene!))
     }
     
-    private func end(missing: UInt) {
-        if missing <= level.3 {
+    func end(missing: Int) {
+        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!))
+        if missing <= Int(level.3) {
             status = .Finished
             updateTexture()
             if next != nil && (next!.status == .Unlockable || next!.status == .Locked) {
                 next!.status = .Unlocked
                 next!.updateTexture()
-                print("Unlocked level \(next!.index)")
                 if next!.next != nil && next!.next!.status == .Locked {
                     next!.next!.status = .Unlockable
                     next!.next!.updateTexture()
@@ -93,7 +94,10 @@ class RandGameLevel: SKSpriteNode {
     }
     
     func updateTexture() {
-        self.texture = status == .Unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(status).lowercaseString)")
+        self.texture =
+            status == .Unlocked ?
+            SKTexture(imageNamed: "levelbuttonbg") :
+            SKTexture(imageNamed: "levelbuttonbg-\(String(status).lowercaseString)")
         NSUserDefaults.standardUserDefaults().setInteger(status.rawValue, forKey: "rand.level.\(index)")
     }
     

@@ -33,6 +33,9 @@
 "gameinfo.speed.high" = "Hastighed : Høj";
 "gameinfo.speed.extreme" = "Hastighed : Ekstrem";
 "gameinfo.requirePoints" = "%d points til at vinde";
+"gameinfo.end.finished" = "FÆRDIG";
+"gameinfo.end.failed" = "MISLYKKEDES";
+"gameinfo.complete" = "%d / %d";
 "settings.title" = "Indstillinger";
 "settings.audio" = "Lyd effekter";
 "settings.music" = "Musik";
