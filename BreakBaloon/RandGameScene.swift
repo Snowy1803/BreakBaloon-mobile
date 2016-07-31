@@ -105,9 +105,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     func breakBaloon(case aCase: Case, touch: CGPoint) {
-        print("HEY?")
         if aCase.status == .Closed {
-            print("HEY!")
             aCase.breakBaloon(false)
             points += 1
             updateLabel()
