@@ -133,7 +133,7 @@ class RandGameScene: AbstractGameScene {
     
     /// Spawn a baloon at a random location
     func spawnBaloon() {
-        spawnBaloon(point: CGPointMake(CGFloat(arc4random_uniform(UInt32(self.frame.width - 75))), CGFloat(arc4random_uniform(UInt32(self.frame.height - 75)))))
+        spawnBaloon(point: CGPointMake(CGFloat(arc4random_uniform(UInt32(self.frame.width - 75))), CGFloat(arc4random_uniform(UInt32(self.frame.height - 105)) + 75)))
     }
     
     func gameEnd() {
