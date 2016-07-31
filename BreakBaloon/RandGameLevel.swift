@@ -10,15 +10,15 @@ import Foundation
 import SpriteKit
 
 class RandGameLevel: SKSpriteNode {
-    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt)] = [(10, 1.25, 4, 1), (10, 0.75, 4, 1), (30, 0.75, 3.5, 5), (25, 0.75, 3, 3), (35, 0.75, 2.5, 1), (35, 0.75, 2.25, 0), (40, 0.5, 2, 2)]
+    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)] = [(10, 1.25, 4, 1, 2), (10, 0.75, 4, 1, 2), (30, 0.75, 3.5, 5, 3), (25, 0.75, 3, 3, 3), (35, 0.75, 2.5, 1, 3), (35, 0.75, 2.25, 0, 3), (40, 0.5, 2, 2, 4)]
     
     var next:RandGameLevel?
     let index:Int
-    let level:(UInt, NSTimeInterval, NSTimeInterval, UInt)
+    let level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)
     var realPosition:CGPoint = CGPointZero
     var status:RandGameLevelStatus
     
-    init(index:Int, level:(UInt, NSTimeInterval, NSTimeInterval, UInt)) {
+    init(index:Int, level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)) {
         self.index = index
         self.level = level
         
@@ -57,7 +57,7 @@ class RandGameLevel: SKSpriteNode {
     }
     
     private func start(view: SKView) {
-        let scene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, completion: end)
+        let scene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, maxBaloons: level.4, completion: end)
         scene.pauseGame()
         view.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
         scene.addChild(RandGameLevelInfoNode(level: self, scene: scene))

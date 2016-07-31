@@ -16,19 +16,21 @@ class RandGameScene: AbstractGameScene {
     let numberOfBaloons:UInt
     let baloonTime:NSTimeInterval
     let nextBaloonMax:NSTimeInterval
+    let maxBaloons: UInt
     let completion:((UInt) -> Void)?
     var label:SKLabelNode = SKLabelNode()
     
     var baloonsToSpawn:UInt
     var nextBaloon:NSTimeInterval?
     
-    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, completion:((UInt) -> Void)?) {
+    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, maxBaloons: UInt, completion:((UInt) -> Void)?) {
         gvc = view.window?.rootViewController as! GameViewController
         self.numberOfBaloons = numberOfBaloons
         self.baloonTime = baloonTime
         self.nextBaloonMax = speed
         self.completion = completion
         baloonsToSpawn = numberOfBaloons
+        self.maxBaloons = maxBaloons
         super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
         label = SKLabelNode()
         label.fontColor = SKColor.blackColor()
@@ -51,7 +53,7 @@ class RandGameScene: AbstractGameScene {
     
     override func update(currentTime: NSTimeInterval) {
         if pauseTime == nil {
-            if nextBaloon == nil || (baloonsToSpawn > 0 && NSDate().timeIntervalSince1970 >= nextBaloon) {
+            if nextBaloon == nil || (baloonsToSpawn > 0 && NSDate().timeIntervalSince1970 >= nextBaloon) && canSpawnBaloon() {
                 spawnBaloon()
             } else if baloonsToSpawn == 0 && isEmpty() && endTime == nil {
                 gameEnd()
@@ -66,6 +68,16 @@ class RandGameScene: AbstractGameScene {
             }
         }
         return true
+    }
+    
+    func canSpawnBaloon() -> Bool {
+        var i:UInt = 0
+        for aCase in children {
+            if aCase is Case {
+                i += 1
+            }
+        }
+        return i < maxBaloons
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
