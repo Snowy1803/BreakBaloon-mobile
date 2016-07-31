@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class RandGameLevel: SKSpriteNode {
-    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt)] = [(10, 1.25, 4, 1), (10, 0.75, 4, 1), (30, 0.75, 3.5, 5), (25, 0.75, 3, 3)]
+    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt)] = [(10, 1.25, 4, 1), (10, 0.75, 4, 1), (30, 0.75, 3.5, 5), (25, 0.75, 3, 3), (35, 0.75, 2.5, 1)]
     
     var next:RandGameLevel?
     let index:Int
@@ -70,8 +70,10 @@ class RandGameLevel: SKSpriteNode {
             if next != nil && (next!.status == .Unlockable || next!.status == .Locked) {
                 next!.status = .Unlocked
                 next!.updateTexture()
+                print("Unlocked level \(next!.index)")
                 if next!.next != nil && next!.next!.status == .Locked {
                     next!.next!.status = .Unlockable
+                    next!.next!.updateTexture()
                 }
             }
         }
@@ -80,7 +82,6 @@ class RandGameLevel: SKSpriteNode {
     func updateTexture() {
         self.texture = status == .Unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(status).lowercaseString)")
         NSUserDefaults.standardUserDefaults().setInteger(status.rawValue, forKey: "rand.level.\(index)")
-        
     }
     
     enum RandGameLevelStatus: Int {
