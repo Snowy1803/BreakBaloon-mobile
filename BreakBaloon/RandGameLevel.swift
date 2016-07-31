@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class RandGameLevel: SKSpriteNode {
-    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)] = [(10, 1.25, 4, 1, 2), (10, 0.75, 4, 1, 2), (30, 0.75, 3.5, 5, 3), (25, 0.75, 3, 3, 3), (35, 0.75, 2.5, 1, 3), (35, 0.75, 2.25, 0, 3), (40, 0.5, 2, 2, 4)]
+    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)] = [(10, 1.25, 4, 1, 2), (10, 0.75, 4, 1, 2), (30, 0.75, 3.5, 5, 3), (25, 0.75, 3, 3, 3), (35, 0.75, 2.5, 1, 3), (35, 0.75, 2.25, 0, 3), (40, 0.5, 2, 2, 4), (50, 0.5, 2, 1, 5), (50, 0.5, 1.5, 0, 5), (75, 0.5, 1.5, 0, 4)]
     
     var next:RandGameLevel?
     let index:Int
