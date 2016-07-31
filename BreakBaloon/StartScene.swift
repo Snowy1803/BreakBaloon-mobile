@@ -222,11 +222,20 @@ class StartScene: SKScene {
             tbigButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + bigButton.size.width, getPositionYForButton(2, text: true))
             tadaptButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + adaptButton.size.width, getPositionYForButton(3, text: true))
         } else if actualPane == 3 {
+            if sizeChange {
+                for child in children {
+                    if child is RandGameLevel {
+                        child.removeFromParent()
+                    }
+                }
+                initThirdPane()
+            }
             for child in children {
                 if child is RandGameLevel {
                     child.position = CGPointMake(sizeChange ? (child as! RandGameLevel).realPosition.x : self.frame.size.width + adaptButton.size.width, (child as! RandGameLevel).realPosition.y)
                 }
             }
+            
         } else {
             return false
         }
