@@ -84,7 +84,7 @@ class RandGameScene: AbstractGameScene {
         for touch in touches {
             let point = touch.locationInNode(self)
             for aCase in children {
-                if aCase is Case && aCase.frame.contains(point) {
+                if aCase is Case && aCase.frame.extends(10).contains(point) {
                     breakBaloon(case: aCase as! Case, touch: point)
                     return
                 }
@@ -161,5 +161,11 @@ class RandGameScene: AbstractGameScene {
     func updateLabel() {
         label.text = String(format: NSLocalizedString("game.score.\(points > 1 ? "more" : "one")", comment: "Points at end"), self.points)
         label.position = CGPointMake(label.frame.width/2, 5)
+    }
+}
+
+extension CGRect {
+    func extends(cubicRadius: CGFloat) -> CGRect {
+        return CGRectMake(self.minX - cubicRadius, self.minY - cubicRadius, self.width + cubicRadius * 2, self.height + cubicRadius * 2)
     }
 }
