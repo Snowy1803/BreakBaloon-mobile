@@ -425,6 +425,8 @@ class StartScene: SKScene {
     func cancelScreen() {
         if actualPane == 2 {
             transitionSecondToFirst()
+        } else if actualPane == 3 {
+            transitionThirdToFirst()
         } else if actualPane == 1 && lastGameInfo != nil {
             showDialog(NSLocalizedString("gameinfo.title", comment: "Last game information"), message: lastGameInfo!)
         }
@@ -495,6 +497,32 @@ class StartScene: SKScene {
         transitionQuitRight(tmediumButton, relativeTo: mediumButton)
         transitionQuitRight(tbigButton, relativeTo: bigButton)
         transitionQuitRight(tadaptButton, relativeTo: adaptButton)
+        initFirstPane(true)
+        actualPane = -1
+        transitionJoinCenter(soloButton)
+        transitionJoinCenter(multiButton)
+        transitionJoinCenter(timedButton)
+        transitionJoinCenter(randButton)
+        transitionJoinAt(prefsButton, at: CGPointMake(self.frame.width / 4, 170))
+        transitionJoinAt(bbstoreButton, at: CGPointMake(self.frame.width / 4 * 3, 170))
+        transitionJoinCenter(tsoloButton)
+        transitionJoinCenter(tmultiButton)
+        transitionJoinCenter(ttimedButton)
+        transitionJoinCenter(trandButton)
+        transitionJoinAt(tprefsButton, at: CGPointMake(self.frame.width / 4, 160))
+        transitionJoinAt(tbbstoreButton, at: CGPointMake(self.frame.width / 4 * 3, 160))
+        self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
+            self.actualPane = 1;
+        })]))
+    }
+    
+    func transitionThirdToFirst() {
+        actualPane = -1
+        for child in children {
+            if child is RandGameLevel {
+                transitionQuitRight(child, relativeTo: child)
+            }
+        }
         initFirstPane(true)
         actualPane = -1
         transitionJoinCenter(soloButton)
