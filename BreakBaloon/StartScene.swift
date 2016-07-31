@@ -299,7 +299,7 @@ class StartScene: SKScene {
         var i:Int = 0
         let w = Int(self.frame.size.width / 64)
         for tuple in RandGameLevel.levels {
-            let node = RandGameLevel(index: i, level: tuple)
+            let node = RandGameLevel(index: i, pre: pre, level: tuple)
             node.realPosition = CGPointMake(CGFloat(i % w * 70 + 35), self.frame.size.height - CGFloat(i / w * 70 + 35))
             addChild(node)
             if pre != nil {

@@ -18,13 +18,13 @@ class RandGameLevel: SKSpriteNode {
     var realPosition:CGPoint = CGPointZero
     var status:RandGameLevelStatus
     
-    init(index:Int, level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)) {
+    init(index:Int, pre: RandGameLevel?, level: (UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)) {
         self.index = index
         self.level = level
         
         let data = NSUserDefaults.standardUserDefaults()
         if data.objectForKey("rand.level.\(index)") == nil {
-            data.setInteger(RandGameLevelStatus.defaultValue(index).rawValue, forKey: "rand.level.\(index)")
+            data.setInteger(RandGameLevelStatus.defaultValue(index, pre: pre?.status).rawValue, forKey: "rand.level.\(index)")
         }
         self.status = RandGameLevelStatus(rawValue: data.integerForKey("rand.level.\(index)"))!
         
@@ -90,10 +90,14 @@ class RandGameLevel: SKSpriteNode {
         case Unlocked
         case Finished
         
-        static func defaultValue(index:Int) -> RandGameLevelStatus {
+        static func defaultValue(index: Int, pre: RandGameLevelStatus?) -> RandGameLevelStatus {
             if index == 0 {
                 return .Unlocked
             } else if index == 1 {
+                return .Unlockable
+            } else if pre == .Finished {
+                return .Unlocked
+            } else if pre == .Unlocked {
                 return .Unlockable
             }
             return .Locked
