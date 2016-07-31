@@ -52,7 +52,7 @@ class RandGameLevelInfoNode: SKNode {
     func speedString() -> String {
         if level.level.1 > 1 && level.level.2 > 3 {
             return "low"
-        } else if level.level.2 > 2 {
+        } else if level.level.2 > 2 && level.level.1 > 0.5 {
             return "medium"
         } else if level.level.2 > 1 && level.level.1 > 0.25 {
             return "high"
