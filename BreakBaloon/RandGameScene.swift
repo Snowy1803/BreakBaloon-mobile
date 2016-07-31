@@ -69,11 +69,11 @@ class RandGameScene: AbstractGameScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if touches.count == 1 {
-            let touch = touches.first!.locationInNode(self)
+        for touch in touches {
+            let point = touch.locationInNode(self)
             for aCase in children {
-                if aCase is Case && aCase.frame.contains(touch) {
-                    breakBaloon(case: aCase as! Case, touch: touch)
+                if aCase is Case && aCase.frame.contains(point) {
+                    breakBaloon(case: aCase as! Case, touch: point)
                     return
                 }
             }
