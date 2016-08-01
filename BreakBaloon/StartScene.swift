@@ -286,9 +286,7 @@ class StartScene: SKScene {
     
     func initThirdPane() {
         let w = Int(self.frame.size.width / 70)
-        print("Will this work? \(RandGameLevel.levels.count)")
         for i in 0..<RandGameLevel.levels.count {
-            print("YESSS \(i)")
             let node = RandGameLevelNode(index: i)
             node.realPosition = CGPointMake(CGFloat(i % w * 70 + 35), self.frame.size.height - CGFloat(i / w * 70 + 35))
             addChild(node)

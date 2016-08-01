@@ -17,7 +17,7 @@ class AbstractGameScene: SKScene {
     var avplayer = AVAudioPlayer()
     var beginTime:NSTimeInterval?
     var endTime:NSTimeInterval?
-    var pauseTime:NSTimeInterval?
+    private var pauseTime:NSTimeInterval?
     
     init(view:SKView, gametype:Int8) {
         self.gametype = gametype
@@ -44,5 +44,9 @@ class AbstractGameScene: SKScene {
             beginTime! += pauseLenght
         }
         pauseTime = nil
+    }
+    
+    func isGamePaused() -> Bool {
+        return pauseTime != nil
     }
 }

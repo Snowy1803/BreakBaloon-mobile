@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         if openURL.host != nil {
             let url = openURL.absoluteString
-            let queryArray = url.componentsSeparatedByString("/")
+            let queryArray:[String] = url.componentsSeparatedByString("/")
             let query = queryArray[2]
             var parameter = ""
             
@@ -36,7 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else if query == "game" {
                 parameter = "singleplayer"
                 if queryArray.count > 3 {
-                    parameter = queryArray[3]
+                    let query:[String] = Array(queryArray[3..<queryArray.count])
+                    parameter = query.joinWithSeparator("/")
                 }
             } else if query == "bbstore" {
                 parameter = "none"

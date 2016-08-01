@@ -197,7 +197,7 @@ class GameScene:AbstractGameScene {
     }
     
     override func update(currentTime: NSTimeInterval) {
-        if gametype == StartScene.GAMETYPE_TIMED && endTime == nil && pauseTime == nil {
+        if gametype == StartScene.GAMETYPE_TIMED && endTime == nil && !isGamePaused() {
             label.text = String(format: NSLocalizedString("game.time", comment: "Time"), (beginTime == nil ? 0 : Int(NSDate().timeIntervalSince1970 - beginTime!)))
             label.position = CGPointMake(label.frame.width/2, 5)
         }

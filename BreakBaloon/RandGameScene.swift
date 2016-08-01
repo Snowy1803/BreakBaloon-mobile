@@ -52,7 +52,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     override func update(currentTime: NSTimeInterval) {
-        if pauseTime == nil {
+        if !isGamePaused() {
             if nextBaloon == nil || (baloonsToSpawn > 0 && NSDate().timeIntervalSince1970 >= nextBaloon) && canSpawnBaloon() {
                 spawnBaloon()
             } else if baloonsToSpawn == 0 && isEmpty() && endTime == nil {
@@ -166,6 +166,15 @@ class RandGameScene: AbstractGameScene {
     func updateLabel() {
         label.text = String(format: NSLocalizedString("game.score.\(points > 1 ? "more" : "one")", comment: "Points at end"), self.points)
         label.position = CGPointMake(label.frame.width/2, 5)
+    }
+    
+    override func isGamePaused() -> Bool {
+        for aCase in children {
+            if aCase is RandGameLevelInfoNode {
+                return true
+            }
+        }
+        return super.isGamePaused()
     }
 }
 
