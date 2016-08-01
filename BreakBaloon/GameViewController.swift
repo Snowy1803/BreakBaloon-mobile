@@ -87,26 +87,19 @@ class GameViewController: UIViewController {
         if data.objectForKey("audio-false") == nil {
             data.setFloat(GameViewController.DEFAULT_AUDIO, forKey: "audio-false")
         }
-        currentMusicFileName = NSUserDefaults.standardUserDefaults().stringForKey("currentMusic")!
         currentTheme = Theme.withID(NSUserDefaults.standardUserDefaults().stringForKey("currentTheme")!)!
-        print(currentTheme.themeID)
         let welcome:NSURL = NSBundle.mainBundle().URLForResource("Welcome", withExtension: "wav")!
-        let bgMusicURL:NSURL = GameViewController.getMusicURL(currentMusicFileName)!
         
         do {
-            try self.backgroundMusicPlayer = AVAudioPlayer(contentsOfURL: bgMusicURL)
             try self.audioPlayer = AVAudioPlayer(contentsOfURL: welcome)
         } catch {
-            
+            print(error)
         }
-        backgroundMusicPlayer.numberOfLoops = -1
-        backgroundMusicPlayer.volume = data.floatForKey("audio-true")
-        backgroundMusicPlayer.prepareToPlay()
-        backgroundMusicPlayer.play()
         audioVolume = data.floatForKey("audio-false")
         audioPlayer.volume = audioVolume
         audioPlayer.prepareToPlay()
         audioPlayer.play()
+        reloadBackgroundMusic()
         
         skView = (self.view as! SKView)
         //skView.showsFPS = true
@@ -127,8 +120,13 @@ class GameViewController: UIViewController {
         let bgMusicURL:NSURL = GameViewController.getMusicURL(currentMusicFileName)!
         do {
             try self.backgroundMusicPlayer = AVAudioPlayer(contentsOfURL: bgMusicURL)
-        } catch {
-            
+        } catch let error as NSError {
+            print("ERROR WHILE LOADING AUDIO FILE. REMOVING THE CORRUPTED AUDIO FILE. Error: \(error.localizedDescription)")
+            do {
+                try NSFileManager.defaultManager().removeItemAtURL(bgMusicURL)
+            } catch let error as NSError{
+                print("Couldn't delete the corrupted file. Error: \(error.localizedDescription)")
+            }
         }
         backgroundMusicPlayer.numberOfLoops = -1
         backgroundMusicPlayer.volume = NSUserDefaults.standardUserDefaults().floatForKey("audio-true")

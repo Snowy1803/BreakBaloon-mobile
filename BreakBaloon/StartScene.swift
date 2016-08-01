@@ -57,25 +57,23 @@ class StartScene: SKScene {
         self.backgroundColor = SKColor.brownColor()
         initFirstPane(false)
         
-        bbLabel = SKLabelNode()
-        bbLabel.text = "BreakBaloon"
-        bbLabel.fontSize = 45
-        bbLabel.fontName = "Chalkduster"
-        bbLabel.fontColor = SKColor.whiteColor()
-        self.addChild(bbLabel)
-        cLabel = SKLabelNode()
+        if UIDevice.currentDevice().userInterfaceIdiom != .Phone {
+            bbLabel.text = "BreakBaloon"
+            bbLabel.fontSize = 45
+            bbLabel.fontName = "Chalkduster"
+            bbLabel.fontColor = SKColor.whiteColor()
+            self.addChild(bbLabel)
+        }
         cLabel.text = "© Snowy_1803"
         cLabel.fontSize = 10
         cLabel.fontName = "ChalkboardSE-Regular"
         cLabel.fontColor = SKColor.whiteColor()
         self.addChild(cLabel)
-        hsLabel = SKLabelNode()
         hsLabel.text = String(format: NSLocalizedString("highscore.score", comment: "Highscore"), NSUserDefaults.standardUserDefaults().integerForKey("highscore"))
         hsLabel.fontSize = 25
         hsLabel.fontName = "ChalkboardSE-Regular"
         hsLabel.fontColor = SKColor.orangeColor()
         self.addChild(hsLabel)
-        bsLabel = SKLabelNode()
         bsLabel.text = String(format: NSLocalizedString("highscore.time", comment: "Best timed score"), NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore"))
         bsLabel.fontSize = 25
         bsLabel.fontName = "ChalkboardSE-Regular"
@@ -181,10 +179,15 @@ class StartScene: SKScene {
     }
     
     func adjustPosition(cancelled:Bool, sizeChange:Bool = false) -> Bool {
-        bbLabel.position = CGPointMake(CGRectGetMidX(self.frame), 40)
+        if UIDevice.currentDevice().userInterfaceIdiom != .Phone {
+            bbLabel.position = CGPointMake(CGRectGetMidX(self.frame), 40)
+            hsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 120)
+            bsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 95)
+        } else {
+            hsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 70)
+            bsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 45)
+        }
         cLabel.position = CGPointMake(CGRectGetMidX(self.frame), 20)
-        hsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 120)
-        bsLabel.position = CGPointMake(CGRectGetMidX(self.frame), 95)
         xpLabel.path = CGPathCreateWithRect(CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), nil)
         txpLabel.position = CGPointMake(size.width / 2, 0)
         if actualPane == 1 {
@@ -192,15 +195,15 @@ class StartScene: SKScene {
             multiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: false))
             timedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: false))
             randButton.position = CGPointMake(cancelled ? -randButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(3, text: false))
-            prefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 170)
-            bbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 170)
+            prefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 170 - lowerButtonMinus())
+            bbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 170 - lowerButtonMinus())
             
             tsoloButton.position = CGPointMake(cancelled ? -soloButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(0, text: true))
             tmultiButton.position = CGPointMake(cancelled ? -multiButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(1, text: true))
             ttimedButton.position = CGPointMake(cancelled ? -timedButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(2, text: true))
             trandButton.position = CGPointMake(cancelled ? -randButton.size.width : CGRectGetMidX(self.frame), getPositionYForButton(3, text: true))
-            tprefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 160)
-            tbbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 160)
+            tprefsButton.position = CGPointMake(cancelled ? -prefsButton.size.width : self.frame.width / 4, 160 - lowerButtonMinus())
+            tbbstoreButton.position = CGPointMake(cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, 160 - lowerButtonMinus())
         } else if actualPane == 2 {
             smallButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + smallButton.size.width, getPositionYForButton(0, text: false))
             mediumButton.position = CGPointMake(sizeChange ? CGRectGetMidX(self.frame) : self.frame.size.width + mediumButton.size.width, getPositionYForButton(1, text: false))
@@ -230,6 +233,13 @@ class StartScene: SKScene {
             return false
         }
         return true
+    }
+    
+    func lowerButtonMinus() -> CGFloat {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            return 50
+        }
+        return 0
     }
     
     func initSecondPane() {
