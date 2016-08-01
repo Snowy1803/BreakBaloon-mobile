@@ -28,7 +28,7 @@ class RandGameLevel {
     static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11)]
     
     let index:Int
-    var status:RandGameLevelStatus?
+    var status:RandGameLevelStatus
     var gamescene:RandGameScene?
     
     var level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt) {
@@ -50,7 +50,6 @@ class RandGameLevel {
     }
     
     private init(_ index:Int) {
-        print("HEY \(index)")
         self.index = index
         self.status = .Locked
     }
@@ -79,7 +78,7 @@ class RandGameLevel {
     }
     
     func save() {
-        NSUserDefaults.standardUserDefaults().setInteger(status!.rawValue, forKey: "rand.level.\(index)")
+        NSUserDefaults.standardUserDefaults().setInteger(status.rawValue, forKey: "rand.level.\(index)")
     }
     
     func open() {
