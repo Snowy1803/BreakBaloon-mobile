@@ -6,7 +6,7 @@
 //  Copyright © 2016 Snowy_1803. All rights reserved.
 //
 
-import Foundation
+import AVFoundation
 import SpriteKit
 
 class RandGameScene: AbstractGameScene {
@@ -111,6 +111,14 @@ class RandGameScene: AbstractGameScene {
             aCase.breakBaloon(false)
             points += 1
             updateLabel()
+            do {
+                avplayer = try AVAudioPlayer(contentsOfURL: (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false))
+                avplayer.volume = (self.view?.window?.rootViewController as! GameViewController).audioVolume
+                avplayer.prepareToPlay()
+                avplayer.play()
+            } catch {
+                print("Error playing pump sound")
+            }
         }
     }
     
