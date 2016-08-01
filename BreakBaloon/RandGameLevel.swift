@@ -9,8 +9,8 @@
 import Foundation
 import SpriteKit
 
-class RandGameLevel: SKSpriteNode {
-    static let levels:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)] = [
+class RandGameLevel {
+    private static let levelValues:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)] = [
         /* 1 */     (10, 1.25, 4, 1, 2),
         /* 2 */     (10, 0.75, 4, 1, 2),
         /* 3 */     (30, 0.75, 3.5, 5, 3),
@@ -25,55 +25,40 @@ class RandGameLevel: SKSpriteNode {
         /* 12 */    (10, 0, 2.5, 3, 1)
     ]
     
-    var next:RandGameLevel?
+    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11)]
+    
     let index:Int
-    let level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)
-    var realPosition:CGPoint = CGPointZero
-    var status:RandGameLevelStatus
+    var status:RandGameLevelStatus?
     var gamescene:RandGameScene?
     
-    init(index:Int, pre: RandGameLevel?, level: (UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)) {
+    var level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt) {
+        get {
+            return RandGameLevel.levelValues[index]
+        }
+    }
+    
+    var precedent: RandGameLevel? {
+        get {
+            return index > 0 ? RandGameLevel.levels[index - 1] : nil
+        }
+    }
+    
+    var next: RandGameLevel? {
+        get {
+            return index + 1 < RandGameLevel.levels.count ? RandGameLevel.levels[index + 1] : nil
+        }
+    }
+    
+    private init(_ index:Int) {
+        print("HEY \(index)")
         self.index = index
-        self.level = level
-        
-        let data = NSUserDefaults.standardUserDefaults()
-        if data.objectForKey("rand.level.\(index)") == nil {
-            data.setInteger(RandGameLevelStatus.defaultValue(index, pre: pre?.status).rawValue, forKey: "rand.level.\(index)")
-        }
-        self.status = RandGameLevelStatus(rawValue: data.integerForKey("rand.level.\(index)"))!
-        
-        let texture = SKTexture(imageNamed: "levelbuttonbg")
-        super.init(texture: texture, color: SKColor.whiteColor(), size: texture.size())
-        updateTexture()
-        
-        let label = SKLabelNode(text: "\(index + 1)")
-        label.fontColor = SKColor.darkGrayColor()
-        label.fontSize = 48
-        label.fontName = "AppleSDGothicNeo-SemiBold"
-        label.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) - 16)
-        label.zPosition = 1
-        
-        addChild(label)
+        self.status = .Locked
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func click(view: SKView) {
-        if status != .Locked {
-            if status == .Unlockable {
-                // TODO Display AD to unlock
-            } else {
-                start(view)
-            }
-        }
-    }
-    
-    private func start(view: SKView) {
+    func start(view: SKView, transition: SKTransition = SKTransition.flipVerticalWithDuration(NSTimeInterval(1))) {
         gamescene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, maxBaloons: level.4, completion: end)
         gamescene!.pauseGame()
-        view.presentScene(gamescene!, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)));
+        view.presentScene(gamescene!, transition: transition);
         gamescene!.addChild(RandGameLevelInfoNode(level: self, scene: gamescene!))
     }
     
@@ -81,24 +66,29 @@ class RandGameLevel: SKSpriteNode {
         gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!))
         if missing <= Int(level.3) {
             status = .Finished
-            updateTexture()
+            save()
             if next != nil && (next!.status == .Unlockable || next!.status == .Locked) {
                 next!.status = .Unlocked
-                next!.updateTexture()
+                next!.save()
                 if next!.next != nil && next!.next!.status == .Locked {
                     next!.next!.status = .Unlockable
-                    next!.next!.updateTexture()
+                    next!.next!.save()
                 }
             }
         }
     }
     
-    func updateTexture() {
-        self.texture =
-            status == .Unlocked ?
-            SKTexture(imageNamed: "levelbuttonbg") :
-            SKTexture(imageNamed: "levelbuttonbg-\(String(status).lowercaseString)")
-        NSUserDefaults.standardUserDefaults().setInteger(status.rawValue, forKey: "rand.level.\(index)")
+    func save() {
+        NSUserDefaults.standardUserDefaults().setInteger(status!.rawValue, forKey: "rand.level.\(index)")
+    }
+    
+    func open() {
+        let data = NSUserDefaults.standardUserDefaults()
+        if data.objectForKey("rand.level.\(index)") == nil {
+            data.setInteger(RandGameLevelStatus.defaultValue(index, pre: precedent?.status).rawValue, forKey: "rand.level.\(index)")
+        }
+        self.status = RandGameLevelStatus(rawValue: data.integerForKey("rand.level.\(index)"))!
+        save()
     }
     
     enum RandGameLevelStatus: Int {
@@ -118,6 +108,10 @@ class RandGameLevel: SKSpriteNode {
                 return .Unlockable
             }
             return .Locked
+        }
+        
+        func isUnlocked() -> Bool {
+            return self == .Unlocked || self == .Finished
         }
     }
 }

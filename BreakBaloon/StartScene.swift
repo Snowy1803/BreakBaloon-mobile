@@ -52,16 +52,6 @@ class StartScene: SKScene {
     var gametype:Int8 = -1
     var lastGameInfo:String?
     
-    override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        /*let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "BreakBaloon"
-        myLabel.fontSize = 45
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
-        
-        self.addChild(myLabel)*/
-    }
-    
     override init(size:CGSize) {
         super.init(size: size)
         self.backgroundColor = SKColor.brownColor()
@@ -224,15 +214,15 @@ class StartScene: SKScene {
         } else if actualPane == 3 {
             if sizeChange {
                 for child in children {
-                    if child is RandGameLevel {
+                    if child is RandGameLevelNode {
                         child.removeFromParent()
                     }
                 }
                 initThirdPane()
             }
             for child in children {
-                if child is RandGameLevel {
-                    child.position = CGPointMake(sizeChange ? (child as! RandGameLevel).realPosition.x : self.frame.size.width + adaptButton.size.width, (child as! RandGameLevel).realPosition.y)
+                if child is RandGameLevelNode {
+                    child.position = CGPointMake(sizeChange ? (child as! RandGameLevelNode).realPosition.x : self.frame.size.width + adaptButton.size.width, (child as! RandGameLevelNode).realPosition.y)
                 }
             }
             
@@ -295,18 +285,13 @@ class StartScene: SKScene {
     }
     
     func initThirdPane() {
-        var pre:RandGameLevel? = nil
-        var i:Int = 0
-        let w = Int(self.frame.size.width / 64)
-        for tuple in RandGameLevel.levels {
-            let node = RandGameLevel(index: i, pre: pre, level: tuple)
+        let w = Int(self.frame.size.width / 70)
+        print("Will this work? \(RandGameLevel.levels.count)")
+        for i in 0..<RandGameLevel.levels.count {
+            print("YESSS \(i)")
+            let node = RandGameLevelNode(index: i)
             node.realPosition = CGPointMake(CGFloat(i % w * 70 + 35), self.frame.size.height - CGFloat(i / w * 70 + 35))
             addChild(node)
-            if pre != nil {
-                pre?.next = node
-            }
-            pre = node
-            i += 1
         }
         
         actualPane = 3;
@@ -400,8 +385,8 @@ class StartScene: SKScene {
                 self.view?.presentScene(BBStoreScene(start: self), transition: SKTransition.doorsCloseVerticalWithDuration(NSTimeInterval(1)))
             } else if actualPane == 3 {
                 for child in children {
-                    if child is RandGameLevel && onNode(child, point: point) {
-                        (child as! RandGameLevel).click(self.view!)
+                    if child is RandGameLevelNode && onNode(child, point: point) {
+                        (child as! RandGameLevelNode).click(self.view!)
                         break
                     }
                 }
@@ -487,8 +472,8 @@ class StartScene: SKScene {
         initThirdPane()
         actualPane = -1
         for child in children {
-            if child is RandGameLevel {
-                child.runAction(SKAction.moveTo((child as! RandGameLevel).realPosition, duration: NSTimeInterval(0.5)))
+            if child is RandGameLevelNode {
+                child.runAction(SKAction.moveTo((child as! RandGameLevelNode).realPosition, duration: NSTimeInterval(0.5)))
             }
         }
         self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
@@ -528,7 +513,7 @@ class StartScene: SKScene {
     func transitionThirdToFirst() {
         actualPane = -1
         for child in children {
-            if child is RandGameLevel {
+            if child is RandGameLevelNode {
                 transitionQuitRight(child, relativeTo: child)
             }
         }

@@ -53,6 +53,12 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // INIT RANDOM BALOONS LEVELS
+        for level in RandGameLevel.levels {
+            level.open()
+        }
+        
         print("Path:", FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
         loadMusicAndStartScene()
         

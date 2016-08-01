@@ -26,6 +26,7 @@
 		204289221D4E71EB00BDEE39 /* levelreplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289211D4E71EB00BDEE39 /* levelreplay.png */; };
 		204289241D4E78EC00BDEE39 /* levelnext.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289231D4E78EC00BDEE39 /* levelnext.png */; };
 		204289261D4E78FE00BDEE39 /* levelback.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289251D4E78FE00BDEE39 /* levelback.png */; };
+		2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */; };
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
@@ -105,6 +106,7 @@
 		204289211D4E71EB00BDEE39 /* levelreplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelreplay.png; sourceTree = "<group>"; };
 		204289231D4E78EC00BDEE39 /* levelnext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelnext.png; sourceTree = "<group>"; };
 		204289251D4E78FE00BDEE39 /* levelback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelback.png; sourceTree = "<group>"; };
+		2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelNode.swift; sourceTree = "<group>"; };
 		206736751D16E26300FB9FFF /* BreakBaloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakBaloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		206736781D16E26300FB9FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
 				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
+				2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */,
 				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
 				2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */,
 				201F4D6B1D180F9F00EB894A /* Case.swift */,
@@ -526,6 +529,7 @@
 				20F1882E1D29A5300099F717 /* ImportMusic.swift in Sources */,
 				20C9958C1D23ECE90029312F /* BBStoreScene.swift in Sources */,
 				20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */,
+				2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */,
 				20ED216B1D4CDC1600DA86AF /* zip.c in Sources */,
 				20C995821D23EC620029312F /* SettingScene.swift in Sources */,
 				20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */,

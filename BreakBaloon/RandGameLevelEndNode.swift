@@ -67,27 +67,27 @@ class RandGameLevelEndNode: SKNode {
     
     func click(touch: CGPoint) {
         if back.containsPoint(touch) {
-            backToMenu()
+            backToMenu(self.scene!.view!)
         } else if replay.containsPoint(touch) {
             setLevel(level, view: self.scene!.view!)
         } else if next != nil && next!.containsPoint(touch) {
             if level.next != nil {
                 setLevel(level.next!, view: self.scene!.view!)
             } else {
-                backToMenu()
+                backToMenu(self.scene!.view!)
             }
         }
     }
     
-    func backToMenu() {
+    func backToMenu(view: SKView) {
         let scene = StartScene(size: self.frame.size)
-        self.scene!.view!.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
+        view.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
+        scene.adjustPosition(false, sizeChange: true)
     }
     
     func setLevel(level: RandGameLevel, view: SKView) {
-        level.gamescene = RandGameScene(view: view, numberOfBaloons: level.level.0, baloonTime: level.level.1, speed: level.level.2, maxBaloons: level.level.4, completion: level.end)
-        level.gamescene!.pauseGame()
-        view.presentScene(level.gamescene!, transition: SKTransition.fadeWithColor(SKColor.whiteColor(), duration: 1));
-        level.gamescene!.addChild(RandGameLevelInfoNode(level: level, scene: level.gamescene!))
+        if level.status.isUnlocked() {
+            level.start(view, transition: SKTransition.fadeWithColor(SKColor.whiteColor(), duration: 1))
+        }
     }
 }
