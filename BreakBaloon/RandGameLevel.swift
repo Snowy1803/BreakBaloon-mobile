@@ -34,9 +34,39 @@ class RandGameLevel {
     var status:RandGameLevelStatus
     var gamescene:RandGameScene?
     
-    var level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt) {
+    private var level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt) {
         get {
             return RandGameLevel.levelValues[index]
+        }
+    }
+    
+    var numberOfBaloons:UInt {
+        get {
+            return level.0
+        }
+    }
+    
+    var secondsBeforeBaloonVanish:NSTimeInterval {
+        get {
+            return level.1
+        }
+    }
+    
+    var maxSecondsBeforeNextBaloon:NSTimeInterval {
+        get {
+            return level.2
+        }
+    }
+    
+    var maxMissingBaloonToWin:UInt {
+        get {
+            return level.3
+        }
+    }
+    
+    var maxBaloonsAtSameTime:UInt {
+        get {
+            return level.4
         }
     }
     
@@ -58,15 +88,15 @@ class RandGameLevel {
     }
     
     func start(view: SKView, transition: SKTransition = SKTransition.flipVerticalWithDuration(NSTimeInterval(1))) {
-        gamescene = RandGameScene(view: view, numberOfBaloons: level.0, baloonTime: level.1, speed: level.2, maxBaloons: level.4, completion: end)
+        gamescene = RandGameScene(view: view, numberOfBaloons: numberOfBaloons, baloonTime: secondsBeforeBaloonVanish, speed: maxSecondsBeforeNextBaloon, maxBaloons: maxBaloonsAtSameTime, completion: end)
         view.presentScene(gamescene!, transition: transition);
         gamescene!.addChild(RandGameLevelInfoNode(level: self, scene: gamescene!))
     }
     
     func end(missing: Int) {
         var stars = 0
-        if missing <= Int(level.3) {
-            stars = missing == 0 ? 3 : (Int(level.0) - Int(level.3)) < gamescene?.points ? 2 : 1
+        if missing <= Int(maxMissingBaloonToWin) {
+            stars = missing == 0 ? 3 : (Int(numberOfBaloons) - Int(maxMissingBaloonToWin)) < gamescene?.points ? 2 : 1
             if status.getStars() < stars {
                 status = RandGameLevelStatus.getFinished(stars: stars)
             }

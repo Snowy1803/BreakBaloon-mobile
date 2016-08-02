@@ -17,7 +17,7 @@ class RandGameLevelEndNode: SKNode {
     let stars: SKSpriteNode?
     
     init(level: RandGameLevel, scene: RandGameScene, stars: Int) {
-        let successful = scene.points >= Int(level.level.0 - level.level.3)
+        let successful = scene.points >= Int(level.numberOfBaloons - level.maxMissingBaloonToWin)
         self.level = level
         self.replay = SKSpriteNode(imageNamed: "levelreplay")
         self.back = SKSpriteNode(imageNamed: "levelback")
@@ -45,7 +45,7 @@ class RandGameLevelEndNode: SKNode {
         tstatus.fontColor = successful ? SKColor.greenColor() : SKColor.redColor()
         tstatus.fontName = "Copperplate-Bold"
         addChild(tstatus)
-        let tcomplete = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.complete", comment: "complete: n / n"), scene.points, level.level.0 - level.level.3))
+        let tcomplete = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.complete", comment: "complete: n / n"), scene.points, level.numberOfBaloons - level.maxMissingBaloonToWin))
         tcomplete.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 160)
         tcomplete.fontSize = 24
         tcomplete.fontColor = SKColor.blackColor()

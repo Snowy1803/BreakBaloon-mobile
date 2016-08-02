@@ -25,7 +25,7 @@ class RandGameLevelInfoNode: SKNode {
         tlevel.fontColor = SKColor.blackColor()
         tlevel.fontName = "Copperplate-Bold"
         addChild(tlevel)
-        let tbaloons = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.baloons", comment: "Baloons: n"), level.level.0))
+        let tbaloons = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.baloons", comment: "Baloons: n"), level.numberOfBaloons))
         tbaloons.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 128)
         tbaloons.fontSize = 24
         tbaloons.fontColor = SKColor.blackColor()
@@ -37,7 +37,7 @@ class RandGameLevelInfoNode: SKNode {
         tspeed.fontColor = SKColor.blackColor()
         tspeed.fontName = "HelveticaNeue-Bold"
         addChild(tspeed)
-        let treq = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.requirePoints", comment: "n points for win"), level.level.0 - level.level.3))
+        let treq = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.requirePoints", comment: "n points for win"), level.numberOfBaloons - level.maxMissingBaloonToWin))
         treq.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 + 32)
         treq.fontSize = 24
         treq.fontColor = SKColor.blackColor()
@@ -50,11 +50,11 @@ class RandGameLevelInfoNode: SKNode {
     }
     
     func speedString() -> String {
-        if level.level.1 > 1 && level.level.2 > 3 {
+        if level.secondsBeforeBaloonVanish > 1 && level.maxSecondsBeforeNextBaloon > 3 {
             return "low"
-        } else if level.level.2 > 2 && level.level.1 > 0.5 {
+        } else if level.maxSecondsBeforeNextBaloon > 2 && level.secondsBeforeBaloonVanish > 0.5 {
             return "medium"
-        } else if level.level.2 > 1 && level.level.1 > 0.25 {
+        } else if level.maxSecondsBeforeNextBaloon > 1 && level.secondsBeforeBaloonVanish > 0.25 {
             return "high"
         }
         return "extreme"
