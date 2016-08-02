@@ -34,9 +34,14 @@
 		20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */; };
 		20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335B01D4BDE4000B54FBE /* RandGameScene.swift */; };
 		20B004F71D2C4B59005F706F /* level.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B004F61D2C4B59005F706F /* level.png */; };
+		20BE2F4B1D50CFA7004A8B17 /* levelbuttonbg-finished1star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */; };
+		20BE2F4C1D50CFA7004A8B17 /* levelbuttonbg-finished2star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F491D50CFA7004A8B17 /* levelbuttonbg-finished2star.png */; };
+		20BE2F4D1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F4A1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png */; };
+		20BE2F511D50D58C004A8B17 /* levelstars1.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F4E1D50D58C004A8B17 /* levelstars1.png */; };
+		20BE2F521D50D58C004A8B17 /* levelstars2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F4F1D50D58C004A8B17 /* levelstars2.png */; };
+		20BE2F531D50D58C004A8B17 /* levelstars3.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F501D50D58C004A8B17 /* levelstars3.png */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */; };
-		20BFC0881D4D0AEE000B7A6A /* levelbuttonbg-finished.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0871D4D0AEE000B7A6A /* levelbuttonbg-finished.png */; };
 		20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */; };
 		20C000941D1930A700CBA51E /* buttonminibg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C000931D1930A700CBA51E /* buttonminibg.png */; };
 		20C995711D23EBA20029312F /* Welcome.wav in Resources */ = {isa = PBXBuildFile; fileRef = 20C995651D23EBA20029312F /* Welcome.wav */; };
@@ -124,10 +129,15 @@
 		20B004BE1D2BF952005F706F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20B004F61D2C4B59005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
 		20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BreakBaloon-Bridging-Header.h"; sourceTree = "<group>"; };
+		20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished1star.png"; sourceTree = "<group>"; };
+		20BE2F491D50CFA7004A8B17 /* levelbuttonbg-finished2star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished2star.png"; sourceTree = "<group>"; };
+		20BE2F4A1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished3star.png"; sourceTree = "<group>"; };
+		20BE2F4E1D50D58C004A8B17 /* levelstars1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelstars1.png; sourceTree = "<group>"; };
+		20BE2F4F1D50D58C004A8B17 /* levelstars2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelstars2.png; sourceTree = "<group>"; };
+		20BE2F501D50D58C004A8B17 /* levelstars3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelstars3.png; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-locked.png"; sourceTree = "<group>"; };
-		20BFC0871D4D0AEE000B7A6A /* levelbuttonbg-finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished.png"; sourceTree = "<group>"; };
 		20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-unlockable.png"; sourceTree = "<group>"; };
 		20C000931D1930A700CBA51E /* buttonminibg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonminibg.png; sourceTree = "<group>"; };
 		20C995651D23EBA20029312F /* Welcome.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Welcome.wav; sourceTree = "<group>"; };
@@ -295,12 +305,17 @@
 				206736941D16FA5100FB9FFF /* buttonbg.png */,
 				20C000931D1930A700CBA51E /* buttonminibg.png */,
 				20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */,
-				20BFC0871D4D0AEE000B7A6A /* levelbuttonbg-finished.png */,
+				20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */,
+				20BE2F491D50CFA7004A8B17 /* levelbuttonbg-finished2star.png */,
+				20BE2F4A1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png */,
 				20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */,
 				20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */,
 				204289251D4E78FE00BDEE39 /* levelback.png */,
 				204289231D4E78EC00BDEE39 /* levelnext.png */,
 				204289211D4E71EB00BDEE39 /* levelreplay.png */,
+				20BE2F4E1D50D58C004A8B17 /* levelstars1.png */,
+				20BE2F4F1D50D58C004A8B17 /* levelstars2.png */,
+				20BE2F501D50D58C004A8B17 /* levelstars3.png */,
 				20FF80DE1D197E4800E5A9EF /* slider.png */,
 				20FF80E01D197EFB00E5A9EF /* slidericon.png */,
 				20C995891D23ECC50029312F /* select.png */,
@@ -482,6 +497,9 @@
 				20C000941D1930A700CBA51E /* buttonminibg.png in Resources */,
 				2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */,
 				20FF80DF1D197E4800E5A9EF /* slider.png in Resources */,
+				20BE2F531D50D58C004A8B17 /* levelstars3.png in Resources */,
+				20BE2F511D50D58C004A8B17 /* levelstars1.png in Resources */,
+				20BE2F4D1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png in Resources */,
 				20C9958A1D23ECC50029312F /* select.png in Resources */,
 				201F4D801D1812DE00EB894A /* closed0.png in Resources */,
 				204289221D4E71EB00BDEE39 /* levelreplay.png in Resources */,
@@ -491,7 +509,6 @@
 				201F4D601D17275600EB894A /* AppIcon.xcassets in Resources */,
 				201F4D851D1812DE00EB894A /* closed5.png in Resources */,
 				201F4D8D1D1812DE00EB894A /* opened4.png in Resources */,
-				20BFC0881D4D0AEE000B7A6A /* levelbuttonbg-finished.png in Resources */,
 				204289241D4E78EC00BDEE39 /* levelnext.png in Resources */,
 				201F4D8A1D1812DE00EB894A /* opened1.png in Resources */,
 				20F188221D2821C30099F717 /* InfoPlist.strings in Resources */,
@@ -503,8 +520,11 @@
 				201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */,
 				20C9957C1D23EBA20029312F /* wpump.wav in Resources */,
 				20C995711D23EBA20029312F /* Welcome.wav in Resources */,
+				20BE2F4B1D50CFA7004A8B17 /* levelbuttonbg-finished1star.png in Resources */,
 				201F4D891D1812DE00EB894A /* opened0.png in Resources */,
 				20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */,
+				20BE2F4C1D50CFA7004A8B17 /* levelbuttonbg-finished2star.png in Resources */,
+				20BE2F521D50D58C004A8B17 /* levelstars2.png in Resources */,
 				201F4D8E1D1812DE00EB894A /* opened5.png in Resources */,
 				201F4D831D1812DE00EB894A /* closed3.png in Resources */,
 				20F1882B1D2830470099F717 /* quick_computer.png in Resources */,

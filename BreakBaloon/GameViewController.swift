@@ -124,7 +124,7 @@ class GameViewController: UIViewController {
             print("ERROR WHILE LOADING AUDIO FILE. REMOVING THE CORRUPTED AUDIO FILE. Error: \(error.localizedDescription)")
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(bgMusicURL)
-            } catch let error as NSError{
+            } catch let error as NSError {
                 print("Couldn't delete the corrupted file. Error: \(error.localizedDescription)")
             }
         }

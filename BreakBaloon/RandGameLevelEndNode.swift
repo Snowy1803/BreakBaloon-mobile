@@ -14,16 +14,19 @@ class RandGameLevelEndNode: SKNode {
     let replay: SKSpriteNode
     let back: SKSpriteNode
     let next: SKSpriteNode?
+    let stars: SKSpriteNode?
     
-    init(level: RandGameLevel, scene: RandGameScene) {
+    init(level: RandGameLevel, scene: RandGameScene, stars: Int) {
         let successful = scene.points >= Int(level.level.0 - level.level.3)
         self.level = level
         self.replay = SKSpriteNode(imageNamed: "levelreplay")
         self.back = SKSpriteNode(imageNamed: "levelback")
         if successful {
             self.next = SKSpriteNode(imageNamed: "levelnext")
+            self.stars = SKSpriteNode(imageNamed: "levelstars\(stars)")
         } else {
             self.next = nil
+            self.stars = nil
         }
         super.init()
         self.zPosition = 1000
@@ -48,6 +51,7 @@ class RandGameLevelEndNode: SKNode {
         tcomplete.fontColor = SKColor.blackColor()
         tcomplete.fontName = "HelveticaNeue-Bold"
         addChild(tcomplete)
+        
         replay.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 12 * 3)
         addChild(replay)
         back.position = CGPointMake(scene.frame.width / 2 - 80, scene.frame.height / 12 * 3)
@@ -56,6 +60,8 @@ class RandGameLevelEndNode: SKNode {
             next!.position = CGPointMake(scene.frame.width / 2 + 80, scene.frame.height / 12 * 3)
             next!.runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.resizeToWidth(80, height: 80, duration: 0.6), SKAction.resizeToWidth(64, height: 64, duration: 0.6)])))
             addChild(next!)
+            self.stars!.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 224)
+            addChild(self.stars!)
         } else {
             replay.runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.resizeToWidth(80, height: 80, duration: 0.6), SKAction.resizeToWidth(64, height: 64, duration: 0.6)])))
         }
