@@ -22,7 +22,10 @@ class RandGameLevel {
         /* 9 */     (40, 0.5, 1.5, 1, 3),
         /* 10 */    (75, 0.75, 2.5, 0, 3),
         /* 11 */    (10, 0.25, 2.5, 0, 1),
-        /* 12 */    (10, 0, 2.5, 3, 1)
+        /* 12 */    (10, 0, 2.5, 3, 1),
+        /* 13 */    (15, 0, 2, 5, 1),
+        /* 14 */    (100, 0.5, 2.5, 5, 3),
+        /* 15 */    (125, 0.5, 1.5, 10, 4)
     ]
     
     static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11)]
