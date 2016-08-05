@@ -49,6 +49,7 @@
 		20BE2F611D5480AC004A8B17 /* levelbuttonbg-bonus.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */; };
 		20BE2F641D54832B004A8B17 /* levelbuttonbg-bonus-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */; };
 		20BE2F651D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */; };
+		20BE2F671D54A029004A8B17 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F661D54A029004A8B17 /* .gitattributes */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */; };
 		20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */; };
@@ -153,6 +154,7 @@
 		20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus.png"; sourceTree = "<group>"; };
 		20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-locked.png"; sourceTree = "<group>"; };
 		20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-unlockable.png"; sourceTree = "<group>"; };
+		20BE2F661D54A029004A8B17 /* .gitattributes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-locked.png"; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				20F1881E1D27D7580099F717 /* libz.tbd */,
 				20B004BC1D2BEF04005F706F /* LICENSE.md */,
 				20B004BE1D2BF952005F706F /* README.md */,
+				20BE2F661D54A029004A8B17 /* .gitattributes */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
 				206736761D16E26300FB9FFF /* Products */,
 			);
@@ -519,6 +522,7 @@
 				20E877331D23EDED00CCBA1A /* pump.wav in Resources */,
 				20BE2F5E1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png in Resources */,
 				204289261D4E78FE00BDEE39 /* levelback.png in Resources */,
+				20BE2F671D54A029004A8B17 /* .gitattributes in Resources */,
 				206736951D16FA5100FB9FFF /* buttonbg.png in Resources */,
 				20E877391D25B1B500CCBA1A /* import.png in Resources */,
 				20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */,
