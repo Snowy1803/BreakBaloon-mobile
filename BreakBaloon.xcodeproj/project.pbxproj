@@ -40,6 +40,15 @@
 		20BE2F511D50D58C004A8B17 /* levelstars1.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F4E1D50D58C004A8B17 /* levelstars1.png */; };
 		20BE2F521D50D58C004A8B17 /* levelstars2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F4F1D50D58C004A8B17 /* levelstars2.png */; };
 		20BE2F531D50D58C004A8B17 /* levelstars3.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F501D50D58C004A8B17 /* levelstars3.png */; };
+		20BE2F551D50F53B004A8B17 /* RandGameBonusLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BE2F541D50F53B004A8B17 /* RandGameBonusLevel.swift */; };
+		20BE2F571D510062004A8B17 /* RandGameBonusLevelInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BE2F561D510062004A8B17 /* RandGameBonusLevelInfoNode.swift */; };
+		20BE2F591D5105D8004A8B17 /* RandGameBonusLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BE2F581D5105D8004A8B17 /* RandGameBonusLevelNode.swift */; };
+		20BE2F5E1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F5A1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png */; };
+		20BE2F5F1D5480AC004A8B17 /* levelbuttonbg-bonus-finished2star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F5B1D5480AC004A8B17 /* levelbuttonbg-bonus-finished2star.png */; };
+		20BE2F601D5480AC004A8B17 /* levelbuttonbg-bonus-finished3star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F5C1D5480AC004A8B17 /* levelbuttonbg-bonus-finished3star.png */; };
+		20BE2F611D5480AC004A8B17 /* levelbuttonbg-bonus.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */; };
+		20BE2F641D54832B004A8B17 /* levelbuttonbg-bonus-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */; };
+		20BE2F651D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */; };
 		20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */; };
@@ -135,6 +144,15 @@
 		20BE2F4E1D50D58C004A8B17 /* levelstars1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelstars1.png; sourceTree = "<group>"; };
 		20BE2F4F1D50D58C004A8B17 /* levelstars2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelstars2.png; sourceTree = "<group>"; };
 		20BE2F501D50D58C004A8B17 /* levelstars3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelstars3.png; sourceTree = "<group>"; };
+		20BE2F541D50F53B004A8B17 /* RandGameBonusLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameBonusLevel.swift; sourceTree = "<group>"; };
+		20BE2F561D510062004A8B17 /* RandGameBonusLevelInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameBonusLevelInfoNode.swift; sourceTree = "<group>"; };
+		20BE2F581D5105D8004A8B17 /* RandGameBonusLevelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameBonusLevelNode.swift; sourceTree = "<group>"; };
+		20BE2F5A1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-finished1star.png"; sourceTree = "<group>"; };
+		20BE2F5B1D5480AC004A8B17 /* levelbuttonbg-bonus-finished2star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-finished2star.png"; sourceTree = "<group>"; };
+		20BE2F5C1D5480AC004A8B17 /* levelbuttonbg-bonus-finished3star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-finished3star.png"; sourceTree = "<group>"; };
+		20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus.png"; sourceTree = "<group>"; };
+		20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-locked.png"; sourceTree = "<group>"; };
+		20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-unlockable.png"; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-locked.png"; sourceTree = "<group>"; };
@@ -279,12 +297,15 @@
 				20F1882F1D2A62C70099F717 /* Theme.swift */,
 				20C995851D23EC7C0029312F /* ThemeSelector.swift */,
 				20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */,
-				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
+				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
 				2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */,
 				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
 				2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */,
+				20BE2F541D50F53B004A8B17 /* RandGameBonusLevel.swift */,
+				20BE2F561D510062004A8B17 /* RandGameBonusLevelInfoNode.swift */,
+				20BE2F581D5105D8004A8B17 /* RandGameBonusLevelNode.swift */,
 				201F4D6B1D180F9F00EB894A /* Case.swift */,
 				20C9957F1D23EC4E0029312F /* FileSaveHelper.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
@@ -310,6 +331,12 @@
 				20BE2F4A1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png */,
 				20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */,
 				20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */,
+				20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */,
+				20BE2F5A1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png */,
+				20BE2F5B1D5480AC004A8B17 /* levelbuttonbg-bonus-finished2star.png */,
+				20BE2F5C1D5480AC004A8B17 /* levelbuttonbg-bonus-finished3star.png */,
+				20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */,
+				20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */,
 				204289251D4E78FE00BDEE39 /* levelback.png */,
 				204289231D4E78EC00BDEE39 /* levelnext.png */,
 				204289211D4E71EB00BDEE39 /* levelreplay.png */,
@@ -490,6 +517,7 @@
 				20F1882A1D2830470099F717 /* quick_singleplayer.png in Resources */,
 				20CB89D01D4CE82600A0408C /* levelbuttonbg.png in Resources */,
 				20E877331D23EDED00CCBA1A /* pump.wav in Resources */,
+				20BE2F5E1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png in Resources */,
 				204289261D4E78FE00BDEE39 /* levelback.png in Resources */,
 				206736951D16FA5100FB9FFF /* buttonbg.png in Resources */,
 				20E877391D25B1B500CCBA1A /* import.png in Resources */,
@@ -497,17 +525,20 @@
 				20C000941D1930A700CBA51E /* buttonminibg.png in Resources */,
 				2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */,
 				20FF80DF1D197E4800E5A9EF /* slider.png in Resources */,
+				20BE2F601D5480AC004A8B17 /* levelbuttonbg-bonus-finished3star.png in Resources */,
 				20BE2F531D50D58C004A8B17 /* levelstars3.png in Resources */,
 				20BE2F511D50D58C004A8B17 /* levelstars1.png in Resources */,
 				20BE2F4D1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png in Resources */,
 				20C9958A1D23ECC50029312F /* select.png in Resources */,
 				201F4D801D1812DE00EB894A /* closed0.png in Resources */,
+				20BE2F641D54832B004A8B17 /* levelbuttonbg-bonus-locked.png in Resources */,
 				204289221D4E71EB00BDEE39 /* levelreplay.png in Resources */,
 				201F4D8B1D1812DE00EB894A /* opened2.png in Resources */,
 				20FF80E11D197EFB00E5A9EF /* slidericon.png in Resources */,
 				201F4D8C1D1812DE00EB894A /* opened3.png in Resources */,
 				201F4D601D17275600EB894A /* AppIcon.xcassets in Resources */,
 				201F4D851D1812DE00EB894A /* closed5.png in Resources */,
+				20BE2F611D5480AC004A8B17 /* levelbuttonbg-bonus.png in Resources */,
 				201F4D8D1D1812DE00EB894A /* opened4.png in Resources */,
 				204289241D4E78EC00BDEE39 /* levelnext.png in Resources */,
 				201F4D8A1D1812DE00EB894A /* opened1.png in Resources */,
@@ -526,8 +557,10 @@
 				20BE2F4C1D50CFA7004A8B17 /* levelbuttonbg-finished2star.png in Resources */,
 				20BE2F521D50D58C004A8B17 /* levelstars2.png in Resources */,
 				201F4D8E1D1812DE00EB894A /* opened5.png in Resources */,
+				20BE2F651D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png in Resources */,
 				201F4D831D1812DE00EB894A /* closed3.png in Resources */,
 				20F1882B1D2830470099F717 /* quick_computer.png in Resources */,
+				20BE2F5F1D5480AC004A8B17 /* levelbuttonbg-bonus-finished2star.png in Resources */,
 				20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */,
 				201F4D841D1812DE00EB894A /* closed4.png in Resources */,
 			);
@@ -559,9 +592,11 @@
 				20ED21681D4CDC1600DA86AF /* ioapi.c in Sources */,
 				20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */,
 				20C995911D23ED300029312F /* GameViewController.swift in Sources */,
+				20BE2F591D5105D8004A8B17 /* RandGameBonusLevelNode.swift in Sources */,
 				20ED21691D4CDC1600DA86AF /* mztools.c in Sources */,
 				20C9957E1D23EC2F0029312F /* StartScene.swift in Sources */,
 				20C9958F1D23ED100029312F /* Downloadable.swift in Sources */,
+				20BE2F571D510062004A8B17 /* RandGameBonusLevelInfoNode.swift in Sources */,
 				20ED21611D4CDC1600DA86AF /* entropy.c in Sources */,
 				20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */,
 				20ED21601D4CDC1600DA86AF /* aestab.c in Sources */,
@@ -578,6 +613,7 @@
 				20ED21651D4CDC1600DA86AF /* pwd2key.c in Sources */,
 				20C995881D23EC9A0029312F /* MusicSelector.swift in Sources */,
 				20ED216C1D4CDC1600DA86AF /* SSZipArchive.m in Sources */,
+				20BE2F551D50F53B004A8B17 /* RandGameBonusLevel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

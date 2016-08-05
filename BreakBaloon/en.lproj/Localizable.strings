@@ -27,6 +27,7 @@
 "game.time" = "Time: %d seconds";
 "gameinfo.title" = "Last game";
 "gameinfo.level" = "LEVEL %d";
+"gameinfo.bonus" = "BONUS LEVEL";
 "gameinfo.baloons" = "Baloons: %d";
 "gameinfo.speed.low" = "Speed : Low";
 "gameinfo.speed.medium" = "Speed : Medium";
@@ -35,6 +36,7 @@
 "gameinfo.requirePoints" = "%d points for win";
 "gameinfo.end.finished" = "FINISHED";
 "gameinfo.end.failed" = "FAILED";
+"gameinfo.end.bonus" = "Bonus level finished with %d bonus XP";
 "gameinfo.complete" = "%d / %d";
 "settings.title" = "Settings";
 "settings.audio" = "Sound effects";

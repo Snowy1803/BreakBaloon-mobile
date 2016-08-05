@@ -25,10 +25,11 @@ class RandGameLevel {
         /* 12 */    (10, 0, 2.5, 3, 1),
         /* 13 */    (15, 0, 2, 5, 1),
         /* 14 */    (100, 0.5, 2.5, 5, 3),
-        /* 15 */    (125, 0.5, 1.5, 10, 4)
+        /* 15 */    (125, 0.5, 1.5, 10, 4),
+        /* B-16 */  (25, 0.25, 1.5, 7, 3)
     ]
     
-    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14)]
+    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14), RandGameBonusLevel(15, modifier: 5)]
     
     let index:Int
     var status:RandGameLevelStatus
@@ -82,7 +83,8 @@ class RandGameLevel {
         }
     }
     
-    private init(_ index:Int) {
+    
+    internal init(_ index:Int) {
         self.index = index
         self.status = .Locked
     }
@@ -124,6 +126,14 @@ class RandGameLevel {
         }
         self.status = RandGameLevelStatus(rawValue: data.integerForKey("rand.level.\(index)"))!
         save()
+    }
+    
+    func canPlay() -> Bool {
+        return status.isUnlocked()
+    }
+    
+    func createNode() -> RandGameLevelNode {
+        return RandGameLevelNode(level: self)
     }
     
     enum RandGameLevelStatus: Int {

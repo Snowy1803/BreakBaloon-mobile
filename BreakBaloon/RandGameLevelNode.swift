@@ -42,7 +42,7 @@ class RandGameLevelNode: SKSpriteNode {
         if level.status != .Locked {
             if level.status == .Unlockable {
                 // TODO Display AD to unlock
-            } else {
+            } else if level.canPlay() {
                 level.start(view, transition: transition)
             }
         }

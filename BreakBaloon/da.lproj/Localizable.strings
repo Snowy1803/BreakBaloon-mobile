@@ -27,6 +27,7 @@
 "game.time" = "Tid: %d sekunder";
 "gameinfo.title" = "Sidste spil";
 "gameinfo.level" = "NIVEAU %d";
+"gameinfo.bonus" = "BONUS NIVEAU";
 "gameinfo.baloons" = "Balloner: %d";
 "gameinfo.speed.low" = "Hastighed : Lav";
 "gameinfo.speed.medium" = "Hastighed : Medium";
@@ -35,6 +36,7 @@
 "gameinfo.requirePoints" = "%d points til at vinde";
 "gameinfo.end.finished" = "FÆRDIG";
 "gameinfo.end.failed" = "MISLYKKEDES";
+"gameinfo.end.bonus" = "Bonus niveau færdig med %d bonus XP";
 "gameinfo.complete" = "%d / %d";
 "settings.title" = "Indstillinger";
 "settings.audio" = "Lyd effekter";

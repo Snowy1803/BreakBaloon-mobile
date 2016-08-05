@@ -96,6 +96,7 @@ class RandGameScene: AbstractGameScene {
         if touches.count == 1 {
             for child in children {
                 if child is RandGameLevelInfoNode {
+                    beginTime = NSDate().timeIntervalSince1970
                     quitPause()
                     child.removeFromParent()
                     break
@@ -145,8 +146,8 @@ class RandGameScene: AbstractGameScene {
     }
     
     func gameEnd() {
-        completion!(Int(numberOfBaloons) - points)
         endTime = NSDate().timeIntervalSince1970 - beginTime!
+        completion!(Int(numberOfBaloons) - points)
         updateLabel()
 
         label.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({

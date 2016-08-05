@@ -27,6 +27,7 @@
 "game.time" = "Temps : %d secondes";
 "gameinfo.title" = "Dernière partie";
 "gameinfo.level" = "NIVEAU %d";
+"gameinfo.bonus" = "NIVEAU BONUS";
 "gameinfo.baloons" = "Ballons : %d";
 "gameinfo.speed.low" = "Vitesse : Basse";
 "gameinfo.speed.medium" = "Vitesse : Normale";
@@ -35,6 +36,7 @@
 "gameinfo.requirePoints" = "%d points pour gagner";
 "gameinfo.end.finished" = "TERMINÉ";
 "gameinfo.end.failed" = "ÉCHOUÉ";
+"gameinfo.end.bonus" = "Niveau bonus terminé avec un bonus de %d d'XP";
 "gameinfo.complete" = "%d / %d";
 "settings.title" = "Réglages";
 "settings.audio" = "Effets sonores";
