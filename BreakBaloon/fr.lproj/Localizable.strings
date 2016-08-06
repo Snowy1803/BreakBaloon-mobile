@@ -41,6 +41,7 @@
 "settings.title" = "Réglages";
 "settings.audio" = "Effets sonores";
 "settings.music" = "Musique";
+"settings.extensions" = "Extensions";
 "theme.selector.text" = "Thème : %@";
 "theme.default.name" = "Défaut";
 "bbstore.button" = "BBStore";
@@ -59,3 +60,4 @@
 "level.up.title" = "Niveau supérieur !";
 "level.up.text" = "Vous passez niveau %d !";
 "level.new" = "NOUVEAU";
+"extension.animation" = "Animation";

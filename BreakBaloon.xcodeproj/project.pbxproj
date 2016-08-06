@@ -33,6 +33,10 @@
 		20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20A335A61D4BD33E00B54FBE /* Main.storyboard */; };
 		20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */; };
 		20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335B01D4BDE4000B54FBE /* RandGameScene.swift */; };
+		20AFF9D11D54B4F200B4CBF8 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */; };
+		20AFF9D31D56822C00B4CBF8 /* ExtensionSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */; };
+		20AFF9D61D568B0200B4CBF8 /* checkbox-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */; };
+		20AFF9D71D568B0200B4CBF8 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFF9D51D568B0200B4CBF8 /* checkbox.png */; };
 		20B004F71D2C4B59005F706F /* level.png in Resources */ = {isa = PBXBuildFile; fileRef = 20B004F61D2C4B59005F706F /* level.png */; };
 		20BE2F4B1D50CFA7004A8B17 /* levelbuttonbg-finished1star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */; };
 		20BE2F4C1D50CFA7004A8B17 /* levelbuttonbg-finished2star.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F491D50CFA7004A8B17 /* levelbuttonbg-finished2star.png */; };
@@ -135,6 +139,10 @@
 		20A335AD1D4BD38700B54FBE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractGameScene.swift; sourceTree = "<group>"; };
 		20A335B01D4BDE4000B54FBE /* RandGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameScene.swift; sourceTree = "<group>"; };
+		20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionSettingScene.swift; sourceTree = "<group>"; };
+		20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-check.png"; sourceTree = "<group>"; };
+		20AFF9D51D568B0200B4CBF8 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		20B004BC1D2BEF04005F706F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		20B004BE1D2BF952005F706F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20B004F61D2C4B59005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
@@ -294,7 +302,9 @@
 				20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */,
 				20C9957D1D23EC2F0029312F /* StartScene.swift */,
 				20C995811D23EC620029312F /* SettingScene.swift */,
+				20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */,
 				20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */,
+				20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */,
 				20C995831D23EC710029312F /* Selector.swift */,
 				20C995871D23EC9A0029312F /* MusicSelector.swift */,
 				20F1882F1D2A62C70099F717 /* Theme.swift */,
@@ -328,6 +338,8 @@
 				201F4D6D1D18122F00EB894A /* baloons */,
 				206736941D16FA5100FB9FFF /* buttonbg.png */,
 				20C000931D1930A700CBA51E /* buttonminibg.png */,
+				20AFF9D51D568B0200B4CBF8 /* checkbox.png */,
+				20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */,
 				20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */,
 				20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */,
 				20BE2F491D50CFA7004A8B17 /* levelbuttonbg-finished2star.png */,
@@ -554,10 +566,12 @@
 				201F4D821D1812DE00EB894A /* closed2.png in Resources */,
 				201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */,
 				20C9957C1D23EBA20029312F /* wpump.wav in Resources */,
+				20AFF9D61D568B0200B4CBF8 /* checkbox-check.png in Resources */,
 				20C995711D23EBA20029312F /* Welcome.wav in Resources */,
 				20BE2F4B1D50CFA7004A8B17 /* levelbuttonbg-finished1star.png in Resources */,
 				201F4D891D1812DE00EB894A /* opened0.png in Resources */,
 				20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */,
+				20AFF9D71D568B0200B4CBF8 /* checkbox.png in Resources */,
 				20BE2F4C1D50CFA7004A8B17 /* levelbuttonbg-finished2star.png in Resources */,
 				20BE2F521D50D58C004A8B17 /* levelstars2.png in Resources */,
 				201F4D8E1D1812DE00EB894A /* opened5.png in Resources */,
@@ -614,7 +628,9 @@
 				20C995801D23EC4E0029312F /* FileSaveHelper.swift in Sources */,
 				20ED215E1D4CDC1600DA86AF /* aescrypt.c in Sources */,
 				20ED216D1D4CDC1600DA86AF /* SSZipArchive+Swift.swift in Sources */,
+				20AFF9D31D56822C00B4CBF8 /* ExtensionSettingScene.swift in Sources */,
 				20ED21651D4CDC1600DA86AF /* pwd2key.c in Sources */,
+				20AFF9D11D54B4F200B4CBF8 /* CheckBox.swift in Sources */,
 				20C995881D23EC9A0029312F /* MusicSelector.swift in Sources */,
 				20ED216C1D4CDC1600DA86AF /* SSZipArchive.m in Sources */,
 				20BE2F551D50F53B004A8B17 /* RandGameBonusLevel.swift in Sources */,

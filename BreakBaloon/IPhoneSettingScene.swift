@@ -13,10 +13,12 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
     let start:StartScene
     var music = SKSpriteNode()
     var other = SKSpriteNode()
+    var extensions = SKSpriteNode()
     var back = SKSpriteNode()
     
     var tmusic = SKLabelNode()
     var tother = SKLabelNode()
+    var textensions = SKLabelNode()
     var tback = SKLabelNode()
     
     init(previous: StartScene) {
@@ -43,14 +45,27 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
         tmusic.zPosition = 2
         self.addChild(tmusic)
         
+        extensions = SKSpriteNode(texture: start.buttonTexture)
+        extensions.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(1, text: false))
+        extensions.zPosition = 1
+        self.addChild(extensions)
+        textensions.text = NSLocalizedString("settings.extensions", comment: "")
+        textensions.fontSize = 35
+        textensions.fontName = start.BUTTON_FONT
+        textensions.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(1, text: true))
+        textensions.fontColor = SKColor.blackColor()
+        textensions.zPosition = 2
+        self.addChild(textensions)
+
+        
         other = SKSpriteNode(texture: start.buttonTexture)
-        other.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(1, text: false))
+        other.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: false))
         other.zPosition = 1
         self.addChild(other)
         tother.text = NSLocalizedString("setting.category.other", comment: "")
         tother.fontSize = 35
         tother.fontName = start.BUTTON_FONT
-        tother.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(1, text: true))
+        tother.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: true))
         tother.fontColor = SKColor.blackColor()
         tother.zPosition = 2
         self.addChild(tother)
@@ -75,6 +90,8 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
                 self.view?.presentScene(IPhoneMusicSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
             } else if other.frame.contains(point) {
                 self.view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+            } else if extensions.frame.contains(point) {
+                self.view?.presentScene(ExtensionSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
             } else if back.frame.contains(point) {
                 self.view?.presentScene(start, transition: SKTransition.doorsCloseHorizontalWithDuration(NSTimeInterval(1)))
             }

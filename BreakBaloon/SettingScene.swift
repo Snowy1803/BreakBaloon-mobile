@@ -16,6 +16,8 @@ class SettingScene:SKScene {
     var tok = SKLabelNode()
     var reset = SKSpriteNode()
     var treset = SKLabelNode()
+    var extensions = SKSpriteNode()
+    var textensions = SKLabelNode()
     
     var audioSetting:AudioSlider
     var musicSetting:AudioSlider
@@ -50,6 +52,18 @@ class SettingScene:SKScene {
         addChild(musicIndexSetting)
         themeIndexSetting.position = CGPointMake(self.frame.width/2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 450 : 350))
         addChild(themeIndexSetting)
+        
+        extensions = SKSpriteNode(imageNamed: "buttonminibg")
+        extensions.position = CGPointMake(self.frame.width/2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 500 : 400))
+        extensions.zPosition = 1
+        addChild(extensions)
+        textensions = SKLabelNode(text: NSLocalizedString("settings.extensions", comment: "Extensions"))
+        textensions.fontName = FONT
+        textensions.fontColor = SKColor.blackColor()
+        textensions.fontSize = 20
+        textensions.position = CGPointMake(self.frame.width/2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 510 : 410))
+        textensions.zPosition = 2
+        addChild(textensions)
         
         ok = SKSpriteNode(imageNamed: "buttonminibg")
         ok.position = CGPointMake(self.frame.width/3, 50)
@@ -89,6 +103,8 @@ class SettingScene:SKScene {
                 close()
             } else if onNode(reset, point: point) {
                 resetSettings()
+            } else if onNode(extensions, point: point) {
+                showExtConfig()
             } else if onNode(audioSetting, point: point) {
                 audioSetting.calculateVolume(touch)
             } else if onNode(musicSetting, point: point) {
@@ -123,6 +139,10 @@ class SettingScene:SKScene {
     
     func close() {
         self.view?.presentScene(previous, transition: SKTransition.doorsCloseHorizontalWithDuration(NSTimeInterval(1)))
+    }
+    
+    func showExtConfig() {
+        self.view?.presentScene(ExtensionSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
     }
     
     func onNode(node:SKNode, point:CGPoint) -> Bool {
