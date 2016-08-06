@@ -61,3 +61,5 @@
 "level.up.text" = "Vous passez niveau %d !";
 "level.new" = "NOUVEAU";
 "extension.animation" = "Animation";
+"extension.hintarrow" = "HintArrow";
+"extension.bee" = "Abeille";

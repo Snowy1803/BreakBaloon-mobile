@@ -61,3 +61,5 @@
 "level.up.text" = "You are now level %d!";
 "level.new" = "NEW";
 "extension.animation" = "Animation";
+"extension.hintarrow" = "HintArrow";
+"extension.bee" = "Bee";
