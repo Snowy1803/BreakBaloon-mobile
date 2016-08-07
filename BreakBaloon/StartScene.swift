@@ -295,10 +295,10 @@ class StartScene: SKScene {
     }
     
     func initThirdPane() {
-        let w = Int(self.frame.size.width / 70)
+        let w = Int(self.frame.size.width / 75)
         for i in 0..<RandGameLevel.levels.count {
             let node = RandGameLevel.levels[i].createNode()
-            node.realPosition = CGPointMake(CGFloat(i % w * 70 + 35), self.frame.size.height - CGFloat(i / w * 70 + 35))
+            node.realPosition = CGPointMake(CGFloat(i % w * 75 + 35), self.frame.size.height - CGFloat(i / w * 75 + 35))
             addChild(node)
         }
         
@@ -312,7 +312,7 @@ class StartScene: SKScene {
     }
     
     func greyIfNotFill(sprite:SKSpriteNode, size:Int) {
-        if Int(self.frame.size.width / 70) < size || Int((self.frame.size.height - 20) / 70) < size {
+        if Int(self.frame.size.width / 75) < size || Int((self.frame.size.height - 20) / 75) < size {
             grey(sprite)
         }
     }
@@ -382,7 +382,7 @@ class StartScene: SKScene {
                     showResolutionAlert()
                 }
             } else if onNode(adaptButton, point: point) {
-                newGame(gametype, width: UInt(self.frame.size.width / 70), height: UInt((self.frame.size.height - 20) / 70))
+                newGame(gametype, width: UInt(self.frame.size.width / 75), height: UInt((self.frame.size.height - 20) / 75))
             } else if onNode(prefsButton, point: point) {
                 if littleScreen() {
                     self.view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontalWithDuration(NSTimeInterval(1)))
