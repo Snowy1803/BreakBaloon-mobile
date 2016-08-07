@@ -70,9 +70,15 @@ class RemoteNotificationDeepLinkSettings : RemoteNotificationDeepLink {
                         scene = IPhoneMusicSettingScene(scene as! IPhoneSettingScene)
                     } else if self.param == "other" {
                         scene = IPhoneOtherSettingScene(scene as! IPhoneSettingScene)
+                    } else if self.param == "extensions" {
+                        scene = ExtensionSettingScene(scene as! IPhoneSettingScene)
                     }
                 } else {
-                    scene = SettingScene(StartScene(size: gvc.view!.frame.size), gvc)
+                    if self.param == "extensions" {
+                        scene = ExtensionSettingScene(SettingScene(StartScene(size: gvc.view!.frame.size), gvc))
+                    } else {
+                        scene = SettingScene(StartScene(size: gvc.view!.frame.size), gvc)
+                    }
                 }
                 
                 gvc.skView?.presentScene(scene)
