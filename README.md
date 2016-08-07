@@ -1,3 +1,4 @@
+[![GitHub issues](https://img.shields.io/github/issues/Snowy1803/BreakBaloon-mobile.svg)](https://github.com/Snowy1803/BreakBaloon-mobile/issues)[![GitHub forks](https://img.shields.io/github/forks/Snowy1803/BreakBaloon-mobile.svg)](https://github.com/Snowy1803/BreakBaloon-mobile/network)[![GitHub stars](https://img.shields.io/github/stars/Snowy1803/BreakBaloon-mobile.svg)](https://github.com/Snowy1803/BreakBaloon-mobile/stargazers)[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Snowy1803/BreakBaloon-mobile/master/LICENSE.md)
 # English
 ## BreakBaloon
 BreakBaloon is a game where you break baloons (balloons). The Java version, for your computer can be found [here](http://elementalcube.esy.es)
