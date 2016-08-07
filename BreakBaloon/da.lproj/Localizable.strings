@@ -42,6 +42,8 @@
 "settings.audio" = "Lyd effekter";
 "settings.music" = "Musik";
 "settings.extensions" = "Extensions";
+"settings.login" = "Log på";
+"settings.logout" = "Log ud";
 "theme.selector.text" = "Tema: %@";
 "theme.default.name" = "Standard";
 "bbstore.button" = "BBStore";
@@ -63,3 +65,13 @@
 "extension.animation" = "Animation";
 "extension.hintarrow" = "HintArrow";
 "extension.bee" = "Bi";
+"login.title" = "Log på";
+"login.text" = "Skriv dit brugernavn og dit kodeord til at logge på Elemental Cube";
+"login.username.placeholder" = "Brugernavn";
+"login.password.placeholder" = "Kodeord";
+"login.tryagain" = "Prøve igen";
+"login.error.InvalidUsername" = "Dette bruger findes ikke!";
+"login.error.DBError" = "Et fejl opstod under oprettelse af forbindelse til databasen";
+"login.error.InvalidSessID" = "Ugyldig session";
+"login.error.IncorrectPassword" = "Ukorrect kodeord";
+"login.error.ProfileDeactivated" = "Dit profil har ikke været bekræftet endnu";

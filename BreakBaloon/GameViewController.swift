@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 import AVFoundation
 
+
 class GameViewController: UIViewController {
     static let DEFAULT_AUDIO:Float = 1.0
     static let DEFAULT_MUSIC:Float = 0.8
@@ -50,7 +51,7 @@ class GameViewController: UIViewController {
             currentTheme = Theme.themeList[value]
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -163,11 +164,11 @@ class GameViewController: UIViewController {
         let path = NSURL(fileURLWithPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
         return path.subdirectories
     }
-
+    
     override func shouldAutorotate() -> Bool {
         return skView!.scene is StartScene && self.view.frame.width > 400
     }
-
+    
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return .AllButUpsideDown
@@ -175,12 +176,12 @@ class GameViewController: UIViewController {
             return .All
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -210,6 +211,80 @@ class GameViewController: UIViewController {
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    class func isLoggedIn() -> Bool {
+        return false
+    }
+    
+    func logInDialog(username username: String? = nil, password: String? = nil) {
+        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler({ textField in
+            textField.placeholder = NSLocalizedString("login.username.placeholder", comment: "")
+            textField.text = username
+        })
+        alert.addTextFieldWithConfigurationHandler({ textField in
+            textField.placeholder = NSLocalizedString("login.password.placeholder", comment: "")
+            textField.text = password
+            textField.secureTextEntry = true
+        })
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: {
+            action in
+            self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    func logIn(username username: String, password: String) {
+        // TODO: PASSWORD SHOULD BE SHA1x
+        logIn(query: "user=\(username)&passwd=\(""/*password*/)", username: username, password: password)
+    }
+    
+    func logIn(sessid sessid: String) {
+        logIn(query: "sessid=\(sessid)")
+    }
+    
+    func logIn(query query: String, username: String? = nil, password: String? = nil) {
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://elementalcube.esy.es/api/auth.php")!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = query.dataUsingEncoding(NSUTF8StringEncoding)
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+            guard error == nil && data != nil else {
+                print("[LOGIN] error=\(error)")
+                return
+            }
+            
+            if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 {
+                print("[LOGIN] status code: \(httpStatus.statusCode)")
+                print("[LOGIN] response: \(response)")
+            }
+            dispatch_async(dispatch_get_main_queue()) {
+                let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                let authStatus = responseString?.componentsSeparatedByString("\r\n")[0]
+                if authStatus != nil {
+                    let status = LoginStatus(rawValue: Int(authStatus!)!)
+                    if status == .Authenticated {
+                        let sessid = responseString!.componentsSeparatedByString("\r\n")[1]
+                        NSUserDefaults.standardUserDefaults().setObject(sessid, forKey: "elementalcube.sessid")
+                    } else {
+                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(status!))", comment: ""), preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .Default, handler: {
+                            action in
+                            if status == .InvalidUsername || status == .IncorrectPassword {
+                                self.logInDialog(username: username, password: password)
+                            } else {
+                                self.logIn(query: query)
+                            }
+                        }))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        task.resume()
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -252,4 +327,13 @@ extension NSURL {
             return []
         }
     }
+}
+
+enum LoginStatus: Int {
+    case Authenticated = 1
+    case InvalidUsername = -1
+    case DBError = -2
+    case InvalidSessID = -3
+    case IncorrectPassword = -4
+    case ProfileDeactivated = -5
 }

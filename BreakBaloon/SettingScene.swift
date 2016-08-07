@@ -18,6 +18,8 @@ class SettingScene:SKScene {
     var treset = SKLabelNode()
     var extensions = SKSpriteNode()
     var textensions = SKLabelNode()
+    var login = SKSpriteNode()
+    var tlogin = SKLabelNode()
     
     var audioSetting:AudioSlider
     var musicSetting:AudioSlider
@@ -54,16 +56,28 @@ class SettingScene:SKScene {
         addChild(themeIndexSetting)
         
         extensions = SKSpriteNode(imageNamed: "buttonminibg")
-        extensions.position = CGPointMake(self.frame.width/2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 500 : 400))
+        extensions.position = CGPointMake(self.frame.width/3, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 500 : 400))
         extensions.zPosition = 1
         addChild(extensions)
         textensions = SKLabelNode(text: NSLocalizedString("settings.extensions", comment: "Extensions"))
         textensions.fontName = FONT
         textensions.fontColor = SKColor.blackColor()
         textensions.fontSize = 20
-        textensions.position = CGPointMake(self.frame.width/2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 510 : 410))
+        textensions.position = CGPointMake(self.frame.width/3, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 510 : 410))
         textensions.zPosition = 2
         addChild(textensions)
+        
+        login = SKSpriteNode(imageNamed: "buttonminibg")
+        login.position = CGPointMake(self.frame.width/3*2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 500 : 400))
+        login.zPosition = 1
+        addChild(login)
+        tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out"))
+        tlogin.fontName = FONT
+        tlogin.fontColor = SKColor.blackColor()
+        tlogin.fontSize = 20
+        tlogin.position = CGPointMake(self.frame.width/3*2, self.frame.height - (UIDevice.currentDevice().userInterfaceIdiom == .Phone ? 510 : 410))
+        tlogin.zPosition = 2
+        addChild(tlogin)
         
         ok = SKSpriteNode(imageNamed: "buttonminibg")
         ok.position = CGPointMake(self.frame.width/3, 50)
@@ -88,7 +102,7 @@ class SettingScene:SKScene {
         treset.position = CGPointMake(self.frame.width/3*2, 40)
         treset.zPosition = 2
         addChild(treset)
-
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,6 +119,10 @@ class SettingScene:SKScene {
                 resetSettings()
             } else if onNode(extensions, point: point) {
                 showExtConfig()
+            } else if onNode(login, point: point) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    (self.view!.window!.rootViewController! as! GameViewController).logInDialog()
+                })
             } else if onNode(audioSetting, point: point) {
                 audioSetting.calculateVolume(touch)
             } else if onNode(musicSetting, point: point) {

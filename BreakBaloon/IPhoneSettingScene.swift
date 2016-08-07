@@ -14,11 +14,13 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
     var music = SKSpriteNode()
     var other = SKSpriteNode()
     var extensions = SKSpriteNode()
+    var login = SKSpriteNode()
     var back = SKSpriteNode()
     
     var tmusic = SKLabelNode()
     var tother = SKLabelNode()
     var textensions = SKLabelNode()
+    var tlogin = SKLabelNode()
     var tback = SKLabelNode()
     
     init(previous: StartScene) {
@@ -56,16 +58,27 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
         textensions.fontColor = SKColor.blackColor()
         textensions.zPosition = 2
         self.addChild(textensions)
-
+        
+        login = SKSpriteNode(texture: start.buttonTexture)
+        login.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: false))
+        login.zPosition = 1
+        self.addChild(login)
+        tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
+        tlogin.fontSize = 35
+        tlogin.fontName = start.BUTTON_FONT
+        tlogin.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: true))
+        tlogin.fontColor = SKColor.blackColor()
+        tlogin.zPosition = 2
+        self.addChild(tlogin)
         
         other = SKSpriteNode(texture: start.buttonTexture)
-        other.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: false))
+        other.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(3, text: false))
         other.zPosition = 1
         self.addChild(other)
         tother.text = NSLocalizedString("setting.category.other", comment: "")
         tother.fontSize = 35
         tother.fontName = start.BUTTON_FONT
-        tother.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: true))
+        tother.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(3, text: true))
         tother.fontColor = SKColor.blackColor()
         tother.zPosition = 2
         self.addChild(tother)
@@ -92,6 +105,10 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
                 self.view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
             } else if extensions.frame.contains(point) {
                 self.view?.presentScene(ExtensionSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+            } else if login.frame.contains(point) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    (self.view!.window!.rootViewController! as! GameViewController).logInDialog()
+                })
             } else if back.frame.contains(point) {
                 self.view?.presentScene(start, transition: SKTransition.doorsCloseHorizontalWithDuration(NSTimeInterval(1)))
             }
@@ -108,7 +125,7 @@ class IPhoneMusicSettingScene: SKScene {
     var reset = SKSpriteNode()
     let tok = SKLabelNode()
     let treset = SKLabelNode()
-        
+    
     init(_ previous: IPhoneSettingScene) {
         self.settings = previous
         musicSetting = AudioSlider(name: NSLocalizedString("settings.music", comment: "Music"), music: true, gvc: (previous.view?.window?.rootViewController as! GameViewController))

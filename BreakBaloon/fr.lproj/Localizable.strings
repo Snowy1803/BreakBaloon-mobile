@@ -42,6 +42,8 @@
 "settings.audio" = "Effets sonores";
 "settings.music" = "Musique";
 "settings.extensions" = "Extensions";
+"settings.login" = "Se connecter";
+"settings.logout" = "Se déconnecter";
 "theme.selector.text" = "Thème : %@";
 "theme.default.name" = "Défaut";
 "bbstore.button" = "BBStore";
@@ -63,3 +65,13 @@
 "extension.animation" = "Animation";
 "extension.hintarrow" = "HintArrow";
 "extension.bee" = "Abeille";
+"login.title" = "Connexion";
+"login.text" = "Entrez votre pseudonyme et votre mot de passe Elemental Cube pour vous connecter.";
+"login.username.placeholder" = "Pseudonyme";
+"login.password.placeholder" = "Mot de passe";
+"login.tryagain" = "Rééssayer";
+"login.error.InvalidUsername" = "Utilisateur inexistant";
+"login.error.DBError" = "Une erreur est survenue lors de la connection à la base de données";
+"login.error.InvalidSessID" = "Session invalide";
+"login.error.IncorrectPassword" = "Mot de passe incorrect";
+"login.error.ProfileDeactivated" = "Votre profil n'est pas encore activé.";
