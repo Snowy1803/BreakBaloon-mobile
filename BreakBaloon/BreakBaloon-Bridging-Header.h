@@ -11,5 +11,6 @@
 
 #import "SSZipArchive.h"
 #import "ZipArchive.h"
+#import <CommonCrypto/CommonCrypto.h>
 
 //#endif /* BreakBaloon_Bridging_Header_h */

@@ -239,8 +239,7 @@ class GameViewController: UIViewController {
     }
     
     func logIn(username username: String, password: String) {
-        // TODO: PASSWORD SHOULD BE SHA1
-        logIn(query: "user=\(username)&passwd=\(""/*password*/)", username: username, password: password)
+        logIn(query: "user=\(username)&passwd=\(password.sha1())", username: username, password: password)
     }
     
     func logIn(sessid sessid: String) {
@@ -328,6 +327,24 @@ extension NSURL {
             print(error.localizedDescription)
             return []
         }
+    }
+}
+
+extension String {
+    func sha1() -> String {
+        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
+        var digest = [UInt8] (count: Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
+        CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
+        let hexBytes = digest.map{String(format: "%02hhx", $0)}
+        return hexBytes.joinWithSeparator("")
+    }
+    
+    func md5() -> String {
+        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
+        var digest = [UInt8] (count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
+        CC_MD5(data.bytes, CC_LONG(data.length), &digest)
+        let hexBytes = digest.map{String(format: "%02hhx", $0)}
+        return hexBytes.joinWithSeparator("")
     }
 }
 
