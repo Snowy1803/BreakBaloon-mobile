@@ -158,6 +158,7 @@ class Theme {
 class DefaultTheme: Theme {
     init() {
         super.init(NSLocalizedString("theme.default.name", comment: "Default theme name"), id: "/Default", author: "Snowy", description: "", version: "1.0", baloons: 6, background: 0xffffff, dbfpg: false)
+        animationColor = [0: SKColor.redColor(), 1: SKColor.yellowColor(), 2: SKColor.blueColor(), 3: SKColor(red: 191/255, green: 1, blue: 0, alpha: 1), 4: SKColor(red: 1, green: 191/255, blue: 191/255, alpha: 1), 5: SKColor(red: 0.5, green: 0, blue: 1, alpha: 1)]
     }
     
     override func getBaloonTexture(status status:Case.CaseStatus, type:Int) -> SKTexture {
