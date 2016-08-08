@@ -14,6 +14,7 @@ import AVFoundation
 class GameViewController: UIViewController {
     static let DEFAULT_AUDIO:Float = 1.0
     static let DEFAULT_MUSIC:Float = 0.8
+    private static var loggedIn = false
     
     var skView: SKView?
     
@@ -214,7 +215,7 @@ class GameViewController: UIViewController {
     }
     
     class func isLoggedIn() -> Bool {
-        return false
+        return loggedIn
     }
     
     func logInDialog(username username: String? = nil, password: String? = nil) {
@@ -238,7 +239,7 @@ class GameViewController: UIViewController {
     }
     
     func logIn(username username: String, password: String) {
-        // TODO: PASSWORD SHOULD BE SHA1x
+        // TODO: PASSWORD SHOULD BE SHA1
         logIn(query: "user=\(username)&passwd=\(""/*password*/)", username: username, password: password)
     }
     
@@ -268,6 +269,7 @@ class GameViewController: UIViewController {
                     if status == .Authenticated {
                         let sessid = responseString!.componentsSeparatedByString("\r\n")[1]
                         NSUserDefaults.standardUserDefaults().setObject(sessid, forKey: "elementalcube.sessid")
+                        GameViewController.loggedIn = true
                     } else {
                         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(status!))", comment: ""), preferredStyle: .Alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
