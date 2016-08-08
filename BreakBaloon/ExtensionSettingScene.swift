@@ -90,9 +90,9 @@ class ExtensionSettingScene: SKScene {
         level.zPosition = 1
         level.setScale(1.5)
         let tlevel = SKLabelNode(text: "\(requirement)")
-        tlevel.position = CGPointMake(0, requirement > 10 ? -8 : -12)
+        tlevel.position = CGPointMake(0, requirement > 9 ? -8 : -12)
         tlevel.fontName = "AppleSDGothicNeo-Bold"
-        tlevel.fontSize = requirement > 10 ? 16 : 24
+        tlevel.fontSize = requirement > 9 ? 16 : 24
         tlevel.fontColor = SKColor.whiteColor()
         tlevel.zPosition = 2
         level.addChild(tlevel)
