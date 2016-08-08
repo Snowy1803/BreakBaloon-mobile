@@ -20,6 +20,8 @@ class Theme {
     let background:SKColor
     let themeID:String
     let differentBaloonsForPumpedGood:Bool
+    //0:16711680;1:16776960;2:255;3:65280;4:16711935;5:8323199
+    var animationColor:[Int: SKColor]?
     
     init(_ name:String, id:String, author:String, description:String, version:String, baloons:UInt, background:UInt, dbfpg:Bool) {
         self.name = name
@@ -104,7 +106,7 @@ class Theme {
     
     private class func parse(id id:String, bbtheme file:String) -> Theme {
         let lines = file.componentsSeparatedByString("\n")
-        var name = "", author = "", desc = "", version = "", baloons = "", background = "16777215", dbfpg = false
+        var name = "", author = "", desc = "", version = "", baloons = "", background = "16777215", dbfpg = false, animation: [Int: SKColor]?
         for line in lines {
             if line.componentsSeparatedByString("=").count > 1 {
                 let value = line.componentsSeparatedByString("=")[1].stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\r\n\t "))
@@ -122,10 +124,19 @@ class Theme {
                     background = value
                 } else if isMetadata(line, metadata: "DIFFERENT-BALOON-PUMPED-GOOD") {
                     dbfpg = value == "true"
+                } else if isMetadata(line, metadata: "ANIMATION-COLOR") {
+                    animation = [:]
+                    let array = value.componentsSeparatedByString(";")
+                    for val in array {
+                        let rgb = Int(val.componentsSeparatedByString(":")[1])!
+                        animation![Int(val.componentsSeparatedByString(":")[0])!] = SKColor(red: CGFloat((rgb & 0xFF0000) >> 16) / 0xFF, green: CGFloat((rgb & 0x00FF00) >> 8) / 0xFF, blue: CGFloat(rgb & 0x0000FF) / 0xFF, alpha: 1.0)
+                    }
                 }
             }
         }
-        return Theme(name, id: id, author: author, description: desc, version: version, baloons: baloons, background: background, dbfpg: dbfpg)
+        let theme = Theme(name, id: id, author: author, description: desc, version: version, baloons: baloons, background: background, dbfpg: dbfpg)
+        theme.animationColor = animation
+        return theme
     }
     
     private class func isMetadata(line:String, metadata:String) -> Bool {
