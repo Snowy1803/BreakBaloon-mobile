@@ -55,6 +55,8 @@
 "bbstore.download.text" = "Voulez-vous vraiment télécharger '%@' ?";
 "bbstore.download.button" = "Télécharger";
 "bbstore.download.unsupported" = "Ce type de fichier n'est pas supporté";
+"bbstore.type.theme" = "Thème";
+"bbstore.type.music" = "Musique";
 "back" = "Retour";
 "setting.category.music" = "Musique";
 "setting.category.other" = "Autres";

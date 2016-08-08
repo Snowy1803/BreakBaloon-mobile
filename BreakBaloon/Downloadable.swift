@@ -44,19 +44,25 @@ class Downloadable: SKNode {
         rect.zPosition = 1
         addChild(rect)
         let name = SKLabelNode(text: dlname)
-        name.color = SKColor.whiteColor()
+        name.fontColor = SKColor.whiteColor()
         name.fontSize = 20
         name.position = CGPointMake(rect.frame.minX + name.frame.width / 2 + 5, rect.frame.maxY - 20)
         name.zPosition = 2
         addChild(name)
         let auth = SKLabelNode(text: dlauthor)
-        auth.color = SKColor.whiteColor()
+        auth.fontColor = SKColor.whiteColor()
         auth.fontSize = 20
         auth.position = CGPointMake(rect.frame.maxX - auth.frame.width / 2 - 5, rect.frame.maxY - 20)
         auth.zPosition = 2
         addChild(auth)
+        let type = SKLabelNode(text: dltype.toString())
+        type.fontColor = SKColor.grayColor()
+        type.fontSize = 20
+        type.position = CGPointMake(rect.frame.minX + type.frame.width / 2 + 5, rect.frame.maxY - 45)
+        type.zPosition = 2
+        addChild(type)
         let btn = SKLabelNode(text: NSLocalizedString("bbstore.clickToDownload", comment: "button"))
-        btn.color = SKColor.whiteColor()
+        btn.fontColor = SKColor.whiteColor()
         btn.fontSize = 16
         btn.position = CGPointMake(rect.frame.midX, rect.frame.minY + 5)
         btn.zPosition = 2
@@ -302,10 +308,18 @@ class Downloadable: SKNode {
         }
         
         func isSupported() -> Bool {
-            if #available(iOS 9.0, *) {
-                return self == .Theme || self == .M4aMusic
+            return self == .Theme || self == .M4aMusic
+        }
+        
+        func toString() -> String {
+            switch self {
+            case .Theme:
+                return NSLocalizedString("bbstore.type.theme", comment: "Theme")
+            case .M4aMusic:
+                return NSLocalizedString("bbstore.type.music", comment: "Music")
+            default:
+                return "UNSUPPORTED"
             }
-            return self == .M4aMusic
         }
     }
 }

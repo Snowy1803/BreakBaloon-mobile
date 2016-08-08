@@ -55,6 +55,8 @@
 "bbstore.download.text" = "Do you really want to download '%@'?";
 "bbstore.download.button" = "Download now!";
 "bbstore.download.unsupported" = "Unsupported file type";
+"bbstore.type.theme" = "Theme";
+"bbstore.type.music" = "Music";
 "back" = "Back";
 "setting.category.music" = "Music";
 "setting.category.other" = "Other";
