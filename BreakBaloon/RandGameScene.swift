@@ -112,6 +112,7 @@ class RandGameScene: AbstractGameScene {
             aCase.breakBaloon(false)
             points += 1
             updateLabel()
+            aCase.baloonBreaked()
             do {
                 avplayer = try AVAudioPlayer(contentsOfURL: (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false))
                 avplayer.volume = (self.view?.window?.rootViewController as! GameViewController).audioVolume

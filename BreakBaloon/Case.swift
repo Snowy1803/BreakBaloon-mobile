@@ -41,7 +41,7 @@ class Case:SKSpriteNode {
     }
     
     func baloonBreaked() {
-        if NSUserDefaults.standardUserDefaults().boolForKey("extension.hintarrow.enabled") {
+        if gvc.currentGame is GameScene && NSUserDefaults.standardUserDefaults().boolForKey("extension.hintarrow.enabled") {
             showHintArrow()
         }
     }
