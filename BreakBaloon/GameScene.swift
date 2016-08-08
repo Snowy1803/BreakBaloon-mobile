@@ -69,7 +69,7 @@ class GameScene:AbstractGameScene {
         if (cases.objectAtIndex(index) as! Case).breaked {
             return
         }
-        (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber);
+        (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber)
         var pumpURL:NSURL
         var gameEnded = false
         if gametype != StartScene.GAMETYPE_TIMED && index == winCaseNumber {
@@ -125,6 +125,10 @@ class GameScene:AbstractGameScene {
             pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
         } else {
             pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
+        }
+        
+        if !gameEnded {
+            (cases.objectAtIndex(index) as! Case).baloonBreaked()
         }
         
         do {

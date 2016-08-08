@@ -40,6 +40,12 @@ class Case:SKSpriteNode {
         }
     }
     
+    func baloonBreaked() {
+        if NSUserDefaults.standardUserDefaults().boolForKey("extension.hintarrow.enabled") {
+            showHintArrow()
+        }
+    }
+    
     func triggerAnimationExtension() {
         let action = SKAction.runBlock({
             self.animate(self.gvc.currentTheme.animationColor == nil ? nil : self.gvc.currentTheme.animationColor![self.type])
@@ -59,8 +65,34 @@ class Case:SKSpriteNode {
         }
     }
     
+    func showHintArrow() {
+        let game = (gvc.currentGame as! GameScene)
+        let shape = SKShapeNode(path: polygon([(-15, 0), (-3, -15), (-3, -3), (15, -3), (15, 3), (-3, 3), (-3, 15)]))
+        let deltaWinX = game.winCaseNumber % game.width - index % game.width
+        let deltaWinY = game.winCaseNumber / game.height - index / game.height
+        
+        let theta = atan2(Double(-deltaWinY), Double(deltaWinX))
+        
+        shape.zRotation = CGFloat(theta + M_PI)
+        shape.fillColor = SKColor.blueColor()
+        shape.strokeColor = SKColor.clearColor()
+        shape.zPosition = 2
+        shape.runAction(SKAction.sequence([SKAction.waitForDuration(0.4), SKAction.removeFromParent()]))
+        addChild(shape)
+    }
+    
     func randomFloat() -> CGFloat {
         return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+    }
+    
+    func polygon(points: [(CGFloat, CGFloat)]) -> CGPath {
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path, nil, points[0].0, points[0].1)
+        for i in 1..<points.count {
+            CGPathAddLineToPoint(path, nil, points[i].0, points[i].1)
+        }
+        CGPathAddLineToPoint(path, nil, points[0].0, points[0].1)
+        return path
     }
     
     enum CaseStatus: Int {
