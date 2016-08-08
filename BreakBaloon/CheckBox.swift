@@ -11,6 +11,7 @@ import SpriteKit
 
 class CheckBox: SKSpriteNode {
     private(set) var checked:Bool
+    private(set) var enabled = true
     let label: SKLabelNode
     
     init(checked: Bool = false, label: String? = nil) {
@@ -31,8 +32,10 @@ class CheckBox: SKSpriteNode {
     }
     
     func check(check: Bool) {
-        self.checked = check
-        texture = SKTexture(imageNamed: "checkbox\(check ? "-check" : "")")
+        if enabled {
+            self.checked = check
+            texture = SKTexture(imageNamed: "checkbox\(check ? "-check" : "")")
+        }
     }
     
     func reverseCheck() {
@@ -45,5 +48,16 @@ class CheckBox: SKSpriteNode {
     
     func uncheck() {
         check(false)
+    }
+    
+    func enable(enable: Bool) {
+        enabled = enable
+        texture = SKTexture(imageNamed: "checkbox\(enable ? checked ? "-check" : "" : "-disabled")")
+    }
+    
+    func setTextureIfDisabled(texture: SKTexture?) {
+        if !enabled {
+            self.texture = texture
+        }
     }
 }

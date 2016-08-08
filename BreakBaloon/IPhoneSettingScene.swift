@@ -104,7 +104,9 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
             } else if other.frame.contains(point) {
                 self.view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
             } else if extensions.frame.contains(point) {
-                self.view?.presentScene(ExtensionSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+                let scene = ExtensionSettingScene(self)
+                self.view?.presentScene(scene, transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+                scene.initialize()
             } else if login.frame.contains(point) {
                 dispatch_async(dispatch_get_main_queue(), {
                     (self.view!.window!.rootViewController! as! GameViewController).logInDialog()

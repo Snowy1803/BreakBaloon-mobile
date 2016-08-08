@@ -11,6 +11,9 @@ import SpriteKit
 
 class ExtensionSettingScene: SKScene {
     let BUTTON_FONT = "ChalkboardSE-Light"
+    let ANIMATION_REQUIREMENT = 2
+    let HINTARROW_REQUIREMENT = 10
+    let BEE_REQUIREMENT = 15
     let sortArray = ["animation": NSLocalizedString("extension.animation", comment: "Animation enabled?"), "hintArrow": NSLocalizedString("extension.hintarrow", comment: "HintArrow enabled?"), "bee": NSLocalizedString("extension.bee", comment: "Bee enabled?")]
     let previous: SKScene
     
@@ -39,12 +42,21 @@ class ExtensionSettingScene: SKScene {
         tok.zPosition = 2
         addChild(tok)
         let array = [String](sortArray.values)
+        self.animation.enable(GameViewController.getLevel() >= ANIMATION_REQUIREMENT)
         animation.position = CGPointMake(32, self.frame.height - sort(sortArray["animation"]!, in: array))
         addChild(animation)
+        self.hintarrow.enable(GameViewController.getLevel() >= HINTARROW_REQUIREMENT)
         hintarrow.position = CGPointMake(32, self.frame.height - sort(sortArray["hintArrow"]!, in: array))
         addChild(hintarrow)
+        self.bee.enable(GameViewController.getLevel() >= BEE_REQUIREMENT)
         bee.position = CGPointMake(32, self.frame.height - sort(sortArray["bee"]!, in: array))
         addChild(bee)
+    }
+    
+    func initialize() {
+        self.animation.setTextureIfDisabled(view?.textureFromNode(getTexture(ANIMATION_REQUIREMENT)))
+        self.hintarrow.setTextureIfDisabled(view?.textureFromNode(getTexture(HINTARROW_REQUIREMENT)))
+        self.bee.setTextureIfDisabled(view?.textureFromNode(getTexture(BEE_REQUIREMENT)))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,5 +83,19 @@ class ExtensionSettingScene: SKScene {
     
     func sort(search: String, in array: [String]) -> CGFloat {
         return CGFloat(32 + array.sort().indexOf(search)! * 32)
+    }
+    
+    func getTexture(requirement: Int) -> SKNode {
+        let level = SKSpriteNode(imageNamed: "level")
+        level.zPosition = 1
+        level.setScale(1.5)
+        let tlevel = SKLabelNode(text: "\(requirement)")
+        tlevel.position = CGPointMake(0, requirement > 10 ? -8 : -12)
+        tlevel.fontName = "AppleSDGothicNeo-Bold"
+        tlevel.fontSize = requirement > 10 ? 16 : 24
+        tlevel.fontColor = SKColor.whiteColor()
+        tlevel.zPosition = 2
+        level.addChild(tlevel)
+        return level
     }
 }

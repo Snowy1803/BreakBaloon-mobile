@@ -27,6 +27,7 @@
 		204289241D4E78EC00BDEE39 /* levelnext.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289231D4E78EC00BDEE39 /* levelnext.png */; };
 		204289261D4E78FE00BDEE39 /* levelback.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289251D4E78FE00BDEE39 /* levelback.png */; };
 		2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */; };
+		204FBB2F1D58D9B700971306 /* checkbox-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 204FBB2E1D58D9B700971306 /* checkbox-disabled.png */; };
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
@@ -126,6 +127,7 @@
 		204289231D4E78EC00BDEE39 /* levelnext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelnext.png; sourceTree = "<group>"; };
 		204289251D4E78FE00BDEE39 /* levelback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelback.png; sourceTree = "<group>"; };
 		2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelNode.swift; sourceTree = "<group>"; };
+		204FBB2E1D58D9B700971306 /* checkbox-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-disabled.png"; sourceTree = "<group>"; };
 		206736751D16E26300FB9FFF /* BreakBaloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakBaloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		206736781D16E26300FB9FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				206736941D16FA5100FB9FFF /* buttonbg.png */,
 				20C000931D1930A700CBA51E /* buttonminibg.png */,
 				20AFF9D51D568B0200B4CBF8 /* checkbox.png */,
+				204FBB2E1D58D9B700971306 /* checkbox-disabled.png */,
 				20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */,
 				20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */,
 				20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */,
@@ -530,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20F1882A1D2830470099F717 /* quick_singleplayer.png in Resources */,
+				204FBB2F1D58D9B700971306 /* checkbox-disabled.png in Resources */,
 				20CB89D01D4CE82600A0408C /* levelbuttonbg.png in Resources */,
 				20E877331D23EDED00CCBA1A /* pump.wav in Resources */,
 				20BE2F5E1D5480AC004A8B17 /* levelbuttonbg-bonus-finished1star.png in Resources */,

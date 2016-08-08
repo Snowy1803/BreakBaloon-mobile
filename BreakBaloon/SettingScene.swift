@@ -160,7 +160,9 @@ class SettingScene:SKScene {
     }
     
     func showExtConfig() {
-        self.view?.presentScene(ExtensionSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+        let scene = ExtensionSettingScene(self)
+        self.view?.presentScene(scene, transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+        scene.initialize()
     }
     
     func onNode(node:SKNode, point:CGPoint) -> Bool {
