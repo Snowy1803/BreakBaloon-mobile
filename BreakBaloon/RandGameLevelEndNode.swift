@@ -97,7 +97,7 @@ class RandGameLevelEndNode: SKNode {
     }
     
     func backToMenu(view: SKView) {
-        let scene = StartScene(size: self.frame.size)
+        let scene = StartScene(size: self.scene!.frame.size)
         view.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
         scene.adjustPosition(false, sizeChange: true)
     }
