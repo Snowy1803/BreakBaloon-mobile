@@ -30,7 +30,7 @@ class GameScene:AbstractGameScene {
         super.construct(gvc)
         for i in 0 ..< (width * height) {
             let theCase = Case(gvc: gvc, index: i)
-            theCase.position = CGPointMake(CGFloat(i / height * 75 + 35), self.frame.size.height - CGFloat(i % height * 75 + 35))
+            theCase.position = CGPointMake(CGFloat(i % width * 75 + 35), self.frame.size.height - CGFloat(i / width * 75 + 35))
             theCase.zPosition = 1
             addChild(theCase)
             cases.addObject(theCase)
