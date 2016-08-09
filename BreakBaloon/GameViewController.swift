@@ -221,7 +221,7 @@ class GameViewController: UIViewController {
         return loggedIn
     }
     
-    func logInDialog(username username: String? = nil, password: String? = nil) {
+    func logInDialog(username username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .Alert)
         alert.addTextFieldWithConfigurationHandler({ textField in
             textField.placeholder = NSLocalizedString("login.username.placeholder", comment: "")
@@ -235,21 +235,21 @@ class GameViewController: UIViewController {
         alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: {
             action in
-            self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!)
+            self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!, completion: completion)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
     
-    func logIn(username username: String, password: String) {
-        logIn(query: "user=\(username)&passwd=\(password.sha1())", username: username, password: password)
+    func logIn(username username: String, password: String, completion: (() -> Void)? = nil) {
+        logIn(query: "user=\(username)&passwd=\(password.sha1())", username: username, password: password, completion: completion)
     }
     
-    func logIn(sessid sessid: String) {
-        logIn(query: "sessid=\(sessid)")
+    func logIn(sessid sessid: String, completion: (() -> Void)? = nil) {
+        logIn(query: "sessid=\(sessid)", completion: completion)
     }
     
-    func logIn(query query: String, username: String? = nil, password: String? = nil) {
+    func logIn(query query: String, username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
         let request = NSMutableURLRequest(URL: NSURL(string: "http://elementalcube.esy.es/api/auth.php")!)
         request.HTTPMethod = "POST"
         request.HTTPBody = query.dataUsingEncoding(NSUTF8StringEncoding)
@@ -272,6 +272,9 @@ class GameViewController: UIViewController {
                         let sessid = responseString!.componentsSeparatedByString("\r\n")[1]
                         NSUserDefaults.standardUserDefaults().setObject(sessid, forKey: "elementalcube.sessid")
                         GameViewController.loggedIn = true
+                        if completion != nil {
+                            completion!()
+                        }
                     } else {
                         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(status!))", comment: ""), preferredStyle: .Alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
@@ -283,12 +286,17 @@ class GameViewController: UIViewController {
                                 self.logIn(query: query)
                             }
                         }))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.presentViewController(alert, animated: true, completion: completion)
                     }
                 }
             }
         }
         task.resume()
+    }
+    
+    class func logOut() {
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "elementalcube.sessid")
+        GameViewController.loggedIn = false
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {

@@ -108,13 +108,22 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
                 self.view?.presentScene(scene, transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
                 scene.initialize()
             } else if login.frame.contains(point) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    (self.view!.window!.rootViewController! as! GameViewController).logInDialog()
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    if GameViewController.isLoggedIn() {
+                        GameViewController.logOut()
+                        self.updateLoginLabel()
+                    } else {
+                        (self.view!.window!.rootViewController! as! GameViewController).logInDialog(completion: self.updateLoginLabel)
+                    }
+                }
             } else if back.frame.contains(point) {
                 self.view?.presentScene(start, transition: SKTransition.doorsCloseHorizontalWithDuration(NSTimeInterval(1)))
             }
         }
+    }
+    
+    func updateLoginLabel() {
+        tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
     }
 }
 

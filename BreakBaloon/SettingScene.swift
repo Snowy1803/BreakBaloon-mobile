@@ -120,9 +120,14 @@ class SettingScene:SKScene {
             } else if onNode(extensions, point: point) {
                 showExtConfig()
             } else if onNode(login, point: point) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    (self.view!.window!.rootViewController! as! GameViewController).logInDialog()
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    if GameViewController.isLoggedIn() {
+                        GameViewController.logOut()
+                        self.updateLoginLabel()
+                    } else {
+                        (self.view!.window!.rootViewController! as! GameViewController).logInDialog(completion: self.updateLoginLabel)
+                    }
+                }
             } else if onNode(audioSetting, point: point) {
                 audioSetting.calculateVolume(touch)
             } else if onNode(musicSetting, point: point) {
@@ -135,6 +140,10 @@ class SettingScene:SKScene {
                 themeIndexSetting.click(touch)
             }
         }
+    }
+    
+    func updateLoginLabel() {
+        tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
