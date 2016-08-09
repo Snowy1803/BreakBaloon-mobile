@@ -357,7 +357,9 @@ class StartScene: SKScene {
                 gametype = StartScene.GAMETYPE_TIMED
                 transitionFirstToSecond()
             } else if onNode(randButton, point: point) {
-                transitionFirstToThird()
+                if GameViewController.getLevel() >= RandGameScene.REQUIREMENT {
+                    transitionFirstToThird()
+                }
             } else if onNode(smallButton, point: point) {
                 if smallButton.colorBlendFactor != 0.5 {
                     newGame(gametype, width: 5, height: 5)
