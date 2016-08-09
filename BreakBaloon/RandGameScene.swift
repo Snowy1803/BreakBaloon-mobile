@@ -126,9 +126,7 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
-        nextBaloon = NSDate().timeIntervalSince1970 + NSTimeInterval(arc4random_uniform(UInt32(nextBaloonMax * 1000)) / 1000)
-        print(nextBaloonMax)
-        print(NSTimeInterval(arc4random_uniform(UInt32(nextBaloonMax * 1000)) / 1000))
+        nextBaloon = NSDate().timeIntervalSince1970 + NSTimeInterval(Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
         baloonsToSpawn -= 1
         
     }
