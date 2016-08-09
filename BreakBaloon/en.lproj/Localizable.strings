@@ -57,6 +57,7 @@
 "bbstore.download.unsupported" = "Unsupported file type";
 "bbstore.type.theme" = "Theme";
 "bbstore.type.music" = "Music";
+"bbstore.search" = "Search";
 "back" = "Back";
 "setting.category.music" = "Music";
 "setting.category.other" = "Other";

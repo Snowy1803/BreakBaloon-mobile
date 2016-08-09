@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class BBStoreScene: SKScene {
+class BBStoreScene: SKScene, UISearchBarDelegate {
     let start:StartScene
     let gvc:GameViewController
     var downloads: [Downloadable]?
@@ -22,6 +22,7 @@ class BBStoreScene: SKScene {
     var title = SKLabelNode()
     var back = SKLabelNode()
     var upper = SKShapeNode()
+    var search = UISearchBar()
     
     convenience init(start: StartScene) {
         self.init(start: start, size: start.view!.frame.size, gvc: (start.view?.window?.rootViewController as! GameViewController))
@@ -77,6 +78,13 @@ class BBStoreScene: SKScene {
                     self.upper.alpha = 0.75
                     self.upper.zPosition = 5
                     self.addChild(self.upper)
+                    
+                    self.search = UISearchBar(frame: CGRectMake(self.frame.width - 150, 0, 150, 30))
+                    self.search.placeholder = NSLocalizedString("bbstore.search", comment: "Search")
+                    self.search.searchBarStyle = .Minimal
+                    self.search.translucent = false
+                    self.search.delegate = self
+                    self.view?.addSubview(self.search)
                 }
             } catch {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -100,6 +108,7 @@ class BBStoreScene: SKScene {
                 title.runAction(SKAction.fadeOutWithDuration(NSTimeInterval(0.1)))
                 back.runAction(SKAction.fadeOutWithDuration(NSTimeInterval(0.1)))
                 upper.runAction(SKAction.fadeOutWithDuration(NSTimeInterval(0.1)))
+                search.removeFromSuperview()
                 let transition = SKTransition.pushWithDirection(.Down, duration: NSTimeInterval((self.view!.frame.height + decY) * (CGFloat(NSDate().timeIntervalSince1970 - touchInterval!) / -decY)))
                 transition.pausesOutgoingScene = false
                 view?.presentScene(BBStoreScene(start: start, size: view!.frame.size, gvc: gvc), transition: transition)
@@ -113,7 +122,7 @@ class BBStoreScene: SKScene {
                 goBack()
             } else if downloads != nil && point.x + 10 > touchBegin!.x && point.x - 10 < touchBegin!.x && point.y + 10 > touchBegin!.y && point.y - 10 < touchBegin!.y {
                 for dl in downloads! {
-                    if dl.rect.frame.contains(touches.first!.locationInNode(dl)) {
+                    if self.children.contains(dl) && dl.rect.frame.contains(touches.first!.locationInNode(dl)) {
                         dl.click(self)
                         break
                     }
@@ -150,6 +159,7 @@ class BBStoreScene: SKScene {
     }
     
     func goBack() {
+        search.removeFromSuperview()
         self.view?.presentScene(start, transition: SKTransition.doorsOpenVerticalWithDuration(NSTimeInterval(1)))
     }
     
@@ -159,6 +169,36 @@ class BBStoreScene: SKScene {
             if dl.dlid == id {
                 print("Simulating download of \(dl.name)")
                 dl.click(self)
+            }
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(search: UISearchBar) {
+        search.frame = CGRectMake(back.frame.width + 10, 0, self.frame.width - back.frame.width - 5, 30)
+        title.runAction(SKAction.fadeOutWithDuration(0.2))
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        search.frame = CGRectMake(self.frame.width - 150, 0, 150, 30)
+        title.runAction(SKAction.fadeInWithDuration(0.2))
+    }
+    
+    func searchBar(search: UISearchBar, textDidChange text: String) {
+        adjustDownloadablePosition()
+    }
+    
+    func adjustDownloadablePosition() {
+        let cols:Int = Int(self.frame.width / Downloadable.WIDTH)
+        var i = 0
+        for dl in downloads! {
+            if search.text!.isEmpty || dl.dlname.lowercaseString.containsString(search.text!.lowercaseString) {
+                if dl.parent == nil {
+                    addChild(dl)
+                }
+                dl.position = CGPointMake(CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, self.frame.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+                i += 1
+            } else {
+                dl.removeFromParent()
             }
         }
     }
