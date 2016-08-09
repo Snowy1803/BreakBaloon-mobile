@@ -56,18 +56,18 @@ class BBStoreScene: SKScene {
                         self.addChild(dl)
                         dl.runAction(SKAction.fadeInWithDuration(1))
                     }
-                    self.title = SKLabelNode(text: NSLocalizedString((UIDevice.currentDevice().orientation == .Portrait ? "bbstore.button" : "bbstore.title"), comment: "BBStore"))
+                    self.title = SKLabelNode(text: NSLocalizedString((UIDevice.currentDevice().userInterfaceIdiom != .Pad ? "bbstore.button" : "bbstore.title"), comment: "BBStore"))
                     self.title.fontColor = SKColor.blackColor()
                     self.title.fontSize = 20
-                    self.title.position = CGPointMake(self.title.frame.width/2 + 5, self.frame.height - 25)
+                    self.title.position = CGPointMake(self.frame.width/2, self.frame.height - 25)
                     self.title.alpha = 0
                     self.title.zPosition = 6
                     self.addChild(self.title)
                     self.title.runAction(SKAction.fadeInWithDuration(1))
-                    self.back.text = NSLocalizedString("back", comment: "")
+                    self.back.text = UIDevice.currentDevice().orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
                     self.back.fontColor = SKColor.blackColor()
                     self.back.fontSize = 20
-                    self.back.position = CGPointMake(self.frame.width - self.back.frame.width/2 - 5, self.frame.height - 25)
+                    self.back.position = CGPointMake(self.back.frame.width/2 + 5, self.frame.height - 25)
                     self.back.alpha = 0
                     self.back.zPosition = 7
                     self.addChild(self.back)
