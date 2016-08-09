@@ -89,6 +89,9 @@ class GameViewController: UIViewController {
         if data.objectForKey("audio-false") == nil {
             data.setFloat(GameViewController.DEFAULT_AUDIO, forKey: "audio-false")
         }
+        if NSUserDefaults.standardUserDefaults().objectForKey("elementalcube.sessid") != nil {
+            logIn(sessid: NSUserDefaults.standardUserDefaults().stringForKey("elementalcube.sessid")!)
+        }
         currentTheme = Theme.withID(NSUserDefaults.standardUserDefaults().stringForKey("currentTheme")!)!
         let welcome:NSURL = NSBundle.mainBundle().URLForResource("Welcome", withExtension: "wav")!
         
