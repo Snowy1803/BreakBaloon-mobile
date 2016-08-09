@@ -37,6 +37,8 @@
 "gameinfo.end.finished" = "FINISHED";
 "gameinfo.end.failed" = "FAILED";
 "gameinfo.end.bonus" = "Bonus level finished with %d bonus XP";
+"gameinfo.end.remaining" = "%d baloons remaining for 3 stars";
+"gameinfo.end.remaining.one" = "One baloon remaining for 3 stars";
 "gameinfo.complete" = "%d / %d";
 "settings.title" = "Settings";
 "settings.audio" = "Sound effects";

@@ -37,6 +37,8 @@
 "gameinfo.end.finished" = "TERMINÉ";
 "gameinfo.end.failed" = "ÉCHOUÉ";
 "gameinfo.end.bonus" = "Niveau bonus terminé avec un bonus de %d d'XP";
+"gameinfo.end.remaining" = "Encore %d ballons pour avoir 3 étoiles";
+"gameinfo.end.remaining.one" = "Encore un ballon pour avoir 3 étoiles";
 "gameinfo.complete" = "%d / %d";
 "settings.title" = "Réglages";
 "settings.audio" = "Effets sonores";

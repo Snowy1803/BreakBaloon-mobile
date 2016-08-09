@@ -37,6 +37,8 @@
 "gameinfo.end.finished" = "FÆRDIG";
 "gameinfo.end.failed" = "MISLYKKEDES";
 "gameinfo.end.bonus" = "Bonus niveau færdig med %d bonus XP";
+"gameinfo.end.remaining" = "%d balloner mere til 3 stjerner";
+"gameinfo.end.remaining.one" = "Et ballon mere til 3 stjerner";
 "gameinfo.complete" = "%d / %d";
 "settings.title" = "Indstillinger";
 "settings.audio" = "Lyd effekter";
