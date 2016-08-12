@@ -74,7 +74,7 @@ class RandGameLevelEndNode: SKNode {
             self.stars!.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 224)
             addChild(self.stars!)
             if stars < 3 {
-                let remaining = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.end.remaining\(Int(level.numberOfBaloons) - scene.points == 1 ? "one" : "")", comment: "n remaining"), Int(level.numberOfBaloons) - scene.points))
+                let remaining = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.end.remaining\(Int(level.numberOfBaloons) - scene.points == 1 ? ".one" : "")", comment: "n remaining"), Int(level.numberOfBaloons) - scene.points))
                 remaining.fontColor = SKColor.darkGrayColor()
                 remaining.fontSize = 20
                 remaining.fontName = "HelveticaNeue-Bold"
