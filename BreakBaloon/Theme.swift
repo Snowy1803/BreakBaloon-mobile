@@ -20,7 +20,6 @@ class Theme {
     let background:SKColor
     let themeID:String
     let differentBaloonsForPumpedGood:Bool
-    //0:16711680;1:16776960;2:255;3:65280;4:16711935;5:8323199
     var animationColor:[Int: SKColor]?
     
     init(_ name:String, id:String, author:String, description:String, version:String, baloons:UInt, background:UInt, dbfpg:Bool) {
@@ -45,6 +44,9 @@ class Theme {
     }
     
     func getBaloonTexture(baloon:Case) -> SKTexture {
+        if baloon is FakeCase {
+            return getFakeBaloonTexture(status: baloon.status, type: baloon.type)
+        }
         return getBaloonTexture(status: baloon.status, type: baloon.type)
     }
     
@@ -59,6 +61,19 @@ class Theme {
             }
         } catch {
             print("Error reading baloon texture of type \(type):", error)
+        }
+        return SKTexture()
+    }
+    
+    func getFakeBaloonTexture(status status:Case.CaseStatus, type:Int) -> SKTexture {
+        do {
+            if status == .Closed {
+                return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .PNG, subDirectory: self.themeID).getImage())
+            } else {
+                return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .PNG, subDirectory: self.themeID).getImage())
+            }
+        } catch {
+            print("Error reading fake baloon texture of type \(type):", error)
         }
         return SKTexture()
     }
@@ -159,6 +174,14 @@ class DefaultTheme: Theme {
             return SKTexture(imageNamed: "opened\(type)-good")
         } else {
             return SKTexture(imageNamed: "opened\(type)")
+        }
+    }
+    
+    override func getFakeBaloonTexture(status status:Case.CaseStatus, type:Int) -> SKTexture {
+        if status == .Closed {
+            return SKTexture(imageNamed: "fake-closed\(type)")
+        } else {
+            return SKTexture(imageNamed: "fake-opened\(type)")
         }
     }
     

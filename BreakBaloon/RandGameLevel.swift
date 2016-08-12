@@ -10,32 +10,33 @@ import Foundation
 import SpriteKit
 
 class RandGameLevel {
-    private static let levelValues:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt)] = [
-        /* 1 */     (10, 1.25, 4, 1, 2),
-        /* 2 */     (10, 0.75, 4, 1, 2),
-        /* 3 */     (30, 0.75, 3.5, 5, 3),
-        /* 4 */     (25, 0.75, 3, 3, 3),
-        /* 5 */     (35, 0.75, 2.5, 1, 3),
-        /* 6 */     (35, 0.75, 2.25, 0, 3),
-        /* 7 */     (40, 0.5, 2, 2, 4),
-        /* 8 */     (40, 0.5, 2, 3, 3),
-        /* 9 */     (40, 0.5, 1.5, 1, 3),
-        /* 10 */    (75, 0.75, 2.5, 0, 3),
-        /* 11 */    (10, 0.25, 2.5, 0, 1),
-        /* 12 */    (10, 0, 2.5, 3, 1),
-        /* 13 */    (15, 0, 2, 5, 1),
-        /* 14 */    (100, 0.5, 2.5, 5, 3),
-        /* 15 */    (125, 0.5, 1.5, 10, 4),
-        /* B-16 */  (25, 0.25, 1.5, 7, 3)
+    private static let levelValues:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt, Float)] = [
+        /* 1 */     (10, 1.25, 4, 1, 2, 0),
+        /* 2 */     (10, 0.75, 4, 1, 2, 0),
+        /* 3 */     (30, 0.75, 3.5, 5, 3, 0),
+        /* 4 */     (25, 0.75, 3, 3, 3, 0),
+        /* 5 */     (35, 0.75, 2.5, 1, 3, 0),
+        /* 6 */     (35, 0.75, 2.25, 0, 3, 0),
+        /* 7 */     (40, 0.5, 2, 2, 4, 0),
+        /* 8 */     (40, 0.5, 2, 3, 3, 0),
+        /* 9 */     (40, 0.5, 1.5, 1, 3, 0),
+        /* 10 */    (75, 0.75, 2.5, 0, 3, 0),
+        /* 11 */    (10, 0.25, 2.5, 0, 1, 0),
+        /* 12 */    (10, 0, 2.5, 3, 1, 0),
+        /* 13 */    (15, 0, 2, 5, 1, 0),
+        /* 14 */    (100, 0.5, 2.5, 5, 3, 0),
+        /* 15 */    (125, 0.5, 1.5, 10, 4, 0),
+        /* B-16 */  (25, 0.25, 1.5, 7, 3, 0),
+        /* 17 */    (30, 0.5, 2, 1, 1, 0.5)
     ]
     
-    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14), RandGameBonusLevel(15, modifier: 5)]
+    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14), RandGameBonusLevel(15, modifier: 5), RandGameLevel(16)]
     
     let index:Int
     var status:RandGameLevelStatus
     var gamescene:RandGameScene?
     
-    private var level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt) {
+    private var level:(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt, Float) {
         get {
             return RandGameLevel.levelValues[index]
         }
@@ -71,6 +72,12 @@ class RandGameLevel {
         }
     }
     
+    var fakeBaloonsRate:Float {
+        get {
+            return level.5
+        }
+    }
+    
     var precedent: RandGameLevel? {
         get {
             return index > 0 ? RandGameLevel.levels[index - 1] : nil
@@ -90,7 +97,7 @@ class RandGameLevel {
     }
     
     func start(view: SKView, transition: SKTransition = SKTransition.flipVerticalWithDuration(NSTimeInterval(1))) {
-        gamescene = RandGameScene(view: view, numberOfBaloons: numberOfBaloons, baloonTime: secondsBeforeBaloonVanish, speed: maxSecondsBeforeNextBaloon, maxBaloons: maxBaloonsAtSameTime, completion: end)
+        gamescene = RandGameScene(view: view, numberOfBaloons: numberOfBaloons, baloonTime: secondsBeforeBaloonVanish, speed: maxSecondsBeforeNextBaloon, maxBaloons: maxBaloonsAtSameTime, fakeBaloonRate: fakeBaloonsRate, completion: end)
         view.presentScene(gamescene!, transition: transition);
         gamescene!.addChild(RandGameLevelInfoNode(level: self, scene: gamescene!))
     }

@@ -17,13 +17,14 @@ class RandGameScene: AbstractGameScene {
     let baloonTime:NSTimeInterval
     let nextBaloonMax:NSTimeInterval
     let maxBaloons: UInt
+    let fakeBaloonRate: Float
     let completion:((Int) -> Void)?
     var label:SKLabelNode = SKLabelNode()
     
     var baloonsToSpawn:UInt
     var nextBaloon:NSTimeInterval?
     
-    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, maxBaloons: UInt, completion:((Int) -> Void)?) {
+    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, maxBaloons: UInt, fakeBaloonRate: Float, completion:((Int) -> Void)?) {
         gvc = view.window?.rootViewController as! GameViewController
         self.numberOfBaloons = numberOfBaloons
         self.baloonTime = baloonTime
@@ -31,6 +32,7 @@ class RandGameScene: AbstractGameScene {
         self.completion = completion
         baloonsToSpawn = numberOfBaloons
         self.maxBaloons = maxBaloons
+        self.fakeBaloonRate = fakeBaloonRate
         super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
         label = SKLabelNode()
         label.fontColor = SKColor.blackColor()
@@ -127,12 +129,18 @@ class RandGameScene: AbstractGameScene {
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
         nextBaloon = NSDate().timeIntervalSince1970 + NSTimeInterval(Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
-        baloonsToSpawn -= 1
-        
+        if !(aCase is FakeCase) {
+            baloonsToSpawn -= 1
+        }
     }
     
     func spawnBaloon(point point: CGPoint) {
-        let aCase = Case(gvc: gvc, index: -1)
+        let aCase: Case
+        if fakeBaloonRate > Float.random() {
+            aCase = FakeCase(gvc: gvc, index: -1)
+        } else {
+            aCase = Case(gvc: gvc, index: -1)
+        }
         aCase.position = point
         aCase.zPosition = CGFloat(numberOfBaloons - baloonsToSpawn)
         aCase.runAction(SKAction.sequence([SKAction.waitForDuration(baloonTime), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))

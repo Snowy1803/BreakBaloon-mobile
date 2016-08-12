@@ -370,6 +370,19 @@ extension SKColor {
     }
 }
 
+extension Float {
+    static func random() -> Float {
+        return Float(arc4random()) / Float(UINT32_MAX)
+    }
+}
+
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX)
+    }
+}
+
+
 enum LoginStatus: Int {
     case Authenticated = 1
     case InvalidUsername = -1

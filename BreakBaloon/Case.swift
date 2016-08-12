@@ -57,7 +57,7 @@ class Case:SKSpriteNode {
         for _ in 0..<arc4random_uniform(10) {
             let shape = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(10) + 1))
             shape.position = CGPointMake(CGFloat(arc4random_uniform(75)) - 75/2, CGFloat(arc4random_uniform(75)) - 75/2)
-            shape.fillColor = color != nil ? color! : SKColor(red: randomFloat(), green: randomFloat(), blue: randomFloat(), alpha: 1)
+            shape.fillColor = color != nil ? color! : SKColor(red: CGFloat.random(), green: CGFloat.random(), blue: CGFloat.random(), alpha: 1)
             shape.strokeColor = SKColor.clearColor()
             shape.zPosition = 1
             shape.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.removeFromParent()]))
@@ -79,10 +79,6 @@ class Case:SKSpriteNode {
         shape.zPosition = 2
         shape.runAction(SKAction.sequence([SKAction.waitForDuration(0.4), SKAction.removeFromParent()]))
         addChild(shape)
-    }
-    
-    func randomFloat() -> CGFloat {
-        return CGFloat(Float(arc4random()) / Float(UINT32_MAX))
     }
     
     func polygon(points: [(CGFloat, CGFloat)]) -> CGPath {
