@@ -27,10 +27,15 @@ class RandGameLevel {
         /* 14 */    (100, 0.5, 2.5, 5, 3, 0),
         /* 15 */    (125, 0.5, 1.5, 10, 4, 0),
         /* B-16 */  (25, 0.25, 1.5, 7, 3, 0),
-        /* 17 */    (30, 0.5, 2, 1, 1, 0.5)
+        /* 17 */    (30, 0.5, 2, 1, 1, 0.5),
+        /* 18 */    (30, 0.35, 1.5, 0, 1, 0.35),
+        /* 19 */    (45, 0.25, 1.5, 2, 2, 0.15),
+        /* 20 */    (10, 0, 2.5, 1, 1, 0.35),
+        /* 21 */    (30, 0, 2, 3, 2, 0.5),
+        /* 22 */    (5, 0, 2, 0, 2, 0.9)
     ]
     
-    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14), RandGameBonusLevel(15, modifier: 5), RandGameLevel(16)]
+    static let levels:[RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14), RandGameBonusLevel(15, modifier: 5), RandGameLevel(16), RandGameLevel(17), RandGameLevel(18), RandGameLevel(19), RandGameLevel(20), RandGameLevel(21)]
     
     let index:Int
     var status:RandGameLevelStatus
