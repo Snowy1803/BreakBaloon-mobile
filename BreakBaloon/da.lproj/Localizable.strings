@@ -33,6 +33,10 @@
 "gameinfo.speed.medium" = "Hastighed : Medium";
 "gameinfo.speed.high" = "Hastighed : Høj";
 "gameinfo.speed.extreme" = "Hastighed : Ekstrem";
+"gameinfo.fakeBaloonRate.low" = "Indholder lidt falske balloner";
+"gameinfo.fakeBaloonRate.medium" = "Indholder nogen falske balloner";
+"gameinfo.fakeBaloonRate.high" = "Indholder mange falske balloner";
+"gameinfo.fakeBaloonRate.extreme" = "Indholer meget falske balloner";
 "gameinfo.requirePoints" = "%d points til at vinde";
 "gameinfo.end.finished" = "FÆRDIG";
 "gameinfo.end.failed" = "MISLYKKEDES";

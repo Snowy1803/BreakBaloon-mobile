@@ -33,6 +33,10 @@
 "gameinfo.speed.medium" = "Vitesse : Normale";
 "gameinfo.speed.high" = "Vitesse : Haute";
 "gameinfo.speed.extreme" = "Vitesse : Extrème";
+"gameinfo.fakeBaloonRate.low" = "Contient quelques faux ballons";
+"gameinfo.fakeBaloonRate.medium" = "Contient des faux ballons";
+"gameinfo.fakeBaloonRate.high" = "Contient beaucoup de faux ballons";
+"gameinfo.fakeBaloonRate.extreme" = "Contient énormément de faux ballons";
 "gameinfo.requirePoints" = "%d points pour gagner";
 "gameinfo.end.finished" = "TERMINÉ";
 "gameinfo.end.failed" = "ÉCHOUÉ";

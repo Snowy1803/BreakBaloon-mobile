@@ -33,6 +33,10 @@
 "gameinfo.speed.medium" = "Speed : Medium";
 "gameinfo.speed.high" = "Speed : High";
 "gameinfo.speed.extreme" = "Speed : Extreme";
+"gameinfo.fakeBaloonRate.low" = "Contains few fake baloons";
+"gameinfo.fakeBaloonRate.medium" = "Contains fake baloons";
+"gameinfo.fakeBaloonRate.high" = "Contains many fake baloons";
+"gameinfo.fakeBaloonRate.extreme" = "Contains very much fake baloons";
 "gameinfo.requirePoints" = "%d points for win";
 "gameinfo.end.finished" = "FINISHED";
 "gameinfo.end.failed" = "FAILED";
