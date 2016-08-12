@@ -86,6 +86,8 @@
 		20C995911D23ED300029312F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C995901D23ED300029312F /* GameViewController.swift */; };
 		20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */; };
 		20CB89D01D4CE82600A0408C /* levelbuttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */; };
+		20CEC7E61D5DF87D0031830C /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CEC7E51D5DF87D0031830C /* pause.png */; };
+		20CEC7E81D5DFE2B0031830C /* RandGamePauseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */; };
 		20E877331D23EDED00CCBA1A /* pump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 20E877321D23EDED00CCBA1A /* pump.wav */; };
 		20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E877361D25AD9D00CCBA1A /* GameScene.swift */; };
 		20E877391D25B1B500CCBA1A /* import.png in Resources */ = {isa = PBXBuildFile; fileRef = 20E877381D25B1B500CCBA1A /* import.png */; };
@@ -210,6 +212,8 @@
 		20C995901D23ED300029312F /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevel.swift; sourceTree = "<group>"; };
 		20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelbuttonbg.png; sourceTree = "<group>"; };
+		20CEC7E51D5DF87D0031830C /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGamePauseNode.swift; sourceTree = "<group>"; };
 		20E877321D23EDED00CCBA1A /* pump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pump.wav; sourceTree = "<group>"; };
 		20E877361D25AD9D00CCBA1A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		20E877381D25B1B500CCBA1A /* import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import.png; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
 				2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */,
 				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
+				20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */,
 				2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */,
 				20BE2F541D50F53B004A8B17 /* RandGameBonusLevel.swift */,
 				20BE2F561D510062004A8B17 /* RandGameBonusLevelInfoNode.swift */,
@@ -407,6 +412,7 @@
 				20F188271D2830470099F717 /* quick_singleplayer.png */,
 				20F188281D2830470099F717 /* quick_computer.png */,
 				20F188291D2830470099F717 /* quick_time.png */,
+				20CEC7E51D5DF87D0031830C /* pause.png */,
 				20B004F61D2C4B59005F706F /* level.png */,
 			);
 			name = sprites;
@@ -597,6 +603,7 @@
 				20BE2F4D1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png in Resources */,
 				20C9958A1D23ECC50029312F /* select.png in Resources */,
 				201F4D801D1812DE00EB894A /* closed0.png in Resources */,
+				20CEC7E61D5DF87D0031830C /* pause.png in Resources */,
 				20263AA51D5CBFB6005E596B /* fake-closed0.png in Resources */,
 				20BE2F641D54832B004A8B17 /* levelbuttonbg-bonus-locked.png in Resources */,
 				20263AB31D5CC2A4005E596B /* fake-opened2.png in Resources */,
@@ -663,6 +670,7 @@
 				20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */,
 				204289201D4E670300BDEE39 /* RandGameLevelEndNode.swift in Sources */,
 				20C995841D23EC710029312F /* Selector.swift in Sources */,
+				20CEC7E81D5DFE2B0031830C /* RandGamePauseNode.swift in Sources */,
 				20ED21681D4CDC1600DA86AF /* ioapi.c in Sources */,
 				20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */,
 				20C995911D23ED300029312F /* GameViewController.swift in Sources */,

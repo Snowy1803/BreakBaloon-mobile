@@ -23,12 +23,12 @@ class RandGameBonusLevel: RandGameLevel {
     }
     
     override func start(view: SKView, transition: SKTransition = SKTransition.flipVerticalWithDuration(NSTimeInterval(1))) {
-        gamescene = RandGameScene(view: view, numberOfBaloons: numberOfBaloons, baloonTime: secondsBeforeBaloonVanish, speed: maxSecondsBeforeNextBaloon, maxBaloons: maxBaloonsAtSameTime, fakeBaloonRate: fakeBaloonsRate, completion: endWithBonus)
+        gamescene = RandGameScene(view: view, level: self)
         view.presentScene(gamescene!, transition: transition);
         gamescene!.addChild(RandGameBonusLevelInfoNode(level: self, scene: gamescene!))
     }
     
-    func endWithBonus(missing: Int) {
+    override func end(missing: Int) {
         let xp = Int((Float(numberOfBaloons) - Float(missing)) * modifier)
         gamescene!.gvc.addXP(xp)
         

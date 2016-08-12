@@ -19,22 +19,24 @@ class RandGameScene: AbstractGameScene {
     let maxBaloons: UInt
     let fakeBaloonRate: Float
     let completion:((Int) -> Void)?
-    var label:SKLabelNode = SKLabelNode()
+    let label = SKLabelNode()
+    var pause = SKSpriteNode()
+    let level: RandGameLevel
     
     var baloonsToSpawn:UInt
     var nextBaloon:NSTimeInterval?
     
-    init(view: SKView, numberOfBaloons: UInt, baloonTime: NSTimeInterval, speed: NSTimeInterval, maxBaloons: UInt, fakeBaloonRate: Float, completion:((Int) -> Void)?) {
+    init(view: SKView, level: RandGameLevel) {
         gvc = view.window?.rootViewController as! GameViewController
-        self.numberOfBaloons = numberOfBaloons
-        self.baloonTime = baloonTime
-        self.nextBaloonMax = speed
-        self.completion = completion
+        self.level = level
+        self.numberOfBaloons = level.numberOfBaloons
+        self.baloonTime = level.secondsBeforeBaloonVanish
+        self.nextBaloonMax = level.maxSecondsBeforeNextBaloon
+        self.completion = level.end
         baloonsToSpawn = numberOfBaloons
-        self.maxBaloons = maxBaloons
-        self.fakeBaloonRate = fakeBaloonRate
+        self.maxBaloons = level.maxBaloonsAtSameTime
+        self.fakeBaloonRate = level.fakeBaloonsRate
         super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
-        label = SKLabelNode()
         label.fontColor = SKColor.blackColor()
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             label.fontSize = 12
@@ -43,9 +45,12 @@ class RandGameScene: AbstractGameScene {
         }
         label.fontName = "Verdana-Bold"
         label.position = CGPointMake(label.frame.width/2, 5)
-        label.zPosition = CGFloat(numberOfBaloons) + 1
+        label.zPosition = 1
         updateLabel()
         addChild(label)
+        pause = SKSpriteNode(imageNamed: "pause")
+        pause.position = CGPointMake(self.frame.width - pause.frame.width / 4 * 3, self.frame.height - pause.frame.height / 4 * 3)
+        pause.zPosition = 2
         beginTime = NSDate().timeIntervalSince1970
     }
     
@@ -83,12 +88,14 @@ class RandGameScene: AbstractGameScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        for touch in touches {
-            let point = touch.locationInNode(self)
-            for aCase in children {
-                if aCase is Case && aCase.frame.extends(10).contains(point) {
-                    breakBaloon(case: aCase as! Case, touch: point)
-                    return
+        if !isGamePaused() {
+            for touch in touches {
+                let point = touch.locationInNode(self)
+                for aCase in children {
+                    if aCase is Case && aCase.frame.extends(10).contains(point) {
+                        breakBaloon(case: aCase as! Case, touch: point)
+                        return
+                    }
                 }
             }
         }
@@ -96,14 +103,24 @@ class RandGameScene: AbstractGameScene {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if touches.count == 1 {
-            for child in children {
-                if child is RandGameLevelInfoNode {
-                    beginTime = NSDate().timeIntervalSince1970
-                    quitPause()
-                    child.removeFromParent()
-                    break
-                } else if child is RandGameLevelEndNode {
-                    (child as! RandGameLevelEndNode).click(touches.first!.locationInNode(self))
+            let point = touches.first!.locationInNode(self)
+            if pause.frame.contains(point) {
+                pauseGame()
+                pause.removeFromParent()
+                addChild(RandGamePauseNode(scene: self))
+            } else {
+                for child in children {
+                    if child is RandGameLevelInfoNode {
+                        beginTime = NSDate().timeIntervalSince1970
+                        quitPause()
+                        child.removeFromParent()
+                        addChild(pause)
+                        break
+                    } else if child is RandGameLevelEndNode {
+                        (child as! RandGameLevelEndNode).click(touches.first!.locationInNode(self))
+                    } else if child is RandGamePauseNode {
+                        (child as! RandGamePauseNode).touchAt(touches.first!.locationInNode(self))
+                    }
                 }
             }
         }
@@ -142,7 +159,7 @@ class RandGameScene: AbstractGameScene {
             aCase = Case(gvc: gvc, index: -1)
         }
         aCase.position = point
-        aCase.zPosition = CGFloat(numberOfBaloons - baloonsToSpawn)
+        aCase.zPosition = 0
         aCase.runAction(SKAction.sequence([SKAction.waitForDuration(baloonTime), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))
         spawnBaloon(case: aCase)
     }

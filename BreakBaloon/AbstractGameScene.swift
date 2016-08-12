@@ -36,9 +36,11 @@ class AbstractGameScene: SKScene {
     
     func pauseGame() {
         pauseTime = NSDate().timeIntervalSince1970
+        paused = true
     }
     
     func quitPause() {
+        paused = false
         if beginTime != nil && pauseTime != nil {
             let pauseLenght = NSDate().timeIntervalSince1970 - pauseTime!
             beginTime! += pauseLenght
