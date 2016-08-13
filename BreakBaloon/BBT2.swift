@@ -196,7 +196,6 @@ class BBT2 {
             print("Tried to lowercase a null string")
             throw ExecErrors.NullPointerError
         }
-        print("lower")
         set(variable, value: get(variable)!.lowercaseString)
         return nil
     }
@@ -206,7 +205,6 @@ class BBT2 {
             print("Tried to uppercase a null string")
             throw ExecErrors.NullPointerError
         }
-        print("upper '\(variable)'")
         set(variable, value: get(variable)!.uppercaseString)
         return nil
     }
