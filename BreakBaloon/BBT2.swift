@@ -42,6 +42,7 @@ class BBT2 {
         methods["blackAndWhite"] = blackAndWhite
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
+        methods["toCap"] = toUpper
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -206,6 +207,15 @@ class BBT2 {
             throw ExecErrors.NullPointerError
         }
         set(variable, value: get(variable)!.uppercaseString)
+        return nil
+    }
+    
+    func toCap(variable: String, stringLiteral: String) throws -> String? {
+        if properties[variable] == nil || properties[variable]! == nil {
+            print("Tried to uppercase a null string")
+            throw ExecErrors.NullPointerError
+        }
+        set(variable, value: get(variable)!.capitalizedString)
         return nil
     }
     
