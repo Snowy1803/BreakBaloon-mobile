@@ -56,7 +56,16 @@ class BBT2 {
     }
     
     func exec(cmd: String) throws -> String? {
-        if cmd.containsString("="){
+        if cmd.containsString("+=") {
+            let varAndValToConcat = cmd.componentsSeparatedByString("+=")
+            let variable = varAndValToConcat[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            if properties[variable] != nil && properties[variable]! != nil {
+                properties[variable] = try properties[variable]!! + execIfNeeds(varAndValToConcat[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!
+                return properties[variable]!
+            }
+            print("Tried to concat a value to the undeclared variable \(variable)")
+            throw ExecErrors.AssignUndeclaredVariableError
+        } else if cmd.containsString("="){
             // Assignation
             let vals = cmd.componentsSeparatedByString("=")
             let property = NSString(string: vals[0]).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
@@ -99,8 +108,8 @@ class BBT2 {
             return constants[cmd]!
         } else if properties[cmd] != nil {
             return properties[cmd]!
-        } else if cmd.hasPrefix("\"") && cmd.hasSuffix("\"") && cmd.componentsSeparatedByString("\"").count == 2 {
-            return cmd.stringByReplacingOccurrencesOfString("\\\\", withString: "\\").stringByReplacingOccurrencesOfString("\\n", withString: "\n").stringByReplacingOccurrencesOfString("\\t", withString: "\t").stringByReplacingOccurrencesOfString("\\r", withString: "\r")
+        } else if cmd.hasPrefix("\"") && cmd.hasSuffix("\"") && cmd.componentsSeparatedByString("\"").count == 3 {
+            return cmd.stringByReplacingOccurrencesOfString("\\\\", withString: "\\").stringByReplacingOccurrencesOfString("\\n", withString: "\n").stringByReplacingOccurrencesOfString("\\t", withString: "\t").stringByReplacingOccurrencesOfString("\\r", withString: "\r").stringByReplacingOccurrencesOfString("\"", withString: "")
         } else if cmd.containsString("(") || cmd.containsString("=") {
             return try exec(cmd)
         } else if cmd.containsString("++") {
