@@ -193,7 +193,7 @@ class IPhoneMusicSettingScene: SKScene {
             } else if onNode(musicSetting, point: point) {
                 musicSetting.calculateVolume(touch)
             } else if onNode(musicIndexSetting.importBtn, point: touch.locationInNode(musicIndexSetting)) {
-                musicIndexSetting.showImportDialog()
+                musicIndexSetting.importBtn.showImportDialog()
             } else if onNode(musicIndexSetting, point: point) {
                 musicIndexSetting.click(touch)
             }

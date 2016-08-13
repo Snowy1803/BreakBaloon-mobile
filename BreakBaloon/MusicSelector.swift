@@ -10,11 +10,13 @@ import Foundation
 import SpriteKit
 import MediaPlayer
 
-class MusicSelector: Selector, MPMediaPickerControllerDelegate {
-    let importBtn = ImportMusic()
+class MusicSelector: Selector {
+    let importBtn: ImportMusic
     
     init(gvc:GameViewController, importUnder:Bool) {
+        importBtn = ImportMusic(gvc: gvc)
         super.init(gvc: gvc, value: gvc.currentMusicInt)
+        importBtn.selector = self
         if importUnder {
             importBtn.position = CGPointMake(0, -(self.frame.height / 4 + importBtn.frame.width / 4))
         } else {
@@ -45,26 +47,5 @@ class MusicSelector: Selector, MPMediaPickerControllerDelegate {
         }
         let cmps = GameViewController.getMusicURLs()[value].absoluteString.componentsSeparatedByString("/")
         return cmps[cmps.count - 1].componentsSeparatedByString(".")[0].stringByRemovingPercentEncoding!
-    }
-    
-    func showImportDialog() {
-        let media = MPMediaPickerController(mediaTypes: .Music)
-        media.allowsPickingMultipleItems = false
-        media.delegate = self
-        gvc.presentViewController(media, animated: true, completion: nil)
-    }
-    
-    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        if mediaItemCollection.count == 1 {
-            gvc.dismissViewControllerAnimated(true, completion: nil)
-            let item = mediaItemCollection.items.first!
-            NSUserDefaults.standardUserDefaults().setObject(item.title, forKey: "usermusicName")
-            NSUserDefaults.standardUserDefaults().setURL(item.assetURL, forKey: "usermusic")
-            setSelectorValue(maxValue())
-        }
-    }
-    
-    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
-        gvc.dismissViewControllerAnimated(true, completion: nil)
     }
 }
