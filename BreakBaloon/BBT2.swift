@@ -181,6 +181,10 @@ class BBT2 {
     }
     
     func blackAndWhite(variable: String, stringLiteral: String) throws -> String? {
+        if get(variable) == nil {
+            print("Tried to grayscale a null image")
+            throw ExecErrors.NullPointerError
+        }
         let ciImage = CIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
         let grayscale = ciImage.imageByApplyingFilter("CIColorControls", withInputParameters: [ kCIInputSaturationKey: 0.0 ])
         set(variable, value: UIImagePNGRepresentation(UIImage(CIImage: grayscale))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
@@ -191,9 +195,34 @@ class BBT2 {
         return properties["theme.id"]! == nil ? "Undefined" : properties["theme.id"]!!
     }
     
+    func getThemeName() -> String {
+        return properties["theme.name"]! == nil ? "Undefined" : properties["theme.name"]!!
+    }
+    
+    func getThemeVersion() -> String {
+        return properties["theme.version"]! == nil ? "Undefined" : properties["theme.version"]!!
+    }
+    
+    func getThemeAuthor() -> String {
+        return properties["theme.author"]! == nil ? "Undefined" : properties["theme.author"]!!
+    }
+    
+    func getThemeDescription() -> String {
+        return properties["theme.description"]! == nil ? "Undefined" : properties["theme.description"]!!
+    }
+    
+    func getBaloons() -> [(UIImage, UIImage, UIImage)] {
+        return []
+    }
+    
+    func getImage(variable: String) -> UIImage {
+        return UIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
+    }
+    
     enum ExecErrors: ErrorType {
         case AssignUndeclaredVariableError
         case CallUndeclaredMethodError
         case SyntaxError
+        case NullPointerError
     }
 }
