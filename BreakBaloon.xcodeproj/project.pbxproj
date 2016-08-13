@@ -88,6 +88,7 @@
 		20CB89D01D4CE82600A0408C /* levelbuttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */; };
 		20CEC7E61D5DF87D0031830C /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CEC7E51D5DF87D0031830C /* pause.png */; };
 		20CEC7E81D5DFE2B0031830C /* RandGamePauseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */; };
+		20CEC7EA1D5F1C670031830C /* BBT2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CEC7E91D5F1C670031830C /* BBT2.swift */; };
 		20E877331D23EDED00CCBA1A /* pump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 20E877321D23EDED00CCBA1A /* pump.wav */; };
 		20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E877361D25AD9D00CCBA1A /* GameScene.swift */; };
 		20E877391D25B1B500CCBA1A /* import.png in Resources */ = {isa = PBXBuildFile; fileRef = 20E877381D25B1B500CCBA1A /* import.png */; };
@@ -214,6 +215,7 @@
 		20CB89CF1D4CE82600A0408C /* levelbuttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelbuttonbg.png; sourceTree = "<group>"; };
 		20CEC7E51D5DF87D0031830C /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGamePauseNode.swift; sourceTree = "<group>"; };
+		20CEC7E91D5F1C670031830C /* BBT2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBT2.swift; sourceTree = "<group>"; };
 		20E877321D23EDED00CCBA1A /* pump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pump.wav; sourceTree = "<group>"; };
 		20E877361D25AD9D00CCBA1A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		20E877381D25B1B500CCBA1A /* import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import.png; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
 				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
 				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
+				20CEC7E91D5F1C670031830C /* BBT2.swift */,
 				2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */,
 				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
 				20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */,
@@ -680,6 +683,7 @@
 				20C9958F1D23ED100029312F /* Downloadable.swift in Sources */,
 				20BE2F571D510062004A8B17 /* RandGameBonusLevelInfoNode.swift in Sources */,
 				20ED21611D4CDC1600DA86AF /* entropy.c in Sources */,
+				20CEC7EA1D5F1C670031830C /* BBT2.swift in Sources */,
 				20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */,
 				20ED21601D4CDC1600DA86AF /* aestab.c in Sources */,
 				20F188301D2A62C70099F717 /* Theme.swift in Sources */,
