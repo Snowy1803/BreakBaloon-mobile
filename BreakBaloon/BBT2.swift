@@ -12,11 +12,14 @@ import UIKit
 class BBT2 {
     let null:String? = nil
     
-    var methods: [String: ((String) -> Void)] = [:]
+    let dir: String
+    
+    var methods: [String: ((String) throws -> String?)] = [:]
     var properties: [String: String?] = [:]
     var constants: [String: String?] = [:]
     
-    init(code: String) throws {
+    init(dir: String, code: String) throws {
+        self.dir = dir
         let lines = code.componentsSeparatedByString("\n")
         // MARK: default properties
         constants["_PLATFORM"] = "iOS"
@@ -27,6 +30,9 @@ class BBT2 {
         properties["theme.description"] = null
         properties["theme.author"] = null
         properties["theme.version"] = null
+        // MARK: methods
+        methods["print"] = printString
+        methods["fileGetContents"] = fileGetContents
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -60,6 +66,20 @@ class BBT2 {
             } else {
                 print("Tried to assign a value to the undeclared variable \(property)")
                 throw ExecErrors.AssignUndeclaredVariableError
+            }
+        } else if cmd.containsString("(") {
+            var components = cmd.componentsSeparatedByString("(")
+            let methodName = components[0]
+            if methods[methodName] != nil {
+                components.removeFirst()
+                var arg = components.joinWithSeparator("(")
+                let range = arg.rangeOfString(")", options: .BackwardsSearch)
+                if range == nil {
+                    print("Missing closing bracket ')'")
+                    throw ExecErrors.SyntaxError
+                }
+                arg.removeRange(range!.startIndex..<arg.endIndex)
+                return try methods[methodName]!(arg)
             }
         }
         return null
@@ -96,8 +116,23 @@ class BBT2 {
         return cmd
     }
     
+    func printString(stringLiteral: String) throws -> String? {
+        print("[BBTC] [\(getThemeID())] \(try execIfNeeds(stringLiteral)!)")
+        return nil
+    }
+    
+    func fileGetContents(stringLiteral: String) throws -> String? {
+        let argument = try execIfNeeds(stringLiteral)!
+        return try FileSaveHelper(fileName: argument, fileExtension: argument.containsString(".") ? .NONE : .PNG, subDirectory: dir).getContentsOfFile()
+    }
+    
+    func getThemeID() -> String {
+        return properties["theme.id"]! == nil ? "Undefined" : properties["theme.id"]!!
+    }
+    
     enum ExecErrors: ErrorType {
         case AssignUndeclaredVariableError
         case CallUndeclaredMethodError
+        case SyntaxError
     }
 }
