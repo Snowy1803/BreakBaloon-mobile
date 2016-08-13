@@ -87,7 +87,7 @@ class BBT2 {
             }
             return valsToConcat.joinWithSeparator(" ")
         } else if cmd.containsString("+") {
-            var valsToConcat = cmd.componentsSeparatedByString("++")
+            var valsToConcat = cmd.componentsSeparatedByString("+")
             for i in 0..<valsToConcat.count {
                 valsToConcat[i] = try execIfNeeds(valsToConcat[i].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!
             }
