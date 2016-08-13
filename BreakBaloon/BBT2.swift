@@ -77,7 +77,7 @@ class BBT2 {
         } else if properties[cmd] != nil {
             return properties[cmd]!
         } else if cmd.hasPrefix("\"") && cmd.hasSuffix("\"") && cmd.componentsSeparatedByString("\"").count == 2 {
-            return cmd
+            return cmd.stringByReplacingOccurrencesOfString("\\\\", withString: "\\").stringByReplacingOccurrencesOfString("\\n", withString: "\n").stringByReplacingOccurrencesOfString("\\t", withString: "\t").stringByReplacingOccurrencesOfString("\\r", withString: "\r")
         } else if cmd.containsString("(") || cmd.containsString("=") {
             return try exec(cmd)
         } else if cmd.containsString("++") {
