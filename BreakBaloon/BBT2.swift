@@ -14,15 +14,18 @@ class BBT2 {
     
     let dir: String
     
-    var methods: [String: ((String) throws -> String?)] = [:]
+    var functions: [String: ((String) throws -> String?)] = [:]
+    var methods: [String: ((String, String) throws -> String?)] = [:]
     var properties: [String: String?] = [:]
     var constants: [String: String?] = [:]
     
     init(dir: String, code: String) throws {
         self.dir = dir
         let lines = code.componentsSeparatedByString("\n")
-        // MARK: default properties
-        constants["_PLATFORM"] = "iOS"
+        // MARK: constants & default properties
+        constants["_PLATFORM_OS"] = "iOS"
+        constants["_PLATFORM_DEVICE_MODEL"] = UIDevice.currentDevice().localizedModel
+        constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
         properties["theme.id"] = null
@@ -33,9 +36,10 @@ class BBT2 {
         properties["image.icon"] = null
         properties["image.wicon"] = null
         properties["image.cursor"] = null
-        // MARK: methods
-        methods["print"] = printString
-        methods["fileGetContents"] = fileGetContents
+        // MARK: functions & methods
+        functions["print"] = printString
+        functions["fileGetContents"] = fileGetContents
+        methods["blackAndWhite"] = blackAndWhite
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -82,7 +86,7 @@ class BBT2 {
         } else if cmd.containsString("(") {
             var components = cmd.componentsSeparatedByString("(")
             let methodName = components[0]
-            if methods[methodName] != nil {
+            if functions[methodName] != nil {
                 components.removeFirst()
                 var arg = components.joinWithSeparator("(")
                 let range = arg.rangeOfString(")", options: .BackwardsSearch)
@@ -91,10 +95,43 @@ class BBT2 {
                     throw ExecErrors.SyntaxError
                 }
                 arg.removeRange(range!.startIndex..<arg.endIndex)
-                return try methods[methodName]!(arg)
+                return try functions[methodName]!(arg)
+            }
+            let lastDot = methodName.rangeOfString(".", options: .BackwardsSearch)!.startIndex
+            if methods[methodName[lastDot.successor()..<methodName.endIndex]] != nil && valueExists(methodName[methodName.startIndex..<lastDot]) {
+                components.removeFirst()
+                var arg = components.joinWithSeparator("(")
+                let range = arg.rangeOfString(")", options: .BackwardsSearch)
+                if range == nil {
+                    print("Missing closing bracket ')'")
+                    throw ExecErrors.SyntaxError
+                }
+                arg.removeRange(range!.startIndex..<arg.endIndex)
+                return try methods[methodName[lastDot.successor()..<methodName.endIndex]]!(methodName[methodName.startIndex..<lastDot], arg)
             }
         }
         return null
+    }
+    
+    func valueExists(name: String) -> Bool {
+        return constants[name] != nil || properties[name] != nil
+    }
+    
+    func set(name: String, value: String) {
+        if constants[name] != nil {
+            constants[name] = value
+        } else if properties[name] != nil {
+            properties[name] = value
+        }
+    }
+    
+    func get(name: String) -> String? {
+        if constants[name] != nil {
+            return constants[name]!
+        } else if properties[name] != nil {
+            return properties[name]!
+        }
+        return nil
     }
     
     func value(vals: [String]) throws -> String? {
@@ -136,11 +173,18 @@ class BBT2 {
     func fileGetContents(stringLiteral: String) throws -> String? {
         let argument = try execIfNeeds(stringLiteral)!
         do {
-            return try FileSaveHelper(fileName: argument, fileExtension: argument.containsString(".") ? .NONE : .PNG, subDirectory: dir).getContentsOfFile()
+            return try FileSaveHelper(fileName: argument, fileExtension: argument.containsString(".") ? .NONE : .PNG, subDirectory: dir).getData().base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         } catch {
             print("Couldn't get file content of \(argument)\(argument.containsString(".") ? "" : ".png"): \(error)")
             throw error
         }
+    }
+    
+    func blackAndWhite(variable: String, stringLiteral: String) throws -> String? {
+        let ciImage = CIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
+        let grayscale = ciImage.imageByApplyingFilter("CIColorControls", withInputParameters: [ kCIInputSaturationKey: 0.0 ])
+        set(variable, value: UIImagePNGRepresentation(UIImage(CIImage: grayscale))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
     }
     
     func getThemeID() -> String {
