@@ -30,6 +30,9 @@ class BBT2 {
         properties["theme.description"] = null
         properties["theme.author"] = null
         properties["theme.version"] = null
+        properties["image.icon"] = null
+        properties["image.wicon"] = null
+        properties["image.cursor"] = null
         // MARK: methods
         methods["print"] = printString
         methods["fileGetContents"] = fileGetContents
@@ -123,7 +126,12 @@ class BBT2 {
     
     func fileGetContents(stringLiteral: String) throws -> String? {
         let argument = try execIfNeeds(stringLiteral)!
-        return try FileSaveHelper(fileName: argument, fileExtension: argument.containsString(".") ? .NONE : .PNG, subDirectory: dir).getContentsOfFile()
+        do {
+            return try FileSaveHelper(fileName: argument, fileExtension: argument.containsString(".") ? .NONE : .PNG, subDirectory: dir).getContentsOfFile()
+        } catch {
+            print("Couldn't get file content of \(argument)\(argument.containsString(".") ? "" : ".png"): \(error)")
+            throw error
+        }
     }
     
     func getThemeID() -> String {
