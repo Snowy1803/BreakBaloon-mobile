@@ -40,6 +40,8 @@ class BBT2 {
         functions["print"] = printString
         functions["fileGetContents"] = fileGetContents
         methods["blackAndWhite"] = blackAndWhite
+        methods["toLower"] = toLower
+        methods["toUpper"] = toUpper
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -118,9 +120,7 @@ class BBT2 {
     }
     
     func set(name: String, value: String) {
-        if constants[name] != nil {
-            constants[name] = value
-        } else if properties[name] != nil {
+        if properties[name] != nil {
             properties[name] = value
         }
     }
@@ -188,6 +188,26 @@ class BBT2 {
         let ciImage = CIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
         let grayscale = ciImage.imageByApplyingFilter("CIColorControls", withInputParameters: [ kCIInputSaturationKey: 0.0 ])
         set(variable, value: UIImagePNGRepresentation(UIImage(CIImage: grayscale))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    func toLower(variable: String, stringLiteral: String) throws -> String? {
+        if properties[variable] == nil || properties[variable]! == nil {
+            print("Tried to lowercase a null string")
+            throw ExecErrors.NullPointerError
+        }
+        print("lower")
+        set(variable, value: get(variable)!.lowercaseString)
+        return nil
+    }
+    
+    func toUpper(variable: String, stringLiteral: String) throws -> String? {
+        if properties[variable] == nil || properties[variable]! == nil {
+            print("Tried to uppercase a null string")
+            throw ExecErrors.NullPointerError
+        }
+        print("upper '\(variable)'")
+        set(variable, value: get(variable)!.uppercaseString)
         return nil
     }
     
