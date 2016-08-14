@@ -33,7 +33,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.13"
+        constants["_BBTC_VERSION"] = "0.1.14"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16581375"
@@ -55,6 +55,7 @@ class BBT2 {
         // MARK: functions & methods
         functions["print"] = printString
         functions["fileImage"] = fileImage
+        functions["unicolor"] = unicolor
         methods["grayscale"] = grayscale
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
@@ -248,6 +249,15 @@ class BBT2 {
         }
     }
     
+    func unicolor(stringLiteral: String) throws -> String? {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0)
+        try parseColor(stringLiteral).uiColor.setFill()
+        UIRectFill(CGRectMake(0, 0, 1, 1))
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return UIImagePNGRepresentation(image)!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+    }
+    
     func grayscale(variable: String, stringLiteral: String) throws -> String? {
         if get(variable) == nil {
             print("Tried to grayscale a null image")
@@ -430,6 +440,11 @@ class BBT2 {
 struct RGBA32: Equatable {
     static let bitmapInfo = CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Little.rawValue
     var color: UInt32
+    var uiColor: UIColor {
+        get {
+            return UIColor(rgbValue: UInt(color))
+        }
+    }
     
     init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
         color = (UInt32(red) << 24) | (UInt32(green) << 16) | (UInt32(blue) << 8) | UInt32(alpha)
