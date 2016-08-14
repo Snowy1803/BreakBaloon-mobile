@@ -33,7 +33,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.11"
+        constants["_BBTC_VERSION"] = "0.1.12"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16581375"
@@ -211,7 +211,8 @@ class BBT2 {
         }
         let ciImage = CIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
         let grayscale = ciImage.imageByApplyingFilter("CIColorControls", withInputParameters: [ kCIInputSaturationKey: 0.0 ])
-        try set(variable, value: UIImagePNGRepresentation(UIImage(CIImage: grayscale))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        let context = CIContext(options: nil)
+        try set(variable, value: UIImagePNGRepresentation(UIImage(CGImage: context.createCGImage(grayscale, fromRect: grayscale.extent)))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
         return nil
     }
     
@@ -223,7 +224,7 @@ class BBT2 {
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
-            degrees.removeAtIndex(stringLiteral.endIndex)
+            degrees.removeAtIndex(stringLiteral.endIndex.predecessor())
             radians = CGFloat(Int(degrees)!) * (180 / CGFloat(M_PI))
         } else {
             radians = CGFloat(Float(stringLiteral)!)
