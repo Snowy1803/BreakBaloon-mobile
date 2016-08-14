@@ -33,7 +33,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.12"
+        constants["_BBTC_VERSION"] = "0.1.13"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16581375"
@@ -54,14 +54,14 @@ class BBT2 {
         properties["image.cursor"] = null
         // MARK: functions & methods
         functions["print"] = printString
-        functions["fileGetContents"] = fileGetContents
-        methods["blackAndWhite"] = blackAndWhite
+        functions["fileImage"] = fileImage
+        methods["grayscale"] = grayscale
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
         methods["toCap"] = toCap
         methods["rotate"] = rotate
         methods["rotate_flip"] = rotateFlip
-        methods["replace_colors"] = pixelChange
+        methods["replaceColors"] = pixelChange
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -76,18 +76,30 @@ class BBT2 {
             do {
                 try exec(cmd.1)
             } catch {
-                print("\tat line \(cmd.0 + 1)")
+                print("\tat line \(line + 1)")
                 throw error
             }
         }
     }
     
     func exec(cmd: String) throws -> String? {
-        if cmd.containsString("+=") {
+        return try exec(cmd, properties: properties)
+    }
+    
+    func exec(cmd: String, properties: [String: String?]) throws -> String? {
+        if cmd.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).hasPrefix("image.baloons") && cmd.containsString("=") {
+            let vals = cmd.componentsSeparatedByString("=")
+            if vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "[" {
+                try parseBaloonBlock()
+            } else {
+                print("Invalid baloons declaration syntax")
+                throw ExecErrors.AssignUndeclaredVariableError
+            }
+        } else if cmd.containsString("+=") {
             let varAndValToConcat = cmd.componentsSeparatedByString("+=")
             let variable = varAndValToConcat[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             if properties[variable] != nil && properties[variable]! != nil {
-                properties[variable] = try properties[variable]!! + execIfNeeds(varAndValToConcat[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!
+                try set(variable, value: properties[variable]!! + execIfNeeds(varAndValToConcat[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!)
                 return properties[variable]!
             }
             print("Tried to concat a value to the undeclared variable \(variable)")
@@ -99,16 +111,16 @@ class BBT2 {
             if property.hasPrefix("val ") {
                 constants[property.substringFromIndex(property.startIndex.advancedBy(4))] = try value(vals)
             } else if property.hasPrefix("var ") {
-                properties[property.substringFromIndex(property.startIndex.advancedBy(4))] = try value(vals)
+                try set(property.substringFromIndex(property.startIndex.advancedBy(4)), value: value(vals)!)
             } else if properties[property] != nil {
-                properties[property] = try value(vals)
+                try set(property, value: value(vals)!)
             } else {
                 print("Tried to assign a value to the undeclared variable \(property)")
                 throw ExecErrors.AssignUndeclaredVariableError
             }
         } else if cmd.containsString("(") {
             var components = cmd.componentsSeparatedByString("(")
-            let methodName = components[0]
+            let methodName = components[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             if functions[methodName] != nil {
                 components.removeFirst()
                 var arg = components.joinWithSeparator("(")
@@ -194,7 +206,39 @@ class BBT2 {
         return nil
     }
     
-    func fileGetContents(stringLiteral: String) throws -> String? {
+    func parseBaloonBlock() throws {
+        var inBaloonBlock = -1
+        var cmps = completeCode.componentsSeparatedByString("\n")
+        cmps.removeRange(0..<self.line)
+        for line in cmps {
+            if inBaloonBlock != -1 {
+                if line.containsString("}") {
+                    inBaloonBlock = -1
+                } else if line.containsString("]") {
+                    print("Early baloon block array end")
+                    throw ExecErrors.SyntaxError
+                } else {
+                    try exec(line)
+                }
+            } else {
+                if line.containsString(":") {
+                    let cmps = line.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).componentsSeparatedByString(":")
+                    let baloon = Int(cmps[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+                    if cmps[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "{" && baloon != nil {
+                        inBaloonBlock = baloon!
+                    } else {
+                        print("Baloon block beginning must be on one line 'x: {'")
+                        throw ExecErrors.SyntaxError
+                    }
+                } else if line.containsString("]") {
+                    return // END
+                }
+            }
+            self.line += 1
+        }
+    }
+    
+    func fileImage(stringLiteral: String) throws -> String? {
         let argument = try execIfNeeds(stringLiteral)!
         do {
             return try FileSaveHelper(fileName: argument, fileExtension: argument.containsString(".") ? .NONE : .PNG, subDirectory: dir).getData().base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
@@ -204,7 +248,7 @@ class BBT2 {
         }
     }
     
-    func blackAndWhite(variable: String, stringLiteral: String) throws -> String? {
+    func grayscale(variable: String, stringLiteral: String) throws -> String? {
         if get(variable) == nil {
             print("Tried to grayscale a null image")
             throw ExecErrors.NullPointerError
