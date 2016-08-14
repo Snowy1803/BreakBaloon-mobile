@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import SpriteKit
 
 class BBT2 {
     let null:String? = nil
@@ -33,6 +33,17 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
+        constants["_BBTC_VERSION"] = "0.1.11"
+        constants["COLOR_BLACK"] = "0"
+        constants["COLOR_WHITE"] = "16581375"
+        constants["COLOR_RED"] = "16581375"
+        constants["COLOR_BLUE"] = "255"
+        constants["COLOR_GREEN"] = "65280"
+        constants["COLOR_YELLOW"] = "16776960"
+        constants["COLOR_ORANGE"] = "16744448"
+        constants["COLOR_PINK"] = "16711935"
+        constants["COLOR_PURPLE"] = "8388736"
+        constants["COLOR_AQUA"] = "65535"
         properties["theme.id"] = null
         properties["theme.name"] = null
         properties["theme.description"] = null
@@ -50,6 +61,7 @@ class BBT2 {
         methods["toCap"] = toCap
         methods["rotate"] = rotate
         methods["rotate_flip"] = rotateFlip
+        methods["replace_colors"] = pixelChange
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -237,6 +249,21 @@ class BBT2 {
         return nil
     }
     
+    func pixelChange(variable: String, stringLiteral: String) throws -> String? {
+        if get(variable) == nil {
+            print("Tried to change pixels of a null image")
+            throw ExecErrors.NullPointerError
+        }
+        if !stringLiteral.containsString("->") {
+            print("The syntax of replaceColors is 'var.replaceColors(COLOR1->COLOR2)'")
+            throw ExecErrors.SyntaxError
+        }
+        let cmps = stringLiteral.componentsSeparatedByString("->")
+        try set(variable, value: UIImagePNGRepresentation(pixelChangeImpl(getImage(variable).CGImage!, from: parseColor(cmps[0]), to: parseColor(cmps[1])))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    /// SO: 27092354
     func rotateImpl(image: UIImage, radians: CGFloat, flip: Bool) -> UIImage {
         let rotatedViewBox = UIView(frame: CGRect(origin: CGPointZero, size: image.size))
         rotatedViewBox.transform = CGAffineTransformMakeRotation(radians)
@@ -250,6 +277,45 @@ class BBT2 {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    /// SO: 31661023
+    func pixelChangeImpl(input: CGImage, from: RGBA32, to: RGBA32) -> UIImage {
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let width = CGImageGetWidth(input)
+        let height = CGImageGetHeight(input)
+        let bytesPerRow = 4 * width
+        
+        guard let context = CGBitmapContextCreate(nil, width, height, 8, bytesPerRow, colorSpace, RGBA32.bitmapInfo) else {
+            print("Couldn't change pixels from \(from) to \(to) in image")
+            print("\tat line \(line)")
+            return UIImage(CGImage: input)
+        }
+        
+        CGContextDrawImage(context, CGRectMake(0, 0, CGFloat(width), CGFloat(height)), input)
+        let pixelBuffer = UnsafeMutablePointer<RGBA32>(CGBitmapContextGetData(context))
+        var currentPixel = pixelBuffer
+        
+        for _ in 0..<height {
+            for _ in 0..<width {
+                if currentPixel.memory == from {
+                    currentPixel.memory = to
+                }
+                currentPixel += 1
+            }
+        }
+        
+        return UIImage(CGImage: CGBitmapContextCreateImage(context)!)
+    }
+    
+    func parseColor(string: String) throws -> RGBA32 {
+        if Int(string) != nil {
+            return RGBA32(color: SKColor(rgbValue: UInt(string)!))
+        } else if get(string) != nil {
+            return try parseColor(get(string)!)
+        }
+        print("Invalid color: \(string)")
+        throw ExecErrors.SyntaxError
     }
     
     func toLower(variable: String, stringLiteral: String) throws -> String? {
@@ -314,4 +380,22 @@ class BBT2 {
         case NullPointerError
         case EditConstantError
     }
+}
+
+struct RGBA32: Equatable {
+    static let bitmapInfo = CGImageAlphaInfo.PremultipliedLast.rawValue | CGBitmapInfo.ByteOrder32Little.rawValue
+    var color: UInt32
+    
+    init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
+        color = (UInt32(red) << 24) | (UInt32(green) << 16) | (UInt32(blue) << 8) | UInt32(alpha)
+    }
+    
+    init(color: UIColor) {
+        let ci = CIColor(color: color)
+        self.init(red: UInt8(ci.red * 0xFF), green: UInt8(ci.green * 0xFF), blue: UInt8(ci.blue * 0xFF), alpha: UInt8(ci.alpha * 0xFF))
+    }
+}
+
+func ==(lhs: RGBA32, rhs: RGBA32) -> Bool {
+    return lhs.color == rhs.color
 }
