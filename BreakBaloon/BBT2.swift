@@ -18,9 +18,14 @@ class BBT2 {
     var methods: [String: ((String, String) throws -> String?)] = [:]
     var properties: [String: String?] = [:]
     var constants: [String: String?] = [:]
+    var baloons: [(UIImage, UIImage, UIImage)] = []
+    
+    let completeCode: String
+    var line = 0
     
     init(dir: String, code: String) throws {
         self.dir = dir
+        self.completeCode = code
         let lines = code.componentsSeparatedByString("\n")
         // MARK: constants & default properties
         constants["_PLATFORM_OS"] = "iOS"
@@ -42,7 +47,9 @@ class BBT2 {
         methods["blackAndWhite"] = blackAndWhite
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
-        methods["toCap"] = toUpper
+        methods["toCap"] = toCap
+        methods["rotate"] = rotate
+        methods["rotate_flip"] = rotateFlip
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -53,6 +60,7 @@ class BBT2 {
             }
         }
         for cmd in commands {
+            line = cmd.0
             do {
                 try exec(cmd.1)
             } catch {
@@ -72,7 +80,7 @@ class BBT2 {
             }
             print("Tried to concat a value to the undeclared variable \(variable)")
             throw ExecErrors.AssignUndeclaredVariableError
-        } else if cmd.containsString("="){
+        } else if cmd.containsString("=") {
             // Assignation
             let vals = cmd.componentsSeparatedByString("=")
             let property = NSString(string: vals[0]).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
@@ -120,9 +128,12 @@ class BBT2 {
         return constants[name] != nil || properties[name] != nil
     }
     
-    func set(name: String, value: String) {
+    func set(name: String, value: String) throws {
         if properties[name] != nil {
             properties[name] = value
+        } else if constants[name] != nil {
+            print("Tried to edit a constant value")
+            throw ExecErrors.EditConstantError
         }
     }
     
@@ -188,8 +199,57 @@ class BBT2 {
         }
         let ciImage = CIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
         let grayscale = ciImage.imageByApplyingFilter("CIColorControls", withInputParameters: [ kCIInputSaturationKey: 0.0 ])
-        set(variable, value: UIImagePNGRepresentation(UIImage(CIImage: grayscale))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        try set(variable, value: UIImagePNGRepresentation(UIImage(CIImage: grayscale))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
         return nil
+    }
+    
+    func rotate(variable: String, stringLiteral: String) throws -> String? {
+        if get(variable) == nil {
+            print("Tried to rotate a null image")
+            throw ExecErrors.NullPointerError
+        }
+        var radians: CGFloat
+        if stringLiteral.hasSuffix("°") {
+            var degrees = stringLiteral
+            degrees.removeAtIndex(stringLiteral.endIndex)
+            radians = CGFloat(Int(degrees)!) * (180 / CGFloat(M_PI))
+        } else {
+            radians = CGFloat(Float(stringLiteral)!)
+        }
+        try set(variable, value: UIImagePNGRepresentation(rotateImpl(getImage(variable), radians: radians, flip: false))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    func rotateFlip(variable: String, stringLiteral: String) throws -> String? {
+        if get(variable) == nil {
+            print("Tried to rotate a null image")
+            throw ExecErrors.NullPointerError
+        }
+        var radians: CGFloat
+        if stringLiteral.hasSuffix("°") {
+            var degrees = stringLiteral
+            degrees.removeAtIndex(stringLiteral.endIndex)
+            radians = CGFloat(Int(degrees)!) * (180 / CGFloat(M_PI))
+        } else {
+            radians = CGFloat(Float(stringLiteral)!)
+        }
+        try set(variable, value: UIImagePNGRepresentation(rotateImpl(getImage(variable), radians: radians, flip: true))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    func rotateImpl(image: UIImage, radians: CGFloat, flip: Bool) -> UIImage {
+        let rotatedViewBox = UIView(frame: CGRect(origin: CGPointZero, size: image.size))
+        rotatedViewBox.transform = CGAffineTransformMakeRotation(radians)
+        
+        UIGraphicsBeginImageContext(rotatedViewBox.frame.size)
+        let bitmap = UIGraphicsGetCurrentContext()
+        CGContextTranslateCTM(bitmap, rotatedViewBox.frame.width / 2.0, rotatedViewBox.frame.height / 2.0)
+        CGContextRotateCTM(bitmap, radians)
+        CGContextScaleCTM(bitmap, flip ? -1.0 : 1.0, -1.0)
+        CGContextDrawImage(bitmap, CGRectMake(-image.size.width / 2, -image.size.height / 2, image.size.width, image.size.height), image.CGImage)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
     }
     
     func toLower(variable: String, stringLiteral: String) throws -> String? {
@@ -197,7 +257,7 @@ class BBT2 {
             print("Tried to lowercase a null string")
             throw ExecErrors.NullPointerError
         }
-        set(variable, value: get(variable)!.lowercaseString)
+        try set(variable, value: get(variable)!.lowercaseString)
         return nil
     }
     
@@ -206,7 +266,7 @@ class BBT2 {
             print("Tried to uppercase a null string")
             throw ExecErrors.NullPointerError
         }
-        set(variable, value: get(variable)!.uppercaseString)
+        try set(variable, value: get(variable)!.uppercaseString)
         return nil
     }
     
@@ -215,7 +275,7 @@ class BBT2 {
             print("Tried to uppercase a null string")
             throw ExecErrors.NullPointerError
         }
-        set(variable, value: get(variable)!.capitalizedString)
+        try set(variable, value: get(variable)!.capitalizedString)
         return nil
     }
     
@@ -240,7 +300,7 @@ class BBT2 {
     }
     
     func getBaloons() -> [(UIImage, UIImage, UIImage)] {
-        return []
+        return baloons
     }
     
     func getImage(variable: String) -> UIImage {
@@ -252,5 +312,6 @@ class BBT2 {
         case CallUndeclaredMethodError
         case SyntaxError
         case NullPointerError
+        case EditConstantError
     }
 }
