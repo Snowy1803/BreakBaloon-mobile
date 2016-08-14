@@ -17,8 +17,9 @@ class BBT2 {
     var functions: [String: ((String) throws -> String?)] = [:]
     var methods: [String: ((String, String) throws -> String?)] = [:]
     var properties: [String: String?] = [:]
+    var localVariables: [String: String?] = [:]
     var constants: [String: String?] = [:]
-    var baloons: [(UIImage, UIImage, UIImage)] = []
+    var baloons: [(UIImage, UIImage, UIImage, UIImage, UIImage)] = []
     
     let completeCode: String
     var line = 0
@@ -33,7 +34,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.14"
+        constants["_BBTC_VERSION"] = "0.1.15"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16581375"
@@ -73,6 +74,9 @@ class BBT2 {
             }
         }
         for cmd in commands {
+            if line > cmd.0 {
+                continue
+            }
             line = cmd.0
             do {
                 try exec(cmd.1)
@@ -154,7 +158,9 @@ class BBT2 {
     }
     
     func set(name: String, value: String) throws {
-        if properties[name] != nil {
+        if localVariables[name] != nil {
+            localVariables[name] = value
+        } else if properties[name] != nil {
             properties[name] = value
         } else if constants[name] != nil {
             print("Tried to edit a constant value")
@@ -163,7 +169,9 @@ class BBT2 {
     }
     
     func get(name: String) -> String? {
-        if constants[name] != nil {
+        if localVariables[name] != nil {
+            return localVariables[name]!
+        } else if constants[name] != nil {
             return constants[name]!
         } else if properties[name] != nil {
             return properties[name]!
@@ -214,12 +222,14 @@ class BBT2 {
         for line in cmps {
             if inBaloonBlock != -1 {
                 if line.containsString("}") {
+                    baloons.insert((getImage("closed"), getImage("opened"), getImage("openedGood", default: "opened"), getImage("closedFake"), getImage("openedFake")), atIndex: inBaloonBlock)
+                    localVariables.removeAll()
                     inBaloonBlock = -1
                 } else if line.containsString("]") {
                     print("Early baloon block array end")
                     throw ExecErrors.SyntaxError
                 } else {
-                    try exec(line)
+                    try exec(line, properties: localVariables)
                 }
             } else {
                 if line.containsString(":") {
@@ -227,6 +237,11 @@ class BBT2 {
                     let baloon = Int(cmps[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
                     if cmps[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "{" && baloon != nil {
                         inBaloonBlock = baloon!
+                        localVariables["closed"] = null
+                        localVariables["opened"] = null
+                        localVariables["openedGood"] = null
+                        localVariables["closedFake"] = null
+                        localVariables["openedFake"] = null
                     } else {
                         print("Baloon block beginning must be on one line 'x: {'")
                         throw ExecErrors.SyntaxError
@@ -420,12 +435,26 @@ class BBT2 {
         return properties["theme.description"]! == nil ? "Undefined" : properties["theme.description"]!!
     }
     
-    func getBaloons() -> [(UIImage, UIImage, UIImage)] {
+    func getBaloons() -> [(UIImage, UIImage, UIImage, UIImage, UIImage)] {
         return baloons
     }
     
-    func getImage(variable: String) -> UIImage {
-        return UIImage(data: NSData(base64EncodedString: get(variable)!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)!
+    func getImage(variable: String, default or: String? = nil) -> UIImage {
+        let string = get(variable)
+        if string != nil {
+            let data = NSData(base64EncodedString: string!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            if data != nil {
+                let image = UIImage(data: data!)
+                if image != nil {
+                    return image!
+                }
+            }
+        }
+        if or != nil {
+            return getImage(or!)
+        } else {
+            return UIImage()
+        }
     }
     
     enum ExecErrors: ErrorType {
