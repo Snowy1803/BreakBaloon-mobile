@@ -34,7 +34,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.16"
+        constants["_BBTC_VERSION"] = "0.1.17"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16581375"
@@ -57,6 +57,7 @@ class BBT2 {
         functions["print"] = printString
         functions["fileImage"] = fileImage
         functions["unicolor"] = unicolor
+        functions["emptyImage"] = emptyImage
         methods["grayscale"] = grayscale
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
@@ -269,6 +270,15 @@ class BBT2 {
     func unicolor(stringLiteral: String) throws -> String? {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0)
         try parseColor(stringLiteral).uiColor.setFill()
+        UIRectFill(CGRectMake(0, 0, 1, 1))
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return UIImagePNGRepresentation(image)!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+    }
+    
+    func emptyImage(stringLiteral: String) throws -> String? {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0)
+        UIColor.clearColor().setFill()
         UIRectFill(CGRectMake(0, 0, 1, 1))
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
