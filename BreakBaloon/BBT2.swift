@@ -34,7 +34,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.15"
+        constants["_BBTC_VERSION"] = "0.1.16"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16581375"
@@ -138,7 +138,7 @@ class BBT2 {
                 return try functions[methodName]!(arg)
             }
             let lastDot = methodName.rangeOfString(".", options: .BackwardsSearch)!.startIndex
-            if methods[methodName[lastDot.successor()..<methodName.endIndex]] != nil && valueExists(methodName[methodName.startIndex..<lastDot]) {
+            if methods[methodName[lastDot.successor()..<methodName.endIndex]] != nil && valueExists(methodName[methodName.startIndex..<lastDot], properties: properties) {
                 components.removeFirst()
                 var arg = components.joinWithSeparator("(")
                 let range = arg.rangeOfString(")", options: .BackwardsSearch)
@@ -149,12 +149,14 @@ class BBT2 {
                 arg.removeRange(range!.startIndex..<arg.endIndex)
                 return try methods[methodName[lastDot.successor()..<methodName.endIndex]]!(methodName[methodName.startIndex..<lastDot], arg)
             }
+            print("Couldn't resolve \(methodName)")
+            throw ExecErrors.CallUndeclaredMethodError
         }
         return null
     }
     
-    func valueExists(name: String) -> Bool {
-        return constants[name] != nil || properties[name] != nil
+    func valueExists(name: String, properties: [String: String?]) -> Bool {
+        return properties[name] != nil || constants[name] != nil || self.properties[name] != nil
     }
     
     func set(name: String, value: String) throws {
