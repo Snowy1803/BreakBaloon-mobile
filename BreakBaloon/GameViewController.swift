@@ -382,6 +382,21 @@ extension CGFloat {
     }
 }
 
+extension UIImage {
+    func withSize(newWidth: CGFloat) -> UIImage {
+        if self.size.width == newWidth {
+            return self
+        }
+        let scale = newWidth / size.width
+        let newHeight = size.height * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
+}
 
 enum LoginStatus: Int {
     case Authenticated = 1

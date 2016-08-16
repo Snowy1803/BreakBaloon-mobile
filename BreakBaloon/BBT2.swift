@@ -35,7 +35,7 @@ class BBT2: AbstractTheme {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.19"
+        constants["_BBTC_VERSION"] = "0.1.20"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -68,6 +68,8 @@ class BBT2: AbstractTheme {
         methods["rotate"] = rotate
         methods["rotate_flip"] = rotateFlip
         methods["replaceColors"] = pixelChange
+        methods["darker"] = imageDarker
+        methods["brighter"] = imageBrighter
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -230,7 +232,7 @@ class BBT2: AbstractTheme {
                 if line.containsString("}") {
                     baloons.insert((getImage("closed"), getImage("opened"), getImage("openedGood", default: "opened"), getImage("closedFake"), getImage("openedFake")), atIndex: inBaloonBlock)
                     if localVariables["extension.animationColor"]! != nil {
-                        animationColors[inBaloonBlock] = UIColor(rgbValue: UInt(localVariables["extension.animationColor"]!!)!)
+                        animationColors.insert(UIColor(rgbValue: UInt(localVariables["extension.animationColor"]!!)!), atIndex: inBaloonBlock)
                     }
                     localVariables.removeAll()
                     inBaloonBlock = -1
@@ -238,7 +240,7 @@ class BBT2: AbstractTheme {
                     print("Early baloon block array end")
                     throw ExecErrors.SyntaxError
                 } else {
-                    try exec(line, properties: localVariables)
+                    try exec(line.componentsSeparatedByString("//")[0], properties: localVariables)
                 }
             } else {
                 if line.containsString(":") {
@@ -299,7 +301,7 @@ class BBT2: AbstractTheme {
             throw ExecErrors.SyntaxError
         }
         do {
-            try set(cmps[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), value: cmps[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+            try set(cmps[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), value: execIfNeeds(cmps[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!)
         } catch {
             print("isset_set failed at line \(line)")
         }
@@ -363,6 +365,44 @@ class BBT2: AbstractTheme {
         }
         let cmps = stringLiteral.componentsSeparatedByString("->")
         try set(variable, value: UIImagePNGRepresentation(pixelChangeImpl(getImage(variable).CGImage!, from: parseColor(cmps[0]), to: parseColor(cmps[1])))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    func imageDarker(variable: String, stringLiteral: String) throws -> String? {
+        // Get the original image and set up the CIExposureAdjust filter
+        guard let inputImage = CIImage(image: getImage(variable)),
+            let filter = CIFilter(name: "CIExposureAdjust") else { return nil }
+        
+        // The inputEV value on the CIFilter adjusts exposure (negative values darken, positive values brighten)
+        filter.setValue(inputImage, forKey: "inputImage")
+        filter.setValue(-2.0, forKey: "inputEV")
+        
+        // Break early if the filter was not a success (.outputImage is optional in Swift)
+        guard let filteredImage = filter.outputImage else { return nil }
+        
+        let context = CIContext(options: nil)
+        let output = UIImage(CGImage: context.createCGImage(filteredImage, fromRect: filteredImage.extent))
+        
+        try set(variable, value: UIImagePNGRepresentation(output)!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    func imageBrighter(variable: String, stringLiteral: String) throws -> String? {
+        // Get the original image and set up the CIExposureAdjust filter
+        guard let inputImage = CIImage(image: getImage(variable)),
+            let filter = CIFilter(name: "CIExposureAdjust") else { return nil }
+        
+        // The inputEV value on the CIFilter adjusts exposure (negative values darken, positive values brighten)
+        filter.setValue(inputImage, forKey: "inputImage")
+        filter.setValue(2.0, forKey: "inputEV")
+        
+        // Break early if the filter was not a success (.outputImage is optional in Swift)
+        guard let filteredImage = filter.outputImage else { return nil }
+        
+        let context = CIContext(options: nil)
+        let output = UIImage(CGImage: context.createCGImage(filteredImage, fromRect: filteredImage.extent))
+        
+        try set(variable, value: UIImagePNGRepresentation(output)!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
         return nil
     }
     
@@ -465,7 +505,7 @@ class BBT2: AbstractTheme {
     }
     
     func getBaloonTexture(status status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
-        return SKTexture(image: fake ? status == .Closed ? baloons[type].3 : baloons[type].4 : status == .Closed ? baloons[type].0 : status == .WinnerOpened ? baloons[type].2 : baloons[type].1)
+        return SKTexture(image: (fake ? status == .Closed ? baloons[type].3 : baloons[type].4 : status == .Closed ? baloons[type].0 : status == .WinnerOpened ? baloons[type].2 : baloons[type].1).withSize(75))
     }
     
     func numberOfBaloons() -> UInt {
