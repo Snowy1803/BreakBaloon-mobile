@@ -21,15 +21,15 @@ class ThemeSelector: Selector {
     
     override func updateAfterValueChange() {
         gvc.currentThemeInt = value
-        NSUserDefaults.standardUserDefaults().setObject(gvc.currentTheme.themeID, forKey: "currentTheme")
+        NSUserDefaults.standardUserDefaults().setObject(gvc.currentTheme.themeID(), forKey: "currentTheme")
         super.updateAfterValueChange()
     }
     
     override func maxValue() -> Int {
-        return Theme.themeList.count - 1
+        return AbstractThemeUtils.themeList.count - 1
     }
     
     override func text() -> String {
-        return gvc.currentTheme.name
+        return gvc.currentTheme.themeName()
     }
 }

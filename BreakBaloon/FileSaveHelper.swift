@@ -21,6 +21,7 @@ class FileSaveHelper {
         case NONE = ""
         case TXT = ".txt"
         case BBTHEME = ".bbtheme"
+        case BBTHEME2CODE = ".bbtc"
         case PNG = ".png"
         case GIF = ".gif"
         case WAV = ".wav"

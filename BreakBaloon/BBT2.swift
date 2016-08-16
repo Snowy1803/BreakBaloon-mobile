@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class BBT2 {
+class BBT2: AbstractTheme {
     let null:String? = nil
     
     let dir: String

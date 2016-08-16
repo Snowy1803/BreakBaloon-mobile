@@ -21,10 +21,10 @@ class Case:SKSpriteNode {
     }
     
     init(gvc:GameViewController, index:Int) {
-        type = Int(arc4random_uniform(UInt32(gvc.currentTheme.baloons)))
+        type = Int(arc4random_uniform(UInt32(gvc.currentTheme.numberOfBaloons())))
         self.index = index
         self.gvc = gvc
-        let texture = gvc.currentTheme.getBaloonTexture(status: status, type: type)
+        let texture = gvc.currentTheme.getBaloonTexture(status: status, type: type, fake: false)
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
     }
     
@@ -34,7 +34,7 @@ class Case:SKSpriteNode {
     
     func breakBaloon(winner:Bool) {
         status = winner ? .WinnerOpened : .Opened
-        texture = gvc.currentTheme.getBaloonTexture(self)
+        texture = gvc.currentTheme.getBaloonTexture(case: self)
         if NSUserDefaults.standardUserDefaults().boolForKey("extension.animation.enabled") {
             triggerAnimationExtension()
         }
@@ -48,7 +48,7 @@ class Case:SKSpriteNode {
     
     func triggerAnimationExtension() {
         let action = SKAction.runBlock({
-            self.animate(self.gvc.currentTheme.animationColor == nil ? nil : self.gvc.currentTheme.animationColor![self.type])
+            self.animate(self.gvc.currentTheme.animationColor(type: self.type))
         })
         runAction(SKAction.sequence([action, SKAction.waitForDuration(NSTimeInterval(0.2)), action, SKAction.waitForDuration(NSTimeInterval(0.2)), action, SKAction.waitForDuration(NSTimeInterval(0.2)), action, SKAction.waitForDuration(NSTimeInterval(0.2)), action]))
     }

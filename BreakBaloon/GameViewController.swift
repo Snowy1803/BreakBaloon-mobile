@@ -41,15 +41,15 @@ class GameViewController: UIViewController {
             }
         }
     }
-    var currentTheme:Theme = Theme.themeList.first!
+    var currentTheme:AbstractTheme = AbstractThemeUtils.themeList.first!
     var currentThemeInt:Int {
         get {
-            return Theme.themeList.indexOf({theme in
+            return AbstractThemeUtils.themeList.indexOf({theme in
                 return theme.equals(currentTheme)
             })!
         }
         set(value) {
-            currentTheme = Theme.themeList[value]
+            currentTheme = AbstractThemeUtils.themeList[value]
         }
     }
     
@@ -92,7 +92,7 @@ class GameViewController: UIViewController {
         if NSUserDefaults.standardUserDefaults().objectForKey("elementalcube.sessid") != nil {
             logIn(sessid: NSUserDefaults.standardUserDefaults().stringForKey("elementalcube.sessid")!)
         }
-        currentTheme = Theme.withID(NSUserDefaults.standardUserDefaults().stringForKey("currentTheme")!)!
+        currentTheme = AbstractThemeUtils.withID(NSUserDefaults.standardUserDefaults().stringForKey("currentTheme")!)!
         let welcome:NSURL = NSBundle.mainBundle().URLForResource("Welcome", withExtension: "wav")!
         
         do {

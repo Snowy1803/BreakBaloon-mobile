@@ -169,11 +169,11 @@ class Downloadable: SKNode {
                 throw file.downloadError!
             }
         }
-        if dltype == .Theme {
+        if dltype.isTheme() {
             let dir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
             print("Data is from", file.fullyQualifiedPath)
             SSZipArchive.unzipFileAtPath(file.fullyQualifiedPath, toDestination: dir)
-            Theme.reloadThemeList()
+            AbstractThemeUtils.reloadThemeList()
         }
     }
     
@@ -185,8 +185,8 @@ class Downloadable: SKNode {
                     return true
                 }
             }
-        } else if dltype == .Theme {
-            return Theme.withID(dlid.componentsSeparatedByString(".").first!) != nil
+        } else if dltype.isTheme() {
+            return AbstractThemeUtils.withID(dlid.componentsSeparatedByString(".").first!) != nil
         }
         return false
     }
@@ -194,8 +194,8 @@ class Downloadable: SKNode {
     func isInUse(gvc:GameViewController) -> Bool {
         if dltype == .M4aMusic {
             return dlid == gvc.currentMusicFileName
-        } else if dltype == .Theme {
-            return dlid == gvc.currentTheme.themeID
+        } else if dltype.isTheme() {
+            return dlid == gvc.currentTheme.themeID()
         }
         return false
     }
@@ -271,15 +271,16 @@ class Downloadable: SKNode {
     }
     
     enum DownloadType {
-        case Theme
+        case BBT1
         case JavaExtension
         case WavMusic
         case M4aMusic
+        case BBT2
         case Unresolved
         
         static func getType(type:Int, id:String) -> DownloadType {
             if type == 0 {
-                return .Theme
+                return .BBT1
             } else if type == 1 {
                 return .JavaExtension
             } else if type == 2 {
@@ -288,13 +289,15 @@ class Downloadable: SKNode {
                 } else if id.hasSuffix(".m4a") {
                     return .M4aMusic
                 }
+            } else if type == 3 {
+                return .BBT2
             }
             return .Unresolved
         }
         
         static func getExtension(type:DownloadType) -> FileSaveHelper.FileExtension {
             switch type {
-            case .Theme:
+            case .BBT1, .BBT2:
                 return .ZIP
             case .JavaExtension:
                 return .JAR
@@ -307,13 +310,17 @@ class Downloadable: SKNode {
             }
         }
         
+        func isTheme() -> Bool {
+            return self == .BBT1 || self == .BBT2
+        }
+        
         func isSupported() -> Bool {
-            return self == .Theme || self == .M4aMusic
+            return self.isTheme() || self == .M4aMusic
         }
         
         func toString() -> String {
             switch self {
-            case .Theme:
+            case .BBT1, .BBT2:
                 return NSLocalizedString("bbstore.type.theme", comment: "Theme")
             case .M4aMusic:
                 return NSLocalizedString("bbstore.type.music", comment: "Music")

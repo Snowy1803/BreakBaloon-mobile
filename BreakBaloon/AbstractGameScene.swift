@@ -31,7 +31,7 @@ class AbstractGameScene: SKScene {
     }
     
     func construct(gvc: GameViewController) {
-        self.backgroundColor = gvc.currentTheme.background
+        self.backgroundColor = gvc.currentTheme.backgroundColor()
     }
     
     func pauseGame() {
