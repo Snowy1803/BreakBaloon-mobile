@@ -20,6 +20,7 @@ class BBT2 {
     var localVariables: [String: String?] = [:]
     var constants: [String: String?] = [:]
     var baloons: [(UIImage, UIImage, UIImage, UIImage, UIImage)] = []
+    var animationColors:[UIColor?] = []
     
     let completeCode: String
     var line = 0
@@ -34,7 +35,7 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.18"
+        constants["_BBTC_VERSION"] = "0.1.19"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -50,6 +51,7 @@ class BBT2 {
         properties["theme.description"] = null
         properties["theme.author"] = null
         properties["theme.version"] = null
+        properties["theme.background"] = null
         properties["image.icon"] = null
         properties["image.wicon"] = null
         properties["image.cursor"] = null
@@ -58,6 +60,7 @@ class BBT2 {
         functions["fileImage"] = fileImage
         functions["unicolor"] = unicolor
         functions["emptyImage"] = emptyImage
+        functions["isset_set"] = issetSet
         methods["grayscale"] = grayscale
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
@@ -214,7 +217,7 @@ class BBT2 {
     }
     
     func printString(stringLiteral: String) throws -> String? {
-        print("[BBTC] [\(getThemeID())] \(try execIfNeeds(stringLiteral)!)")
+        print("[BBTC] [\(themeID())] \(try execIfNeeds(stringLiteral)!)")
         return nil
     }
     
@@ -226,6 +229,9 @@ class BBT2 {
             if inBaloonBlock != -1 {
                 if line.containsString("}") {
                     baloons.insert((getImage("closed"), getImage("opened"), getImage("openedGood", default: "opened"), getImage("closedFake"), getImage("openedFake")), atIndex: inBaloonBlock)
+                    if localVariables["extension.animationColor"]! != nil {
+                        animationColors[inBaloonBlock] = UIColor(rgbValue: UInt(localVariables["extension.animationColor"]!!)!)
+                    }
                     localVariables.removeAll()
                     inBaloonBlock = -1
                 } else if line.containsString("]") {
@@ -245,6 +251,7 @@ class BBT2 {
                         localVariables["openedGood"] = null
                         localVariables["closedFake"] = null
                         localVariables["openedFake"] = null
+                        localVariables["extension.animationColor"] = null
                     } else {
                         print("Baloon block beginning must be on one line 'x: {'")
                         throw ExecErrors.SyntaxError
@@ -283,6 +290,20 @@ class BBT2 {
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return UIImagePNGRepresentation(image)!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+    }
+    
+    func issetSet(stringLiteral: String) throws -> String? {
+        let cmps = stringLiteral.componentsSeparatedByString(",")
+        if cmps.count != 2 {
+            print("Invalid argument count")
+            throw ExecErrors.SyntaxError
+        }
+        do {
+            try set(cmps[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), value: cmps[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+        } catch {
+            print("isset_set failed at line \(line)")
+        }
+        return nil
     }
     
     func grayscale(variable: String, stringLiteral: String) throws -> String? {
@@ -427,28 +448,56 @@ class BBT2 {
         return nil
     }
     
-    func getThemeID() -> String {
+    func equals(theme: AbstractTheme) -> Bool {
+        return theme.themeID() == self.themeID()
+    }
+    
+    func pumpSound(winner: Bool) -> NSURL {
+        // TODO
+        return NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!
+    }
+    
+    func getBaloonTexture(case aCase: Case) -> SKTexture {
+        if aCase is FakeCase {
+            return getBaloonTexture(status: aCase.status, type: aCase.type, fake: true)
+        }
+        return getBaloonTexture(status: aCase.status, type: aCase.type, fake: false)
+    }
+    
+    func getBaloonTexture(status status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
+        return SKTexture(image: fake ? status == .Closed ? baloons[type].3 : baloons[type].4 : status == .Closed ? baloons[type].0 : status == .WinnerOpened ? baloons[type].2 : baloons[type].1)
+    }
+    
+    func numberOfBaloons() -> UInt {
+        return UInt(baloons.count)
+    }
+    
+    func animationColor(type type: Int) -> UIColor? {
+        return animationColors[type]
+    }
+    
+    func backgroundColor() -> UIColor {
+        return properties["theme.background"]! == nil ? UIColor.whiteColor() : UIColor(rgbValue: UInt(properties["theme.background"]!!)!)
+    }
+    
+    func themeID() -> String {
         return properties["theme.id"]! == nil ? "Undefined" : properties["theme.id"]!!
     }
     
-    func getThemeName() -> String {
+    func themeName() -> String {
         return properties["theme.name"]! == nil ? "Undefined" : properties["theme.name"]!!
     }
     
-    func getThemeVersion() -> String {
+    func themeVersion() -> String {
         return properties["theme.version"]! == nil ? "Undefined" : properties["theme.version"]!!
     }
     
-    func getThemeAuthor() -> String {
+    func themeAuthor() -> String {
         return properties["theme.author"]! == nil ? "Undefined" : properties["theme.author"]!!
     }
     
-    func getThemeDescription() -> String {
+    func themeDescription() -> String {
         return properties["theme.description"]! == nil ? "Undefined" : properties["theme.description"]!!
-    }
-    
-    func getBaloons() -> [(UIImage, UIImage, UIImage, UIImage, UIImage)] {
-        return baloons
     }
     
     func getImage(variable: String, default or: String? = nil) -> UIImage {
