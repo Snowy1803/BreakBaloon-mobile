@@ -266,7 +266,7 @@ class GameViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let authStatus = responseString?.componentsSeparatedByString("\r\n")[0]
-                if authStatus != nil {
+                if authStatus != nil && Int(authStatus!) != nil {
                     let status = LoginStatus(rawValue: Int(authStatus!)!)
                     if status == .Authenticated {
                         let sessid = responseString!.componentsSeparatedByString("\r\n")[1]
