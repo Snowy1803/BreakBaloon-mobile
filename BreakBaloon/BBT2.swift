@@ -34,10 +34,10 @@ class BBT2 {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.17"
+        constants["_BBTC_VERSION"] = "0.1.18"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
-        constants["COLOR_RED"] = "16581375"
+        constants["COLOR_RED"] = "16711680"
         constants["COLOR_BLUE"] = "255"
         constants["COLOR_GREEN"] = "65280"
         constants["COLOR_YELLOW"] = "16776960"
@@ -306,7 +306,7 @@ class BBT2 {
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
             degrees.removeAtIndex(stringLiteral.endIndex.predecessor())
-            radians = CGFloat(Int(degrees)!) * (180 / CGFloat(M_PI))
+            radians = CGFloat(Int(degrees)!) * (CGFloat(M_PI) / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
         }
@@ -322,8 +322,8 @@ class BBT2 {
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
-            degrees.removeAtIndex(stringLiteral.endIndex)
-            radians = CGFloat(Int(degrees)!) * (180 / CGFloat(M_PI))
+            degrees.removeAtIndex(stringLiteral.endIndex.predecessor())
+            radians = CGFloat(Int(degrees)!) * (CGFloat(M_PI) / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
         }
