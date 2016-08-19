@@ -35,7 +35,7 @@ class BBT2: AbstractTheme {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.20"
+        constants["_BBTC_VERSION"] = "0.1.21"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -60,6 +60,7 @@ class BBT2: AbstractTheme {
         functions["fileImage"] = fileImage
         functions["unicolor"] = unicolor
         functions["emptyImage"] = emptyImage
+        functions["imageByConcat"] = concatImage
         functions["isset_set"] = issetSet
         methods["grayscale"] = grayscale
         methods["toLower"] = toLower
@@ -70,6 +71,7 @@ class BBT2: AbstractTheme {
         methods["replaceColors"] = pixelChange
         methods["darker"] = imageDarker
         methods["brighter"] = imageBrighter
+        methods["add"] = add
         // MARK: parse
         var commands: [(Int, String)] = []
         for line in 0..<lines.count {
@@ -194,6 +196,8 @@ class BBT2: AbstractTheme {
     func execIfNeeds(cmd: String) throws -> String? {
         if cmd.lowercaseString == "null" {
             return null
+        } else if localVariables[cmd] != nil {
+            return localVariables[cmd]!
         } else if constants[cmd] != nil {
             return constants[cmd]!
         } else if properties[cmd] != nil {
@@ -406,6 +410,28 @@ class BBT2: AbstractTheme {
         return nil
     }
     
+    func add(variable: String, stringLiteral: String) throws -> String? {
+        if get(variable) == nil {
+            print("Tried to add image to a null image")
+            throw ExecErrors.NullPointerError
+        }
+        try set(variable, value: UIImagePNGRepresentation(concatImageImpl(getImage(variable), getImage(value: execIfNeeds(stringLiteral))))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength))
+        return nil
+    }
+    
+    func concatImage(stringLiteral: String) throws -> String? {
+        let images = stringLiteral.componentsSeparatedByString(",")
+        if images.count != 2 {
+            print("Invalid argument count")
+            throw ExecErrors.SyntaxError
+        }
+        
+        let image1 = getImage(value: try execIfNeeds(images[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())))
+        let image2 = getImage(value: try execIfNeeds(images[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())))
+        
+        return UIImagePNGRepresentation(concatImageImpl(image1, image2))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+    }
+    
     /// SO: 27092354
     func rotateImpl(image: UIImage, radians: CGFloat, flip: Bool) -> UIImage {
         let rotatedViewBox = UIView(frame: CGRect(origin: CGPointZero, size: image.size))
@@ -449,6 +475,19 @@ class BBT2: AbstractTheme {
         }
         
         return UIImage(CGImage: CGBitmapContextCreateImage(context)!)
+    }
+    
+    
+    /// SO: 1309757
+    func concatImageImpl(image1: UIImage, _ image2: UIImage) -> UIImage {
+        print(image1.size, image2.size)
+        let size = CGSize(width: max(image1.size.width, image2.size.width), height: max(image1.size.height, image2.size.height))
+        UIGraphicsBeginImageContext(size)
+        image1.withSize(size.width).drawInRect(CGRectMake(0, 0, size.width, size.width))
+        image2.withSize(size.width).drawInRect(CGRectMake(0, 0, size.width, size.width))
+        let image3 = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image3
     }
     
     func parseColor(string: String) throws -> RGBA32 {
@@ -541,7 +580,10 @@ class BBT2: AbstractTheme {
     }
     
     func getImage(variable: String, default or: String? = nil) -> UIImage {
-        let string = get(variable)
+        return getImage(value: get(variable), default: or)
+    }
+    
+    func getImage(value string: String?, default or: String? = nil) -> UIImage {
         if string != nil {
             let data = NSData(base64EncodedString: string!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             if data != nil {
