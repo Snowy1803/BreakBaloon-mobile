@@ -22,9 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        SSZipArchive.unzipFileAtPath(url.path!, toDestination: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])
-        print("Installed theme \(url.lastPathComponent)")
-        return true
+        if url.path!.hasSuffix(".zip") {
+            SSZipArchive.unzipFileAtPath(url.path!, toDestination: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])
+            print("Installed theme \(url.lastPathComponent)")
+            return true
+        } else if url.path!.hasSuffix(".m4a") {
+            do {
+                try NSFileManager.defaultManager().moveItemAtURL(url, toURL: NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]))
+                return true
+            } catch {
+                print(error)
+            }
+        }
+        return false
     }
     
     func application(application: UIApplication, openURL: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
