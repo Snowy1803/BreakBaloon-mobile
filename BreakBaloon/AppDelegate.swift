@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        SSZipArchive.unzipFileAtPath(url.path!, toDestination: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])
+        print("Installed theme \(url.lastPathComponent)")
+        return true
+    }
+    
     func application(application: UIApplication, openURL: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         if openURL.host != nil {
             let url = openURL.absoluteString
