@@ -35,7 +35,7 @@ class BBT2: AbstractTheme {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.22"
+        constants["_BBTC_VERSION"] = "0.1.23"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -322,7 +322,7 @@ class BBT2: AbstractTheme {
                print("There must be a ':' in each arguments of localized")
                throw ExecErrors.SyntaxError 
             }
-            values[vals[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())] = vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            values[vals[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())] = execIfNeeds(vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
         }
         if values[NSLocalizedString("lang.code", comment: "")] != nil {
             return values[NSLocalizedString("lang.code", comment: "")]
