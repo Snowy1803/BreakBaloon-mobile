@@ -35,7 +35,7 @@ class BBT2: AbstractTheme {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.21"
+        constants["_BBTC_VERSION"] = "0.1.22"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -62,6 +62,7 @@ class BBT2: AbstractTheme {
         functions["emptyImage"] = emptyImage
         functions["imageByConcat"] = concatImage
         functions["isset_set"] = issetSet
+        functions["localized"] = localized
         methods["grayscale"] = grayscale
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
@@ -308,6 +309,29 @@ class BBT2: AbstractTheme {
             try set(cmps[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()), value: execIfNeeds(cmps[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!)
         } catch {
             print("isset_set failed at line \(line)")
+        }
+        return nil
+    }
+
+    func localized(stringLiteral: String) throws -> String? {
+        let cmps = stringLiteral.componentsSeparatedByString(",")
+        var values: [String: String] = [:]
+        for cmp in cmps {
+            let vals = cmp.componentsSeparatedByString(":")
+            if vals.count != 2 {
+               print("There must be a ':' in each arguments of localized")
+               throw ExecErrors.SyntaxError 
+            }
+            values[vals[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())] = vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        }
+        if values[NSLocalizedString("lang.code", comment: "")] != nil {
+            return values[NSLocalizedString("lang.code", comment: "")]
+        }
+        if values["default"] != nil {
+            return values["default"]
+        }
+        if values["en_US"] != nil {
+            return values["en_US"]
         }
         return nil
     }
