@@ -35,7 +35,7 @@ class BBT2: AbstractTheme {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.23"
+        constants["_BBTC_VERSION"] = "0.1.24"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -112,7 +112,7 @@ class BBT2: AbstractTheme {
         } else if cmd.containsString("+=") {
             let varAndValToConcat = cmd.componentsSeparatedByString("+=")
             let variable = varAndValToConcat[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            if properties[variable] != nil && properties[variable]! != nil {
+            if (properties[variable] != nil && properties[variable]! != nil) || (self.properties[variable] != nil && self.properties[variable]! != nil) {
                 try set(variable, value: properties[variable]!! + execIfNeeds(varAndValToConcat[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))!)
                 return properties[variable]!
             }
@@ -125,8 +125,8 @@ class BBT2: AbstractTheme {
             if property.hasPrefix("val ") {
                 constants[property.substringFromIndex(property.startIndex.advancedBy(4))] = try value(vals)
             } else if property.hasPrefix("var ") {
-                try set(property.substringFromIndex(property.startIndex.advancedBy(4)), value: value(vals)!)
-            } else if properties[property] != nil {
+                properties[property.substringFromIndex(property.startIndex.advancedBy(4))] = try value(vals)
+            } else if properties[property] != nil || self.properties[property] != nil {
                 try set(property, value: value(vals)!)
             } else {
                 print("Tried to assign a value to the undeclared variable \(property)")
