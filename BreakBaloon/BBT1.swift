@@ -87,8 +87,8 @@ class BBT1: AbstractTheme {
         return animationColors == nil ? nil : animationColors![type]
     }
     
-    func pumpSound(winner:Bool) -> NSURL {
-        return NSURL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath)
+    func pumpSound(winner:Bool) -> NSData {
+        return NSData(contentsOfURL: NSURL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath))!
     }
     
     class func parse(id id:String, bbtheme file:String) -> BBT1 {
@@ -159,7 +159,7 @@ class DefaultTheme: BBT1 {
         }
     }
     
-    override func pumpSound(winner:Bool) -> NSURL {
-        return NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!
+    override func pumpSound(winner:Bool) -> NSData {
+        return NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!)!
     }
 }

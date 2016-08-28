@@ -35,7 +35,7 @@ class BBT2: AbstractTheme {
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.24"
+        constants["_BBTC_VERSION"] = "0.1.25"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -55,6 +55,8 @@ class BBT2: AbstractTheme {
         properties["image.icon"] = null
         properties["image.wicon"] = null
         properties["image.cursor"] = null
+        properties["sound.pump"] = null
+        properties["sound.wpump"] = null
         // MARK: functions & methods
         functions["print"] = printString
         functions["fileImage"] = fileImage
@@ -100,7 +102,7 @@ class BBT2: AbstractTheme {
         return try exec(cmd, properties: properties)
     }
     
-    func exec(cmd: String, properties: [String: String?]) throws -> String? {
+    func exec(cmd: String, var properties: [String: String?]) throws -> String? {
         if cmd.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).hasPrefix("image.baloons") && cmd.containsString("=") {
             let vals = cmd.componentsSeparatedByString("=")
             if vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "[" {
@@ -322,7 +324,7 @@ class BBT2: AbstractTheme {
                print("There must be a ':' in each arguments of localized")
                throw ExecErrors.SyntaxError 
             }
-            values[vals[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())] = execIfNeeds(vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+            values[vals[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())] = try execIfNeeds(vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
         }
         if values[NSLocalizedString("lang.code", comment: "")] != nil {
             return values[NSLocalizedString("lang.code", comment: "")]
@@ -555,9 +557,11 @@ class BBT2: AbstractTheme {
         return theme.themeID() == self.themeID()
     }
     
-    func pumpSound(winner: Bool) -> NSURL {
-        // TODO
-        return NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!
+    func pumpSound(winner: Bool) -> NSData {
+        if (properties["sound.\(winner ? "w" : "")pump"]! != nil) {
+            return properties["sound.\(winner ? "w" : "")pump"]!!.dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+        return NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!)!
     }
     
     func getBaloonTexture(case aCase: Case) -> SKTexture {

@@ -70,7 +70,7 @@ class GameScene:AbstractGameScene {
             return
         }
         (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber)
-        var pumpURL:NSURL
+        var data:NSData
         var gameEnded = false
         if gametype != StartScene.GAMETYPE_TIMED && index == winCaseNumber {
             if computer {
@@ -110,7 +110,7 @@ class GameScene:AbstractGameScene {
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
             } while (cases.objectAtIndex(winCaseNumber) as! Case).breaked && !gameEnded
-            pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
+            data = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
         } else if gametype == StartScene.GAMETYPE_TIMED {
             var isThereUnbreakedBaloons = false
             for aCase in cases {
@@ -122,9 +122,9 @@ class GameScene:AbstractGameScene {
             if !isThereUnbreakedBaloons {
                 gameEnd()
             }
-            pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
+            data = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
         } else {
-            pumpURL = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
+            data = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
         }
         
         if !gameEnded {
@@ -132,12 +132,12 @@ class GameScene:AbstractGameScene {
         }
         
         do {
-            avplayer = try AVAudioPlayer(contentsOfURL: pumpURL)
+            avplayer = try AVAudioPlayer(data: data)
             avplayer.volume = (self.view?.window?.rootViewController as! GameViewController).audioVolume
             avplayer.prepareToPlay()
             avplayer.play()
         } catch {
-            print("Error playing sound at \(pumpURL)")
+            print("Error playing sound at \(data)")
         }
         
         if !gameEnded && !computer && gametype == StartScene.GAMETYPE_COMPUTER {

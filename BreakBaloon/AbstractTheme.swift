@@ -19,7 +19,7 @@ protocol AbstractTheme {
     
     func getBaloonTexture(status status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture
     func getBaloonTexture(case aCase: Case) -> SKTexture
-    func pumpSound(winner: Bool) -> NSURL
+    func pumpSound(winner: Bool) -> NSData
     func equals(theme: AbstractTheme) -> Bool
     
 }
