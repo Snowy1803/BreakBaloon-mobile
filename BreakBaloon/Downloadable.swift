@@ -171,6 +171,14 @@ class Downloadable: SKNode {
         }
         if dltype.isTheme() {
             let dir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            do {
+                var pathToRemove = NSURL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent!
+                pathToRemove.removeRange(pathToRemove.endIndex.predecessor().predecessor().predecessor().predecessor()..<pathToRemove.endIndex)
+                try NSFileManager.defaultManager().removeItemAtPath("\(dir)/\(pathToRemove)")
+            } catch {
+                print(error)
+            }
+            
             print("Data is from", file.fullyQualifiedPath)
             SSZipArchive.unzipFileAtPath(file.fullyQualifiedPath, toDestination: dir)
             AbstractThemeUtils.reloadThemeList()

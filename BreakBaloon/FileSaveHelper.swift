@@ -144,6 +144,12 @@ class FileSaveHelper {
     }
     
     func download(URL: NSURL) {
+        do {
+            try fileManager.removeItemAtPath(fullyQualifiedPath)
+        } catch {
+            print(error)
+        }
+        createDirectory()
         let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         let request = NSMutableURLRequest(URL: URL)

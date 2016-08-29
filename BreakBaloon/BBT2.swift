@@ -27,15 +27,15 @@ class BBT2: AbstractTheme {
     
     init(dir: String, code: String) throws {
         self.dir = dir
-        self.completeCode = code
-        let lines = code.componentsSeparatedByString("\n")
+        self.completeCode = code.stringByReplacingOccurrencesOfString("\r", withString: "")
+        let lines = completeCode.componentsSeparatedByString("\n")
         // MARK: constants & default properties
         constants["_PLATFORM_OS"] = "iOS"
         constants["_PLATFORM_DEVICE_MODEL"] = UIDevice.currentDevice().localizedModel
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.currentDevice().name
         constants["_PLATFORM_VERSION"] = UIDevice.currentDevice().systemVersion
         constants["_BREAKBALOON_VERSION"] = "1.0.0"
-        constants["_BBTC_VERSION"] = "0.1.25"
+        constants["_BBTC_VERSION"] = "1.0.0"
         constants["COLOR_BLACK"] = "0"
         constants["COLOR_WHITE"] = "16581375"
         constants["COLOR_RED"] = "16711680"
@@ -99,10 +99,10 @@ class BBT2: AbstractTheme {
     }
     
     func exec(cmd: String) throws -> String? {
-        return try exec(cmd, properties: properties)
+        return try exec(cmd, properties: &properties)
     }
     
-    func exec(cmd: String, var properties: [String: String?]) throws -> String? {
+    func exec(cmd: String, inout properties: [String: String?]) throws -> String? {
         if cmd.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).hasPrefix("image.baloons") && cmd.containsString("=") {
             let vals = cmd.componentsSeparatedByString("=")
             if vals[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "[" {
@@ -247,7 +247,7 @@ class BBT2: AbstractTheme {
                     print("Early baloon block array end")
                     throw ExecErrors.SyntaxError
                 } else {
-                    try exec(line.componentsSeparatedByString("//")[0], properties: localVariables)
+                    try exec(line.componentsSeparatedByString("//")[0], properties: &localVariables)
                 }
             } else {
                 if line.containsString(":") {
@@ -447,15 +447,17 @@ class BBT2: AbstractTheme {
     
     func concatImage(stringLiteral: String) throws -> String? {
         let images = stringLiteral.componentsSeparatedByString(",")
-        if images.count != 2 {
+        if images.count < 2 {
             print("Invalid argument count")
             throw ExecErrors.SyntaxError
         }
+        var image = getImage(value: try execIfNeeds(images[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())))
         
-        let image1 = getImage(value: try execIfNeeds(images[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())))
-        let image2 = getImage(value: try execIfNeeds(images[1].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())))
+        for i in 1..<images.count {
+            image = concatImageImpl(image, getImage(value: try execIfNeeds(images[i].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))))
+        }
         
-        return UIImagePNGRepresentation(concatImageImpl(image1, image2))!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        return UIImagePNGRepresentation(image)!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
     }
     
     /// SO: 27092354
