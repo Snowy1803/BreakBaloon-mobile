@@ -11,8 +11,8 @@ import SpriteKit
 
 class RandGameLevel {
     private static let levelValues:[(UInt, NSTimeInterval, NSTimeInterval, UInt, UInt, Float)] = [
-        /* 1 */     (10, 1.25, 4, 1, 2, 0),
-        /* 2 */     (10, 0.75, 4, 1, 2, 0),
+        /* 1 */     (10, 1.25, 4, 1, 3, 0),
+        /* 2 */     (10, 0.75, 4, 1, 3, 0),
         /* 3 */     (30, 0.75, 3.5, 5, 3, 0),
         /* 4 */     (25, 0.75, 3, 3, 3, 0),
         /* 5 */     (35, 0.75, 2.5, 1, 3, 0),
