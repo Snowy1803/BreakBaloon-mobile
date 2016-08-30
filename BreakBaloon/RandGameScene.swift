@@ -196,6 +196,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     func gameEnd() {
+        pause.removeFromParent()
         endTime = NSDate().timeIntervalSince1970 - beginTime!
         level.end(getMissingBaloons())
         updateLabel()
