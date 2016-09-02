@@ -24,6 +24,7 @@
 "game.score.vsc.end.lost" = "You lost %d-%d!";
 "game.score.vsc.end.same" = "You are tied with %d points!";
 "game.score.time" = "You have %d points with a time of %d seconds";
+"game.end.newrecord" = "New record!";
 "game.time" = "Time: %d seconds";
 "gameinfo.title" = "Last game";
 "gameinfo.level" = "LEVEL %d";

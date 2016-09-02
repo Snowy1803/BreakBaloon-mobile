@@ -24,6 +24,7 @@
 "game.score.vsc.end.lost" = "Vous avez avez perdu %d-%d !";
 "game.score.vsc.end.same" = "Vous êtes à ex-aequo avec %d points !";
 "game.score.time" = "Vous avez un score de %d points, avec un temps de %d secondes !";
+"game.end.newrecord" = "Nouveau record!";
 "game.time" = "Temps : %d secondes";
 "gameinfo.title" = "Dernière partie";
 "gameinfo.level" = "NIVEAU %d";

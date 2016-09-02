@@ -164,6 +164,7 @@ class GameScene:AbstractGameScene {
     
     func gameEnd() {
         endTime = NSDate().timeIntervalSince1970 - beginTime!
+        let newRecord = self.gametype == StartScene.GAMETYPE_SOLO && NSUserDefaults.standardUserDefaults().integerForKey("highscore") < self.points || self.gametype == StartScene.GAMETYPE_TIMED && NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore") < self.points
         if self.gametype == StartScene.GAMETYPE_COMPUTER {
             if self.points > self.computerpoints {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.won", comment: "Points at end"), self.points, self.computerpoints)
@@ -182,7 +183,16 @@ class GameScene:AbstractGameScene {
             self.label.fontColor = SKColor.orangeColor()
         }), SKAction.waitForDuration(NSTimeInterval(1)), SKAction.runBlock({
             self.label.fontColor = SKColor.blackColor()
-        }), SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
+            if newRecord {
+                let record = SKLabelNode(text: NSLocalizedString("game.end.newrecord", comment: ""))
+                record.fontColor = SKColor.orangeColor()
+                record.fontName = "Verdana-Bold"
+                record.fontSize = 25
+                record.zPosition = 1000
+                record.position = CGPointMake(self.frame.midX, self.frame.midY)
+                self.addChild(record)
+            }
+        }), SKAction.waitForDuration(NSTimeInterval(newRecord ? 1.5 : 0.5)), SKAction.runBlock({
             let data = NSUserDefaults.standardUserDefaults()
             if self.gametype == StartScene.GAMETYPE_SOLO && data.integerForKey("highscore") < self.points {
                 data.setInteger(self.points, forKey: "highscore")
