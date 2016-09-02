@@ -205,7 +205,7 @@ class GameScene:AbstractGameScene {
             let sizeModifier = Float(min(self.width * self.height, 100)) / 50
             gvc.addXP(Int(5 * levelModifier * sizeModifier))
             let scene:StartScene = StartScene(size: self.frame.size)
-            scene.lastGameInfo = NSLocalizedString(self.label.text!, comment: "Last game info")
+            scene.lastGameInfo = self.label.text!
             self.view!.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
         })]))
     }
