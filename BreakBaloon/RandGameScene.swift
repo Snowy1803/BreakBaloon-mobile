@@ -102,7 +102,7 @@ class RandGameScene: AbstractGameScene {
     func numberOfClosedBaloonsInGame() -> UInt {
         var i:UInt = 0
         for aCase in children {
-            if aCase is Case && (aCase as! Case).status == .Closed {
+            if aCase is Case && (aCase as! Case).status == .Closed  && !(aCase is FakeCase) {
                 i += 1
             }
         }
