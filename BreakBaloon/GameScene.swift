@@ -164,7 +164,6 @@ class GameScene:AbstractGameScene {
     
     func gameEnd() {
         endTime = NSDate().timeIntervalSince1970 - beginTime!
-        let newRecord = self.gametype == StartScene.GAMETYPE_SOLO && NSUserDefaults.standardUserDefaults().integerForKey("highscore") < self.points || self.gametype == StartScene.GAMETYPE_TIMED && NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore") < self.points
         if self.gametype == StartScene.GAMETYPE_COMPUTER {
             if self.points > self.computerpoints {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.won", comment: "Points at end"), self.points, self.computerpoints)
@@ -175,10 +174,11 @@ class GameScene:AbstractGameScene {
             }
             label.position = CGPointMake(label.frame.width/2, 5)
         } else if self.gametype == StartScene.GAMETYPE_TIMED {
-            points = Int(Float(width * height) / Float(endTime!) * 5)
+            points = Int((Float(width * height) / Float(endTime!)) * 5)
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), self.points, Int(self.endTime!))
             label.position = CGPointMake(label.frame.width/2, 5)
         }
+        let newRecord = self.gametype == StartScene.GAMETYPE_SOLO && NSUserDefaults.standardUserDefaults().integerForKey("highscore") < self.points || self.gametype == StartScene.GAMETYPE_TIMED && NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore") < self.points
         label.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
             self.label.fontColor = SKColor.orangeColor()
         }), SKAction.waitForDuration(NSTimeInterval(1)), SKAction.runBlock({
@@ -202,7 +202,7 @@ class GameScene:AbstractGameScene {
             let gvc = self.view!.window!.rootViewController as! GameViewController
             gvc.currentGame = nil
             let levelModifier = Float(max(10 - GameViewController.getLevel(), 1))
-            let sizeModifier = Float(min(self.width * self.height, 100)) / 50
+            let sizeModifier = Float(self.width * self.height) / 100
             gvc.addXP(Int(5 * levelModifier * sizeModifier))
             let scene:StartScene = StartScene(size: self.frame.size)
             scene.lastGameInfo = self.label.text!
