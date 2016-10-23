@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class Selector:SKSpriteNode {
-    private(set) var value:Int
+    fileprivate(set) var value:Int
     var tname:SKLabelNode
     var gvc:GameViewController
     
@@ -19,12 +19,12 @@ class Selector:SKSpriteNode {
         self.value = value
         tname = SKLabelNode()
         self.gvc = gvc
-        super.init(texture: texture, color: SKColor.whiteColor(), size: texture.size())
+        super.init(texture: texture, color: SKColor.white, size: texture.size())
         self.setScale(2)
         tname.text = text()
-        tname.position = CGPointMake(0, -5)
+        tname.position = CGPoint(x: 0, y: -5)
         tname.fontName = "ChalkboardSE-Light"
-        tname.fontColor = SKColor.blackColor()
+        tname.fontColor = SKColor.black
         tname.fontSize = 12
         tname.zPosition = 3
         addChild(tname)
@@ -34,8 +34,8 @@ class Selector:SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func click(touch: UITouch) {
-        let point = touch.locationInNode(self)
+    func click(_ touch: UITouch) {
+        let point = touch.location(in: self)
         if point.y > -10 && point.y < 10 {
             if point.x > -69 && point.x < -53 {
                 value -= 1
@@ -54,7 +54,7 @@ class Selector:SKSpriteNode {
         }
     }
     
-    func setSelectorValue(value:Int) {
+    func setSelectorValue(_ value:Int) {
         self.value = value
         updateAfterValueChange()
     }

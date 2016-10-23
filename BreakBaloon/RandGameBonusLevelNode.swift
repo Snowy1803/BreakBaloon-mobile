@@ -11,7 +11,7 @@ import SpriteKit
 
 class RandGameBonusLevelNode: RandGameLevelNode {
     override func updateTexture() {
-        self.texture = level.status == .Unlocked ? SKTexture(imageNamed: "levelbuttonbg-bonus") : SKTexture(imageNamed: "levelbuttonbg-bonus-\(String(level.status).lowercaseString)")
+        self.texture = level.status == .unlocked ? SKTexture(imageNamed: "levelbuttonbg-bonus") : SKTexture(imageNamed: "levelbuttonbg-bonus-\(String(level.status).lowercased())")
         level.save()
     }
 }

@@ -17,8 +17,8 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     var errored = false
     var lastTouch:CGPoint?
     var touchBegin:CGPoint?
-    var touchInterval:NSTimeInterval?
-    private var decY:CGFloat = 0
+    var touchInterval:TimeInterval?
+    fileprivate var decY:CGFloat = 0
     var title = SKLabelNode()
     var back = SKLabelNode()
     var upper = SKShapeNode()
@@ -33,11 +33,11 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         self.gvc = gvc
         
         loading = SKLabelNode(text: NSLocalizedString("bbstore.loading", comment: "Loading text"))
-        loading.fontColor = SKColor.blackColor()
+        loading.fontColor = SKColor.black
         
         super.init(size: size)
-        self.backgroundColor = SKColor.whiteColor()
-        loading.position = CGPointMake(self.frame.width / 2, self.frame.height / 2 - 10)
+        self.backgroundColor = SKColor.white
+        loading.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 - 10)
         addChild(loading)
         beginBBStoreLoading()
     }
@@ -47,69 +47,69 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     }
     
     func beginBBStoreLoading() {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             do {
                 self.downloads = try Downloadable.loadAll(self.size, self.gvc)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.loading.runAction(SKAction.sequence([SKAction.fadeOutWithDuration(1), SKAction.removeFromParent()]))
+                DispatchQueue.main.async {
+                    self.loading.run(SKAction.sequence([SKAction.fadeOut(withDuration: 1), SKAction.removeFromParent()]))
                     for dl in self.downloads! {
                         dl.alpha = 0
                         self.addChild(dl)
-                        dl.runAction(SKAction.fadeInWithDuration(1))
+                        dl.run(SKAction.fadeIn(withDuration: 1))
                     }
-                    self.title = SKLabelNode(text: NSLocalizedString((UIDevice.currentDevice().userInterfaceIdiom != .Pad ? "bbstore.button" : "bbstore.title"), comment: "BBStore"))
-                    self.title.fontColor = SKColor.blackColor()
+                    self.title = SKLabelNode(text: NSLocalizedString((UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title"), comment: "BBStore"))
+                    self.title.fontColor = SKColor.black
                     self.title.fontSize = 20
-                    self.title.position = CGPointMake(self.frame.width/2, self.frame.height - 25)
+                    self.title.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 25)
                     self.title.alpha = 0
                     self.title.zPosition = 6
                     self.addChild(self.title)
-                    self.title.runAction(SKAction.fadeInWithDuration(1))
-                    self.back.text = UIDevice.currentDevice().orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
-                    self.back.fontColor = SKColor.blackColor()
+                    self.title.run(SKAction.fadeIn(withDuration: 1))
+                    self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
+                    self.back.fontColor = SKColor.black
                     self.back.fontSize = 20
-                    self.back.position = CGPointMake(self.back.frame.width/2 + 5, self.frame.height - 25)
+                    self.back.position = CGPoint(x: self.back.frame.width/2 + 5, y: self.frame.height - 25)
                     self.back.alpha = 0
                     self.back.zPosition = 7
                     self.addChild(self.back)
-                    self.back.runAction(SKAction.fadeInWithDuration(1))
-                    self.upper = SKShapeNode(rect: CGRectMake(0, self.frame.height - 30, self.frame.width, 30))
+                    self.back.run(SKAction.fadeIn(withDuration: 1))
+                    self.upper = SKShapeNode(rect: CGRect(x: 0, y: self.frame.height - 30, width: self.frame.width, height: 30))
                     self.upper.fillColor = SKColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
                     self.upper.alpha = 0.75
                     self.upper.zPosition = 5
                     self.addChild(self.upper)
                     
-                    self.search = UISearchBar(frame: CGRectMake(self.frame.width - 150, 0, 150, 30))
+                    self.search = UISearchBar(frame: CGRect(x: self.frame.width - 150, y: 0, width: 150, height: 30))
                     self.search.placeholder = NSLocalizedString("bbstore.search", comment: "Search")
-                    self.search.searchBarStyle = .Minimal
-                    self.search.translucent = false
+                    self.search.searchBarStyle = .minimal
+                    self.search.isTranslucent = false
                     self.search.delegate = self
                     self.view?.addSubview(self.search)
                 }
             } catch {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.loading.text = NSLocalizedString("bbstore.error", comment: "Error text")
                     self.errored = true
                     let errorInfo = SKLabelNode(text: (error as NSError).localizedDescription)
-                    errorInfo.position = CGPointMake(self.loading.position.x, self.loading.position.y - 30)
-                    errorInfo.fontColor = SKColor.blackColor()
+                    errorInfo.position = CGPoint(x: self.loading.position.x, y: self.loading.position.y - 30)
+                    errorInfo.fontColor = SKColor.black
                     self.addChild(errorInfo)
                 }
             }
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if errored {
             goBack()
         }
         if decY < 0 {
             if decY < -100 {
-                title.runAction(SKAction.fadeOutWithDuration(NSTimeInterval(0.1)))
-                back.runAction(SKAction.fadeOutWithDuration(NSTimeInterval(0.1)))
-                upper.runAction(SKAction.fadeOutWithDuration(NSTimeInterval(0.1)))
+                title.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
+                back.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
+                upper.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
                 search.removeFromSuperview()
-                let transition = SKTransition.pushWithDirection(.Down, duration: NSTimeInterval((self.view!.frame.height + decY) * (CGFloat(NSDate().timeIntervalSince1970 - touchInterval!) / -decY)))
+                let transition = SKTransition.push(with: .down, duration: TimeInterval((self.view!.frame.height + decY) * (CGFloat(Date().timeIntervalSince1970 - touchInterval!) / -decY)))
                 transition.pausesOutgoingScene = false
                 view?.presentScene(BBStoreScene(start: start, size: view!.frame.size, gvc: gvc), transition: transition)
             } else {
@@ -117,12 +117,12 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
             }
         }
         if touches.count == 1 {
-            let point = touches.first!.locationInNode(self)
+            let point = touches.first!.location(in: self)
             if back.frame.contains(point) {
                 goBack()
             } else if downloads != nil && point.x + 10 > touchBegin!.x && point.x - 10 < touchBegin!.x && point.y + 10 > touchBegin!.y && point.y - 10 < touchBegin!.y {
                 for dl in downloads! {
-                    if self.children.contains(dl) && dl.rect.frame.contains(touches.first!.locationInNode(dl)) {
+                    if self.children.contains(dl) && dl.rect.frame.contains(touches.first!.location(in: dl)) {
                         dl.click(self)
                         break
                     }
@@ -132,9 +132,9 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         //if transition == false {
-            let point = touches.first?.locationInNode(self)
+            let point = touches.first?.location(in: self)
             if touches.count == 1 && downloads != nil {
                 decalageY(lastTouch!.y - point!.y)
             }
@@ -142,15 +142,15 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         //}
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.count == 1 {
-            lastTouch = touches.first?.locationInNode(self)
-            touchBegin = touches.first?.locationInNode(self)
-            touchInterval = NSDate().timeIntervalSince1970
+            lastTouch = touches.first?.location(in: self)
+            touchBegin = touches.first?.location(in: self)
+            touchInterval = Date().timeIntervalSince1970
         }
     }
     
-    func decalageY(decY:CGFloat) {
+    func decalageY(_ decY:CGFloat) {
         self.decY -= decY
         
         for dl in downloads! {
@@ -160,10 +160,10 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     
     func goBack() {
         search.removeFromSuperview()
-        self.view?.presentScene(start, transition: SKTransition.doorsOpenVerticalWithDuration(NSTimeInterval(1)))
+        self.view?.presentScene(start, transition: SKTransition.doorsOpenVertical(withDuration: TimeInterval(1)))
     }
     
-    func simulateClickOnDownload(id:String) {
+    func simulateClickOnDownload(_ id:String) {
         while downloads == nil {}
         for dl in downloads! {
             if dl.dlid == id {
@@ -173,17 +173,17 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         }
     }
     
-    func searchBarTextDidBeginEditing(search: UISearchBar) {
-        search.frame = CGRectMake(back.frame.width + 10, 0, self.frame.width - back.frame.width - 5, 30)
-        title.runAction(SKAction.fadeOutWithDuration(0.2))
+    func searchBarTextDidBeginEditing(_ search: UISearchBar) {
+        search.frame = CGRect(x: back.frame.width + 10, y: 0, width: self.frame.width - back.frame.width - 5, height: 30)
+        title.run(SKAction.fadeOut(withDuration: 0.2))
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        search.frame = CGRectMake(self.frame.width - 150, 0, 150, 30)
-        title.runAction(SKAction.fadeInWithDuration(0.2))
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        search.frame = CGRect(x: self.frame.width - 150, y: 0, width: 150, height: 30)
+        title.run(SKAction.fadeIn(withDuration: 0.2))
     }
     
-    func searchBar(search: UISearchBar, textDidChange text: String) {
+    func searchBar(_ search: UISearchBar, textDidChange text: String) {
         adjustDownloadablePosition()
     }
     
@@ -191,11 +191,11 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         let cols:Int = Int(self.frame.width / Downloadable.WIDTH)
         var i = 0
         for dl in downloads! {
-            if search.text!.isEmpty || dl.dlname.lowercaseString.containsString(search.text!.lowercaseString) {
+            if search.text!.isEmpty || dl.dlname.lowercased().contains(search.text!.lowercased()) {
                 if dl.parent == nil {
                     addChild(dl)
                 }
-                dl.position = CGPointMake(CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, self.frame.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+                dl.position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: self.frame.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
                 i += 1
             } else {
                 dl.removeFromParent()

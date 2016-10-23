@@ -13,10 +13,10 @@ class Case:SKSpriteNode {
     let gvc:GameViewController
     let type:Int
     let index:Int
-    var status:CaseStatus = .Closed
+    var status:CaseStatus = .closed
     var breaked:Bool {
         get {
-            return status != .Closed
+            return status != .closed
         }
     }
     
@@ -25,42 +25,42 @@ class Case:SKSpriteNode {
         self.index = index
         self.gvc = gvc
         let texture = gvc.currentTheme.getBaloonTexture(status: status, type: type, fake: false)
-        super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
+        super.init(texture: texture, color: UIColor.clear, size: texture.size())
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func breakBaloon(winner:Bool) {
-        status = winner ? .WinnerOpened : .Opened
+    func breakBaloon(_ winner:Bool) {
+        status = winner ? .winnerOpened : .opened
         texture = gvc.currentTheme.getBaloonTexture(case: self)
-        if NSUserDefaults.standardUserDefaults().boolForKey("extension.animation.enabled") {
+        if UserDefaults.standard.bool(forKey: "extension.animation.enabled") {
             triggerAnimationExtension()
         }
     }
     
     func baloonBreaked() {
-        if gvc.currentGame is GameScene && gvc.currentGame!.gametype != StartScene.GAMETYPE_TIMED && NSUserDefaults.standardUserDefaults().boolForKey("extension.hintarrow.enabled") {
+        if gvc.currentGame is GameScene && gvc.currentGame!.gametype != StartScene.GAMETYPE_TIMED && UserDefaults.standard.bool(forKey: "extension.hintarrow.enabled") {
             showHintArrow()
         }
     }
     
     func triggerAnimationExtension() {
-        let action = SKAction.runBlock({
+        let action = SKAction.run({
             self.animate(self.gvc.currentTheme.animationColor(type: self.type))
         })
-        runAction(SKAction.sequence([action, SKAction.waitForDuration(NSTimeInterval(0.2)), action, SKAction.waitForDuration(NSTimeInterval(0.2)), action, SKAction.waitForDuration(NSTimeInterval(0.2)), action, SKAction.waitForDuration(NSTimeInterval(0.2)), action]))
+        run(SKAction.sequence([action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action]))
     }
     
-    func animate(color: SKColor?) {
+    func animate(_ color: SKColor?) {
         for _ in 0..<arc4random_uniform(10) {
             let shape = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(10) + 1))
-            shape.position = CGPointMake(CGFloat(arc4random_uniform(75)) - 75/2, CGFloat(arc4random_uniform(75)) - 75/2)
+            shape.position = CGPoint(x: CGFloat(arc4random_uniform(75)) - 75/2, y: CGFloat(arc4random_uniform(75)) - 75/2)
             shape.fillColor = color != nil ? color! : SKColor(red: CGFloat.random(), green: CGFloat.random(), blue: CGFloat.random(), alpha: 1)
-            shape.strokeColor = SKColor.clearColor()
+            shape.strokeColor = SKColor.clear
             shape.zPosition = 1
-            shape.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), SKAction.removeFromParent()]))
+            shape.run(SKAction.sequence([SKAction.wait(forDuration: 0.2), SKAction.removeFromParent()]))
             addChild(shape)
         }
     }
@@ -74,15 +74,15 @@ class Case:SKSpriteNode {
         let theta = atan2(Double(-deltaWinY), Double(deltaWinX))
         
         shape.zRotation = CGFloat(theta + M_PI)
-        shape.fillColor = SKColor.blueColor()
-        shape.strokeColor = SKColor.clearColor()
+        shape.fillColor = SKColor.blue
+        shape.strokeColor = SKColor.clear
         shape.zPosition = 2
-        shape.runAction(SKAction.sequence([SKAction.waitForDuration(0.4), SKAction.removeFromParent()]))
+        shape.run(SKAction.sequence([SKAction.wait(forDuration: 0.4), SKAction.removeFromParent()]))
         addChild(shape)
     }
     
-    func polygon(points: [(CGFloat, CGFloat)]) -> CGPath {
-        let path = CGPathCreateMutable()
+    func polygon(_ points: [(CGFloat, CGFloat)]) -> CGPath {
+        let path = CGMutablePath()
         CGPathMoveToPoint(path, nil, points[0].0, points[0].1)
         for i in 1..<points.count {
             CGPathAddLineToPoint(path, nil, points[i].0, points[i].1)
@@ -92,8 +92,8 @@ class Case:SKSpriteNode {
     }
     
     enum CaseStatus: Int {
-        case Closed
-        case Opened
-        case WinnerOpened
+        case closed
+        case opened
+        case winnerOpened
     }
 }

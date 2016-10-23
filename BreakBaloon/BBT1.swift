@@ -37,7 +37,7 @@ class BBT1: AbstractTheme {
                   background: UInt(background)!, dbfpg: dbfpg)
     }
     
-    func equals(other:AbstractTheme) -> Bool {
+    func equals(_ other:AbstractTheme) -> Bool {
         return self.themeID() == other.themeID()
     }
     
@@ -48,18 +48,18 @@ class BBT1: AbstractTheme {
         return getBaloonTexture(status: baloon.status, type: baloon.type, fake: false)
     }
     
-    func getBaloonTexture(status status:Case.CaseStatus, type:Int, fake: Bool) -> SKTexture {
+    func getBaloonTexture(status:Case.CaseStatus, type:Int, fake: Bool) -> SKTexture {
         do {
             if fake {
-                if status == .Closed {
+                if status == .closed {
                     return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
                 } else {
                     return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
                 }
             } else {
-                if status == .Closed {
+                if status == .closed {
                     return SKTexture(image: try FileSaveHelper(fileName: "closed\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
-                } else if differentBaloonsForPumpedGood  && status == .WinnerOpened {
+                } else if differentBaloonsForPumpedGood  && status == .winnerOpened {
                     return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)-good", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
                 } else {
                     return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
@@ -83,20 +83,20 @@ class BBT1: AbstractTheme {
         return background
     }
     
-    func animationColor(type type: Int) -> UIColor? {
+    func animationColor(type: Int) -> UIColor? {
         return animationColors == nil ? nil : animationColors![type]
     }
     
-    func pumpSound(winner:Bool) -> NSData {
-        return NSData(contentsOfURL: NSURL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath))!
+    func pumpSound(_ winner:Bool) -> Data {
+        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath)))!
     }
     
-    class func parse(id id:String, bbtheme file:String) -> BBT1 {
-        let lines = file.componentsSeparatedByString("\n")
+    class func parse(id:String, bbtheme file:String) -> BBT1 {
+        let lines = file.components(separatedBy: "\n")
         var name = "", author = "", desc = "", version = "", baloons = "", background = "16777215", dbfpg = false, animation: [Int: SKColor]?
         for line in lines {
-            if line.componentsSeparatedByString("=").count > 1 {
-                let value = line.componentsSeparatedByString("=")[1].stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\r\n\t "))
+            if line.components(separatedBy: "=").count > 1 {
+                let value = line.components(separatedBy: "=")[1].trimmingCharacters(in: CharacterSet(charactersIn: "\r\n\t "))
                 if isMetadata(line, metadata: "NAME") {
                     name = value
                 } else if isMetadata(line, metadata: "DESCRIPTION") {
@@ -113,10 +113,10 @@ class BBT1: AbstractTheme {
                     dbfpg = value == "true"
                 } else if isMetadata(line, metadata: "ANIMATION-COLOR") {
                     animation = [:]
-                    let array = value.componentsSeparatedByString(";")
+                    let array = value.components(separatedBy: ";")
                     for val in array {
-                        let rgb = Int(val.componentsSeparatedByString(":")[1])!
-                        animation![Int(val.componentsSeparatedByString(":")[0])!] = SKColor(red: CGFloat((rgb & 0xFF0000) >> 16) / 0xFF, green: CGFloat((rgb & 0x00FF00) >> 8) / 0xFF, blue: CGFloat(rgb & 0x0000FF) / 0xFF, alpha: 1.0)
+                        let rgb = Int(val.components(separatedBy: ":")[1])!
+                        animation![Int(val.components(separatedBy: ":")[0])!] = SKColor(red: CGFloat((rgb & 0xFF0000) >> 16) / 0xFF, green: CGFloat((rgb & 0x00FF00) >> 8) / 0xFF, blue: CGFloat(rgb & 0x0000FF) / 0xFF, alpha: 1.0)
                     }
                 }
             }
@@ -126,7 +126,7 @@ class BBT1: AbstractTheme {
         return theme
     }
     
-    private class func isMetadata(line:String, metadata:String) -> Bool {
+    fileprivate class func isMetadata(_ line:String, metadata:String) -> Bool {
         return line.hasPrefix("\(metadata)=") || line.hasPrefix("\(metadata)_\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))=")
     }
     
@@ -138,20 +138,20 @@ class BBT1: AbstractTheme {
 class DefaultTheme: BBT1 {
     init() {
         super.init(NSLocalizedString("theme.default.name", comment: "Default theme name"), id: "/Default", author: "Snowy", description: "", version: "1.0", baloons: 6, background: 0xffffff, dbfpg: false)
-        animationColors = [0: SKColor.redColor(), 1: SKColor.yellowColor(), 2: SKColor.blueColor(), 3: SKColor(red: 191/255, green: 1, blue: 0, alpha: 1), 4: SKColor(red: 1, green: 191/255, blue: 191/255, alpha: 1), 5: SKColor(red: 0.5, green: 0, blue: 1, alpha: 1)]
+        animationColors = [0: SKColor.red, 1: SKColor.yellow, 2: SKColor.blue, 3: SKColor(red: 191/255, green: 1, blue: 0, alpha: 1), 4: SKColor(red: 1, green: 191/255, blue: 191/255, alpha: 1), 5: SKColor(red: 0.5, green: 0, blue: 1, alpha: 1)]
     }
     
-    override func getBaloonTexture(status status:Case.CaseStatus, type:Int, fake: Bool) -> SKTexture {
+    override func getBaloonTexture(status:Case.CaseStatus, type:Int, fake: Bool) -> SKTexture {
         if fake {
-            if status == .Closed {
+            if status == .closed {
                 return SKTexture(imageNamed: "fake-closed\(type)")
             } else {
                 return SKTexture(imageNamed: "fake-opened\(type)")
             }
         } else {
-            if status == .Closed {
+            if status == .closed {
                 return SKTexture(imageNamed: "closed\(type)")
-            } else if differentBaloonsForPumpedGood  && status == .WinnerOpened {
+            } else if differentBaloonsForPumpedGood  && status == .winnerOpened {
                 return SKTexture(imageNamed: "opened\(type)-good")
             } else {
                 return SKTexture(imageNamed: "opened\(type)")
@@ -159,7 +159,7 @@ class DefaultTheme: BBT1 {
         }
     }
     
-    override func pumpSound(winner:Bool) -> NSData {
-        return NSData(contentsOfURL: NSBundle.mainBundle().URLForResource("\(winner ? "w" : "")pump", withExtension: "wav")!)!
+    override func pumpSound(_ winner:Bool) -> Data {
+        return (try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!))
     }
 }

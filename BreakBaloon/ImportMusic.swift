@@ -17,7 +17,7 @@ class ImportMusic: SKSpriteNode, MPMediaPickerControllerDelegate {
     init(gvc: GameViewController) {
         self.gvc = gvc
         let texture = SKTexture(imageNamed: "import")
-        super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
+        super.init(texture: texture, color: SKColor.clear, size: texture.size())
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,23 +25,23 @@ class ImportMusic: SKSpriteNode, MPMediaPickerControllerDelegate {
     }
     
     func showImportDialog() {
-        let media = MPMediaPickerController(mediaTypes: .Music)
+        let media = MPMediaPickerController(mediaTypes: .music)
         media.allowsPickingMultipleItems = false
         media.delegate = self
-        gvc.presentViewController(media, animated: true, completion: nil)
+        gvc.present(media, animated: true, completion: nil)
     }
     
-    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         if mediaItemCollection.count == 1 {
-            gvc.dismissViewControllerAnimated(true, completion: nil)
+            gvc.dismiss(animated: true, completion: nil)
             let item = mediaItemCollection.items.first!
-            NSUserDefaults.standardUserDefaults().setObject(item.title, forKey: "usermusicName")
-            NSUserDefaults.standardUserDefaults().setURL(item.assetURL, forKey: "usermusic")
+            UserDefaults.standard.set(item.title, forKey: "usermusicName")
+            UserDefaults.standard.set(item.assetURL, forKey: "usermusic")
             selector!.setSelectorValue(selector!.maxValue())
         }
     }
     
-    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
-        gvc.dismissViewControllerAnimated(true, completion: nil)
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        gvc.dismiss(animated: true, completion: nil)
     }
 }

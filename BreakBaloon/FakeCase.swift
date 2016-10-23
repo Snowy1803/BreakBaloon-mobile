@@ -19,7 +19,7 @@ class FakeCase: Case {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func breakBaloon(winner: Bool) {
+    override func breakBaloon(_ winner: Bool) {
         super.breakBaloon(winner)
         gvc.currentGame?.points -= 2
     }

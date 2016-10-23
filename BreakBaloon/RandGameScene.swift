@@ -8,19 +8,39 @@
 
 import AVFoundation
 import SpriteKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class RandGameScene: AbstractGameScene {
     static let REQUIREMENT = 6
     
     let gvc:GameViewController
-    let nextBaloonMax:NSTimeInterval
+    let nextBaloonMax:TimeInterval
     let label = SKLabelNode()
     let errors = SKLabelNode()
     var pause = SKSpriteNode()
     let level: RandGameLevel
     
     var baloonsToSpawn:UInt
-    var nextBaloon:NSTimeInterval?
+    var nextBaloon:TimeInterval?
     
     init(view: SKView, level: RandGameLevel) {
         gvc = view.window?.rootViewController as! GameViewController
@@ -28,43 +48,43 @@ class RandGameScene: AbstractGameScene {
         self.nextBaloonMax = level.maxSecondsBeforeNextBaloon
         baloonsToSpawn = level.numberOfBaloons
         super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
-        label.fontColor = SKColor.blackColor()
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+        label.fontColor = SKColor.black
+        if UIDevice.current.userInterfaceIdiom == .phone {
             label.fontSize = 12
         } else {
             label.fontSize = 30
         }
         label.fontName = "Verdana-Bold"
-        label.position = CGPointMake(label.frame.width/2, 5)
+        label.position = CGPoint(x: label.frame.width/2, y: 5)
         label.zPosition = 1
         updateLabel()
         addChild(label)
         if (level.maxMissingBaloonToWin > 0) {
-            errors.fontColor = SKColor.redColor()
-            if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            errors.fontColor = SKColor.red
+            if UIDevice.current.userInterfaceIdiom == .phone {
                 errors.fontSize = 12
             } else {
                 errors.fontSize = 30
             }
             errors.text = "0"
             errors.fontName = "Verdana-Bold"
-            errors.position = CGPointMake(self.frame.width - 30, 5)
+            errors.position = CGPoint(x: self.frame.width - 30, y: 5)
             errors.zPosition = 1
             addChild(errors)
         }
         pause = SKSpriteNode(imageNamed: "pause")
-        pause.position = CGPointMake(self.frame.width - pause.frame.width / 4 * 3, self.frame.height - pause.frame.height / 4 * 3)
+        pause.position = CGPoint(x: self.frame.width - pause.frame.width / 4 * 3, y: self.frame.height - pause.frame.height / 4 * 3)
         pause.zPosition = 2
-        beginTime = NSDate().timeIntervalSince1970
+        beginTime = Date().timeIntervalSince1970
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         if !isGamePaused() {
-            if nextBaloon == nil || (baloonsToSpawn > 0 && NSDate().timeIntervalSince1970 >= nextBaloon) && canSpawnBaloon() {
+            if nextBaloon == nil || (baloonsToSpawn > 0 && Date().timeIntervalSince1970 >= nextBaloon) && canSpawnBaloon() {
                 spawnBaloon()
             } else if baloonsToSpawn == 0 && isEmpty() && endTime == nil {
                 gameEnd()
@@ -102,17 +122,17 @@ class RandGameScene: AbstractGameScene {
     func numberOfClosedBaloonsInGame() -> UInt {
         var i:UInt = 0
         for aCase in children {
-            if aCase is Case && (aCase as! Case).status == .Closed  && !(aCase is FakeCase) {
+            if aCase is Case && (aCase as! Case).status == .closed  && !(aCase is FakeCase) {
                 i += 1
             }
         }
         return i
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isGamePaused() {
             for touch in touches {
-                let point = touch.locationInNode(self)
+                let point = touch.location(in: self)
                 for aCase in children {
                     if aCase is Case && aCase.frame.extends(10).contains(point) {
                         breakBaloon(case: aCase as! Case, touch: point)
@@ -123,9 +143,9 @@ class RandGameScene: AbstractGameScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.count == 1 {
-            let point = touches.first!.locationInNode(self)
+            let point = touches.first!.location(in: self)
             if pause.frame.contains(point) {
                 pauseGame()
                 pause.removeFromParent()
@@ -133,15 +153,15 @@ class RandGameScene: AbstractGameScene {
             } else {
                 for child in children {
                     if child is RandGameLevelInfoNode {
-                        beginTime = NSDate().timeIntervalSince1970
+                        beginTime = Date().timeIntervalSince1970
                         quitPause()
                         child.removeFromParent()
                         addChild(pause)
                         break
                     } else if child is RandGameLevelEndNode {
-                        (child as! RandGameLevelEndNode).click(touches.first!.locationInNode(self))
+                        (child as! RandGameLevelEndNode).click(touches.first!.location(in: self))
                     } else if child is RandGamePauseNode {
-                        (child as! RandGamePauseNode).touchAt(touches.first!.locationInNode(self))
+                        (child as! RandGamePauseNode).touchAt(touches.first!.location(in: self))
                     }
                 }
             }
@@ -149,7 +169,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     func breakBaloon(case aCase: Case, touch: CGPoint) {
-        if aCase.status == .Closed {
+        if aCase.status == .closed {
             aCase.breakBaloon(false)
             points += 1
             updateLabel()
@@ -167,13 +187,13 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
-        nextBaloon = NSDate().timeIntervalSince1970 + NSTimeInterval(Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
+        nextBaloon = Date().timeIntervalSince1970 + TimeInterval(Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
         if !(aCase is FakeCase) {
             baloonsToSpawn -= 1
         }
     }
     
-    func spawnBaloon(point point: CGPoint) {
+    func spawnBaloon(point: CGPoint) {
         let aCase: Case
         if level.fakeBaloonsRate > Float.random() {
             aCase = FakeCase(gvc: gvc, index: -1)
@@ -182,13 +202,13 @@ class RandGameScene: AbstractGameScene {
         }
         aCase.position = point
         aCase.zPosition = 0
-        aCase.runAction(SKAction.sequence([SKAction.waitForDuration(level.secondsBeforeBaloonVanish), SKAction.fadeOutWithDuration(0.5), SKAction.removeFromParent()]))
+        aCase.run(SKAction.sequence([SKAction.wait(forDuration: level.secondsBeforeBaloonVanish), SKAction.fadeOut(withDuration: 0.5), SKAction.removeFromParent()]))
         spawnBaloon(case: aCase)
     }
     
     /// Spawn a baloon at a random location
     func spawnBaloon() {
-        spawnBaloon(point: CGPointMake(CGFloat(arc4random_uniform(UInt32(self.frame.width - 75))), CGFloat(arc4random_uniform(UInt32(self.frame.height - 105)) + 75)))
+        spawnBaloon(point: CGPoint(x: CGFloat(arc4random_uniform(UInt32(self.frame.width - 75))), y: CGFloat(arc4random_uniform(UInt32(self.frame.height - 105)) + 75)))
     }
     
     func getMissingBaloons() -> Int {
@@ -197,17 +217,17 @@ class RandGameScene: AbstractGameScene {
     
     func gameEnd() {
         pause.removeFromParent()
-        endTime = NSDate().timeIntervalSince1970 - beginTime!
+        endTime = Date().timeIntervalSince1970 - beginTime!
         level.end(getMissingBaloons())
         updateLabel()
 
-        label.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
-            self.label.fontColor = SKColor.orangeColor()
-        }), SKAction.waitForDuration(NSTimeInterval(1)), SKAction.runBlock({
-            self.label.fontColor = SKColor.blackColor()
-        }), SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
-            if NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore") < self.points {
-                NSUserDefaults.standardUserDefaults().setInteger(self.points, forKey: "bestRandomScore")
+        label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run({
+            self.label.fontColor = SKColor.orange
+        }), SKAction.wait(forDuration: TimeInterval(1)), SKAction.run({
+            self.label.fontColor = SKColor.black
+        }), SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run({
+            if UserDefaults.standard.integer(forKey: "bestTimedScore") < self.points {
+                UserDefaults.standard.set(self.points, forKey: "bestRandomScore")
             }
             let gvc = self.view!.window!.rootViewController as! GameViewController
             gvc.currentGame = nil
@@ -217,7 +237,7 @@ class RandGameScene: AbstractGameScene {
     
     func updateLabel() {
         label.text = String(format: NSLocalizedString("game.score.\(points > 1 ? "more" : "one")", comment: "Points at end"), self.points)
-        label.position = CGPointMake(label.frame.width/2, 5)
+        label.position = CGPoint(x: label.frame.width/2, y: 5)
     }
     
     override func isGamePaused() -> Bool {
@@ -231,7 +251,7 @@ class RandGameScene: AbstractGameScene {
 }
 
 extension CGRect {
-    func extends(cubicRadius: CGFloat) -> CGRect {
-        return CGRectMake(self.minX - cubicRadius, self.minY - cubicRadius, self.width + cubicRadius * 2, self.height + cubicRadius * 2)
+    func extends(_ cubicRadius: CGFloat) -> CGRect {
+        return CGRect(x: self.minX - cubicRadius, y: self.minY - cubicRadius, width: self.width + cubicRadius * 2, height: self.height + cubicRadius * 2)
     }
 }

@@ -14,7 +14,7 @@ import AVFoundation
 class GameViewController: UIViewController {
     static let DEFAULT_AUDIO:Float = 1.0
     static let DEFAULT_MUSIC:Float = 0.8
-    private static var loggedIn = false
+    fileprivate static var loggedIn = false
     
     var skView: SKView?
     
@@ -34,7 +34,7 @@ class GameViewController: UIViewController {
         }
         set(value) {
             if value < GameViewController.getMusicURLs().count {
-                let cmps = GameViewController.getMusicURLs()[value].absoluteString.componentsSeparatedByString("/")
+                let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
                 currentMusicFileName = cmps[cmps.count - 1]
             } else {
                 currentMusicFileName = "_personnal"
@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
     var currentTheme:AbstractTheme = AbstractThemeUtils.themeList.first!
     var currentThemeInt:Int {
         get {
-            return AbstractThemeUtils.themeList.indexOf({theme in
+            return AbstractThemeUtils.themeList.index(where: {theme in
                 return theme.equals(currentTheme)
             })!
         }
@@ -64,43 +64,43 @@ class GameViewController: UIViewController {
         print("Path:", FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
         loadMusicAndStartScene()
         
-        (UIApplication.sharedApplication().delegate as! AppDelegate).triggerDeepLinkIfPresent()
+        (UIApplication.shared.delegate as! AppDelegate).triggerDeepLinkIfPresent()
     }
     
     func loadMusicAndStartScene() {
         if GameViewController.getMusicURLs().isEmpty {
             do {
-                try Downloadable(type: .M4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
+                try Downloadable(type: .m4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
             } catch {
                 print("Couldn't download content")
                 getNil()! //Crash
             }
         }
-        let data = NSUserDefaults.standardUserDefaults()
-        if data.stringForKey("currentMusic") == nil {
-            data.setObject("Race.m4a", forKey: "currentMusic")
+        let data = UserDefaults.standard
+        if data.string(forKey: "currentMusic") == nil {
+            data.set("Race.m4a", forKey: "currentMusic")
         }
-        if data.stringForKey("currentTheme") == nil {
-            data.setObject("/Default", forKey: "currentTheme")
+        if data.string(forKey: "currentTheme") == nil {
+            data.set("/Default", forKey: "currentTheme")
         }
-        if data.objectForKey("audio-true") == nil {
-            data.setFloat(GameViewController.DEFAULT_MUSIC, forKey: "audio-true")
+        if data.object(forKey: "audio-true") == nil {
+            data.set(GameViewController.DEFAULT_MUSIC, forKey: "audio-true")
         }
-        if data.objectForKey("audio-false") == nil {
-            data.setFloat(GameViewController.DEFAULT_AUDIO, forKey: "audio-false")
+        if data.object(forKey: "audio-false") == nil {
+            data.set(GameViewController.DEFAULT_AUDIO, forKey: "audio-false")
         }
-        if NSUserDefaults.standardUserDefaults().objectForKey("elementalcube.sessid") != nil {
-            logIn(sessid: NSUserDefaults.standardUserDefaults().stringForKey("elementalcube.sessid")!)
+        if UserDefaults.standard.object(forKey: "elementalcube.sessid") != nil {
+            logIn(sessid: UserDefaults.standard.string(forKey: "elementalcube.sessid")!)
         }
-        currentTheme = AbstractThemeUtils.withID(NSUserDefaults.standardUserDefaults().stringForKey("currentTheme")!)!
-        let welcome:NSURL = NSBundle.mainBundle().URLForResource("Welcome", withExtension: "wav")!
+        currentTheme = AbstractThemeUtils.withID(UserDefaults.standard.string(forKey: "currentTheme")!)!
+        let welcome:URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
         
         do {
-            try self.audioPlayer = AVAudioPlayer(contentsOfURL: welcome)
+            try self.audioPlayer = AVAudioPlayer(contentsOf: welcome)
         } catch {
             print(error)
         }
-        audioVolume = data.floatForKey("audio-false")
+        audioVolume = data.float(forKey: "audio-false")
         audioPlayer.volume = audioVolume
         audioPlayer.prepareToPlay()
         audioPlayer.play()
@@ -112,7 +112,7 @@ class GameViewController: UIViewController {
         skView!.ignoresSiblingOrder = true
         
         let scene:SKScene = StartScene(size: skView!.bounds.size)
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         skView!.presentScene(scene)
     }
     
@@ -121,40 +121,40 @@ class GameViewController: UIViewController {
     }
     
     func reloadBackgroundMusic() {
-        currentMusicFileName = NSUserDefaults.standardUserDefaults().stringForKey("currentMusic")!
-        let bgMusicURL:NSURL = GameViewController.getMusicURL(currentMusicFileName)!
+        currentMusicFileName = UserDefaults.standard.string(forKey: "currentMusic")!
+        let bgMusicURL:URL = GameViewController.getMusicURL(currentMusicFileName)!
         do {
-            try self.backgroundMusicPlayer = AVAudioPlayer(contentsOfURL: bgMusicURL)
+            try self.backgroundMusicPlayer = AVAudioPlayer(contentsOf: bgMusicURL)
         } catch let error as NSError {
             print("ERROR WHILE LOADING AUDIO FILE. REMOVING THE CORRUPTED AUDIO FILE. Error: \(error.localizedDescription)")
             do {
-                try NSFileManager.defaultManager().removeItemAtURL(bgMusicURL)
+                try FileManager.default.removeItem(at: bgMusicURL)
             } catch let error as NSError {
                 print("Couldn't delete the corrupted file. Error: \(error.localizedDescription)")
             }
         }
         backgroundMusicPlayer.numberOfLoops = -1
-        backgroundMusicPlayer.volume = NSUserDefaults.standardUserDefaults().floatForKey("audio-true")
+        backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
         backgroundMusicPlayer.prepareToPlay()
         backgroundMusicPlayer.play()
     }
     
-    class func getMusicURLs() -> [NSURL] {
-        var urls:[NSURL] = []
+    class func getMusicURLs() -> [URL] {
+        var urls:[URL] = []
         let path = FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath
-        let enumerator = NSFileManager.defaultManager().enumeratorAtPath(path)
+        let enumerator = FileManager.default.enumerator(atPath: path)
         
         while let element = enumerator?.nextObject() as? String {
             if(element.hasSuffix(".m4a")) {
-                urls.append(NSURL(fileURLWithPath: "\(path)/\(element)"))
+                urls.append(URL(fileURLWithPath: "\(path)/\(element)"))
             }
         }
         return urls
     }
     
-    class func getMusicURL(fileName:String) -> NSURL? {
+    class func getMusicURL(_ fileName:String) -> URL? {
         if fileName == "_personnal" {
-            return NSUserDefaults.standardUserDefaults().URLForKey("usermusic")
+            return UserDefaults.standard.url(forKey: "usermusic")
         }
         for url in getMusicURLs() {
             if url.absoluteString.hasSuffix("/\(fileName)") {
@@ -164,20 +164,20 @@ class GameViewController: UIViewController {
         return nil
     }
     
-    class func getExternalThemes() -> [NSURL] {
-        let path = NSURL(fileURLWithPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
+    class func getExternalThemes() -> [URL] {
+        let path = URL(fileURLWithPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
         return path.subdirectories
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return skView!.scene is StartScene && self.view.frame.width > 400
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return .AllButUpsideDown
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
         } else {
-            return .All
+            return .all
         }
     }
     
@@ -186,7 +186,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
@@ -195,7 +195,7 @@ class GameViewController: UIViewController {
     }
     
     class func getTotalXP() -> Int {
-        return NSUserDefaults.standardUserDefaults().integerForKey("exp")
+        return UserDefaults.standard.integer(forKey: "exp")
     }
     
     class func getLevelXP() -> Int {
@@ -206,14 +206,14 @@ class GameViewController: UIViewController {
         return Float(getLevelXP()) / 250
     }
     
-    func addXP(xp:Int) {
+    func addXP(_ xp:Int) {
         let levelBefore = GameViewController.getLevel()
-        NSUserDefaults.standardUserDefaults().setInteger(GameViewController.getTotalXP() + xp, forKey: "exp")
+        UserDefaults.standard.set(GameViewController.getTotalXP() + xp, forKey: "exp")
         print("Added \(xp) XP")
         if levelBefore < GameViewController.getLevel() {
-            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), GameViewController.getLevel()), preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), GameViewController.getLevel()), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -221,87 +221,87 @@ class GameViewController: UIViewController {
         return loggedIn
     }
     
-    func logInDialog(username username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler({ textField in
+    func logInDialog(username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { textField in
             textField.placeholder = NSLocalizedString("login.username.placeholder", comment: "")
             textField.text = username
         })
-        alert.addTextFieldWithConfigurationHandler({ textField in
+        alert.addTextField(configurationHandler: { textField in
             textField.placeholder = NSLocalizedString("login.password.placeholder", comment: "")
             textField.text = password
-            textField.secureTextEntry = true
+            textField.isSecureTextEntry = true
         })
-        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: {
+        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: {
             action in
             self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!, completion: completion)
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
     }
     
-    func logIn(username username: String, password: String, completion: (() -> Void)? = nil) {
+    func logIn(username: String, password: String, completion: (() -> Void)? = nil) {
         logIn(query: "user=\(username)&passwd=\(password.sha1())", username: username, password: password, completion: completion)
     }
     
-    func logIn(sessid sessid: String, completion: (() -> Void)? = nil) {
+    func logIn(sessid: String, completion: (() -> Void)? = nil) {
         logIn(query: "sessid=\(sessid)", completion: completion)
     }
     
-    func logIn(query query: String, username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://elementalcube.esy.es/api/auth.php")!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = query.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, error in
+    func logIn(query: String, username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
+        let request = NSMutableURLRequest(url: URL(string: "http://elementalcube.esy.es/api/auth.php")!)
+        request.httpMethod = "POST"
+        request.httpBody = query.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             guard error == nil && data != nil else {
                 print("[LOGIN] error=\(error)")
                 return
             }
             
-            if let httpStatus = response as? NSHTTPURLResponse where httpStatus.statusCode != 200 {
+            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
                 print("[LOGIN] status code: \(httpStatus.statusCode)")
                 print("[LOGIN] response: \(response)")
             }
-            dispatch_async(dispatch_get_main_queue()) {
-                let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                let authStatus = responseString?.componentsSeparatedByString("\r\n")[0]
+            DispatchQueue.main.async {
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8)
+                let authStatus = responseString?.components(separatedBy: "\r\n")[0]
                 if authStatus != nil && Int(authStatus!) != nil {
                     let status = LoginStatus(rawValue: Int(authStatus!)!)
-                    if status == .Authenticated {
-                        let sessid = responseString!.componentsSeparatedByString("\r\n")[1]
-                        NSUserDefaults.standardUserDefaults().setObject(sessid, forKey: "elementalcube.sessid")
+                    if status == .authenticated {
+                        let sessid = responseString!.components(separatedBy: "\r\n")[1]
+                        UserDefaults.standard.set(sessid, forKey: "elementalcube.sessid")
                         GameViewController.loggedIn = true
                         if completion != nil {
                             completion!()
                         }
                     } else {
-                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(status!))", comment: ""), preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .Default, handler: {
+                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(status!))", comment: ""), preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default, handler: {
                             action in
-                            if status == .InvalidUsername || status == .IncorrectPassword {
+                            if status == .invalidUsername || status == .incorrectPassword {
                                 self.logInDialog(username: username, password: password)
                             } else {
                                 self.logIn(query: query)
                             }
                         }))
-                        self.presentViewController(alert, animated: true, completion: completion)
+                        self.present(alert, animated: true, completion: completion)
                     }
                 }
             }
-        }
+        }) 
         task.resume()
     }
     
     class func logOut() {
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "elementalcube.sessid")
+        UserDefaults.standard.set(nil, forKey: "elementalcube.sessid")
         GameViewController.loggedIn = false
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        coordinator.animateAlongsideTransition(nil, completion: {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil, completion: {
             _ in
             if self.skView!.scene! is StartScene {
                 self.skView!.scene!.size = size
@@ -312,28 +312,28 @@ class GameViewController: UIViewController {
     }
 }
 
-extension NSURL {
+extension URL {
     var isDirectory: Bool {
-        guard let path = path where fileURL else { return false }
+        guard let path = path , isFileURL else { return false }
         var bool: ObjCBool = false
-        return NSFileManager().fileExistsAtPath(path, isDirectory: &bool) ? bool.boolValue : false
+        return FileManager().fileExists(atPath: path, isDirectory: &bool) ? bool.boolValue : false
     }
-    var subdirectories: [NSURL] {
+    var subdirectories: [URL] {
         guard isDirectory else { return [] }
         do {
-            return try NSFileManager.defaultManager()
-                .contentsOfDirectoryAtURL(self, includingPropertiesForKeys: nil, options: [])
+            return try FileManager.default
+                .contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [])
                 .filter{ $0.isDirectory }
         } catch let error as NSError {
             print(error.localizedDescription)
             return []
         }
     }
-    var content: [NSURL] {
+    var content: [URL] {
         guard isDirectory else { return [] }
         do {
-            return try NSFileManager.defaultManager()
-                .contentsOfDirectoryAtURL(self, includingPropertiesForKeys: nil, options: [])
+            return try FileManager.default
+                .contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [])
         } catch let error as NSError {
             print(error.localizedDescription)
             return []
@@ -343,19 +343,19 @@ extension NSURL {
 
 extension String {
     func sha1() -> String {
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
-        var digest = [UInt8] (count: Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
-        CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
+        let data = self.data(using: String.Encoding.utf8)!
+        var digest = [UInt8] (repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+        CC_SHA1((data as NSData).bytes, CC_LONG(data.count), &digest)
         let hexBytes = digest.map{String(format: "%02hhx", $0)}
-        return hexBytes.joinWithSeparator("")
+        return hexBytes.joined(separator: "")
     }
     
     func md5() -> String {
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
-        var digest = [UInt8] (count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
-        CC_MD5(data.bytes, CC_LONG(data.length), &digest)
+        let data = self.data(using: String.Encoding.utf8)!
+        var digest = [UInt8] (repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+        CC_MD5((data as NSData).bytes, CC_LONG(data.count), &digest)
         let hexBytes = digest.map{String(format: "%02hhx", $0)}
-        return hexBytes.joinWithSeparator("")
+        return hexBytes.joined(separator: "")
     }
 }
 
@@ -383,26 +383,26 @@ extension CGFloat {
 }
 
 extension UIImage {
-    func withSize(newWidth: CGFloat) -> UIImage {
+    func withSize(_ newWidth: CGFloat) -> UIImage {
         if self.size.width == newWidth {
             return self
         }
         let scale = newWidth / size.width
         let newHeight = size.height * scale
-        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
-        drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return newImage
+        return newImage!
     }
 }
 
 enum LoginStatus: Int {
-    case Authenticated = 1
-    case InvalidUsername = -1
-    case DBError = -2
-    case InvalidSessID = -3
-    case IncorrectPassword = -4
-    case ProfileDeactivated = -5
+    case authenticated = 1
+    case invalidUsername = -1
+    case dbError = -2
+    case invalidSessID = -3
+    case incorrectPassword = -4
+    case profileDeactivated = -5
 }

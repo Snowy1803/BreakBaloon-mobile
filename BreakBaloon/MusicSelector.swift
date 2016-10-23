@@ -18,9 +18,9 @@ class MusicSelector: Selector {
         super.init(gvc: gvc, value: gvc.currentMusicInt)
         importBtn.selector = self
         if importUnder {
-            importBtn.position = CGPointMake(0, -(self.frame.height / 4 + importBtn.frame.width / 4))
+            importBtn.position = CGPoint(x: 0, y: -(self.frame.height / 4 + importBtn.frame.width / 4))
         } else {
-            importBtn.position = CGPointMake(self.frame.width / 4 + importBtn.frame.width / 4, 0)
+            importBtn.position = CGPoint(x: self.frame.width / 4 + importBtn.frame.width / 4, y: 0)
         }
         addChild(importBtn)
     }
@@ -31,21 +31,21 @@ class MusicSelector: Selector {
     
     override func updateAfterValueChange() {
         gvc.currentMusicInt = value
-        NSUserDefaults.standardUserDefaults().setObject(gvc.currentMusicFileName, forKey: "currentMusic")
+        UserDefaults.standard.set(gvc.currentMusicFileName, forKey: "currentMusic")
         super.updateAfterValueChange()
         gvc.reloadBackgroundMusic()
     }
     
     override func maxValue() -> Int {
-        return GameViewController.getMusicURLs().count - (NSUserDefaults.standardUserDefaults().objectForKey("usermusic") == nil ? 1 : 0)
+        return GameViewController.getMusicURLs().count - (UserDefaults.standard.object(forKey: "usermusic") == nil ? 1 : 0)
     }
     
     override func text() -> String {
         if value == GameViewController.getMusicURLs().count {
-            let name = NSUserDefaults.standardUserDefaults().stringForKey("usermusicName")
+            let name = UserDefaults.standard.string(forKey: "usermusicName")
             return name == nil ? "Custom" : name!
         }
-        let cmps = GameViewController.getMusicURLs()[value].absoluteString.componentsSeparatedByString("/")
-        return cmps[cmps.count - 1].componentsSeparatedByString(".")[0].stringByRemovingPercentEncoding!
+        let cmps = GameViewController.getMusicURLs()[value].absoluteString?.components(separatedBy: "/")
+        return cmps?[(cmps?.count)! - 1].components(separatedBy: ".")[0].stringByRemovingPercentEncoding!
     }
 }

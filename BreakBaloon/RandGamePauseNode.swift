@@ -24,11 +24,11 @@ class RandGamePauseNode: SKNode {
         replay = SKSpriteNode(imageNamed: "levelreplay")
         super.init()
         grey.zPosition = 3
-        menu.position = CGPointMake(scene.frame.width / 2 - 80, scene.frame.height / 2)
+        menu.position = CGPoint(x: scene.frame.width / 2 - 80, y: scene.frame.height / 2)
         menu.zPosition = 4
-        play.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 2)
+        play.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 2)
         play.zPosition = 4
-        replay.position = CGPointMake(scene.frame.width / 2 + 80, scene.frame.height / 2)
+        replay.position = CGPoint(x: scene.frame.width / 2 + 80, y: scene.frame.height / 2)
         replay.zPosition = 4
         addChild(grey)
         addChild(menu)
@@ -40,17 +40,17 @@ class RandGamePauseNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func touchAt(point: CGPoint) {
+    func touchAt(_ point: CGPoint) {
         if menu.frame.contains(point) {
             let scene = StartScene(size: self.scene!.frame.size)
-            self.scene!.view!.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
+            self.scene!.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
             scene.adjustPosition(false, sizeChange: true)
         } else if play.frame.contains(point) {
             removeFromParent()
             game.quitPause()
             game.addChild(game.pause)
         } else if replay.frame.contains(point) {
-            game.level.start(game.scene!.view!, transition: SKTransition.fadeWithColor(SKColor.whiteColor(), duration: 1))
+            game.level.start(game.scene!.view!, transition: SKTransition.fade(with: SKColor.white, duration: 1))
         }
     }
 }

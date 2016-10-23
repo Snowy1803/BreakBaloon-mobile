@@ -32,12 +32,12 @@ class RandGameLevelEndNode: SKNode {
         super.init()
         self.zPosition = 1000
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))
-        rect.fillColor = SKColor.lightGrayColor()
+        rect.fillColor = SKColor.lightGray
         addChild(rect)
         let tlevel = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.level", comment: "Level n"), level.index + 1))
-        tlevel.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 32)
+        tlevel.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 32)
         tlevel.fontSize = 24
-        tlevel.fontColor = SKColor.blackColor()
+        tlevel.fontColor = SKColor.black
         tlevel.fontName = "Copperplate-Bold"
         addChild(tlevel)
         let tstatus: SKLabelNode
@@ -46,43 +46,43 @@ class RandGameLevelEndNode: SKNode {
         } else {
             tstatus = SKLabelNode(text: NSLocalizedString("gameinfo.end.\(successful ? "finished" : "failed")", comment: "Level finished"))
         }
-        tstatus.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 128)
+        tstatus.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 128)
         tstatus.fontSize = 24
-        tstatus.fontColor = successful ? SKColor.greenColor() : SKColor.redColor()
+        tstatus.fontColor = successful ? SKColor.green : SKColor.red
         tstatus.fontName = "Copperplate-Bold"
         addChild(tstatus)
         if !isBonusLevel {
             let tcomplete = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.complete", comment: "complete: n / n"), scene.points, level.numberOfBaloons - level.maxMissingBaloonToWin))
-            tcomplete.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 160)
+            tcomplete.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 160)
             tcomplete.fontSize = 24
-            tcomplete.fontColor = SKColor.blackColor()
+            tcomplete.fontColor = SKColor.black
             tcomplete.fontName = "HelveticaNeue-Bold"
             addChild(tcomplete)
             
-            replay.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 12 * 3)
+            replay.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 12 * 3)
             addChild(replay)
         }
         
-        back.position = CGPointMake(scene.frame.width / 2 - 80, scene.frame.height / 12 * 3)
+        back.position = CGPoint(x: scene.frame.width / 2 - 80, y: scene.frame.height / 12 * 3)
         addChild(back)
         if successful {
             if level.next != nil && level.next!.canPlay() {
-                next!.position = CGPointMake(scene.frame.width / 2 + 80, scene.frame.height / 12 * 3)
-                next!.runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.resizeToWidth(80, height: 80, duration: 0.6), SKAction.resizeToWidth(64, height: 64, duration: 0.6)])))
+                next!.position = CGPoint(x: scene.frame.width / 2 + 80, y: scene.frame.height / 12 * 3)
+                next!.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
                 addChild(next!)
             }
-            self.stars!.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 224)
+            self.stars!.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 224)
             addChild(self.stars!)
             if stars < 3 {
                 let remaining = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.end.remaining\(Int(level.numberOfBaloons) - scene.points == 1 ? ".one" : "")", comment: "n remaining"), Int(level.numberOfBaloons) - scene.points))
-                remaining.fontColor = SKColor.darkGrayColor()
+                remaining.fontColor = SKColor.darkGray
                 remaining.fontSize = 20
                 remaining.fontName = "HelveticaNeue-Bold"
-                remaining.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 275)
+                remaining.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 275)
                 addChild(remaining)
             }
         } else if !isBonusLevel {
-            replay.runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.resizeToWidth(80, height: 80, duration: 0.6), SKAction.resizeToWidth(64, height: 64, duration: 0.6)])))
+            replay.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
         }
     }
     
@@ -90,12 +90,12 @@ class RandGameLevelEndNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func click(touch: CGPoint) {
-        if back.containsPoint(touch) {
+    func click(_ touch: CGPoint) {
+        if back.contains(touch) {
             backToMenu(self.scene!.view!)
-        } else if replay.containsPoint(touch) {
+        } else if replay.contains(touch) {
             setLevel(level, view: self.scene!.view!)
-        } else if next != nil && next!.containsPoint(touch) {
+        } else if next != nil && next!.contains(touch) {
             if level.next != nil {
                 setLevel(level.next!, view: self.scene!.view!)
             } else {
@@ -104,15 +104,15 @@ class RandGameLevelEndNode: SKNode {
         }
     }
     
-    func backToMenu(view: SKView) {
+    func backToMenu(_ view: SKView) {
         let scene = StartScene(size: self.scene!.frame.size)
-        view.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
+        view.presentScene(scene, transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
         scene.adjustPosition(false, sizeChange: true)
     }
     
-    func setLevel(level: RandGameLevel, view: SKView) {
+    func setLevel(_ level: RandGameLevel, view: SKView) {
         if level.canPlay() {
-            level.start(view, transition: SKTransition.fadeWithColor(SKColor.whiteColor(), duration: 1))
+            level.start(view, transition: SKTransition.fade(with: SKColor.white, duration: 1))
         }
     }
 }

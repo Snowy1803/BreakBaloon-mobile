@@ -15,9 +15,9 @@ class AbstractGameScene: SKScene {
     var points:Int = 0
     
     var avplayer = AVAudioPlayer()
-    var beginTime:NSTimeInterval?
-    var endTime:NSTimeInterval?
-    private var pauseTime:NSTimeInterval?
+    var beginTime:TimeInterval?
+    var endTime:TimeInterval?
+    fileprivate var pauseTime:TimeInterval?
     
     init(view:SKView, gametype:Int8) {
         self.gametype = gametype
@@ -30,19 +30,19 @@ class AbstractGameScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func construct(gvc: GameViewController) {
+    func construct(_ gvc: GameViewController) {
         self.backgroundColor = gvc.currentTheme.backgroundColor()
     }
     
     func pauseGame() {
-        pauseTime = NSDate().timeIntervalSince1970
-        paused = true
+        pauseTime = Date().timeIntervalSince1970
+        isPaused = true
     }
     
     func quitPause() {
-        paused = false
+        isPaused = false
         if beginTime != nil && pauseTime != nil {
-            let pauseLenght = NSDate().timeIntervalSince1970 - pauseTime!
+            let pauseLenght = Date().timeIntervalSince1970 - pauseTime!
             beginTime! += pauseLenght
         }
         pauseTime = nil

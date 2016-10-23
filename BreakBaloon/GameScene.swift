@@ -26,14 +26,14 @@ class GameScene:AbstractGameScene {
         super.init(view: view, gametype: gametype)
     }
     
-    override func construct(gvc: GameViewController) {
+    override func construct(_ gvc: GameViewController) {
         super.construct(gvc)
         for i in 0 ..< (width * height) {
             let theCase = Case(gvc: gvc, index: i)
-            theCase.position = CGPointMake(CGFloat(i % width * 75 + 35), self.frame.size.height - CGFloat(i / width * 75 + 35))
+            theCase.position = CGPoint(x: CGFloat(i % width * 75 + 35), y: self.frame.size.height - CGFloat(i / width * 75 + 35))
             theCase.zPosition = 1
             addChild(theCase)
-            cases.addObject(theCase)
+            cases.add(theCase)
         }
         if gametype == StartScene.GAMETYPE_SOLO {
             label.text = NSLocalizedString("game.score.no", comment: "No points")
@@ -42,14 +42,14 @@ class GameScene:AbstractGameScene {
         } else if gametype == StartScene.GAMETYPE_TIMED {
             label.text = String(format: NSLocalizedString("game.time", comment: "Time"), 0)
         }
-        label.fontColor = SKColor.blackColor()
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+        label.fontColor = SKColor.black
+        if UIDevice.current.userInterfaceIdiom == .phone {
             label.fontSize = 12
         } else {
             label.fontSize = 30
         }
         label.fontName = "Verdana-Bold"
-        label.position = CGPointMake(label.frame.width/2, 5)
+        label.position = CGPoint(x: label.frame.width/2, y: 5)
         label.zPosition = 2
         addChild(label)
         winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
@@ -59,18 +59,18 @@ class GameScene:AbstractGameScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func breakBaloon(index:Int, touch:CGPoint, computer:Bool) {
+    func breakBaloon(_ index:Int, touch:CGPoint, computer:Bool) {
         if waitingForComputer && !computer {
             return
         }
         if beginTime == nil {
-            beginTime = NSDate().timeIntervalSince1970
+            beginTime = Date().timeIntervalSince1970
         }
-        if (cases.objectAtIndex(index) as! Case).breaked {
+        if (cases.object(at: index) as! Case).breaked {
             return
         }
-        (cases.objectAtIndex(index) as! Case).breakBaloon(index == winCaseNumber)
-        var data:NSData
+        (cases.object(at: index) as! Case).breakBaloon(index == winCaseNumber)
+        var data:Data
         var gameEnded = false
         if gametype != StartScene.GAMETYPE_TIMED && index == winCaseNumber {
             if computer {
@@ -83,19 +83,19 @@ class GameScene:AbstractGameScene {
             } else if gametype == StartScene.GAMETYPE_COMPUTER {
                 label.text = String(format: NSLocalizedString("game.score.vsc.\(points > 1 ? "more" : "one").\(computerpoints > 1 ? "more" : "one")", comment: "Number of points both"), points, computerpoints)
             }
-            label.position = CGPointMake(label.frame.width/2, 5)
+            label.position = CGPoint(x: label.frame.width/2, y: 5)
             let plus = SKLabelNode(text: "+ 1")
             if computer {
-                plus.fontColor = SKColor.redColor()
+                plus.fontColor = SKColor.red
             } else {
-                plus.fontColor = SKColor.blueColor()
+                plus.fontColor = SKColor.blue
             }
             plus.fontName = "Verdana-Bold"
             plus.fontSize = 25
             plus.position = touch
             plus.zPosition = 3
             addChild(plus)
-            plus.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(5)), SKAction.removeFromParent()]))
+            plus.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(5)), SKAction.removeFromParent()]))
             var isThereUnbreakedBaloons = false
             for aCase in cases {
                 if !(aCase as! Case).breaked {
@@ -109,7 +109,7 @@ class GameScene:AbstractGameScene {
             }
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
-            } while (cases.objectAtIndex(winCaseNumber) as! Case).breaked && !gameEnded
+            } while (cases.object(at: winCaseNumber) as! Case).breaked && !gameEnded
             data = (self.view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
         } else if gametype == StartScene.GAMETYPE_TIMED {
             var isThereUnbreakedBaloons = false
@@ -128,7 +128,7 @@ class GameScene:AbstractGameScene {
         }
         
         if !gameEnded {
-            (cases.objectAtIndex(index) as! Case).baloonBreaked()
+            (cases.object(at: index) as! Case).baloonBreaked()
         }
         
         do {
@@ -142,28 +142,28 @@ class GameScene:AbstractGameScene {
         
         if !gameEnded && !computer && gametype == StartScene.GAMETYPE_COMPUTER {
             waitingForComputer = true
-            self.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.25)), SKAction.runBlock({
+            self.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.25)), SKAction.run({
                 var wherebreak:Int
                 repeat {
                     wherebreak = Int(arc4random_uniform(UInt32(self.width) * UInt32(self.height)))
-                } while (self.cases.objectAtIndex(wherebreak) as! Case).breaked
-                self.breakBaloon(wherebreak, touch: self.cases.objectAtIndex(wherebreak).position, computer: true)
+                } while (self.cases.object(at: wherebreak) as! Case).breaked
+                self.breakBaloon(wherebreak, touch: (self.cases.object(at: wherebreak) as AnyObject).position, computer: true)
                 self.waitingForComputer = false
             })]))
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let point = touch.locationInNode(self)
-            if self.nodeAtPoint(point) is Case {
-                breakBaloon((self.nodeAtPoint(point) as! Case).index, touch: point, computer: false)
+            let point = touch.location(in: self)
+            if self.atPoint(point) is Case {
+                breakBaloon((self.atPoint(point) as! Case).index, touch: point, computer: false)
             }
         }
     }
     
     func gameEnd() {
-        endTime = NSDate().timeIntervalSince1970 - beginTime!
+        endTime = Date().timeIntervalSince1970 - beginTime!
         if self.gametype == StartScene.GAMETYPE_COMPUTER {
             if self.points > self.computerpoints {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.won", comment: "Points at end"), self.points, self.computerpoints)
@@ -172,32 +172,32 @@ class GameScene:AbstractGameScene {
             } else {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.same", comment: "Points at end"), self.points)
             }
-            label.position = CGPointMake(label.frame.width/2, 5)
+            label.position = CGPoint(x: label.frame.width/2, y: 5)
         } else if self.gametype == StartScene.GAMETYPE_TIMED {
             points = Int((Float(width * height) / Float(endTime!)) * 5)
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), self.points, Int(self.endTime!))
-            label.position = CGPointMake(label.frame.width/2, 5)
+            label.position = CGPoint(x: label.frame.width/2, y: 5)
         }
-        let newRecord = self.gametype == StartScene.GAMETYPE_SOLO && NSUserDefaults.standardUserDefaults().integerForKey("highscore") < self.points || self.gametype == StartScene.GAMETYPE_TIMED && NSUserDefaults.standardUserDefaults().integerForKey("bestTimedScore") < self.points
-        label.runAction(SKAction.sequence([SKAction.waitForDuration(NSTimeInterval(0.5)), SKAction.runBlock({
-            self.label.fontColor = SKColor.orangeColor()
-        }), SKAction.waitForDuration(NSTimeInterval(1)), SKAction.runBlock({
-            self.label.fontColor = SKColor.blackColor()
+        let newRecord = self.gametype == StartScene.GAMETYPE_SOLO && UserDefaults.standard.integer(forKey: "highscore") < self.points || self.gametype == StartScene.GAMETYPE_TIMED && UserDefaults.standard.integer(forKey: "bestTimedScore") < self.points
+        label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run({
+            self.label.fontColor = SKColor.orange
+        }), SKAction.wait(forDuration: TimeInterval(1)), SKAction.run({
+            self.label.fontColor = SKColor.black
             if newRecord {
                 let record = SKLabelNode(text: NSLocalizedString("game.end.newrecord", comment: ""))
-                record.fontColor = SKColor.orangeColor()
+                record.fontColor = SKColor.orange
                 record.fontName = "Verdana-Bold"
                 record.fontSize = 25
                 record.zPosition = 1000
-                record.position = CGPointMake(self.frame.midX, self.frame.midY)
+                record.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
                 self.addChild(record)
             }
-        }), SKAction.waitForDuration(NSTimeInterval(newRecord ? 1.5 : 0.5)), SKAction.runBlock({
-            let data = NSUserDefaults.standardUserDefaults()
-            if self.gametype == StartScene.GAMETYPE_SOLO && data.integerForKey("highscore") < self.points {
-                data.setInteger(self.points, forKey: "highscore")
-            } else if self.gametype == StartScene.GAMETYPE_TIMED && data.integerForKey("bestTimedScore") < self.points {
-                data.setInteger(self.points, forKey: "bestTimedScore")
+        }), SKAction.wait(forDuration: TimeInterval(newRecord ? 1.5 : 0.5)), SKAction.run({
+            let data = UserDefaults.standard
+            if self.gametype == StartScene.GAMETYPE_SOLO && data.integer(forKey: "highscore") < self.points {
+                data.set(self.points, forKey: "highscore")
+            } else if self.gametype == StartScene.GAMETYPE_TIMED && data.integer(forKey: "bestTimedScore") < self.points {
+                data.set(self.points, forKey: "bestTimedScore")
             }
             let gvc = self.view!.window!.rootViewController as! GameViewController
             gvc.currentGame = nil
@@ -206,14 +206,14 @@ class GameScene:AbstractGameScene {
             gvc.addXP(Int(5 * levelModifier * sizeModifier))
             let scene:StartScene = StartScene(size: self.frame.size)
             scene.lastGameInfo = self.label.text!
-            self.view!.presentScene(scene, transition: SKTransition.flipVerticalWithDuration(NSTimeInterval(1)))
+            self.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
         })]))
     }
     
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         if gametype == StartScene.GAMETYPE_TIMED && endTime == nil && !isGamePaused() {
-            label.text = String(format: NSLocalizedString("game.time", comment: "Time"), (beginTime == nil ? 0 : Int(NSDate().timeIntervalSince1970 - beginTime!)))
-            label.position = CGPointMake(label.frame.width/2, 5)
+            label.text = String(format: NSLocalizedString("game.time", comment: "Time"), (beginTime == nil ? 0 : Int(Date().timeIntervalSince1970 - beginTime!)))
+            label.position = CGPoint(x: label.frame.width/2, y: 5)
         }
     }
 }

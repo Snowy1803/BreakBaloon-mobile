@@ -17,38 +17,38 @@ class RandGameLevelInfoNode: SKNode {
         super.init()
         self.zPosition = 1000
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))
-        rect.fillColor = SKColor.lightGrayColor()
+        rect.fillColor = SKColor.lightGray
         addChild(rect)
         let tlevel = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.level", comment: "Level n"), level.index + 1))
-        tlevel.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 32)
+        tlevel.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 32)
         tlevel.fontSize = 24
-        tlevel.fontColor = SKColor.blackColor()
+        tlevel.fontColor = SKColor.black
         tlevel.fontName = "Copperplate-Bold"
         addChild(tlevel)
         let tbaloons = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.baloons", comment: "Baloons: n"), level.numberOfBaloons))
-        tbaloons.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 128)
+        tbaloons.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 128)
         tbaloons.fontSize = 24
-        tbaloons.fontColor = SKColor.blackColor()
+        tbaloons.fontColor = SKColor.black
         tbaloons.fontName = "HelveticaNeue-Bold"
         addChild(tbaloons)
         let tspeed = SKLabelNode(text: NSLocalizedString("gameinfo.speed.\(speedString())", comment: "Speed: s"))
-        tspeed.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 160)
+        tspeed.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 160)
         tspeed.fontSize = 24
-        tspeed.fontColor = SKColor.blackColor()
+        tspeed.fontColor = SKColor.black
         tspeed.fontName = "HelveticaNeue-Bold"
         addChild(tspeed)
         if level.fakeBaloonsRate > 0 {
             let tfakeRate = SKLabelNode(text: NSLocalizedString("gameinfo.fakeBaloonRate.\(fakeBaloonRateString())", comment: "Fake Baloon Rate: s"))
-            tfakeRate.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 * 5 - 192)
+            tfakeRate.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 192)
             tfakeRate.fontSize = 24
-            tfakeRate.fontColor = SKColor.blackColor()
+            tfakeRate.fontColor = SKColor.black
             tfakeRate.fontName = "HelveticaNeue-Bold"
             addChild(tfakeRate)
         }
         let treq = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.requirePoints", comment: "n points for win"), level.numberOfBaloons - level.maxMissingBaloonToWin))
-        treq.position = CGPointMake(scene.frame.width / 2, scene.frame.height / 6 + 32)
+        treq.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 + 32)
         treq.fontSize = 24
-        treq.fontColor = SKColor.blackColor()
+        treq.fontColor = SKColor.black
         treq.fontName = "HelveticaNeue-Bold"
         addChild(treq)
     }

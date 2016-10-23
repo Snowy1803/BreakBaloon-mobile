@@ -15,22 +15,22 @@ protocol AbstractTheme {
     func numberOfBaloons() -> UInt
     func themeName() -> String
     
-    func animationColor(type type: Int) -> UIColor?
+    func animationColor(type: Int) -> UIColor?
     
-    func getBaloonTexture(status status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture
+    func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture
     func getBaloonTexture(case aCase: Case) -> SKTexture
-    func pumpSound(winner: Bool) -> NSData
-    func equals(theme: AbstractTheme) -> Bool
+    func pumpSound(_ winner: Bool) -> Data
+    func equals(_ theme: AbstractTheme) -> Bool
     
 }
 
 struct AbstractThemeUtils {
     static var themeList = AbstractThemeUtils.getThemeList()
     
-    private static func getThemeList() -> [AbstractTheme] {
+    fileprivate static func getThemeList() -> [AbstractTheme] {
         var list = [AbstractTheme](arrayLiteral: DefaultTheme())
         for url in GameViewController.getExternalThemes() {
-            let theme = parse(directoryUrl: url)
+            let theme = parse(directoryUrl: url as URL)
             if theme != nil {
                 list.append(theme!)
             }
@@ -43,30 +43,30 @@ struct AbstractThemeUtils {
         themeList = getThemeList()
     }
     
-    static func parse(directoryUrl url:NSURL) -> AbstractTheme? {
+    static func parse(directoryUrl url:URL) -> AbstractTheme? {
         if url.isDirectory {//isDirectory is defined in GameViewController
-            let bbt1 = FileSaveHelper(fileName: url.lastPathComponent!, fileExtension: .BBTHEME, subDirectory: url.lastPathComponent!)
+            let bbt1 = FileSaveHelper(fileName: url.lastPathComponent, fileExtension: .BBTHEME, subDirectory: url.lastPathComponent)
             if bbt1.fileExists {
                 do {
                     return try BBT1.parse(id: url.lastPathComponent!, bbtheme: bbt1.getContentsOfFile())
                 } catch {
-                    print("Theme \(url.lastPathComponent!)'s .bbtheme file couldn't be read")
+                    print("Theme \(url.lastPathComponent)'s .bbtheme file couldn't be read")
                 }
             }
-            let bbt2 = FileSaveHelper(fileName: "theme", fileExtension: .BBTHEME2CODE, subDirectory: url.lastPathComponent!)
+            let bbt2 = FileSaveHelper(fileName: "theme", fileExtension: .BBTHEME2CODE, subDirectory: url.lastPathComponent)
             if bbt2.fileExists {
                 do {
                     return try BBT2(dir: url.lastPathComponent!, code: bbt2.getContentsOfFile())
                 } catch {
-                    print("Theme \(url.lastPathComponent!)'s .bbtc file couldn't be read")
+                    print("Theme \(url.lastPathComponent)'s .bbtc file couldn't be read")
                 }
             }
         }
         return nil
     }
     
-    static func withID(id:String) -> AbstractTheme? {
-        let index = themeList.indexOf({theme in
+    static func withID(_ id:String) -> AbstractTheme? {
+        let index = themeList.index(where: {theme in
             return theme.themeID() == id
         })
         if index != nil {

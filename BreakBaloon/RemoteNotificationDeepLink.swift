@@ -13,12 +13,12 @@ import SpriteKit
 class RemoteNotificationDeepLink: NSObject {
     var param : String = ""
     
-    class func create(userInfo : [NSObject : AnyObject]) -> RemoteNotificationDeepLink? {
+    class func create(_ userInfo : [AnyHashable: Any]) -> RemoteNotificationDeepLink? {
         let info = userInfo as NSDictionary
         
-        let settingPage = info.objectForKey("settings") as? String
-        let gameMode = info.objectForKey("game") as? String
-        let bbstore = info.objectForKey("bbstore") as? String
+        let settingPage = info.object(forKey: "settings") as? String
+        let gameMode = info.object(forKey: "game") as? String
+        let bbstore = info.object(forKey: "bbstore") as? String
         
         var ret : RemoteNotificationDeepLink? = nil
         if settingPage != nil {
@@ -31,18 +31,18 @@ class RemoteNotificationDeepLink: NSObject {
         return ret
     }
     
-    private override init() {
+    fileprivate override init() {
         self.param = ""
         super.init()
     }
     
-    private init(param: String) {
+    fileprivate init(param: String) {
         self.param = param
         super.init()
     }
     
     final func trigger() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.triggerImp()
                 { (passedData) in
                     // do nothing
@@ -50,17 +50,17 @@ class RemoteNotificationDeepLink: NSObject {
         }
     }
     
-    private func triggerImp(completion: ((AnyObject?)->(Void))) {
+    fileprivate func triggerImp(_ completion: ((AnyObject?)->(Void))) {
         completion(nil)
     }
 }
 
 class RemoteNotificationDeepLinkSettings : RemoteNotificationDeepLink {
-    private override func triggerImp(completion: ((AnyObject?)->(Void))) {
+    fileprivate override func triggerImp(_ completion: ((AnyObject?)->(Void))) {
         super.triggerImp()
             { (passedData) in
                 
-                let gvc = (UIApplication.sharedApplication().delegate!.window!!.rootViewController as! GameViewController)
+                let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
                 let start = StartScene(size: gvc.view!.frame.size)
                 var scene:SKScene?
                 
@@ -89,11 +89,11 @@ class RemoteNotificationDeepLinkSettings : RemoteNotificationDeepLink {
 }
 
 class RemoteNotificationDeepLinkNewGame : RemoteNotificationDeepLink {
-    private override func triggerImp(completion: ((AnyObject?)->(Void))) {
+    fileprivate override func triggerImp(_ completion: ((AnyObject?)->(Void))) {
         super.triggerImp()
             { (passedData) in
                 
-                let gvc = (UIApplication.sharedApplication().delegate!.window!!.rootViewController as! GameViewController)
+                let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
                 //let start = StartScene(size: gvc.view!.frame.size)
                 var scene:SKScene?
                 if self.param == "singleplayer" {
@@ -103,7 +103,7 @@ class RemoteNotificationDeepLinkNewGame : RemoteNotificationDeepLink {
                 } else if self.param == "time" {
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
                 } else if self.param.hasPrefix("randombaloons") {
-                    let level = RandGameLevel.levels[Int(self.param.componentsSeparatedByString("/")[1])! - 1]
+                    let level = RandGameLevel.levels[Int(self.param.components(separatedBy: "/")[1])! - 1]
                     if level.canPlay() {
                         level.start(gvc.skView!)
                     }
@@ -111,15 +111,15 @@ class RemoteNotificationDeepLinkNewGame : RemoteNotificationDeepLink {
                     completion(nil)
                     return
                 } else if self.param.hasPrefix("singleplayer") {
-                    let ints = self.param.componentsSeparatedByString("ingleplayer")[1].componentsSeparatedByString("x")
+                    let ints = self.param.components(separatedBy: "ingleplayer")[1].components(separatedBy: "x")
                     let width = UInt(ints[0])!, height = UInt(ints[1])!
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_SOLO, width: width, height: height)
                 } else if self.param.hasPrefix("computer") {
-                    let ints = self.param.componentsSeparatedByString("omputer")[1].componentsSeparatedByString("x")
+                    let ints = self.param.components(separatedBy: "omputer")[1].components(separatedBy: "x")
                     let width = UInt(ints[0])!, height = UInt(ints[1])!
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_COMPUTER, width: width, height: height)
                 } else if self.param.hasPrefix("time") {
-                    let ints = self.param.componentsSeparatedByString("ime")[1].componentsSeparatedByString("x")
+                    let ints = self.param.components(separatedBy: "ime")[1].components(separatedBy: "x")
                     let width = UInt(ints[0])!, height = UInt(ints[1])!
                     scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: width, height: height)
                 }
@@ -132,11 +132,11 @@ class RemoteNotificationDeepLinkNewGame : RemoteNotificationDeepLink {
 }
 
 class RemoteNotificationDeepLinkBBStore : RemoteNotificationDeepLink {
-    private override func triggerImp(completion: ((AnyObject?)->(Void))) {
+    fileprivate override func triggerImp(_ completion: ((AnyObject?)->(Void))) {
         super.triggerImp()
             { (passedData) in
                 
-                let gvc = (UIApplication.sharedApplication().delegate!.window!!.rootViewController as! GameViewController)
+                let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
                 let scene = BBStoreScene(start: StartScene(size: gvc.view!.frame.size), size: gvc.view!.frame.size, gvc: gvc)
                 
                 gvc.skView?.presentScene(scene)

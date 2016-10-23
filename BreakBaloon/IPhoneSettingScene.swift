@@ -26,7 +26,7 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
     init(previous: StartScene) {
         self.start = previous
         super.init(size: previous.frame.size)
-        self.backgroundColor = SKColor.brownColor()
+        self.backgroundColor = SKColor.brown
         initPane()
     }
     
@@ -36,79 +36,79 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
     
     func initPane() {
         music = SKSpriteNode(texture: start.buttonTexture)
-        music.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(0, text: false))
+        music.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(0, text: false))
         music.zPosition = 1
         self.addChild(music)
         tmusic.text = NSLocalizedString("setting.category.music", comment: "")
         tmusic.fontSize = 35
         tmusic.fontName = start.BUTTON_FONT
-        tmusic.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(0, text: true))
-        tmusic.fontColor = SKColor.blackColor()
+        tmusic.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(0, text: true))
+        tmusic.fontColor = SKColor.black
         tmusic.zPosition = 2
         self.addChild(tmusic)
         
         extensions = SKSpriteNode(texture: start.buttonTexture)
-        extensions.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(1, text: false))
+        extensions.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(1, text: false))
         extensions.zPosition = 1
         self.addChild(extensions)
         textensions.text = NSLocalizedString("settings.extensions", comment: "")
         textensions.fontSize = 35
         textensions.fontName = start.BUTTON_FONT
-        textensions.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(1, text: true))
-        textensions.fontColor = SKColor.blackColor()
+        textensions.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(1, text: true))
+        textensions.fontColor = SKColor.black
         textensions.zPosition = 2
         self.addChild(textensions)
         
         login = SKSpriteNode(texture: start.buttonTexture)
-        login.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: false))
+        login.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(2, text: false))
         login.zPosition = 1
         self.addChild(login)
         tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
         tlogin.fontSize = 35
         tlogin.fontName = start.BUTTON_FONT
-        tlogin.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(2, text: true))
-        tlogin.fontColor = SKColor.blackColor()
+        tlogin.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(2, text: true))
+        tlogin.fontColor = SKColor.black
         tlogin.zPosition = 2
         self.addChild(tlogin)
         
         other = SKSpriteNode(texture: start.buttonTexture)
-        other.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(3, text: false))
+        other.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(3, text: false))
         other.zPosition = 1
         self.addChild(other)
         tother.text = NSLocalizedString("setting.category.other", comment: "")
         tother.fontSize = 35
         tother.fontName = start.BUTTON_FONT
-        tother.position = CGPointMake(CGRectGetMidX(self.frame), start.getPositionYForButton(3, text: true))
-        tother.fontColor = SKColor.blackColor()
+        tother.position = CGPoint(x: self.frame.midX, y: start.getPositionYForButton(3, text: true))
+        tother.fontColor = SKColor.black
         tother.zPosition = 2
         self.addChild(tother)
         
         back = SKSpriteNode(texture: start.buttonTexture)
-        back.position = CGPointMake(CGRectGetMidX(self.frame), back.frame.height/2)
+        back.position = CGPoint(x: self.frame.midX, y: back.frame.height/2)
         back.zPosition = 1
         self.addChild(back)
         tback.text = NSLocalizedString("back", comment: "")
         tback.fontSize = 35
         tback.fontName = start.BUTTON_FONT
-        tback.position = CGPointMake(CGRectGetMidX(self.frame), back.frame.height/2 - 15)
-        tback.fontColor = SKColor.blackColor()
+        tback.position = CGPoint(x: self.frame.midX, y: back.frame.height/2 - 15)
+        tback.fontColor = SKColor.black
         tback.zPosition = 2
         self.addChild(tback)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touches.count == 1 {
-            let point = touches.first!.locationInNode(self)
+            let point = touches.first!.location(in: self)
             if music.frame.contains(point) {
-                self.view?.presentScene(IPhoneMusicSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+                self.view?.presentScene(IPhoneMusicSettingScene(self), transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
             } else if other.frame.contains(point) {
-                self.view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+                self.view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
             } else if extensions.frame.contains(point) {
                 let scene = ExtensionSettingScene(self)
-                self.view?.presentScene(scene, transition: SKTransition.pushWithDirection(.Left, duration: NSTimeInterval(1)))
+                self.view?.presentScene(scene, transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
                 scene.initialize()
             } else if login.frame.contains(point) {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     if GameViewController.isLoggedIn() {
                         GameViewController.logOut()
                         self.updateLoginLabel()
@@ -117,7 +117,7 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
                     }
                 }
             } else if back.frame.contains(point) {
-                self.view?.presentScene(start, transition: SKTransition.doorsCloseHorizontalWithDuration(NSTimeInterval(1)))
+                self.view?.presentScene(start, transition: SKTransition.doorsCloseHorizontal(withDuration: TimeInterval(1)))
             }
         }
     }
@@ -140,9 +140,9 @@ class IPhoneMusicSettingScene: SKScene {
     init(_ previous: IPhoneSettingScene) {
         self.settings = previous
         musicSetting = AudioSlider(name: NSLocalizedString("settings.music", comment: "Music"), music: true, gvc: (previous.view?.window?.rootViewController as! GameViewController))
-        musicIndexSetting = MusicSelector(gvc: (previous.view?.window?.rootViewController as! GameViewController), importUnder: UIDevice.currentDevice().userInterfaceIdiom == .Phone)
+        musicIndexSetting = MusicSelector(gvc: (previous.view?.window?.rootViewController as! GameViewController), importUnder: UIDevice.current.userInterfaceIdiom == .phone)
         super.init(size: previous.frame.size)
-        self.backgroundColor = SKColor.brownColor()
+        self.backgroundColor = SKColor.brown
         initPane()
     }
     
@@ -152,47 +152,47 @@ class IPhoneMusicSettingScene: SKScene {
     
     func initPane() {
         musicSetting.setVolume((settings.view?.window?.rootViewController as! GameViewController).backgroundMusicPlayer.volume)
-        musicSetting.position = CGPointMake(self.frame.width/2, self.frame.height - 100)
+        musicSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 100)
         addChild(musicSetting)
-        musicIndexSetting.position = CGPointMake(self.frame.width/2, self.frame.height - 175)
+        musicIndexSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 175)
         addChild(musicIndexSetting)
         
         ok = SKSpriteNode(imageNamed: "buttonminibg")
-        ok.position = CGPointMake(self.frame.width/3, 50)
+        ok.position = CGPoint(x: self.frame.width/3, y: 50)
         ok.zPosition = 1
         addChild(ok)
         tok.text = NSLocalizedString("ok", comment: "Ok")
         tok.fontName = settings.start.BUTTON_FONT
-        tok.fontColor = SKColor.blackColor()
+        tok.fontColor = SKColor.black
         tok.fontSize = 20
-        tok.position = CGPointMake(self.frame.width/3, 40)
+        tok.position = CGPoint(x: self.frame.width/3, y: 40)
         tok.zPosition = 2
         addChild(tok)
         
         reset = SKSpriteNode(imageNamed: "buttonminibg")
-        reset.position = CGPointMake(self.frame.width/3*2, 50)
+        reset.position = CGPoint(x: self.frame.width/3*2, y: 50)
         reset.zPosition = 1
         addChild(reset)
         treset.text = NSLocalizedString("reset", comment: "Reset settings")
         treset.fontName = settings.start.BUTTON_FONT
-        treset.fontColor = SKColor.blackColor()
+        treset.fontColor = SKColor.black
         treset.fontSize = 20
-        treset.position = CGPointMake(self.frame.width/3*2, 40)
+        treset.position = CGPoint(x: self.frame.width/3*2, y: 40)
         treset.zPosition = 2
         addChild(treset)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(touches.count == 1) {
             let touch = touches.first!
-            let point = touch.locationInNode(self)
+            let point = touch.location(in: self)
             if onNode(ok, point: point) {
-                self.view?.presentScene(settings, transition: SKTransition.pushWithDirection(.Right, duration: NSTimeInterval(1)))
+                self.view?.presentScene(settings, transition: SKTransition.push(with: .right, duration: TimeInterval(1)))
             } else if onNode(reset, point: point) {
                 resetSettings()
             } else if onNode(musicSetting, point: point) {
                 musicSetting.calculateVolume(touch)
-            } else if onNode(musicIndexSetting.importBtn, point: touch.locationInNode(musicIndexSetting)) {
+            } else if onNode(musicIndexSetting.importBtn, point: touch.location(in: musicIndexSetting)) {
                 musicIndexSetting.importBtn.showImportDialog()
             } else if onNode(musicIndexSetting, point: point) {
                 musicIndexSetting.click(touch)
@@ -200,17 +200,17 @@ class IPhoneMusicSettingScene: SKScene {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(touches.count == 1) {
             let touch = touches.first!
-            let point = touch.locationInNode(self)
+            let point = touch.location(in: self)
             if onNode(musicSetting, point: point) {
                 musicSetting.calculateVolume(touch)
             }
         }
     }
     
-    func onNode(node:SKSpriteNode, point:CGPoint) -> Bool {
+    func onNode(_ node:SKSpriteNode, point:CGPoint) -> Bool {
         return node.frame.contains(point)
     }
     
@@ -235,7 +235,7 @@ class IPhoneOtherSettingScene: SKScene {
         audioSetting = AudioSlider(name: NSLocalizedString("settings.audio", comment: "Sound effects"), music: false, gvc: (previous.view?.window?.rootViewController as! GameViewController))
         themeIndexSetting = ThemeSelector(gvc: (previous.view?.window?.rootViewController as! GameViewController))
         super.init(size: previous.frame.size)
-        self.backgroundColor = SKColor.brownColor()
+        self.backgroundColor = SKColor.brown
         initPane()
     }
     
@@ -245,42 +245,42 @@ class IPhoneOtherSettingScene: SKScene {
     
     func initPane() {
         audioSetting.setVolume((settings.view?.window?.rootViewController as! GameViewController).audioVolume)
-        audioSetting.position = CGPointMake(self.frame.width/2, self.frame.height - 100)
+        audioSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 100)
         addChild(audioSetting)
-        themeIndexSetting.position = CGPointMake(self.frame.width/2, self.frame.height - 175)
+        themeIndexSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 175)
         addChild(themeIndexSetting)
         
         ok = SKSpriteNode(imageNamed: "buttonminibg")
-        ok.position = CGPointMake(self.frame.width/3, 50)
+        ok.position = CGPoint(x: self.frame.width/3, y: 50)
         ok.zPosition = 1
         addChild(ok)
         tok.text = NSLocalizedString("ok", comment: "Ok")
         tok.fontName = settings.start.BUTTON_FONT
-        tok.fontColor = SKColor.blackColor()
+        tok.fontColor = SKColor.black
         tok.fontSize = 20
-        tok.position = CGPointMake(self.frame.width/3, 40)
+        tok.position = CGPoint(x: self.frame.width/3, y: 40)
         tok.zPosition = 2
         addChild(tok)
         
         reset = SKSpriteNode(imageNamed: "buttonminibg")
-        reset.position = CGPointMake(self.frame.width/3*2, 50)
+        reset.position = CGPoint(x: self.frame.width/3*2, y: 50)
         reset.zPosition = 1
         addChild(reset)
         treset.text = NSLocalizedString("reset", comment: "Reset settings")
         treset.fontName = settings.start.BUTTON_FONT
-        treset.fontColor = SKColor.blackColor()
+        treset.fontColor = SKColor.black
         treset.fontSize = 20
-        treset.position = CGPointMake(self.frame.width/3*2, 40)
+        treset.position = CGPoint(x: self.frame.width/3*2, y: 40)
         treset.zPosition = 2
         addChild(treset)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(touches.count == 1) {
             let touch = touches.first!
-            let point = touch.locationInNode(self)
+            let point = touch.location(in: self)
             if onNode(ok, point: point) {
-                self.view?.presentScene(settings, transition: SKTransition.pushWithDirection(.Right, duration: NSTimeInterval(1)))
+                self.view?.presentScene(settings, transition: SKTransition.push(with: .right, duration: TimeInterval(1)))
             } else if onNode(reset, point: point) {
                 resetSettings()
             } else if onNode(audioSetting, point: point) {
@@ -291,17 +291,17 @@ class IPhoneOtherSettingScene: SKScene {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(touches.count == 1) {
             let touch = touches.first!
-            let point = touch.locationInNode(self)
+            let point = touch.location(in: self)
             if onNode(audioSetting, point: point) {
                 audioSetting.calculateVolume(touch)
             }
         }
     }
     
-    func onNode(node:SKSpriteNode, point:CGPoint) -> Bool {
+    func onNode(_ node:SKSpriteNode, point:CGPoint) -> Bool {
         return node.frame.contains(point)
     }
     

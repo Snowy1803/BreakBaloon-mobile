@@ -21,7 +21,7 @@ class ThemeSelector: Selector {
     
     override func updateAfterValueChange() {
         gvc.currentThemeInt = value
-        NSUserDefaults.standardUserDefaults().setObject(gvc.currentTheme.themeID(), forKey: "currentTheme")
+        UserDefaults.standard.set(gvc.currentTheme.themeID(), forKey: "currentTheme")
         super.updateAfterValueChange()
     }
     

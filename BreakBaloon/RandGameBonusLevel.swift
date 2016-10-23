@@ -8,6 +8,17 @@
 
 import Foundation
 import SpriteKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class RandGameBonusLevel: RandGameLevel {
     let modifier: Float
@@ -22,24 +33,24 @@ class RandGameBonusLevel: RandGameLevel {
         return status.isUnlocked() && !status.isFinished()
     }
     
-    override func start(view: SKView, transition: SKTransition = SKTransition.flipVerticalWithDuration(NSTimeInterval(1))) {
+    override func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: TimeInterval(1))) {
         gamescene = RandGameScene(view: view, level: self)
         view.presentScene(gamescene!, transition: transition);
         gamescene!.addChild(RandGameBonusLevelInfoNode(level: self, scene: gamescene!))
     }
     
-    override func end(missing: Int) {
+    override func end(_ missing: Int) {
         let xp = Int((Float(numberOfBaloons) - Float(missing)) * modifier)
         gamescene!.gvc.addXP(xp)
         
         let stars = missing == 0 ? 3 : (Int(numberOfBaloons) - Int(maxMissingBaloonToWin)) < gamescene?.points ? 2 : 1
         status = RandGameLevelStatus.getFinished(stars: stars)
         save()
-        if next != nil && (next!.status == .Unlockable || next!.status == .Locked) {
-            next!.status = .Unlocked
+        if next != nil && (next!.status == .unlockable || next!.status == .locked) {
+            next!.status = .unlocked
             next!.save()
-            if next!.next != nil && next!.next!.status == .Locked {
-                next!.next!.status = .Unlockable
+            if next!.next != nil && next!.next!.status == .locked {
+                next!.next!.status = .unlockable
                 next!.next!.save()
             }
         }

@@ -10,20 +10,20 @@ import Foundation
 import SpriteKit
 
 class CheckBox: SKSpriteNode {
-    private(set) var checked:Bool
-    private(set) var enabled = true
+    fileprivate(set) var checked:Bool
+    fileprivate(set) var enabled = true
     let label: SKLabelNode
     
     init(checked: Bool = false, label: String? = nil) {
         self.checked = checked
         self.label = SKLabelNode(text: label)
         let texture = SKTexture(imageNamed: "checkbox\(checked ? "-check" : "")")
-        super.init(texture: texture, color: SKColor.whiteColor(), size: texture.size())
+        super.init(texture: texture, color: SKColor.white, size: texture.size())
         
         self.label.fontSize = 16
-        self.label.fontColor = SKColor.blackColor()
+        self.label.fontColor = SKColor.black
         self.label.fontName = "ChalkboardSE-Bold"
-        self.label.position = CGPointMake(self.label.frame.width / 2 + self.frame.width, -8)
+        self.label.position = CGPoint(x: self.label.frame.width / 2 + self.frame.width, y: -8)
         addChild(self.label)
     }
     
@@ -31,7 +31,7 @@ class CheckBox: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func check(check: Bool) {
+    func check(_ check: Bool) {
         if enabled {
             self.checked = check
             texture = SKTexture(imageNamed: "checkbox\(check ? "-check" : "")")
@@ -50,12 +50,12 @@ class CheckBox: SKSpriteNode {
         check(false)
     }
     
-    func enable(enable: Bool) {
+    func enable(_ enable: Bool) {
         enabled = enable
         texture = SKTexture(imageNamed: "checkbox\(enable ? checked ? "-check" : "" : "-disabled")")
     }
     
-    func setTextureIfDisabled(texture: SKTexture?) {
+    func setTextureIfDisabled(_ texture: SKTexture?) {
         if !enabled {
             self.texture = texture
         }

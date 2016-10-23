@@ -38,39 +38,39 @@ class Downloadable: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func construct(gvc:GameViewController) {
-        rect = SKShapeNode(rect: CGRectMake(position.x, position.y, Downloadable.WIDTH, Downloadable.HEIGHT))
-        rect.fillColor = SKColor.lightGrayColor()
+    func construct(_ gvc:GameViewController) {
+        rect = SKShapeNode(rect: CGRect(x: position.x, y: position.y, width: Downloadable.WIDTH, height: Downloadable.HEIGHT))
+        rect.fillColor = SKColor.lightGray
         rect.zPosition = 1
         addChild(rect)
         let name = SKLabelNode(text: dlname)
-        name.fontColor = SKColor.whiteColor()
+        name.fontColor = SKColor.white
         name.fontSize = 20
-        name.position = CGPointMake(rect.frame.minX + name.frame.width / 2 + 5, rect.frame.maxY - 20)
+        name.position = CGPoint(x: rect.frame.minX + name.frame.width / 2 + 5, y: rect.frame.maxY - 20)
         name.zPosition = 2
         addChild(name)
         let auth = SKLabelNode(text: dlauthor)
-        auth.fontColor = SKColor.whiteColor()
+        auth.fontColor = SKColor.white
         auth.fontSize = 20
-        auth.position = CGPointMake(rect.frame.maxX - auth.frame.width / 2 - 5, rect.frame.maxY - 20)
+        auth.position = CGPoint(x: rect.frame.maxX - auth.frame.width / 2 - 5, y: rect.frame.maxY - 20)
         auth.zPosition = 2
         addChild(auth)
         let type = SKLabelNode(text: dltype.toString())
-        type.fontColor = SKColor.grayColor()
+        type.fontColor = SKColor.gray
         type.fontSize = 20
-        type.position = CGPointMake(rect.frame.minX + type.frame.width / 2 + 5, rect.frame.maxY - 45)
+        type.position = CGPoint(x: rect.frame.minX + type.frame.width / 2 + 5, y: rect.frame.maxY - 45)
         type.zPosition = 2
         addChild(type)
         let btn = SKLabelNode(text: NSLocalizedString("bbstore.clickToDownload", comment: "button"))
-        btn.fontColor = SKColor.whiteColor()
+        btn.fontColor = SKColor.white
         btn.fontSize = 16
-        btn.position = CGPointMake(rect.frame.midX, rect.frame.minY + 5)
+        btn.position = CGPoint(x: rect.frame.midX, y: rect.frame.minY + 5)
         btn.zPosition = 2
         addChild(btn)
         
         if isInPossession() {
             let lenght:CGFloat = 40
-            let path = CGPathCreateMutable()
+            let path = CGMutablePath()
             CGPathMoveToPoint(path, nil, rect.frame.maxX, rect.frame.maxY - 30)
             CGPathAddLineToPoint(path, nil, rect.frame.maxX - (lenght + 25), rect.frame.maxY - 30)
             CGPathAddLineToPoint(path, nil, rect.frame.maxX - (lenght + 5), rect.frame.maxY - 45)
@@ -78,13 +78,13 @@ class Downloadable: SKNode {
             CGPathAddLineToPoint(path, nil, rect.frame.maxX, rect.frame.maxY - 60)
             let tooltip = SKShapeNode(path: path)
             tooltip.fillColor = isInUse(gvc) ? SKColor(red: 0.5, green: 1, blue: 0, alpha: 1) : SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
-            tooltip.strokeColor = SKColor.clearColor()
+            tooltip.strokeColor = SKColor.clear
             tooltip.zPosition = 3
             addChild(tooltip)
             let tttext = SKLabelNode(text: "✓")
-            tttext.color = SKColor.whiteColor()
+            tttext.color = SKColor.white
             tttext.fontSize = 30
-            tttext.position = CGPointMake(rect.frame.maxX - tttext.frame.width / 2 - 5, rect.frame.maxY - 57)
+            tttext.position = CGPoint(x: rect.frame.maxX - tttext.frame.width / 2 - 5, y: rect.frame.maxY - 57)
             tttext.zPosition = 4
             addChild(tttext)
         }
@@ -94,63 +94,63 @@ class Downloadable: SKNode {
             disable.zPosition = 10
             addChild(disable)
             let level = SKSpriteNode(imageNamed: "level")
-            level.position = CGPointMake(rect.frame.maxX - 24, rect.frame.minY + 24)
+            level.position = CGPoint(x: rect.frame.maxX - 24, y: rect.frame.minY + 24)
             level.zPosition = 11
             level.setScale(1.5)
             addChild(level)
             let tlevel = SKLabelNode(text: "\(levelRequirement)")
-            tlevel.position = CGPointMake(rect.frame.maxX - 24, rect.frame.minY + 12)
+            tlevel.position = CGPoint(x: rect.frame.maxX - 24, y: rect.frame.minY + 12)
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
-            tlevel.fontColor = SKColor.whiteColor()
+            tlevel.fontColor = SKColor.white
             tlevel.zPosition = 12
             addChild(tlevel)
         } else if levelRequirement == GameViewController.getLevel() && !isInPossession() {
             let tlevel = SKLabelNode(text: NSLocalizedString("level.new", comment: ""))
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
-            tlevel.position = CGPointMake(rect.frame.maxX - tlevel.frame.width / 2 - 5, rect.frame.minY + 12)
+            tlevel.position = CGPoint(x: rect.frame.maxX - tlevel.frame.width / 2 - 5, y: rect.frame.minY + 12)
             tlevel.fontColor = SKColor(red: 1, green: 170/255, blue: 85/255, alpha: 1)
             tlevel.zPosition = 4
             addChild(tlevel)
         }
     }
     
-    func click(scene:BBStoreScene) {
+    func click(_ scene:BBStoreScene) {
         if levelRequirement <= GameViewController.getLevel() {
-            let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.text", comment: ""), dlname), preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .Default, handler:  {
+            let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.text", comment: ""), dlname), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default, handler:  {
                 _ in do {
                     try self.download(scene, wait: false)
                 } catch {
-                    let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.error", comment: ""), self.dlname), preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .Default, handler: nil))
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .Cancel, handler: nil))
-                    scene.view!.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.error", comment: ""), self.dlname), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default, handler: nil))
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
+                    scene.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .Cancel, handler: nil))
-            scene.view!.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
+            scene.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
         }
     }
     
-    func download(scene:BBStoreScene?, wait:Bool) throws {
+    func download(_ scene:BBStoreScene?, wait:Bool) throws {
         if !dltype.isSupported() {
             if scene != nil {
-                let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: NSLocalizedString("bbstore.download.unsupported", comment: ""), preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .Default, handler: nil))
-                scene!.view!.window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: NSLocalizedString("bbstore.download.unsupported", comment: ""), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
+                scene!.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
             }
             return
         }
         print("Beginning download of", dlname)
         let file = FileSaveHelper(fileName: dlid, fileExtension: .NONE)
-        file.download(NSURL(string: "http://elementalcube.esy.es/api/bbstore-dl.php?id=\(dlid)")!)
+        file.download(URL(string: "http://elementalcube.esy.es/api/bbstore-dl.php?id=\(dlid)")!)
         do {
             if wait {
                 try afterDownload(file)
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     do {
                         try self.afterDownload(file)
                     } catch {
@@ -163,44 +163,44 @@ class Downloadable: SKNode {
         }
     }
     
-    private func afterDownload(file:FileSaveHelper) throws {
+    fileprivate func afterDownload(_ file:FileSaveHelper) throws {
         while !file.downloadedSuccessfully {
             if file.downloadError != nil {
                 throw file.downloadError!
             }
         }
         if dltype.isTheme() {
-            let dir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             do {
-                var pathToRemove = NSURL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent!
-                pathToRemove.removeRange(pathToRemove.endIndex.predecessor().predecessor().predecessor().predecessor()..<pathToRemove.endIndex)
-                try NSFileManager.defaultManager().removeItemAtPath("\(dir)/\(pathToRemove)")
+                var pathToRemove = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
+                pathToRemove.removeSubrange(<#T##Collection corresponding to your index##Collection#>.index(before: <#T##Collection corresponding to your index##Collection#>.index(before: <#T##Collection corresponding to your index##Collection#>.index(before: pathToRemove.characters.index(before: pathToRemove.endIndex))))..<pathToRemove.endIndex)
+                try FileManager.default.removeItem(atPath: "\(dir)/\(pathToRemove)")
             } catch {
                 print(error)
             }
             
             print("Data is from", file.fullyQualifiedPath)
-            SSZipArchive.unzipFileAtPath(file.fullyQualifiedPath, toDestination: dir)
+            SSZipArchive.unzipFile(atPath: file.fullyQualifiedPath, toDestination: dir)
             AbstractThemeUtils.reloadThemeList()
         }
     }
     
     func isInPossession() -> Bool {
-        if dltype == .M4aMusic {
+        if dltype == .m4aMusic {
             for url in GameViewController.getMusicURLs() {
-                let cmps = url.absoluteString.componentsSeparatedByString("/")
-                if cmps[cmps.count - 1].stringByRemovingPercentEncoding! == dlid.stringByRemovingPercentEncoding! {
+                let cmps = url.absoluteString?.components(separatedBy: "/")
+                if cmps?[(cmps?.count)! - 1].stringByRemovingPercentEncoding! == dlid.stringByRemovingPercentEncoding! {
                     return true
                 }
             }
         } else if dltype.isTheme() {
-            return AbstractThemeUtils.withID(dlid.componentsSeparatedByString(".").first!) != nil
+            return AbstractThemeUtils.withID(dlid.components(separatedBy: ".").first!) != nil
         }
         return false
     }
     
-    func isInUse(gvc:GameViewController) -> Bool {
-        if dltype == .M4aMusic {
+    func isInUse(_ gvc:GameViewController) -> Bool {
+        if dltype == .m4aMusic {
             return dlid == gvc.currentMusicFileName
         } else if dltype.isTheme() {
             return dlid == gvc.currentTheme.themeID()
@@ -208,10 +208,10 @@ class Downloadable: SKNode {
         return false
     }
     
-    class func loadAll(viewSize:CGSize, _ gvc:GameViewController) throws -> [Downloadable] {
+    class func loadAll(_ viewSize:CGSize, _ gvc:GameViewController) throws -> [Downloadable] {
         let list:NSMutableArray = NSMutableArray()
-        let fsh:FileSaveHelper = FileSaveHelper(fileName: "bbstore", fileExtension: .TXT, subDirectory: "", directory: .CachesDirectory)
-        fsh.download(NSURL(string: "http://elementalcube.esy.es/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
+        let fsh:FileSaveHelper = FileSaveHelper(fileName: "bbstore", fileExtension: .TXT, subDirectory: "", directory: .cachesDirectory)
+        fsh.download(URL(string: "http://elementalcube.esy.es/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
         while !fsh.downloadedSuccessfully {
             if fsh.downloadError != nil {
                 throw fsh.downloadError!
@@ -223,7 +223,7 @@ class Downloadable: SKNode {
         } catch {
             print("Error \(error)")
         }
-        let lines = file.componentsSeparatedByString("\n")
+        let lines = file.components(separatedBy: "\n")
         var currentName:String = "", currentId:String = "", currentDescription:String = "", currentAuthor:String = "", currentVersion:String = "", currentType:Int = -1, currentLevelRequirement = 0
         let /*rows:Int = Int((viewSize.width - 30) % (Downloadable.WIDTH + 5)), */cols:Int = Int(viewSize.width / Downloadable.WIDTH)
         for line in lines {
@@ -232,7 +232,7 @@ class Downloadable: SKNode {
                     let dl = Downloadable(type: DownloadType.getType(currentType, id: currentId), name: currentName, author: currentAuthor, id: currentId, version: currentVersion, description: currentDescription, levelRequirement: currentLevelRequirement)
                     //dl.position = CGPointMake(viewSize.width/2, viewSize.height/2)
                     
-                    list.addObject(dl)
+                    list.add(dl)
                     currentName = ""
                     currentId = ""
                     currentDescription = ""
@@ -242,34 +242,34 @@ class Downloadable: SKNode {
                     currentType = -1
                 }
             } else if line.hasPrefix("ID=") {
-                currentId = line.componentsSeparatedByString("=")[1]
+                currentId = line.components(separatedBy: "=")[1]
             } else if line.hasPrefix("NAME=") {
-                currentName = line.componentsSeparatedByString("=")[1]
+                currentName = line.components(separatedBy: "=")[1]
             } else if line.hasPrefix("USERNAME=") {
-                currentAuthor = line.componentsSeparatedByString("=")[1]
+                currentAuthor = line.components(separatedBy: "=")[1]
             } else if line.hasPrefix("VERSION=") {
-                currentVersion = line.componentsSeparatedByString("=")[1]
+                currentVersion = line.components(separatedBy: "=")[1]
             } else if line.hasPrefix("DESCRIPTION=") {
-                currentDescription = line.componentsSeparatedByString("=")[1]
+                currentDescription = line.components(separatedBy: "=")[1]
             } else if line.hasPrefix("TYPE=") {
-                currentType = Int(line.componentsSeparatedByString("=")[1])!
+                currentType = Int(line.components(separatedBy: "=")[1])!
             } else if line.hasPrefix("LEVEL-REQUIREMENT=") {
-                currentLevelRequirement = Int(line.componentsSeparatedByString("=")[1])!
+                currentLevelRequirement = Int(line.components(separatedBy: "=")[1])!
             }
         }
-        list.sortUsingComparator({
+        list.sort(comparator: {
             dl1, dl2 in
-            if dl1.levelRequirement > GameViewController.getLevel() && dl1.levelRequirement > dl2.levelRequirement {
-                return .OrderedDescending
-            } else if dl2.levelRequirement > GameViewController.getLevel() && dl1.levelRequirement < dl2.levelRequirement {
-                return .OrderedAscending
+            if (dl1 as AnyObject).levelRequirement > GameViewController.getLevel() && (dl1 as AnyObject).levelRequirement > (dl2 as AnyObject).levelRequirement {
+                return .orderedDescending
+            } else if (dl2 as AnyObject).levelRequirement > GameViewController.getLevel() && (dl1 as AnyObject).levelRequirement < (dl2 as AnyObject).levelRequirement {
+                return .orderedAscending
             }
-            return .OrderedSame
+            return .orderedSame
         })
         var i = 0
         for dl in list {//Setting position after sorting
             (dl as! Downloadable).construct(gvc)
-            (dl as! Downloadable).position = CGPointMake(CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+            (dl as! Downloadable).position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
             i += 1
         }
         if let array = list as NSArray as? [Downloadable] {
@@ -279,39 +279,39 @@ class Downloadable: SKNode {
     }
     
     enum DownloadType {
-        case BBT1
-        case JavaExtension
-        case WavMusic
-        case M4aMusic
-        case BBT2
-        case Unresolved
+        case bbt1
+        case javaExtension
+        case wavMusic
+        case m4aMusic
+        case bbt2
+        case unresolved
         
-        static func getType(type:Int, id:String) -> DownloadType {
+        static func getType(_ type:Int, id:String) -> DownloadType {
             if type == 0 {
-                return .BBT1
+                return .bbt1
             } else if type == 1 {
-                return .JavaExtension
+                return .javaExtension
             } else if type == 2 {
                 if id.hasSuffix(".wav") {
-                    return .WavMusic
+                    return .wavMusic
                 } else if id.hasSuffix(".m4a") {
-                    return .M4aMusic
+                    return .m4aMusic
                 }
             } else if type == 3 {
-                return .BBT2
+                return .bbt2
             }
-            return .Unresolved
+            return .unresolved
         }
         
-        static func getExtension(type:DownloadType) -> FileSaveHelper.FileExtension {
+        static func getExtension(_ type:DownloadType) -> FileSaveHelper.FileExtension {
             switch type {
-            case .BBT1, .BBT2:
+            case .bbt1, .bbt2:
                 return .ZIP
-            case .JavaExtension:
+            case .javaExtension:
                 return .JAR
-            case .WavMusic:
+            case .wavMusic:
                 return .WAV
-            case .M4aMusic:
+            case .m4aMusic:
                 return .M4A
             default:
                 return .NONE
@@ -319,18 +319,18 @@ class Downloadable: SKNode {
         }
         
         func isTheme() -> Bool {
-            return self == .BBT1 || self == .BBT2
+            return self == .bbt1 || self == .bbt2
         }
         
         func isSupported() -> Bool {
-            return self.isTheme() || self == .M4aMusic
+            return self.isTheme() || self == .m4aMusic
         }
         
         func toString() -> String {
             switch self {
-            case .BBT1, .BBT2:
+            case .bbt1, .bbt2:
                 return NSLocalizedString("bbstore.type.theme", comment: "Theme")
-            case .M4aMusic:
+            case .m4aMusic:
                 return NSLocalizedString("bbstore.type.music", comment: "Music")
             default:
                 return "UNSUPPORTED"

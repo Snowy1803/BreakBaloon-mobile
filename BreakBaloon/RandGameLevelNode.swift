@@ -11,20 +11,20 @@ import SpriteKit
 
 class RandGameLevelNode: SKSpriteNode {
     let level:RandGameLevel
-    var realPosition:CGPoint = CGPointZero
+    var realPosition:CGPoint = CGPoint.zero
     
     init(level: RandGameLevel) {
         self.level = level
         
         let texture = SKTexture(imageNamed: "levelbuttonbg")
-        super.init(texture: texture, color: SKColor.whiteColor(), size: texture.size())
+        super.init(texture: texture, color: SKColor.white, size: texture.size())
         updateTexture()
         
         let label = SKLabelNode(text: "\(level.index + 1)")
-        label.fontColor = SKColor.darkGrayColor()
+        label.fontColor = SKColor.darkGray
         label.fontSize = 48
         label.fontName = "AppleSDGothicNeo-SemiBold"
-        label.position = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) - 16)
+        label.position = CGPoint(x: frame.midX, y: frame.midY - 16)
         label.zPosition = 1
         
         addChild(label)
@@ -38,9 +38,9 @@ class RandGameLevelNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func click(view: SKView, transition: SKTransition = SKTransition.flipVerticalWithDuration(NSTimeInterval(1))) {
-        if level.status != .Locked {
-            if level.status == .Unlockable {
+    func click(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: TimeInterval(1))) {
+        if level.status != .locked {
+            if level.status == .unlockable {
                 // TODO Display AD to unlock
             } else if level.canPlay() {
                 level.start(view, transition: transition)
@@ -49,7 +49,7 @@ class RandGameLevelNode: SKSpriteNode {
     }
     
     func updateTexture() {
-        self.texture = level.status == .Unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(level.status).lowercaseString)")
+        self.texture = level.status == .unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(level.status).lowercased())")
         level.save()
     }
 }
