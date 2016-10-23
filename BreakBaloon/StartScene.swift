@@ -178,7 +178,7 @@ class StartScene: SKScene {
         adjustPosition(cancelled)
     }
     
-    func adjustPosition(_ cancelled:Bool, sizeChange:Bool = false) -> Bool {
+    func adjustPosition(_ cancelled:Bool, sizeChange:Bool = false) {
         if UIDevice.current.userInterfaceIdiom != .phone {
             bbLabel.position = CGPoint(x: self.frame.midX, y: 40)
             hsLabel.position = CGPoint(x: self.frame.midX, y: 120)
@@ -230,9 +230,9 @@ class StartScene: SKScene {
             }
             
         } else {
-            return false
+            //return false
         }
-        return true
+        //return true
     }
     
     func lowerButtonMinus() -> CGFloat {

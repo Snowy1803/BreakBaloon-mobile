@@ -154,7 +154,7 @@ class FileSaveHelper {
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
         let request = NSMutableURLRequest(url: URL)
         request.httpMethod = "GET"
-        let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: NSError?) -> Void in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if (error == nil) {
                 // Success
                 let statusCode = (response as! HTTPURLResponse).statusCode
@@ -170,7 +170,7 @@ class FileSaveHelper {
             } else {
                 // Failure
                 print("Failure: %@", error!.localizedDescription);
-                self.downloadError = error
+                self.downloadError = error as NSError?
             }
         })
         task.resume()

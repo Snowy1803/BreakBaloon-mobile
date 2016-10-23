@@ -88,7 +88,7 @@ class BBT1: AbstractTheme {
     }
     
     func pumpSound(_ winner:Bool) -> Data {
-        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath)))!
+        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath)))
     }
     
     class func parse(id:String, bbtheme file:String) -> BBT1 {

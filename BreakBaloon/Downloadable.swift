@@ -71,11 +71,11 @@ class Downloadable: SKNode {
         if isInPossession() {
             let lenght:CGFloat = 40
             let path = CGMutablePath()
-            CGPathMoveToPoint(path, nil, rect.frame.maxX, rect.frame.maxY - 30)
-            CGPathAddLineToPoint(path, nil, rect.frame.maxX - (lenght + 25), rect.frame.maxY - 30)
-            CGPathAddLineToPoint(path, nil, rect.frame.maxX - (lenght + 5), rect.frame.maxY - 45)
-            CGPathAddLineToPoint(path, nil, rect.frame.maxX - (lenght + 25), rect.frame.maxY - 60)
-            CGPathAddLineToPoint(path, nil, rect.frame.maxX, rect.frame.maxY - 60)
+            path.move(to: CGPoint(x: rect.frame.maxX, y: rect.frame.maxY - 30))
+            path.addLine(to: CGPoint(x: rect.frame.maxX - (lenght + 25), y: rect.frame.maxY - 30))
+            path.addLine(to: CGPoint(x: rect.frame.maxX - (lenght + 5), y: rect.frame.maxY - 45))
+            path.addLine(to: CGPoint(x: rect.frame.maxX - (lenght + 25), y: rect.frame.maxY - 60))
+            path.addLine(to: CGPoint(x: rect.frame.maxX, y: rect.frame.maxY - 60))
             let tooltip = SKShapeNode(path: path)
             tooltip.fillColor = isInUse(gvc) ? SKColor(red: 0.5, green: 1, blue: 0, alpha: 1) : SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
             tooltip.strokeColor = SKColor.clear
@@ -173,7 +173,7 @@ class Downloadable: SKNode {
             let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             do {
                 var pathToRemove = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
-                pathToRemove.removeSubrange(<#T##Collection corresponding to your index##Collection#>.index(before: <#T##Collection corresponding to your index##Collection#>.index(before: <#T##Collection corresponding to your index##Collection#>.index(before: pathToRemove.characters.index(before: pathToRemove.endIndex))))..<pathToRemove.endIndex)
+                pathToRemove.removeSubrange(pathToRemove.characters.index(before: pathToRemove.characters.index(before: pathToRemove.characters.index(before: pathToRemove.characters.index(before: pathToRemove.endIndex))))..<pathToRemove.endIndex)
                 try FileManager.default.removeItem(atPath: "\(dir)/\(pathToRemove)")
             } catch {
                 print(error)
@@ -188,8 +188,8 @@ class Downloadable: SKNode {
     func isInPossession() -> Bool {
         if dltype == .m4aMusic {
             for url in GameViewController.getMusicURLs() {
-                let cmps = url.absoluteString?.components(separatedBy: "/")
-                if cmps?[(cmps?.count)! - 1].stringByRemovingPercentEncoding! == dlid.stringByRemovingPercentEncoding! {
+                let cmps = url.absoluteString.components(separatedBy: "/")
+                if cmps[(cmps.count) - 1].removingPercentEncoding! == dlid.removingPercentEncoding! {
                     return true
                 }
             }

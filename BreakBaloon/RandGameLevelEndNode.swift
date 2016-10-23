@@ -13,7 +13,7 @@ class RandGameLevelEndNode: SKNode {
     let level:RandGameLevel
     let replay: SKSpriteNode
     let back: SKSpriteNode
-    let next: SKSpriteNode?
+    let nextlevel: SKSpriteNode?
     let stars: SKSpriteNode?
     
     init(level: RandGameLevel, scene: RandGameScene, stars: Int, xpBonus: Int = -1) {
@@ -23,10 +23,10 @@ class RandGameLevelEndNode: SKNode {
         self.replay = SKSpriteNode(imageNamed: "levelreplay")
         self.back = SKSpriteNode(imageNamed: "levelback")
         if successful {
-            self.next = SKSpriteNode(imageNamed: "levelnext")
+            self.nextlevel = SKSpriteNode(imageNamed: "levelnext")
             self.stars = SKSpriteNode(imageNamed: "levelstars\(stars)")
         } else {
-            self.next = nil
+            self.nextlevel = nil
             self.stars = nil
         }
         super.init()
@@ -67,9 +67,9 @@ class RandGameLevelEndNode: SKNode {
         addChild(back)
         if successful {
             if level.next != nil && level.next!.canPlay() {
-                next!.position = CGPoint(x: scene.frame.width / 2 + 80, y: scene.frame.height / 12 * 3)
-                next!.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
-                addChild(next!)
+                nextlevel!.position = CGPoint(x: scene.frame.width / 2 + 80, y: scene.frame.height / 12 * 3)
+                nextlevel!.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
+                addChild(nextlevel!)
             }
             self.stars!.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 224)
             addChild(self.stars!)
@@ -95,7 +95,7 @@ class RandGameLevelEndNode: SKNode {
             backToMenu(self.scene!.view!)
         } else if replay.contains(touch) {
             setLevel(level, view: self.scene!.view!)
-        } else if next != nil && next!.contains(touch) {
+        } else if nextlevel != nil && nextlevel!.contains(touch) {
             if level.next != nil {
                 setLevel(level.next!, view: self.scene!.view!)
             } else {

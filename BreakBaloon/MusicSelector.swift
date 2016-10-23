@@ -45,7 +45,7 @@ class MusicSelector: Selector {
             let name = UserDefaults.standard.string(forKey: "usermusicName")
             return name == nil ? "Custom" : name!
         }
-        let cmps = GameViewController.getMusicURLs()[value].absoluteString?.components(separatedBy: "/")
-        return cmps?[(cmps?.count)! - 1].components(separatedBy: ".")[0].stringByRemovingPercentEncoding!
+        let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
+        return cmps[(cmps.count) - 1].components(separatedBy: ".")[0].removingPercentEncoding!
     }
 }

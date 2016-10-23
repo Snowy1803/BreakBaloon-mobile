@@ -48,7 +48,7 @@ struct AbstractThemeUtils {
             let bbt1 = FileSaveHelper(fileName: url.lastPathComponent, fileExtension: .BBTHEME, subDirectory: url.lastPathComponent)
             if bbt1.fileExists {
                 do {
-                    return try BBT1.parse(id: url.lastPathComponent!, bbtheme: bbt1.getContentsOfFile())
+                    return try BBT1.parse(id: url.lastPathComponent, bbtheme: bbt1.getContentsOfFile())
                 } catch {
                     print("Theme \(url.lastPathComponent)'s .bbtheme file couldn't be read")
                 }
@@ -56,7 +56,7 @@ struct AbstractThemeUtils {
             let bbt2 = FileSaveHelper(fileName: "theme", fileExtension: .BBTHEME2CODE, subDirectory: url.lastPathComponent)
             if bbt2.fileExists {
                 do {
-                    return try BBT2(dir: url.lastPathComponent!, code: bbt2.getContentsOfFile())
+                    return try BBT2(dir: url.lastPathComponent, code: bbt2.getContentsOfFile())
                 } catch {
                     print("Theme \(url.lastPathComponent)'s .bbtc file couldn't be read")
                 }

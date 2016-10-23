@@ -148,8 +148,10 @@ class BBT2: AbstractTheme {
                 arg.removeSubrange(range!.lowerBound..<arg.endIndex)
                 return try functions[methodName]!(arg)
             }
-            let lastDot = methodName.range(of: ".", options: .backwards)!.lowerBound
-            if methods[methodName[<#T##String.CharacterView corresponding to `lastDot`##String.CharacterView#>.index(after: lastDot)..<methodName.endIndex]] != nil && valueExists(methodName[methodName.startIndex..<lastDot], properties: properties) {
+            let lastDotRange = methodName.range(of: ".", options: .backwards)!
+            let lastDot = lastDotRange.lowerBound
+            let lastDotString = methodName.characters[lastDotRange]
+            if methods[methodName[lastDotString.index(after: lastDot)..<methodName.endIndex]] != nil && valueExists(methodName[methodName.startIndex..<lastDot], properties: properties) {
                 components.removeFirst()
                 var arg = components.joined(separator: "(")
                 let range = arg.range(of: ")", options: .backwards)
@@ -158,7 +160,7 @@ class BBT2: AbstractTheme {
                     throw ExecErrors.syntaxError
                 }
                 arg.removeSubrange(range!.lowerBound..<arg.endIndex)
-                return try methods[methodName[<#T##String.CharacterView corresponding to `lastDot`##String.CharacterView#>.index(after: lastDot)..<methodName.endIndex]]!(methodName[methodName.startIndex..<lastDot], arg)
+                return try methods[methodName[lastDotString.index(after: lastDot)..<methodName.endIndex]]!(methodName[methodName.startIndex..<lastDot], arg)
             }
             print("Couldn't resolve \(methodName)")
             throw ExecErrors.callUndeclaredMethodError
@@ -490,7 +492,12 @@ class BBT2: AbstractTheme {
         }
         
         context.draw(input, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
-        let pixelBuffer = UnsafeMutablePointer<RGBA32>(context.data)
+        guard let buffer = context.data else {
+            print("Couldn't change pixels from \(from) to \(to) in image")
+            print("\tat line \(line)")
+            return UIImage(cgImage: input)
+        }
+        let pixelBuffer = buffer.bindMemory(to: RGBA32.self, capacity: width * height)
         var currentPixel = pixelBuffer
         
         for _ in 0..<height {

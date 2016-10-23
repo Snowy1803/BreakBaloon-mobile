@@ -49,7 +49,7 @@ class RandGameLevelNode: SKSpriteNode {
     }
     
     func updateTexture() {
-        self.texture = level.status == .unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(level.status).lowercased())")
+        self.texture = level.status == .unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(describing: level.status).lowercased())")
         level.save()
     }
 }

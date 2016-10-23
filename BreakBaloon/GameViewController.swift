@@ -253,7 +253,7 @@ class GameViewController: UIViewController {
         let request = NSMutableURLRequest(url: URL(string: "http://elementalcube.esy.es/api/auth.php")!)
         request.httpMethod = "POST"
         request.httpBody = query.data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             guard error == nil && data != nil else {
                 print("[LOGIN] error=\(error)")
                 return
@@ -264,7 +264,7 @@ class GameViewController: UIViewController {
                 print("[LOGIN] response: \(response)")
             }
             DispatchQueue.main.async {
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8)
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                 let authStatus = responseString?.components(separatedBy: "\r\n")[0]
                 if authStatus != nil && Int(authStatus!) != nil {
                     let status = LoginStatus(rawValue: Int(authStatus!)!)
@@ -276,7 +276,7 @@ class GameViewController: UIViewController {
                             completion!()
                         }
                     } else {
-                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(status!))", comment: ""), preferredStyle: .alert)
+                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
                         alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default, handler: {
                             action in
@@ -314,7 +314,6 @@ class GameViewController: UIViewController {
 
 extension URL {
     var isDirectory: Bool {
-        guard let path = path , isFileURL else { return false }
         var bool: ObjCBool = false
         return FileManager().fileExists(atPath: path, isDirectory: &bool) ? bool.boolValue : false
     }

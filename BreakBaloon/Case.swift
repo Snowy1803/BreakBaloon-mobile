@@ -83,11 +83,11 @@ class Case:SKSpriteNode {
     
     func polygon(_ points: [(CGFloat, CGFloat)]) -> CGPath {
         let path = CGMutablePath()
-        CGPathMoveToPoint(path, nil, points[0].0, points[0].1)
+        path.move(to: CGPoint(x: points[0].0, y: points[0].1))
         for i in 1..<points.count {
-            CGPathAddLineToPoint(path, nil, points[i].0, points[i].1)
+            path.addLine(to: CGPoint(x: points[i].0, y: points[i].1))
         }
-        CGPathAddLineToPoint(path, nil, points[0].0, points[0].1)
+        path.addLine(to: CGPoint(x: points[0].0, y: points[0].1))
         return path
     }
     
