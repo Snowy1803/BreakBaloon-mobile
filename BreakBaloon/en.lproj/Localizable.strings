@@ -3,10 +3,13 @@
 "gametype.computer" = "Against the computer";
 "gametype.timed" = "Against the time";
 "gametype.rand" = "Random baloons";
+"gametype.error" = "You must play the other gamemodes for unlock this one";
 "gamesize.small" = "Small (5x5)";
 "gamesize.medium" = "Medium (7x7)";
 "gamesize.large" = "Large (10x10)";
 "gamesize.adaptive" = "Adaptive (%dx%d)";
+"gamesize.error" = "This resolution needs a higher device resolution";
+"error" = "Error";
 "cancel" = "Cancel";
 "ok" = "Ok";
 "reset" = "Reset";

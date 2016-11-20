@@ -3,10 +3,13 @@
 "gametype.computer" = "Contre l'ordinateur";
 "gametype.timed" = "Contre la montre";
 "gametype.rand" = "Ballons aléatoires";
+"gametype.error" = "Vous devez jouer aux autres modes pour débloquer celui-ci";
 "gamesize.small" = "Petit (5x5)";
 "gamesize.medium" = "Normal (7x7)";
 "gamesize.large" = "Grand (10x10)";
 "gamesize.adaptive" = "Adapté (%dx%d)";
+"gamesize.error" = "Cette résolution ne tient pas sur votre écran";
+"error" = "Erreur";
 "cancel" = "Annuler";
 "ok" = "Ok";
 "reset" = "Réinitialiser";

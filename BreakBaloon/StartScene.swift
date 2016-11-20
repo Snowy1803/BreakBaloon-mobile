@@ -400,7 +400,7 @@ class StartScene: SKScene {
     }
     
     func littleScreen() -> Bool {
-        return self.frame.height < 500
+        return self.frame.height < 575
     }
     
     func showDialog(_ title:String, message:String) {
@@ -410,11 +410,11 @@ class StartScene: SKScene {
     }
     
     func showResolutionAlert() {
-        showDialog("Erreur", message: "Cette résolution ne tient pas sur votre écran")
+        showDialog(NSLocalizedString("error", comment: "error"), message: NSLocalizedString("gamesize.error", comment: "++ resolution"))
     }
     
     func showLevelAlert() {
-        showDialog("Erreur", message: "Vous devez jouer aux autres modes pour débloquer celui-ci")
+        showDialog(NSLocalizedString("error", comment: "error"), message: NSLocalizedString("gametype.error", comment: "play to unlock"))
     }
     
     func newGame(_ gametype:Int8, width:UInt, height:UInt) {

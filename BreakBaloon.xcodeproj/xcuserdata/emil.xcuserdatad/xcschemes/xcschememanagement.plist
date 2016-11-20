@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>BreakBaloonStickers.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>200ADDF81DBD071B00275668</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>206736741D16E26300FB9FFF</key>
 		<dict>
 			<key>primary</key>

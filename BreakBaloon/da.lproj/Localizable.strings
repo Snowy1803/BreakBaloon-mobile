@@ -3,10 +3,13 @@
 "gametype.computer" = "Mod computeren";
 "gametype.timed" = "Mod tiden";
 "gametype.rand" = "Tilfældige balloner";
+"gametype.error" = "Du skal spille de andre spillemoder til at låse denne her op";
 "gamesize.small" = "Lille (5x5)";
 "gamesize.medium" = "Mellem (7x7)";
 "gamesize.large" = "Stor (10x10)";
 "gamesize.adaptive" = "Tilpasset (%dx%d)";
+"gamesize.error" = "Dette oploøsning holder ikke på dit skærm";
+"error" = "Fejl";
 "cancel" = "Annuller";
 "ok" = "OK";
 "reset" = "Reset";

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200ADDFC1DBD071B00275668 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200ADDFB1DBD071B00275668 /* Stickers.xcassets */; };
+		200ADE001DBD071C00275668 /* BreakBaloonStickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		201F4D601D17275600EB894A /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D5F1D17275600EB894A /* AppIcon.xcassets */; };
 		201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D671D17F7E600EB894A /* Launch.xcassets */; };
 		201F4D6C1D180F9F00EB894A /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F4D6B1D180F9F00EB894A /* Case.swift */; };
@@ -123,7 +125,34 @@
 		20FF80E11D197EFB00E5A9EF /* slidericon.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80E01D197EFB00E5A9EF /* slidericon.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		200ADDFE1DBD071C00275668 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2067366D1D16E26300FB9FFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200ADDF81DBD071B00275668;
+			remoteInfo = BreakBaloonStickers;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		200ADE041DBD071C00275668 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				200ADE001DBD071C00275668 /* BreakBaloonStickers.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BreakBaloonStickers.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		200ADDFB1DBD071B00275668 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		200ADDFD1DBD071C00275668 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		201F4D5F1D17275600EB894A /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		201F4D671D17F7E600EB894A /* Launch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Launch.xcassets; sourceTree = "<group>"; };
 		201F4D6B1D180F9F00EB894A /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
@@ -286,6 +315,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		200ADDFA1DBD071B00275668 /* BreakBaloonStickers */ = {
+			isa = PBXGroup;
+			children = (
+				200ADDFB1DBD071B00275668 /* Stickers.xcassets */,
+				200ADDFD1DBD071C00275668 /* Info.plist */,
+			);
+			path = BreakBaloonStickers;
+			sourceTree = "<group>";
+		};
 		201F4D6D1D18122F00EB894A /* baloons */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +363,7 @@
 				20B004BE1D2BF952005F706F /* README.md */,
 				20BE2F661D54A029004A8B17 /* .gitattributes */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
+				200ADDFA1DBD071B00275668 /* BreakBaloonStickers */,
 				206736761D16E26300FB9FFF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -333,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				206736751D16E26300FB9FFF /* BreakBaloon.app */,
+				200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -517,6 +557,21 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		200ADDF81DBD071B00275668 /* BreakBaloonStickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 200ADE031DBD071C00275668 /* Build configuration list for PBXNativeTarget "BreakBaloonStickers" */;
+			buildPhases = (
+				200ADDF71DBD071B00275668 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BreakBaloonStickers;
+			productName = BreakBaloonStickers;
+			productReference = 200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 		206736741D16E26300FB9FFF /* BreakBaloon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2067368B1D16E26300FB9FFF /* Build configuration list for PBXNativeTarget "BreakBaloon" */;
@@ -524,10 +579,12 @@
 				206736711D16E26300FB9FFF /* Sources */,
 				206736721D16E26300FB9FFF /* Frameworks */,
 				206736731D16E26300FB9FFF /* Resources */,
+				200ADE041DBD071C00275668 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				200ADDFF1DBD071C00275668 /* PBXTargetDependency */,
 			);
 			name = BreakBaloon;
 			productName = BreakBaloon;
@@ -547,6 +604,11 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Snowy_1803;
 				TargetAttributes = {
+					200ADDF81DBD071B00275668 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = EYTYK8J7PX;
+						ProvisioningStyle = Automatic;
+					};
 					206736741D16E26300FB9FFF = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = EYTYK8J7PX;
@@ -575,11 +637,20 @@
 			projectRoot = "";
 			targets = (
 				206736741D16E26300FB9FFF /* BreakBaloon */,
+				200ADDF81DBD071B00275668 /* BreakBaloonStickers */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		200ADDF71DBD071B00275668 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				200ADDFC1DBD071B00275668 /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		206736731D16E26300FB9FFF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -712,6 +783,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		200ADDFF1DBD071C00275668 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200ADDF81DBD071B00275668 /* BreakBaloonStickers */;
+			targetProxy = 200ADDFE1DBD071C00275668 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		20A335A61D4BD33E00B54FBE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -749,6 +828,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		200ADE011DBD071C00275668 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				INFOPLIST_FILE = BreakBaloonStickers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.BreakBaloonStickers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		200ADE021DBD071C00275668 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				INFOPLIST_FILE = BreakBaloonStickers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.BreakBaloonStickers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		206736891D16E26300FB9FFF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -875,6 +991,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		200ADE031DBD071C00275668 /* Build configuration list for PBXNativeTarget "BreakBaloonStickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200ADE011DBD071C00275668 /* Debug */,
+				200ADE021DBD071C00275668 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		206736701D16E26300FB9FFF /* Build configuration list for PBXProject "BreakBaloon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
