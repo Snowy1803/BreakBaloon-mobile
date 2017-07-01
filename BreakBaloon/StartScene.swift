@@ -52,9 +52,14 @@ class StartScene: SKScene {
     var gametype:Int8 = -1
     var lastGameInfo:String?
     
-    override init(size:CGSize) {
+    override convenience init(size:CGSize) {
+        self.init(size: size, growXPFrom: -1)
+    }
+    
+    init(size:CGSize, growXPFrom: CGFloat) {
         super.init(size: size)
         self.backgroundColor = SKColor.brown
+        self.isPaused = true
         initFirstPane(false)
         
         if UIDevice.current.userInterfaceIdiom != .phone {
@@ -79,11 +84,23 @@ class StartScene: SKScene {
         bsLabel.fontName = "ChalkboardSE-Regular"
         bsLabel.fontColor = SKColor.orange
         self.addChild(bsLabel)
-        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15))
+        print(growXPFrom > -1 ? growXPFrom : CGFloat(GameViewController.getLevelXPFloat()))
+        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: (growXPFrom > -1 ? growXPFrom : CGFloat(GameViewController.getLevelXPFloat())) * size.width, height: 15))
         xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
         xpLabel.strokeColor = SKColor.clear
         xpLabel.zPosition = 2
         self.addChild(xpLabel)
+        if growXPFrom > -1 {
+            print("GrowXP: \(growXPFrom) -> \(GameViewController.getLevelXPFloat())")
+            xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(GameViewController.getLevelXPFloat()) / growXPFrom, duration: 1.0)]), completion: {() -> Void in
+                    self.xpLabel.removeFromParent()
+                    self.xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15))
+                    self.xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+                    self.xpLabel.strokeColor = SKColor.clear
+                    self.xpLabel.zPosition = 2
+                    self.addChild(self.xpLabel)
+                })
+        }
         txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), GameViewController.getLevel()))
         txpLabel.fontSize = 13
         txpLabel.fontName = "AppleSDGothicNeo-Bold"
@@ -565,5 +582,8 @@ class StartScene: SKScene {
    
     override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
+        if isPaused {
+            isPaused = false
+        }
     }
 }

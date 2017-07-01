@@ -201,10 +201,11 @@ class GameScene:AbstractGameScene {
             }
             let gvc = self.view!.window!.rootViewController as! GameViewController
             gvc.currentGame = nil
+            let oldXP = CGFloat(GameViewController.getLevelXPFloat())
             let levelModifier = Float(max(10 - GameViewController.getLevel(), 1))
             let sizeModifier = Float(self.width * self.height) / 100
             gvc.addXP(Int(5 * levelModifier * sizeModifier))
-            let scene:StartScene = StartScene(size: self.frame.size)
+            let scene:StartScene = StartScene(size: self.frame.size, growXPFrom: oldXP)
             scene.lastGameInfo = self.label.text!
             self.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
         })]))
