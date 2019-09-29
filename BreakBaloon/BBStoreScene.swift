@@ -47,7 +47,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     }
     
     func beginBBStoreLoading() {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+        DispatchQueue.global(qos: .default).async {
             do {
                 self.downloads = try Downloadable.loadAll(self.size, self.gvc)
                 DispatchQueue.main.async {
@@ -167,7 +167,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         while downloads == nil {}
         for dl in downloads! {
             if dl.dlid == id {
-                print("Simulating download of \(dl.name)")
+                print("Simulating download of \(String(describing: dl.name))")
                 dl.click(self)
             }
         }

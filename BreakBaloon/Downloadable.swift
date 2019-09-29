@@ -173,7 +173,7 @@ class Downloadable: SKNode {
             let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             do {
                 var pathToRemove = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
-                pathToRemove.removeSubrange(pathToRemove.characters.index(before: pathToRemove.characters.index(before: pathToRemove.characters.index(before: pathToRemove.characters.index(before: pathToRemove.endIndex))))..<pathToRemove.endIndex)
+                pathToRemove.removeSubrange(pathToRemove.index(before: pathToRemove.index(before: pathToRemove.index(before: pathToRemove.index(before: pathToRemove.endIndex))))..<pathToRemove.endIndex)
                 try FileManager.default.removeItem(atPath: "\(dir)/\(pathToRemove)")
             } catch {
                 print(error)
@@ -211,7 +211,7 @@ class Downloadable: SKNode {
     class func loadAll(_ viewSize:CGSize, _ gvc:GameViewController) throws -> [Downloadable] {
         let list:NSMutableArray = NSMutableArray()
         let fsh:FileSaveHelper = FileSaveHelper(fileName: "bbstore", fileExtension: .TXT, subDirectory: "", directory: .cachesDirectory)
-        fsh.download(URL(string: "http://elementalcube.esy.es/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
+        fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
         while !fsh.downloadedSuccessfully {
             if fsh.downloadError != nil {
                 throw fsh.downloadError!

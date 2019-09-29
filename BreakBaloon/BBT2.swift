@@ -125,9 +125,9 @@ class BBT2: AbstractTheme {
             let vals = cmd.components(separatedBy: "=")
             let property = NSString(string: vals[0]).trimmingCharacters(in: CharacterSet.whitespaces)
             if property.hasPrefix("val ") {
-                constants[property.substring(from: property.characters.index(property.startIndex, offsetBy: 4))] = try value(vals)
+                constants[String(property[property.index(property.startIndex, offsetBy: 4)...])] = try value(vals)
             } else if property.hasPrefix("var ") {
-                properties[property.substring(from: property.characters.index(property.startIndex, offsetBy: 4))] = try value(vals)
+                properties[String(property[property.index(property.startIndex, offsetBy: 4)...])] = try value(vals)
             } else if properties[property] != nil || self.properties[property] != nil {
                 try set(property, value: value(vals)!)
             } else {
@@ -150,7 +150,7 @@ class BBT2: AbstractTheme {
             }
             let lastDotRange = methodName.range(of: ".", options: .backwards)!
             let lastDot = lastDotRange.lowerBound
-            let lastDotString = methodName.characters[lastDotRange]
+            let lastDotString = methodName[lastDotRange]
             if methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])] != nil && valueExists(String(methodName[methodName.startIndex..<lastDot]), properties: properties) {
                 components.removeFirst()
                 var arg = components.joined(separator: "(")
@@ -360,8 +360,8 @@ class BBT2: AbstractTheme {
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
-            degrees.remove(at: stringLiteral.characters.index(before: stringLiteral.endIndex))
-            radians = CGFloat(Int(degrees)!) * (CGFloat(M_PI) / 180)
+            degrees.remove(at: stringLiteral.index(before: stringLiteral.endIndex))
+            radians = CGFloat(Int(degrees)!) * (CGFloat.pi / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
         }
@@ -377,8 +377,8 @@ class BBT2: AbstractTheme {
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
-            degrees.remove(at: stringLiteral.characters.index(before: stringLiteral.endIndex))
-            radians = CGFloat(Int(degrees)!) * (CGFloat(M_PI) / 180)
+            degrees.remove(at: stringLiteral.index(before: stringLiteral.endIndex))
+            radians = CGFloat(Int(degrees)!) * (CGFloat.pi / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
         }

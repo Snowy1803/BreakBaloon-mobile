@@ -73,7 +73,7 @@ class Case:SKSpriteNode {
         
         let theta = atan2(Double(-deltaWinY), Double(deltaWinX))
         
-        shape.zRotation = CGFloat(theta + M_PI)
+        shape.zRotation = CGFloat(theta + .pi)
         shape.fillColor = SKColor.blue
         shape.strokeColor = SKColor.clear
         shape.zPosition = 2
