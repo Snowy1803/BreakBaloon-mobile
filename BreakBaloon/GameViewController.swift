@@ -18,8 +18,8 @@ class GameViewController: UIViewController {
     
     var skView: SKView?
     
-    var backgroundMusicPlayer:AVAudioPlayer = AVAudioPlayer()
-    var audioPlayer:AVAudioPlayer = AVAudioPlayer()
+    var backgroundMusicPlayer:AVAudioPlayer!
+    var audioPlayer:AVAudioPlayer!
     var audioVolume:Float = GameViewController.DEFAULT_AUDIO
     var currentGame:AbstractGameScene?
     var currentMusicFileName = "Race.m4a"
@@ -96,7 +96,7 @@ class GameViewController: UIViewController {
         let welcome:URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
         
         do {
-            try self.audioPlayer = AVAudioPlayer(contentsOf: welcome)
+            self.audioPlayer = try AVAudioPlayer(contentsOf: welcome)
         } catch {
             print(error)
         }
