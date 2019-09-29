@@ -20,7 +20,7 @@ class Downloadable: SKNode {
     let dldescription: String
     let dlid:String
     let dlversion:String
-    let levelRequirement:Int
+    @objc let levelRequirement:Int
     
     init(type:DownloadType, name:String, author:String, id:String, version:String, description:String, levelRequirement:Int) {
         self.dltype = type
@@ -145,7 +145,7 @@ class Downloadable: SKNode {
         }
         print("Beginning download of", dlname)
         let file = FileSaveHelper(fileName: dlid, fileExtension: .NONE)
-        file.download(URL(string: "http://elementalcube.esy.es/api/bbstore-dl.php?id=\(dlid)")!)
+        file.download(URL(string: "http://elementalcube.infos.st/api/bbstore-dl.php?id=\(dlid)")!)
         do {
             if wait {
                 try afterDownload(file)

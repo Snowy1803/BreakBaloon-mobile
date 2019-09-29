@@ -404,8 +404,8 @@ class StartScene: SKScene {
     }
     
     func showDialog(_ title:String, message:String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
     }
     
