@@ -82,7 +82,7 @@ class ExtensionSettingScene: SKScene {
     }
     
     func sort(_ search: String, in array: [String]) -> CGFloat {
-        return CGFloat(32 + array.sorted().index(of: search)! * 32)
+        return CGFloat(32 + array.sorted().firstIndex(of: search)! * 32)
     }
     
     func getTexture(_ requirement: Int) -> SKNode {

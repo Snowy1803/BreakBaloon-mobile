@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
     var currentTheme:AbstractTheme = AbstractThemeUtils.themeList.first!
     var currentThemeInt:Int {
         get {
-            return AbstractThemeUtils.themeList.index(where: {theme in
+            return AbstractThemeUtils.themeList.firstIndex(where: {theme in
                 return theme.equals(currentTheme)
             })!
         }
