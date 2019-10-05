@@ -90,7 +90,7 @@ class FileSaveHelper {
     }
     
     func saveFile(image:UIImage) throws {
-        guard let data = UIImagePNGRepresentation(image) else {
+        guard let data = image.pngData() else {
             throw FileErrors.imageNotConvertedToData
         }
         if !fileManager.createFile(atPath: fullyQualifiedPath, contents: data, attributes: nil) {

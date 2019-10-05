@@ -18,8 +18,8 @@ class GameViewController: UIViewController {
     
     var skView: SKView?
     
-    var backgroundMusicPlayer:AVAudioPlayer = AVAudioPlayer()
-    var audioPlayer:AVAudioPlayer = AVAudioPlayer()
+    var backgroundMusicPlayer:AVAudioPlayer!
+    var audioPlayer:AVAudioPlayer!
     var audioVolume:Float = GameViewController.DEFAULT_AUDIO
     var currentGame:AbstractGameScene?
     var currentMusicFileName = "Race.m4a"
@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
     var currentTheme:AbstractTheme = AbstractThemeUtils.themeList.first!
     var currentThemeInt:Int {
         get {
-            return AbstractThemeUtils.themeList.index(where: {theme in
+            return AbstractThemeUtils.themeList.firstIndex(where: {theme in
                 return theme.equals(currentTheme)
             })!
         }
@@ -96,7 +96,7 @@ class GameViewController: UIViewController {
         let welcome:URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
         
         do {
-            try self.audioPlayer = AVAudioPlayer(contentsOf: welcome)
+            self.audioPlayer = try AVAudioPlayer(contentsOf: welcome)
         } catch {
             print(error)
         }
@@ -250,18 +250,18 @@ class GameViewController: UIViewController {
     }
     
     func logIn(query: String, username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
-        let request = NSMutableURLRequest(url: URL(string: "http://elementalcube.esy.es/api/auth.php")!)
+        let request = NSMutableURLRequest(url: URL(string: "http://elementalcube.infos.st/api/auth.php")!)
         request.httpMethod = "POST"
         request.httpBody = query.data(using: String.Encoding.utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
             guard error == nil && data != nil else {
-                print("[LOGIN] error=\(error)")
+                print("[LOGIN] error=\(String(describing: error))")
                 return
             }
             
             if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
                 print("[LOGIN] status code: \(httpStatus.statusCode)")
-                print("[LOGIN] response: \(response)")
+                print("[LOGIN] response: \(String(describing: response))")
             }
             DispatchQueue.main.async {
                 let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)

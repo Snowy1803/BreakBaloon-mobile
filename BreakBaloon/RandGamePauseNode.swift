@@ -20,7 +20,7 @@ class RandGamePauseNode: SKNode {
         grey.fillColor = SKColor(white: 0.5, alpha: 0.5)
         menu = SKSpriteNode(imageNamed: "levelback")
         play = SKSpriteNode(imageNamed: "levelback")
-        play.zRotation = CGFloat(M_PI)
+        play.zRotation = CGFloat.pi
         replay = SKSpriteNode(imageNamed: "levelreplay")
         super.init()
         grey.zPosition = 3

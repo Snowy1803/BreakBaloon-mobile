@@ -14,7 +14,7 @@ class AbstractGameScene: SKScene {
     
     var points:Int = 0
     
-    var avplayer = AVAudioPlayer()
+    var avplayer : AVAudioPlayer!
     var beginTime:TimeInterval?
     var endTime:TimeInterval?
     fileprivate var pauseTime:TimeInterval?

@@ -66,7 +66,7 @@ struct AbstractThemeUtils {
     }
     
     static func withID(_ id:String) -> AbstractTheme? {
-        let index = themeList.index(where: {theme in
+        let index = themeList.firstIndex(where: {theme in
             return theme.themeID() == id
         })
         if index != nil {

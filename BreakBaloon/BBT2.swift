@@ -125,9 +125,9 @@ class BBT2: AbstractTheme {
             let vals = cmd.components(separatedBy: "=")
             let property = NSString(string: vals[0]).trimmingCharacters(in: CharacterSet.whitespaces)
             if property.hasPrefix("val ") {
-                constants[property.substring(from: property.characters.index(property.startIndex, offsetBy: 4))] = try value(vals)
+                constants[String(property[property.index(property.startIndex, offsetBy: 4)...])] = try value(vals)
             } else if property.hasPrefix("var ") {
-                properties[property.substring(from: property.characters.index(property.startIndex, offsetBy: 4))] = try value(vals)
+                properties[String(property[property.index(property.startIndex, offsetBy: 4)...])] = try value(vals)
             } else if properties[property] != nil || self.properties[property] != nil {
                 try set(property, value: value(vals)!)
             } else {
@@ -150,8 +150,8 @@ class BBT2: AbstractTheme {
             }
             let lastDotRange = methodName.range(of: ".", options: .backwards)!
             let lastDot = lastDotRange.lowerBound
-            let lastDotString = methodName.characters[lastDotRange]
-            if methods[methodName[lastDotString.index(after: lastDot)..<methodName.endIndex]] != nil && valueExists(methodName[methodName.startIndex..<lastDot], properties: properties) {
+            let lastDotString = methodName[lastDotRange]
+            if methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])] != nil && valueExists(String(methodName[methodName.startIndex..<lastDot]), properties: properties) {
                 components.removeFirst()
                 var arg = components.joined(separator: "(")
                 let range = arg.range(of: ")", options: .backwards)
@@ -160,7 +160,7 @@ class BBT2: AbstractTheme {
                     throw ExecErrors.syntaxError
                 }
                 arg.removeSubrange(range!.lowerBound..<arg.endIndex)
-                return try methods[methodName[lastDotString.index(after: lastDot)..<methodName.endIndex]]!(methodName[methodName.startIndex..<lastDot], arg)
+                return try methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])]!(String(methodName[methodName.startIndex..<lastDot]), arg)
             }
             print("Couldn't resolve \(methodName)")
             throw ExecErrors.callUndeclaredMethodError
@@ -291,7 +291,7 @@ class BBT2: AbstractTheme {
         UIRectFill(CGRect(x: 0, y: 0, width: 1, height: 1))
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        return UIImagePNGRepresentation(image)!.base64EncodedString(options: .lineLength64Characters)
+        return image.pngData()!.base64EncodedString(options: .lineLength64Characters)
     }
     
     func emptyImage(_ stringLiteral: String) throws -> String? {
@@ -300,7 +300,7 @@ class BBT2: AbstractTheme {
         UIRectFill(CGRect(x: 0, y: 0, width: 1, height: 1))
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        return UIImagePNGRepresentation(image)!.base64EncodedString(options: .lineLength64Characters)
+        return image.pngData()!.base64EncodedString(options: .lineLength64Characters)
     }
     
     func issetSet(_ stringLiteral: String) throws -> String? {
@@ -346,9 +346,9 @@ class BBT2: AbstractTheme {
             throw ExecErrors.nullPointerError
         }
         let ciImage = CIImage(data: Data(base64Encoded: get(variable)!, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)!)!
-        let grayscale = ciImage.applyingFilter("CIColorControls", withInputParameters: [ kCIInputSaturationKey: 0.0 ])
+        let grayscale = ciImage.applyingFilter("CIColorControls", parameters: [ kCIInputSaturationKey: 0.0 ])
         let context = CIContext(options: nil)
-        try set(variable, value: UIImagePNGRepresentation(UIImage(cgImage: context.createCGImage(grayscale, from: grayscale.extent)!))!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: UIImage(cgImage: context.createCGImage(grayscale, from: grayscale.extent)!).pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -360,12 +360,12 @@ class BBT2: AbstractTheme {
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
-            degrees.remove(at: stringLiteral.characters.index(before: stringLiteral.endIndex))
-            radians = CGFloat(Int(degrees)!) * (CGFloat(M_PI) / 180)
+            degrees.remove(at: stringLiteral.index(before: stringLiteral.endIndex))
+            radians = CGFloat(Int(degrees)!) * (CGFloat.pi / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
         }
-        try set(variable, value: UIImagePNGRepresentation(rotateImpl(getImage(variable), radians: radians, flip: false))!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: rotateImpl(getImage(variable), radians: radians, flip: false).pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -377,12 +377,12 @@ class BBT2: AbstractTheme {
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
             var degrees = stringLiteral
-            degrees.remove(at: stringLiteral.characters.index(before: stringLiteral.endIndex))
-            radians = CGFloat(Int(degrees)!) * (CGFloat(M_PI) / 180)
+            degrees.remove(at: stringLiteral.index(before: stringLiteral.endIndex))
+            radians = CGFloat(Int(degrees)!) * (CGFloat.pi / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
         }
-        try set(variable, value: UIImagePNGRepresentation(rotateImpl(getImage(variable), radians: radians, flip: true))!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: rotateImpl(getImage(variable), radians: radians, flip: true).pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -396,7 +396,7 @@ class BBT2: AbstractTheme {
             throw ExecErrors.syntaxError
         }
         let cmps = stringLiteral.components(separatedBy: "->")
-        try set(variable, value: UIImagePNGRepresentation(pixelChangeImpl(getImage(variable).cgImage!, from: parseColor(cmps[0]), to: parseColor(cmps[1])))!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: pixelChangeImpl(getImage(variable).cgImage!, from: parseColor(cmps[0]), to: parseColor(cmps[1])).pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -415,7 +415,7 @@ class BBT2: AbstractTheme {
         let context = CIContext(options: nil)
         let output = UIImage(cgImage: context.createCGImage(filteredImage, from: filteredImage.extent)!)
         
-        try set(variable, value: UIImagePNGRepresentation(output)!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: output.pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -434,7 +434,7 @@ class BBT2: AbstractTheme {
         let context = CIContext(options: nil)
         let output = UIImage(cgImage: context.createCGImage(filteredImage, from: filteredImage.extent)!)
         
-        try set(variable, value: UIImagePNGRepresentation(output)!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: output.pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -443,7 +443,7 @@ class BBT2: AbstractTheme {
             print("Tried to add image to a null image")
             throw ExecErrors.nullPointerError
         }
-        try set(variable, value: UIImagePNGRepresentation(concatImageImpl(getImage(variable), getImage(value: execIfNeeds(stringLiteral))))!.base64EncodedString(options: .lineLength64Characters))
+        try set(variable, value: concatImageImpl(getImage(variable), getImage(value: execIfNeeds(stringLiteral))).pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
     }
     
@@ -459,7 +459,7 @@ class BBT2: AbstractTheme {
             image = concatImageImpl(image, getImage(value: try execIfNeeds(images[i].trimmingCharacters(in: CharacterSet.whitespaces))))
         }
         
-        return UIImagePNGRepresentation(image)!.base64EncodedString(options: .lineLength64Characters)
+        return image.pngData()!.base64EncodedString(options: .lineLength64Characters)
     }
     
     /// SO: 27092354
