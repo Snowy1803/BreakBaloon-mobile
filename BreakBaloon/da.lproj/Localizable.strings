@@ -70,7 +70,7 @@
 "bbstore.search" = "Søg";
 "back" = "Tilbage";
 "setting.category.music" = "Musik";
-"setting.category.other" = "Andet";
+"setting.category.other" = "Tema & Lyd";
 "level.label" = "Niveau %d";
 "level.up.title" = "Niveau op!";
 "level.up.text" = "Du er nu niveau %d!";
