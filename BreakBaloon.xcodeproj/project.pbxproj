@@ -36,6 +36,15 @@
 		20263AB41D5CC2A4005E596B /* fake-opened3.png in Resources */ = {isa = PBXBuildFile; fileRef = 20263AAE1D5CC2A4005E596B /* fake-opened3.png */; };
 		20263AB51D5CC2A4005E596B /* fake-opened4.png in Resources */ = {isa = PBXBuildFile; fileRef = 20263AAF1D5CC2A4005E596B /* fake-opened4.png */; };
 		20263AB61D5CC2A4005E596B /* fake-opened5.png in Resources */ = {isa = PBXBuildFile; fileRef = 20263AB01D5CC2A4005E596B /* fake-opened5.png */; };
+		203EEC75234A6438002D81F2 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC73234A6438002D81F2 /* Interface.storyboard */; };
+		203EEC77234A6439002D81F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC76234A6439002D81F2 /* Assets.xcassets */; };
+		203EEC7E234A6439002D81F2 /* BreakBaloon Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		203EEC83234A6439002D81F2 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC82234A6439002D81F2 /* InterfaceController.swift */; };
+		203EEC85234A6439002D81F2 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC84234A6439002D81F2 /* GameScene.sks */; };
+		203EEC87234A6439002D81F2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC86234A6439002D81F2 /* GameScene.swift */; };
+		203EEC89234A6439002D81F2 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */; };
+		203EEC8B234A643A002D81F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC8A234A643A002D81F2 /* Assets.xcassets */; };
+		203EEC8F234A643A002D81F2 /* BreakBaloon Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 203EEC71234A6438002D81F2 /* BreakBaloon Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		204289201D4E670300BDEE39 /* RandGameLevelEndNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */; };
 		204289221D4E71EB00BDEE39 /* levelreplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289211D4E71EB00BDEE39 /* levelreplay.png */; };
 		204289241D4E78EC00BDEE39 /* levelnext.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289231D4E78EC00BDEE39 /* levelnext.png */; };
@@ -134,6 +143,20 @@
 			remoteGlobalIDString = 200ADDF81DBD071B00275668;
 			remoteInfo = BreakBaloonStickers;
 		};
+		203EEC7F234A6439002D81F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2067366D1D16E26300FB9FFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 203EEC7C234A6439002D81F2;
+			remoteInfo = "BreakBaloon Watch Extension";
+		};
+		203EEC8D234A643A002D81F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2067366D1D16E26300FB9FFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 203EEC70234A6438002D81F2;
+			remoteInfo = "BreakBaloon Watch";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -144,6 +167,28 @@
 			dstSubfolderSpec = 13;
 			files = (
 				200ADE001DBD071C00275668 /* BreakBaloonStickers.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		203EEC90234A643A002D81F2 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				203EEC8F234A643A002D81F2 /* BreakBaloon Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		203EEC93234A643A002D81F2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				203EEC7E234A6439002D81F2 /* BreakBaloon Watch Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,6 +226,17 @@
 		20263AAE1D5CC2A4005E596B /* fake-opened3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-opened3.png"; sourceTree = "<group>"; };
 		20263AAF1D5CC2A4005E596B /* fake-opened4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-opened4.png"; sourceTree = "<group>"; };
 		20263AB01D5CC2A4005E596B /* fake-opened5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-opened5.png"; sourceTree = "<group>"; };
+		203EEC71234A6438002D81F2 /* BreakBaloon Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BreakBaloon Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		203EEC74234A6438002D81F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		203EEC76234A6439002D81F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		203EEC78234A6439002D81F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "BreakBaloon Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		203EEC82234A6439002D81F2 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		203EEC84234A6439002D81F2 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		203EEC86234A6439002D81F2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		203EEC8A234A643A002D81F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		203EEC8C234A643A002D81F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelEndNode.swift; sourceTree = "<group>"; };
 		204289211D4E71EB00BDEE39 /* levelreplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelreplay.png; sourceTree = "<group>"; };
 		204289231D4E78EC00BDEE39 /* levelnext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelnext.png; sourceTree = "<group>"; };
@@ -306,6 +362,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		203EEC7A234A6439002D81F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		206736721D16E26300FB9FFF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -357,6 +420,29 @@
 			name = baloons;
 			sourceTree = "<group>";
 		};
+		203EEC72234A6438002D81F2 /* BreakBaloon Watch */ = {
+			isa = PBXGroup;
+			children = (
+				203EEC73234A6438002D81F2 /* Interface.storyboard */,
+				203EEC76234A6439002D81F2 /* Assets.xcassets */,
+				203EEC78234A6439002D81F2 /* Info.plist */,
+			);
+			path = "BreakBaloon Watch";
+			sourceTree = "<group>";
+		};
+		203EEC81234A6439002D81F2 /* BreakBaloon Watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				203EEC82234A6439002D81F2 /* InterfaceController.swift */,
+				203EEC84234A6439002D81F2 /* GameScene.sks */,
+				203EEC86234A6439002D81F2 /* GameScene.swift */,
+				203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */,
+				203EEC8A234A643A002D81F2 /* Assets.xcassets */,
+				203EEC8C234A643A002D81F2 /* Info.plist */,
+			);
+			path = "BreakBaloon Watch Extension";
+			sourceTree = "<group>";
+		};
 		2067366C1D16E26300FB9FFF = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +453,8 @@
 				20BE2F661D54A029004A8B17 /* .gitattributes */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
 				200ADDFA1DBD071B00275668 /* BreakBaloonStickers */,
+				203EEC72234A6438002D81F2 /* BreakBaloon Watch */,
+				203EEC81234A6439002D81F2 /* BreakBaloon Watch Extension */,
 				206736761D16E26300FB9FFF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -376,6 +464,8 @@
 			children = (
 				206736751D16E26300FB9FFF /* BreakBaloon.app */,
 				200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */,
+				203EEC71234A6438002D81F2 /* BreakBaloon Watch.app */,
+				203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -575,6 +665,40 @@
 			productReference = 200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */;
 			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
 		};
+		203EEC70234A6438002D81F2 /* BreakBaloon Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 203EEC97234A643A002D81F2 /* Build configuration list for PBXNativeTarget "BreakBaloon Watch" */;
+			buildPhases = (
+				203EEC6F234A6438002D81F2 /* Resources */,
+				203EEC93234A643A002D81F2 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				203EEC80234A6439002D81F2 /* PBXTargetDependency */,
+			);
+			name = "BreakBaloon Watch";
+			productName = "BreakBaloon Watch";
+			productReference = 203EEC71234A6438002D81F2 /* BreakBaloon Watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		203EEC7C234A6439002D81F2 /* BreakBaloon Watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 203EEC96234A643A002D81F2 /* Build configuration list for PBXNativeTarget "BreakBaloon Watch Extension" */;
+			buildPhases = (
+				203EEC79234A6439002D81F2 /* Sources */,
+				203EEC7A234A6439002D81F2 /* Frameworks */,
+				203EEC7B234A6439002D81F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BreakBaloon Watch Extension";
+			productName = "BreakBaloon Watch Extension";
+			productReference = 203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		206736741D16E26300FB9FFF /* BreakBaloon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2067368B1D16E26300FB9FFF /* Build configuration list for PBXNativeTarget "BreakBaloon" */;
@@ -583,11 +707,13 @@
 				206736721D16E26300FB9FFF /* Frameworks */,
 				206736731D16E26300FB9FFF /* Resources */,
 				200ADE041DBD071C00275668 /* Embed App Extensions */,
+				203EEC90234A643A002D81F2 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				200ADDFF1DBD071C00275668 /* PBXTargetDependency */,
+				203EEC8E234A643A002D81F2 /* PBXTargetDependency */,
 			);
 			name = BreakBaloon;
 			productName = BreakBaloon;
@@ -603,12 +729,22 @@
 				KnownAssetTags = (
 					"com.apple.gamecenter.Leaderboard Set",
 				);
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = Snowy_1803;
 				TargetAttributes = {
 					200ADDF81DBD071B00275668 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = EYTYK8J7PX;
+						ProvisioningStyle = Automatic;
+					};
+					203EEC70234A6438002D81F2 = {
+						CreatedOnToolsVersion = 11.0;
+						DevelopmentTeam = EYTYK8J7PX;
+						ProvisioningStyle = Automatic;
+					};
+					203EEC7C234A6439002D81F2 = {
+						CreatedOnToolsVersion = 11.0;
 						DevelopmentTeam = EYTYK8J7PX;
 						ProvisioningStyle = Automatic;
 					};
@@ -641,6 +777,8 @@
 			targets = (
 				206736741D16E26300FB9FFF /* BreakBaloon */,
 				200ADDF81DBD071B00275668 /* BreakBaloonStickers */,
+				203EEC70234A6438002D81F2 /* BreakBaloon Watch */,
+				203EEC7C234A6439002D81F2 /* BreakBaloon Watch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -651,6 +789,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				200ADDFC1DBD071B00275668 /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		203EEC6F234A6438002D81F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				203EEC77234A6439002D81F2 /* Assets.xcassets in Resources */,
+				203EEC75234A6438002D81F2 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		203EEC7B234A6439002D81F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				203EEC8B234A643A002D81F2 /* Assets.xcassets in Resources */,
+				203EEC85234A6439002D81F2 /* GameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +887,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		203EEC79234A6439002D81F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				203EEC87234A6439002D81F2 /* GameScene.swift in Sources */,
+				203EEC83234A6439002D81F2 /* InterfaceController.swift in Sources */,
+				203EEC89234A6439002D81F2 /* ExtensionDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		206736711D16E26300FB9FFF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -793,9 +959,27 @@
 			target = 200ADDF81DBD071B00275668 /* BreakBaloonStickers */;
 			targetProxy = 200ADDFE1DBD071C00275668 /* PBXContainerItemProxy */;
 		};
+		203EEC80234A6439002D81F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 203EEC7C234A6439002D81F2 /* BreakBaloon Watch Extension */;
+			targetProxy = 203EEC7F234A6439002D81F2 /* PBXContainerItemProxy */;
+		};
+		203EEC8E234A643A002D81F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 203EEC70234A6438002D81F2 /* BreakBaloon Watch */;
+			targetProxy = 203EEC8D234A643A002D81F2 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		203EEC73234A6438002D81F2 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				203EEC74234A6438002D81F2 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		20A335A61D4BD33E00B54FBE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -866,6 +1050,120 @@
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.BreakBaloonStickers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		203EEC91234A643A002D81F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IBSC_MODULE = BreakBaloon_Watch_Extension;
+				INFOPLIST_FILE = "BreakBaloon Watch/Info.plist";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		203EEC92234A643A002D81F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IBSC_MODULE = BreakBaloon_Watch_Extension;
+				INFOPLIST_FILE = "BreakBaloon Watch/Info.plist";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Release;
+		};
+		203EEC94234A643A002D81F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "BreakBaloon Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		203EEC95234A643A002D81F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "BreakBaloon Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
 			name = Release;
 		};
@@ -1029,6 +1327,24 @@
 			buildConfigurations = (
 				200ADE011DBD071C00275668 /* Debug */,
 				200ADE021DBD071C00275668 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		203EEC96234A643A002D81F2 /* Build configuration list for PBXNativeTarget "BreakBaloon Watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				203EEC94234A643A002D81F2 /* Debug */,
+				203EEC95234A643A002D81F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		203EEC97234A643A002D81F2 /* Build configuration list for PBXNativeTarget "BreakBaloon Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				203EEC91234A643A002D81F2 /* Debug */,
+				203EEC92234A643A002D81F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
