@@ -1,5 +1,5 @@
 "lang.code" = "da_DK";
-"gametype.singleplayer" = "Singleplayer";
+"gametype.singleplayer" = "Selv";
 "gametype.computer" = "Mod computeren";
 "gametype.timed" = "Mod tiden";
 "gametype.rand" = "Tilfældige balloner";
@@ -8,7 +8,7 @@
 "gamesize.medium" = "Mellem (7x7)";
 "gamesize.large" = "Stor (10x10)";
 "gamesize.adaptive" = "Tilpasset (%dx%d)";
-"gamesize.error" = "Dette oploøsning holder ikke på dit skærm";
+"gamesize.error" = "Dette størrelse holder ikke på dit skærm";
 "error" = "Fejl";
 "cancel" = "Annuller";
 "ok" = "OK";
@@ -40,7 +40,7 @@
 "gameinfo.fakeBaloonRate.low" = "Indholder lidt falske balloner";
 "gameinfo.fakeBaloonRate.medium" = "Indholder nogen falske balloner";
 "gameinfo.fakeBaloonRate.high" = "Indholder mange falske balloner";
-"gameinfo.fakeBaloonRate.extreme" = "Indholer meget falske balloner";
+"gameinfo.fakeBaloonRate.extreme" = "Indholer masser af falske balloner";
 "gameinfo.requirePoints" = "%d points til at vinde";
 "gameinfo.end.finished" = "FÆRDIG";
 "gameinfo.end.failed" = "MISLYKKEDES";
@@ -86,5 +86,5 @@
 "login.error.InvalidUsername" = "Dette bruger findes ikke!";
 "login.error.DBError" = "Et fejl opstod under oprettelse af forbindelse til databasen";
 "login.error.InvalidSessID" = "Ugyldig session";
-"login.error.IncorrectPassword" = "Ukorrect kodeord";
+"login.error.IncorrectPassword" = "Ukorrekt kodeord";
 "login.error.ProfileDeactivated" = "Dit profil har ikke været bekræftet endnu";

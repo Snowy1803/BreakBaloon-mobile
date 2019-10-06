@@ -6,7 +6,7 @@
   Copyright © 2016 Snowy_1803. All rights reserved.
 */
 
-"singleplayer" = "Singleplayer";
+"singleplayer" = "Selv";
 "singleplayer.subtitle" = "Spille selv";
 "computer" = "Mod computeren";
 "computer.subtitle" = "Spille mod computeren";
