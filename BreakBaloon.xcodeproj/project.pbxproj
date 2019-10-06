@@ -626,10 +626,9 @@
 			};
 			buildConfigurationList = 206736701D16E26300FB9FFF /* Build configuration list for PBXProject "BreakBaloon" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				fr,
 				da,
