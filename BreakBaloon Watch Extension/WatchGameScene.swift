@@ -8,17 +8,12 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class WatchGameScene: SKScene {
     
     private var spinnyNode : SKShapeNode?
     
     override func sceneDidLoad() {
-        
-        if let label = self.childNode(withName: "//helloLabel") as? SKLabelNode {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
-        
+        print("scene did load")
         let w = (self.size.width + self.size.height) * 0.05
         let spinnyNode = SKShapeNode(rectOf: CGSize(width: w, height: w), cornerRadius: w * 0.3)
         

@@ -95,6 +95,13 @@ class GameViewController: UIViewController {
         currentTheme = AbstractThemeUtils.withID(UserDefaults.standard.string(forKey: "currentTheme")!)!
         let welcome:URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
         
+        print(UserDefaults.standard.dictionaryRepresentation())
+        do {
+            print(try FileManager.default.contentsOfDirectory(atPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath))
+        } catch let error as NSError {
+           print("Couldn't view documents. Error: \(error.localizedDescription)")
+       }
+        
         do {
             self.audioPlayer = try AVAudioPlayer(contentsOf: welcome)
         } catch {
@@ -132,6 +139,7 @@ class GameViewController: UIViewController {
             } catch let error as NSError {
                 print("Couldn't delete the corrupted file. Error: \(error.localizedDescription)")
             }
+            UserDefaults.standard.set("Race.m4a", forKey: "currentMusic")
         }
         backgroundMusicPlayer.numberOfLoops = -1
         backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
@@ -149,6 +157,7 @@ class GameViewController: UIViewController {
                 urls.append(URL(fileURLWithPath: "\(path)/\(element)"))
             }
         }
+        print(urls)
         return urls
     }
     

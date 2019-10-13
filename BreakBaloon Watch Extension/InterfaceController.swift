@@ -16,21 +16,22 @@ class InterfaceController: WKInterfaceController {
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        print("awake")
         
         // Configure interface objects here.
         
         // Load the SKScene from 'GameScene.sks'
-        if let scene = GameScene(fileNamed: "GameScene") {
+        let scene = WatchGameScene()
             
-            // Set the scale mode to scale to fit the window
-            scene.scaleMode = .aspectFill
-            
-            // Present the scene
-            self.skInterface.presentScene(scene)
-            
-            // Use a value that will maintain a consistent frame rate
-            self.skInterface.preferredFramesPerSecond = 30
-        }
+        // Set the scale mode to scale to fit the window
+        scene.scaleMode = .aspectFill
+        
+        // Present the scene
+        self.skInterface.presentScene(scene)
+        
+        // Use a value that will maintain a consistent frame rate
+        self.skInterface.preferredFramesPerSecond = 30
+    
     }
     
     override func willActivate() {

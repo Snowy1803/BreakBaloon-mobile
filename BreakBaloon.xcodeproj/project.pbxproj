@@ -40,8 +40,7 @@
 		203EEC77234A6439002D81F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC76234A6439002D81F2 /* Assets.xcassets */; };
 		203EEC7E234A6439002D81F2 /* BreakBaloon Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		203EEC83234A6439002D81F2 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC82234A6439002D81F2 /* InterfaceController.swift */; };
-		203EEC85234A6439002D81F2 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC84234A6439002D81F2 /* GameScene.sks */; };
-		203EEC87234A6439002D81F2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC86234A6439002D81F2 /* GameScene.swift */; };
+		203EEC87234A6439002D81F2 /* WatchGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC86234A6439002D81F2 /* WatchGameScene.swift */; };
 		203EEC89234A6439002D81F2 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */; };
 		203EEC8B234A643A002D81F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC8A234A643A002D81F2 /* Assets.xcassets */; };
 		203EEC8F234A643A002D81F2 /* BreakBaloon Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 203EEC71234A6438002D81F2 /* BreakBaloon Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -232,8 +231,7 @@
 		203EEC78234A6439002D81F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "BreakBaloon Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203EEC82234A6439002D81F2 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
-		203EEC84234A6439002D81F2 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		203EEC86234A6439002D81F2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		203EEC86234A6439002D81F2 /* WatchGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGameScene.swift; sourceTree = "<group>"; };
 		203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		203EEC8A234A643A002D81F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		203EEC8C234A643A002D81F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -434,8 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				203EEC82234A6439002D81F2 /* InterfaceController.swift */,
-				203EEC84234A6439002D81F2 /* GameScene.sks */,
-				203EEC86234A6439002D81F2 /* GameScene.swift */,
+				203EEC86234A6439002D81F2 /* WatchGameScene.swift */,
 				203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */,
 				203EEC8A234A643A002D81F2 /* Assets.xcassets */,
 				203EEC8C234A643A002D81F2 /* Info.plist */,
@@ -806,7 +803,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				203EEC8B234A643A002D81F2 /* Assets.xcassets in Resources */,
-				203EEC85234A6439002D81F2 /* GameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -891,7 +887,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				203EEC87234A6439002D81F2 /* GameScene.swift in Sources */,
+				203EEC87234A6439002D81F2 /* WatchGameScene.swift in Sources */,
 				203EEC83234A6439002D81F2 /* InterfaceController.swift in Sources */,
 				203EEC89234A6439002D81F2 /* ExtensionDelegate.swift in Sources */,
 			);
