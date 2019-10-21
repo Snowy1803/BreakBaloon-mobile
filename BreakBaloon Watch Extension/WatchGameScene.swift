@@ -42,6 +42,7 @@ class WatchGameScene: SKScene {
             addChild(theCase)
             cases.add(theCase)
         }
+        points = 0
         winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
     }
     
@@ -61,10 +62,13 @@ class WatchGameScene: SKScene {
             WKInterfaceDevice.current().play(.success)
             let plus = SKLabelNode(text: "+ 1")
             plus.fontColor = SKColor.blue
-            plus.fontSize = 20
+            plus.fontName = "HelveticaNeue-Bold"
+            plus.fontSize = 10
+            plus.setScale(0.01)
             plus.position = touch
             plus.zPosition = 3
             addChild(plus)
+            print(plus, plus.frame)
             plus.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(5)), SKAction.removeFromParent()]))
             var isThereUnbreakedBaloons = false
             for aCase in cases {
@@ -102,9 +106,12 @@ class WatchGameScene: SKScene {
         let newRecord = UserDefaults.standard.integer(forKey: "highscore") < self.points
         let label = SKLabelNode(text: String(points) + " points")
         label.fontColor = SKColor.orange
-        label.fontSize = 20
+        label.fontName = "HelveticaNeue-Bold"
+        label.fontSize = 15
+        label.setScale(0.01)
         label.zPosition = 1000
         label.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        print(label)
         self.addChild(label)
         label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(1)), SKAction.run({
             label.fontColor = SKColor.black
