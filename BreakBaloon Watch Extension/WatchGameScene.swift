@@ -65,8 +65,8 @@ class WatchGameScene: SKScene {
             let plus = SKLabelNode(text: "+ 1")
             plus.fontColor = SKColor.blue
             plus.fontName = "HelveticaNeue-Bold"
-            plus.fontSize = 10
-            plus.setScale(0.01)
+            plus.fontSize = 20
+            plus.setScale(0.005)
             plus.position = touch
             plus.zPosition = 3
             addChild(plus)
@@ -109,8 +109,8 @@ class WatchGameScene: SKScene {
         let label = SKLabelNode(text: String(points) + " points")
         label.fontColor = SKColor.orange
         label.fontName = "HelveticaNeue-Bold"
-        label.fontSize = 15
-        label.setScale(0.01)
+        label.fontSize = 30
+        label.setScale(0.005)
         label.zPosition = 1000
         label.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         print(label)
