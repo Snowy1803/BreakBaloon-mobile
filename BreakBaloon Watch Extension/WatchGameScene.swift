@@ -19,7 +19,6 @@ class WatchGameScene: SKScene {
     override init() {
         cases = NSMutableArray(capacity: self.width * self.height)
         super.init()
-        construct()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,13 +28,12 @@ class WatchGameScene: SKScene {
     override init(size: CGSize) {
         cases = NSMutableArray(capacity: self.width * self.height)
         super.init(size: size)
-        construct()
     }
     
     func construct() {
         backgroundColor = .white
         let baloonSize = min(self.size.width, self.size.height) / 4
-        print(baloonSize)
+        print("construct")
         for i in 0 ..< (width * height) {
             let theCase = Case(index: i)
             theCase.position = CGPoint(x: (CGFloat(i % width) + 0.5) * baloonSize + self.size.width / 8, y: (CGFloat(i / width) + 0.5) * baloonSize + self.size.height / 8)
@@ -48,6 +46,7 @@ class WatchGameScene: SKScene {
     }
     
     override func sceneDidLoad() {
+        construct()
     }
     
     func breakBaloon(_ index:Int, touch:CGPoint) {
@@ -55,7 +54,6 @@ class WatchGameScene: SKScene {
         if (cases.object(at: index) as! Case).breaked {
             return
         }
-        print("wb")
         (cases.object(at: index) as! Case).breakBaloon(index == winCaseNumber)
         var gameEnded = false
         if index == winCaseNumber {
