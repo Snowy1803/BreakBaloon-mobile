@@ -55,6 +55,7 @@
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
+		207A2CD6235E2A37004BC4E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 207A2CD8235E2A37004BC4E5 /* Localizable.strings */; };
 		208989541D5CAF07008CB986 /* FakeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208989531D5CAF07008CB986 /* FakeCase.swift */; };
 		2099709C1D6303CD00A3F268 /* AbstractTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099709B1D6303CD00A3F268 /* AbstractTheme.swift */; };
 		20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20A335A61D4BD33E00B54FBE /* Main.storyboard */; };
@@ -250,6 +251,9 @@
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
 		206736881D16E26300FB9FFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		206736941D16FA5100FB9FFF /* buttonbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonbg.png; sourceTree = "<group>"; };
+		207A2CD7235E2A37004BC4E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		207A2CD9235E2A44004BC4E5 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		207A2CDA235E2A44004BC4E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		208989531D5CAF07008CB986 /* FakeCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeCase.swift; sourceTree = "<group>"; };
 		2099709B1D6303CD00A3F268 /* AbstractTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractTheme.swift; sourceTree = "<group>"; };
 		20A335A71D4BD34100B54FBE /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -442,6 +446,7 @@
 				203EEC8A234A643A002D81F2 /* Assets.xcassets */,
 				203EEC8C234A643A002D81F2 /* Info.plist */,
 				200C7872235DD34B00E93468 /* Balloons.xcassets */,
+				207A2CD8235E2A37004BC4E5 /* Localizable.strings */,
 			);
 			path = "BreakBaloon Watch Extension";
 			sourceTree = "<group>";
@@ -809,6 +814,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				203EEC8B234A643A002D81F2 /* Assets.xcassets in Resources */,
+				207A2CD6235E2A37004BC4E5 /* Localizable.strings in Resources */,
 				200C7873235DD34B00E93468 /* Balloons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -982,6 +988,16 @@
 				203EEC74234A6438002D81F2 /* Base */,
 			);
 			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+		207A2CD8235E2A37004BC4E5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				207A2CD7235E2A37004BC4E5 /* en */,
+				207A2CD9235E2A44004BC4E5 /* da */,
+				207A2CDA235E2A44004BC4E5 /* fr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		20A335A61D4BD33E00B54FBE /* Main.storyboard */ = {

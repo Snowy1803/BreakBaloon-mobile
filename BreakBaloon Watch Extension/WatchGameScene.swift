@@ -106,7 +106,7 @@ class WatchGameScene: SKScene {
     
     func gameEnd() {
         let newRecord = UserDefaults.standard.integer(forKey: "highscore") < self.points
-        let label = SKLabelNode(text: String(points) + " points")
+        let label = SKLabelNode(text: String(format: NSLocalizedString("game.points", comment: ""), points))
         label.fontColor = SKColor.orange
         label.fontName = "HelveticaNeue-Bold"
         label.fontSize = 30
@@ -118,7 +118,7 @@ class WatchGameScene: SKScene {
         label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(1)), SKAction.run({
             label.fontColor = SKColor.black
             if newRecord {
-                label.text = "Highscore!" // NSLocalizedString("game.end.newrecord", comment: "")
+                label.text = NSLocalizedString("game.highscore", comment: "")
             }
         }), SKAction.wait(forDuration: TimeInterval(newRecord ? 1.5 : 0.5)), SKAction.run({
             let data = UserDefaults.standard
@@ -143,7 +143,7 @@ class WatchGameScene: SKScene {
             // Level up
         }
         print("XP:", oldXP + xp)
-        controller.wcSession.transferUserInfo(["exp": oldXP + xp])
+        controller.wcSession?.transferUserInfo(["exp": oldXP + xp])
     }
     
     override func update(_ currentTime: TimeInterval) {
