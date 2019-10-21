@@ -10,9 +10,17 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller hidesWhenLoading="NO" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="BreakBaloon_Watch_Extension">
+                <controller hidesWhenLoading="NO" fullScreen="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="BreakBaloon_Watch_Extension">
                     <items>
-                        <spriteKitScene alignment="left" id="ARY-87-yzO"/>
+                        <spriteKitScene alignment="left" id="ARY-87-yzO">
+                            <gestureRecognizers>
+                                <longPressGestureRecognizer minimumPressDuration="0.10000000000000001" id="h1c-CT-5km">
+                                    <connections>
+                                        <action selector="onRecognizerStateChange:" destination="AgC-eL-Hgc" id="44q-iO-4mI"/>
+                                    </connections>
+                                </longPressGestureRecognizer>
+                            </gestureRecognizers>
+                        </spriteKitScene>
                     </items>
                     <connections>
                         <outlet property="skInterface" destination="ARY-87-yzO" id="U6w-Od-uXj"/>

@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		200ADDFC1DBD071B00275668 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200ADDFB1DBD071B00275668 /* Stickers.xcassets */; };
 		200ADE001DBD071C00275668 /* BreakBaloonStickers.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		200C7873235DD34B00E93468 /* Balloons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200C7872235DD34B00E93468 /* Balloons.xcassets */; };
+		2010C84F235CE16B001B5FE0 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F4D6B1D180F9F00EB894A /* Case.swift */; };
+		2010C851235CE1A9001B5FE0 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2010C850235CE1A9001B5FE0 /* Case.swift */; };
 		201F4D601D17275600EB894A /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D5F1D17275600EB894A /* AppIcon.xcassets */; };
 		201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D671D17F7E600EB894A /* Launch.xcassets */; };
-		201F4D6C1D180F9F00EB894A /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F4D6B1D180F9F00EB894A /* Case.swift */; };
 		201F4D801D1812DE00EB894A /* closed0.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D6E1D1812DE00EB894A /* closed0.png */; };
 		201F4D811D1812DE00EB894A /* closed1.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D6F1D1812DE00EB894A /* closed1.png */; };
 		201F4D821D1812DE00EB894A /* closed2.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D701D1812DE00EB894A /* closed2.png */; };
@@ -53,18 +55,6 @@
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
-		207FEA68234A775F00989753 /* closed0.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D6E1D1812DE00EB894A /* closed0.png */; };
-		207FEA69234A775F00989753 /* closed1.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D6F1D1812DE00EB894A /* closed1.png */; };
-		207FEA6A234A775F00989753 /* closed2.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D701D1812DE00EB894A /* closed2.png */; };
-		207FEA6B234A775F00989753 /* closed3.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D711D1812DE00EB894A /* closed3.png */; };
-		207FEA6C234A775F00989753 /* closed4.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D721D1812DE00EB894A /* closed4.png */; };
-		207FEA6D234A775F00989753 /* closed5.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D731D1812DE00EB894A /* closed5.png */; };
-		207FEA6E234A775F00989753 /* opened0.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D771D1812DE00EB894A /* opened0.png */; };
-		207FEA6F234A775F00989753 /* opened1.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D781D1812DE00EB894A /* opened1.png */; };
-		207FEA70234A775F00989753 /* opened2.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D791D1812DE00EB894A /* opened2.png */; };
-		207FEA71234A775F00989753 /* opened3.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D7A1D1812DE00EB894A /* opened3.png */; };
-		207FEA72234A775F00989753 /* opened4.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D7B1D1812DE00EB894A /* opened4.png */; };
-		207FEA73234A775F00989753 /* opened5.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D7C1D1812DE00EB894A /* opened5.png */; };
 		208989541D5CAF07008CB986 /* FakeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208989531D5CAF07008CB986 /* FakeCase.swift */; };
 		2099709C1D6303CD00A3F268 /* AbstractTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2099709B1D6303CD00A3F268 /* AbstractTheme.swift */; };
 		20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20A335A61D4BD33E00B54FBE /* Main.storyboard */; };
@@ -210,6 +200,8 @@
 		200ADDF91DBD071B00275668 /* BreakBaloonStickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BreakBaloonStickers.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		200ADDFB1DBD071B00275668 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		200ADDFD1DBD071C00275668 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		200C7872235DD34B00E93468 /* Balloons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Balloons.xcassets; sourceTree = "<group>"; };
+		2010C850235CE1A9001B5FE0 /* Case.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
 		201F4D5F1D17275600EB894A /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		201F4D671D17F7E600EB894A /* Launch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Launch.xcassets; sourceTree = "<group>"; };
 		201F4D6B1D180F9F00EB894A /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
@@ -444,10 +436,12 @@
 			isa = PBXGroup;
 			children = (
 				203EEC82234A6439002D81F2 /* InterfaceController.swift */,
+				2010C850235CE1A9001B5FE0 /* Case.swift */,
 				203EEC86234A6439002D81F2 /* WatchGameScene.swift */,
 				203EEC88234A6439002D81F2 /* ExtensionDelegate.swift */,
 				203EEC8A234A643A002D81F2 /* Assets.xcassets */,
 				203EEC8C234A643A002D81F2 /* Info.plist */,
+				200C7872235DD34B00E93468 /* Balloons.xcassets */,
 			);
 			path = "BreakBaloon Watch Extension";
 			sourceTree = "<group>";
@@ -815,18 +809,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				203EEC8B234A643A002D81F2 /* Assets.xcassets in Resources */,
-				207FEA6A234A775F00989753 /* closed2.png in Resources */,
-				207FEA72234A775F00989753 /* opened4.png in Resources */,
-				207FEA70234A775F00989753 /* opened2.png in Resources */,
-				207FEA6C234A775F00989753 /* closed4.png in Resources */,
-				207FEA71234A775F00989753 /* opened3.png in Resources */,
-				207FEA69234A775F00989753 /* closed1.png in Resources */,
-				207FEA6F234A775F00989753 /* opened1.png in Resources */,
-				207FEA6E234A775F00989753 /* opened0.png in Resources */,
-				207FEA73234A775F00989753 /* opened5.png in Resources */,
-				207FEA6D234A775F00989753 /* closed5.png in Resources */,
-				207FEA68234A775F00989753 /* closed0.png in Resources */,
-				207FEA6B234A775F00989753 /* closed3.png in Resources */,
+				200C7873235DD34B00E93468 /* Balloons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,6 +895,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				203EEC87234A6439002D81F2 /* WatchGameScene.swift in Sources */,
+				2010C851235CE1A9001B5FE0 /* Case.swift in Sources */,
 				203EEC83234A6439002D81F2 /* InterfaceController.swift in Sources */,
 				203EEC89234A6439002D81F2 /* ExtensionDelegate.swift in Sources */,
 			);
@@ -941,6 +925,7 @@
 				20CEC7E81D5DFE2B0031830C /* RandGamePauseNode.swift in Sources */,
 				20ED21681D4CDC1600DA86AF /* ioapi.c in Sources */,
 				20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */,
+				2010C84F235CE16B001B5FE0 /* Case.swift in Sources */,
 				20C995911D23ED300029312F /* GameViewController.swift in Sources */,
 				20BE2F591D5105D8004A8B17 /* RandGameBonusLevelNode.swift in Sources */,
 				20ED21691D4CDC1600DA86AF /* mztools.c in Sources */,
@@ -952,7 +937,6 @@
 				20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */,
 				20ED21601D4CDC1600DA86AF /* aestab.c in Sources */,
 				20F188301D2A62C70099F717 /* BBT1.swift in Sources */,
-				201F4D6C1D180F9F00EB894A /* Case.swift in Sources */,
 				20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */,
 				20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */,
 				20C995861D23EC7C0029312F /* ThemeSelector.swift in Sources */,
@@ -1096,7 +1080,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1125,7 +1109,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1158,6 +1142,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 5.3;
+				__WKEXTENSIONMAIN_LEGACY_TARGET_5_3 = legacy;
 			};
 			name = Debug;
 		};
@@ -1184,6 +1169,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 5.3;
+				__WKEXTENSIONMAIN_LEGACY_TARGET_5_3 = legacy;
 			};
 			name = Release;
 		};

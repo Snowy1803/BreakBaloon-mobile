@@ -14,17 +14,18 @@ class InterfaceController: WKInterfaceController {
 
     @IBOutlet var skInterface: WKInterfaceSKScene!
     
+    var scene: WatchGameScene?
+    
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
-        print("awake")
         
         // Configure interface objects here.
         
         // Load the SKScene from 'GameScene.sks'
-        let scene = WatchGameScene()
+        scene = WatchGameScene()
             
         // Set the scale mode to scale to fit the window
-        scene.scaleMode = .aspectFill
+        scene!.scaleMode = .aspectFill
         
         // Present the scene
         self.skInterface.presentScene(scene)
@@ -43,5 +44,10 @@ class InterfaceController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-
+    
+    @IBAction func onRecognizerStateChange(_ recognizer: WKLongPressGestureRecognizer) {
+        if recognizer.state == .began {
+            scene!.touchBegan(recognizer)
+        }
+    }
 }
