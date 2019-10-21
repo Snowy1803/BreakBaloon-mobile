@@ -52,8 +52,8 @@ class Case:SKSpriteNode {
     
     func animate(_ color: SKColor?) {
         for _ in 0..<arc4random_uniform(10) {
-            let shape = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(10) + 1))
-            shape.position = CGPoint(x: CGFloat(arc4random_uniform(75)) - 75/2, y: CGFloat(arc4random_uniform(75)) - 75/2)
+            let shape = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(10) + 1) / 300.0)
+            shape.position = CGPoint(x: (CGFloat(arc4random_uniform(75)) - 75.0/2) / 300.0, y: (CGFloat(arc4random_uniform(75)) - 75.0/2) / 300.0)
             shape.fillColor = color != nil ? color! : SKColor(red: CGFloat.random(in: 0..<1), green: CGFloat.random(in: 0..<1), blue: CGFloat.random(in: 0..<1), alpha: 1)
             shape.strokeColor = SKColor.clear
             shape.zPosition = 1
