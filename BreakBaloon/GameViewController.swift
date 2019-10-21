@@ -9,14 +9,18 @@
 import UIKit
 import SpriteKit
 import AVFoundation
+import WatchConnectivity
 
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, WCSessionDelegate {
+    
     static let DEFAULT_AUDIO:Float = 1.0
     static let DEFAULT_MUSIC:Float = 0.8
     fileprivate static var loggedIn = false
     
     var skView: SKView?
+    
+    var wcSession: WCSession!
     
     var backgroundMusicPlayer:AVAudioPlayer!
     var audioPlayer:AVAudioPlayer!
@@ -65,6 +69,12 @@ class GameViewController: UIViewController {
         loadMusicAndStartScene()
         
         (UIApplication.shared.delegate as! AppDelegate).triggerDeepLinkIfPresent()
+
+        if WCSession.isSupported() {
+            wcSession = WCSession.default
+            wcSession.delegate = self
+            wcSession.activate()
+        }
     }
     
     func loadMusicAndStartScene() {
@@ -224,6 +234,28 @@ class GameViewController: UIViewController {
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+        wcSession?.transferUserInfo(["exp": GameViewController.getTotalXP() + xp])
+    }
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        let exp = userInfo["exp"] as? Int
+        if exp != nil && GameViewController.getTotalXP() < exp! {
+            UserDefaults.standard.set(exp!, forKey: "exp")
+        } else {
+            session.transferUserInfo(["exp": GameViewController.getTotalXP()])
+        }
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
     }
     
     class func isLoggedIn() -> Bool {

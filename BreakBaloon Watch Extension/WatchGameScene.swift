@@ -16,6 +16,8 @@ class WatchGameScene: SKScene {
     var winCaseNumber:Int = -1
     var points:Int = 0
     
+    var controller: InterfaceController!
+    
     override init() {
         cases = NSMutableArray(capacity: self.width * self.height)
         super.init()
@@ -123,16 +125,26 @@ class WatchGameScene: SKScene {
             if data.integer(forKey: "highscore") < self.points {
                 data.set(self.points, forKey: "highscore")
             }
-//            let oldXP = CGFloat(GameViewController.getLevelXPFloat())
-//            let levelModifier = Float(max(10 - GameViewController.getLevel(), 1))
-//            let sizeModifier = Float(self.width * self.height) / 100
-//            gvc.addXP(Int(5 * levelModifier * sizeModifier))
+            let oldXP = UserDefaults.standard.integer(forKey: "exp")
+            let levelModifier = Float(max(10 - (oldXP / 250 + 1), 1))
+            let sizeModifier = Float(self.width * self.height) / 100
+            self.addXP(oldXP, Int(5 * levelModifier * sizeModifier))
             self.cases.removeAllObjects()
             self.removeAllChildren()
             self.construct()
         })]))
     }
     
+    func addXP(_ oldXP: Int, _ xp: Int) {
+        let levelBefore = (oldXP / 250 + 1)
+        UserDefaults.standard.set(oldXP + xp, forKey: "exp")
+        print("Added \(xp) XP")
+        if levelBefore < ((oldXP + xp) / 250 + 1) {
+            // Level up
+        }
+        print("XP:", oldXP + xp)
+        controller.wcSession.transferUserInfo(["exp": oldXP + xp])
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
