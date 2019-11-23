@@ -115,24 +115,57 @@ class WatchGameScene: SKScene {
         label.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         print(label)
         self.addChild(label)
+        
         label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(1)), SKAction.run({
             label.fontColor = SKColor.black
             if newRecord {
                 label.text = NSLocalizedString("game.highscore", comment: "")
             }
         }), SKAction.wait(forDuration: TimeInterval(newRecord ? 1.5 : 0.5)), SKAction.run({
-            let data = UserDefaults.standard
-            if data.integer(forKey: "highscore") < self.points {
-                data.set(self.points, forKey: "highscore")
-            }
-            let oldXP = UserDefaults.standard.integer(forKey: "exp")
-            let levelModifier = Float(max(10 - (oldXP / 250 + 1), 1))
-            let sizeModifier = Float(self.width * self.height) / 100
-            self.addXP(oldXP, Int(5 * levelModifier * sizeModifier))
             self.cases.removeAllObjects()
             self.removeAllChildren()
             self.construct()
         })]))
+        
+        // highscore
+        let data = UserDefaults.standard
+        if data.integer(forKey: "highscore") < self.points {
+            data.set(self.points, forKey: "highscore")
+        }
+        // xp
+        let oldXP = UserDefaults.standard.integer(forKey: "exp")
+        let levelModifier = Float(max(10 - (oldXP / 250 + 1), 1))
+        let sizeModifier = Float(self.width * self.height) / 100
+        let addedXP = Int(5 * levelModifier * sizeModifier)
+        self.addXP(oldXP, addedXP)
+        
+        //xp animation
+        let level = SKSpriteNode(imageNamed: "level")
+        level.position = CGPoint(x: 0.25, y: 0.2)
+        level.zPosition = 500
+        level.size = CGSize(width: 0.2, height: 0.2)
+        addChild(level)
+        let tlevel = SKLabelNode(text: "\(oldXP / 250 + 1)")
+        tlevel.position = CGPoint(x: 0.25, y: 0.15)
+        tlevel.fontName = "AppleSDGothicNeo-Bold"
+        tlevel.fontSize = 20
+        tlevel.fontColor = SKColor.white
+        tlevel.setScale(0.005)
+        tlevel.zPosition = 501
+        addChild(tlevel)
+        let progressTotal = SKSpriteNode(color: .gray, size: CGSize(width: 0.5, height: 0.05))
+        progressTotal.position = CGPoint(x: 0.55, y: 0.2)
+        progressTotal.zPosition = 498
+        addChild(progressTotal)
+        let progress = SKSpriteNode(color: .blue, size: CGSize(width: CGFloat(oldXP % 250) / 500, height: 0.05))
+        progress.position = CGPoint(x: 0.3, y: 0.2)
+        progress.anchorPoint = CGPoint(x: 0, y: 0.5)
+        progress.zPosition = 499
+        addChild(progress)
+        progress.run(SKAction.resize(toWidth: CGFloat((oldXP + addedXP) % 250) / 500, duration: 1))
+        tlevel.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
+            tlevel.text = "\((oldXP + addedXP) / 250 + 1)"
+            }]))
     }
     
     func addXP(_ oldXP: Int, _ xp: Int) {
