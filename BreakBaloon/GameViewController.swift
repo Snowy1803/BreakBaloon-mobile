@@ -68,7 +68,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         print("Path:", FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
         loadMusicAndStartScene()
         
-        (UIApplication.shared.delegate as! AppDelegate).triggerDeepLinkIfPresent()
+        _ = (UIApplication.shared.delegate as! AppDelegate).triggerDeepLinkIfPresent()
 
         if WCSession.isSupported() {
             wcSession = WCSession.default
@@ -83,7 +83,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
                 try Downloadable(type: .m4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
             } catch {
                 print("Couldn't download content")
-                getNil()! //Crash
+                _ = getNil()! //Crash
             }
         }
         let data = UserDefaults.standard

@@ -90,7 +90,7 @@ class BBT2: AbstractTheme {
             }
             line = cmd.0
             do {
-                try exec(cmd.1)
+                _ = try exec(cmd.1)
             } catch {
                 print("\tat line \(line + 1)")
                 throw error
@@ -249,7 +249,7 @@ class BBT2: AbstractTheme {
                     print("Early baloon block array end")
                     throw ExecErrors.syntaxError
                 } else {
-                    try exec(line.components(separatedBy: "//")[0], properties: &localVariables)
+                    _ = try exec(line.components(separatedBy: "//")[0], properties: &localVariables)
                 }
             } else {
                 if line.contains(":") {

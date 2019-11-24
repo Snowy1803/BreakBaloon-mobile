@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.applicationState == .background || application.applicationState == .inactive {
             self.deepLink = RemoteNotificationDeepLink.create(userInfo)
             if loadedEnoughToDeepLink {
-                self.triggerDeepLinkIfPresent()
+                _ = self.triggerDeepLinkIfPresent()
             }
         }
     }
