@@ -82,9 +82,11 @@
 "login.text" = "Skriv dit brugernavn og dit kodeord til at logge på Elemental Cube";
 "login.username.placeholder" = "Brugernavn";
 "login.password.placeholder" = "Kodeord";
+"login.2fa.placeholder" = "6-cifret kode";
 "login.tryagain" = "Prøve igen";
-"login.error.InvalidUsername" = "Dette bruger findes ikke!";
-"login.error.DBError" = "Et fejl opstod under oprettelse af forbindelse til databasen";
-"login.error.InvalidSessID" = "Ugyldig session";
-"login.error.IncorrectPassword" = "Ukorrekt kodeord";
-"login.error.ProfileDeactivated" = "Dit profil har ikke været bekræftet endnu";
+"login.error.invalidUsername" = "Dette bruger findes ikke!";
+"login.error.dbError" = "Et fejl opstod under oprettelse af forbindelse til databasen";
+"login.error.invalidSessID" = "Ugyldig session";
+"login.error.incorrectPassword" = "Ukorrekt kodeord";
+"login.error.profileDeactivated" = "Dit email har ikke været bekræftet endnu";
+"login.error.tfaRequired" = "Skriv dit 2FA kode :";

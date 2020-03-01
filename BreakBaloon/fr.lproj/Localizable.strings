@@ -82,9 +82,11 @@
 "login.text" = "Entrez votre pseudonyme et votre mot de passe Elemental Cube pour vous connecter.";
 "login.username.placeholder" = "Pseudonyme";
 "login.password.placeholder" = "Mot de passe";
+"login.2fa.placeholder" = "Code à 6 chiffres";
 "login.tryagain" = "Rééssayer";
-"login.error.InvalidUsername" = "Utilisateur inexistant";
-"login.error.DBError" = "Une erreur est survenue lors de la connection à la base de données";
-"login.error.InvalidSessID" = "Session invalide";
-"login.error.IncorrectPassword" = "Mot de passe incorrect";
-"login.error.ProfileDeactivated" = "Votre profil n'est pas encore activé.";
+"login.error.invalidUsername" = "Utilisateur inexistant";
+"login.error.dbError" = "Une erreur est survenue lors de la connection à la base de données";
+"login.error.invalidSessID" = "Session invalide";
+"login.error.incorrectPassword" = "Mot de passe incorrect";
+"login.error.profileDeactivated" = "Votre profil n'est pas encore activé.";
+"login.error.tfaRequired" = "Entrez votre code 2FA :";

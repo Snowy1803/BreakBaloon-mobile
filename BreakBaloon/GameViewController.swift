@@ -283,7 +283,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     func logIn(username: String, password: String, completion: (() -> Void)? = nil) {
-        logIn(query: "user=\(username)&passwd=\(password.sha1())", username: username, password: password, completion: completion)
+        logIn(query: "user=\(username)&passwd=\(password)&v2&appid=ibb", username: username, password: password, completion: completion)
     }
     
     func logIn(sessid: String, completion: (() -> Void)? = nil) {
@@ -316,6 +316,17 @@ class GameViewController: UIViewController, WCSessionDelegate {
                         if completion != nil {
                             completion!()
                         }
+                    } else if status == .tfaRequired {
+                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
+                        alert.addTextField(configurationHandler: { textField in
+                            textField.placeholder = NSLocalizedString("login.2fa.placeholder", comment: "")
+                        })
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.title", comment: ""), style: .default, handler: {
+                            action in
+                            self.logIn(query: "\(query)&code=\(alert.textFields![0].text!)")
+                        }))
+                        self.present(alert, animated: true, completion: completion)
                     } else {
                         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
@@ -445,4 +456,5 @@ enum LoginStatus: Int {
     case invalidSessID = -3
     case incorrectPassword = -4
     case profileDeactivated = -5
+    case tfaRequired = -6
 }
