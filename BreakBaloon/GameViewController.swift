@@ -20,7 +20,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     var skView: SKView?
     
-    var wcSession: WCSession!
+    var wcSession: WCSession?
     
     var backgroundMusicPlayer:AVAudioPlayer!
     var audioPlayer:AVAudioPlayer!
@@ -72,8 +72,8 @@ class GameViewController: UIViewController, WCSessionDelegate {
 
         if WCSession.isSupported() {
             wcSession = WCSession.default
-            wcSession.delegate = self
-            wcSession.activate()
+            wcSession!.delegate = self
+            wcSession!.activate()
         }
     }
     

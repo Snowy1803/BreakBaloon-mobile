@@ -71,7 +71,7 @@ class ExtensionSettingScene: SKScene {
                 UserDefaults.standard.set(animation.checked, forKey: "extension.animation.enabled")
                 UserDefaults.standard.set(hintarrow.checked, forKey: "extension.hintarrow.enabled")
                 UserDefaults.standard.set(bee.checked, forKey: "extension.bee.enabled")
-                (self.view!.window!.rootViewController as! GameViewController).wcSession.transferUserInfo(["extension.animation.enabled": animation.checked])
+                (self.view!.window!.rootViewController as! GameViewController).wcSession?.transferUserInfo(["extension.animation.enabled": animation.checked])
                 view?.presentScene(previous, transition: SKTransition.push(with: .right, duration: TimeInterval(1)))
             } else if animation.frame.contains(point) {
                 animation.reverseCheck()
