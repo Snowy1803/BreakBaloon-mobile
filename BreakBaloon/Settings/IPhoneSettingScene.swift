@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class IPhoneSettingScene: SKScene {//For iPhone 4S only
+class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
     let start:StartScene
     var music = SKSpriteNode()
     var other = SKSpriteNode()
@@ -84,13 +84,13 @@ class IPhoneSettingScene: SKScene {//For iPhone 4S only
         self.addChild(tother)
         
         back = SKSpriteNode(texture: start.buttonTexture)
-        back.position = CGPoint(x: self.frame.midX, y: back.frame.height/2)
+        back.position = CGPoint(x: self.frame.midX, y: back.frame.height/2 + (start.view?.safeAreaInsets.bottom ?? 0))
         back.zPosition = 1
         self.addChild(back)
         tback.text = NSLocalizedString("back", comment: "")
         tback.fontSize = 35
         tback.fontName = start.BUTTON_FONT
-        tback.position = CGPoint(x: self.frame.midX, y: back.frame.height/2 - 15)
+        tback.position = CGPoint(x: self.frame.midX, y: back.frame.height/2 - 15 + (start.view?.safeAreaInsets.bottom ?? 0))
         tback.fontColor = SKColor.black
         tback.zPosition = 2
         self.addChild(tback)

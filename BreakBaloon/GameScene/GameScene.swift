@@ -28,9 +28,11 @@ class GameScene:AbstractGameScene {
     
     override func construct(_ gvc: GameViewController) {
         super.construct(gvc)
+        let top = self.frame.size.height - (gvc.view?.safeAreaInsets.top ?? 0)
+        let left = gvc.view?.safeAreaInsets.left ?? 0
         for i in 0 ..< (width * height) {
             let theCase = Case(gvc: gvc, index: i)
-            theCase.position = CGPoint(x: CGFloat(i % width * 75 + 35), y: self.frame.size.height - CGFloat(i / width * 75 + 35))
+            theCase.position = CGPoint(x: left + CGFloat(i % width * 75 + 35), y: top - CGFloat(i / width * 75 + 35))
             theCase.zPosition = 1
             addChild(theCase)
             cases.add(theCase)
@@ -49,7 +51,7 @@ class GameScene:AbstractGameScene {
             label.fontSize = 30
         }
         label.fontName = "Verdana-Bold"
-        label.position = CGPoint(x: label.frame.width/2, y: 5)
+        label.position = CGPoint(x: label.frame.width/2, y: 5 + (gvc.view?.safeAreaInsets.bottom ?? 0))
         label.zPosition = 2
         addChild(label)
         winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
@@ -83,7 +85,7 @@ class GameScene:AbstractGameScene {
             } else if gametype == StartScene.GAMETYPE_COMPUTER {
                 label.text = String(format: NSLocalizedString("game.score.vsc.\(points > 1 ? "more" : "one").\(computerpoints > 1 ? "more" : "one")", comment: "Number of points both"), points, computerpoints)
             }
-            label.position = CGPoint(x: label.frame.width/2, y: 5)
+            label.position.x = label.frame.width / 2
             let plus = SKLabelNode(text: "+ 1")
             if computer {
                 plus.fontColor = SKColor.red
@@ -172,11 +174,11 @@ class GameScene:AbstractGameScene {
             } else {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.same", comment: "Points at end"), self.points)
             }
-            label.position = CGPoint(x: label.frame.width/2, y: 5)
+            label.position.x = label.frame.width / 2
         } else if self.gametype == StartScene.GAMETYPE_TIMED {
             points = Int((Float(width * height) / Float(endTime!)) * 5)
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), self.points, Int(self.endTime!))
-            label.position = CGPoint(x: label.frame.width/2, y: 5)
+            label.position.x = label.frame.width / 2
         }
         let newRecord = self.gametype == StartScene.GAMETYPE_SOLO && UserDefaults.standard.integer(forKey: "highscore") < self.points || self.gametype == StartScene.GAMETYPE_TIMED && UserDefaults.standard.integer(forKey: "bestTimedScore") < self.points
         label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run({
@@ -214,7 +216,7 @@ class GameScene:AbstractGameScene {
     override func update(_ currentTime: TimeInterval) {
         if gametype == StartScene.GAMETYPE_TIMED && endTime == nil && !isGamePaused() {
             label.text = String(format: NSLocalizedString("game.time", comment: "Time"), (beginTime == nil ? 0 : Int(Date().timeIntervalSince1970 - beginTime!)))
-            label.position = CGPoint(x: label.frame.width/2, y: 5)
+            label.position.x = label.frame.width / 2
         }
     }
 }

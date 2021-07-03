@@ -57,10 +57,12 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                         self.addChild(dl)
                         dl.run(SKAction.fadeIn(withDuration: 1))
                     }
+                    let topSA = self.view?.safeAreaInsets.top ?? 0
+                    let top = self.frame.height - topSA
                     self.title = SKLabelNode(text: NSLocalizedString((UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title"), comment: "BBStore"))
                     self.title.fontColor = SKColor.black
                     self.title.fontSize = 20
-                    self.title.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 25)
+                    self.title.position = CGPoint(x: self.frame.width/2, y: top - 25)
                     self.title.alpha = 0
                     self.title.zPosition = 6
                     self.addChild(self.title)
@@ -68,18 +70,18 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                     self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
                     self.back.fontColor = SKColor.black
                     self.back.fontSize = 20
-                    self.back.position = CGPoint(x: self.back.frame.width/2 + 5, y: self.frame.height - 25)
+                    self.back.position = CGPoint(x: self.back.frame.width/2 + 5, y: top - 25)
                     self.back.alpha = 0
                     self.back.zPosition = 7
                     self.addChild(self.back)
                     self.back.run(SKAction.fadeIn(withDuration: 1))
-                    self.upper = SKShapeNode(rect: CGRect(x: 0, y: self.frame.height - 30, width: self.frame.width, height: 30))
+                    self.upper = SKShapeNode(rect: CGRect(x: 0, y: top - 30, width: self.frame.width, height: 30 + topSA))
                     self.upper.fillColor = SKColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
                     self.upper.alpha = 0.75
                     self.upper.zPosition = 5
                     self.addChild(self.upper)
                     
-                    self.search = UISearchBar(frame: CGRect(x: self.frame.width - 150, y: 0, width: 150, height: 30))
+                    self.search = UISearchBar(frame: CGRect(x: self.frame.width - 150, y: topSA, width: 150, height: 30))
                     self.search.placeholder = NSLocalizedString("bbstore.search", comment: "Search")
                     self.search.searchBarStyle = .minimal
                     self.search.isTranslucent = false
@@ -174,12 +176,12 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ search: UISearchBar) {
-        search.frame = CGRect(x: back.frame.width + 10, y: 0, width: self.frame.width - back.frame.width - 5, height: 30)
+        search.frame = CGRect(x: back.frame.width + 10, y: self.view?.safeAreaInsets.top ?? 0, width: self.frame.width - back.frame.width - 5, height: 30)
         title.run(SKAction.fadeOut(withDuration: 0.2))
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        search.frame = CGRect(x: self.frame.width - 150, y: 0, width: 150, height: 30)
+        search.frame = CGRect(x: self.frame.width - 150, y: self.view?.safeAreaInsets.top ?? 0, width: 150, height: 30)
         title.run(SKAction.fadeIn(withDuration: 0.2))
     }
     

@@ -38,68 +38,71 @@ class SettingScene:SKScene {
         themeIndexSetting = ThemeSelector(gvc: gvc)
         super.init(size: previous.frame.size)
         self.backgroundColor = SKColor.brown
+        let top = self.frame.height - (gvc.skView?.safeAreaInsets.top ?? 0)
+        
         let name = SKLabelNode(text: NSLocalizedString("settings.title", comment: "Settings"))
         name.fontName = FONT
         name.fontColor = SKColor.black
-        name.position = CGPoint(x: self.frame.midX, y: self.frame.height - 50)
+        name.position = CGPoint(x: self.frame.midX, y: top - 50)
         addChild(name)
         
         audioSetting.setVolume(gvc.audioVolume)
-        audioSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 150)
+        audioSetting.position = CGPoint(x: self.frame.width/2, y: top - 150)
         addChild(audioSetting)
         musicSetting.setVolume(gvc.backgroundMusicPlayer.volume)
-        musicSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 250)
+        musicSetting.position = CGPoint(x: self.frame.width/2, y: top - 250)
         addChild(musicSetting)
-        musicIndexSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 300)
+        musicIndexSetting.position = CGPoint(x: self.frame.width/2, y: top - 300)
         addChild(musicIndexSetting)
-        themeIndexSetting.position = CGPoint(x: self.frame.width/2, y: self.frame.height - (UIDevice.current.userInterfaceIdiom == .phone ? 450 : 350))
+        themeIndexSetting.position = CGPoint(x: self.frame.width/2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 450 : 350))
         addChild(themeIndexSetting)
         
         extensions = SKSpriteNode(imageNamed: "buttonminibg")
-        extensions.position = CGPoint(x: self.frame.width/3, y: self.frame.height - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
+        extensions.position = CGPoint(x: self.frame.width/3, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
         extensions.zPosition = 1
         addChild(extensions)
         textensions = SKLabelNode(text: NSLocalizedString("settings.extensions", comment: "Extensions"))
         textensions.fontName = FONT
         textensions.fontColor = SKColor.black
         textensions.fontSize = 20
-        textensions.position = CGPoint(x: self.frame.width/3, y: self.frame.height - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
+        textensions.position = CGPoint(x: self.frame.width/3, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
         textensions.zPosition = 2
         addChild(textensions)
         
         login = SKSpriteNode(imageNamed: "buttonminibg")
-        login.position = CGPoint(x: self.frame.width/3*2, y: self.frame.height - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
+        login.position = CGPoint(x: self.frame.width/3*2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
         login.zPosition = 1
         addChild(login)
         tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out"))
         tlogin.fontName = FONT
         tlogin.fontColor = SKColor.black
         tlogin.fontSize = 20
-        tlogin.position = CGPoint(x: self.frame.width/3*2, y: self.frame.height - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
+        tlogin.position = CGPoint(x: self.frame.width/3*2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
         tlogin.zPosition = 2
         addChild(tlogin)
         
+        let bottom = gvc.skView?.safeAreaInsets.bottom ?? 0
         ok = SKSpriteNode(imageNamed: "buttonminibg")
-        ok.position = CGPoint(x: self.frame.width/3, y: 50)
+        ok.position = CGPoint(x: self.frame.width/3, y: 50 + bottom)
         ok.zPosition = 1
         addChild(ok)
         tok = SKLabelNode(text: NSLocalizedString("ok", comment: "Ok"))
         tok.fontName = FONT
         tok.fontColor = SKColor.black
         tok.fontSize = 20
-        tok.position = CGPoint(x: self.frame.width/3, y: 40)
+        tok.position = CGPoint(x: self.frame.width/3, y: 40 + bottom)
         tok.zPosition = 2
         addChild(tok)
         
         reset = SKSpriteNode(imageNamed: "buttonminibg")
-        reset.position = CGPoint(x: self.frame.width/3*2, y: 50)
+        reset.position = CGPoint(x: self.frame.width/3*2, y: 50 + bottom)
         reset.zPosition = 1
         addChild(reset)
         treset = SKLabelNode(text: NSLocalizedString("reset", comment: "Reset settings"))
         treset.fontName = FONT
         treset.fontColor = SKColor.black
         treset.fontSize = 20
-        treset.position = CGPoint(x: self.frame.width/3*2, y: 40)
+        treset.position = CGPoint(x: self.frame.width/3*2, y: 40 + bottom)
         treset.zPosition = 2
         addChild(treset)
         

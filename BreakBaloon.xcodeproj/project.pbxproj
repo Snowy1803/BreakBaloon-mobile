@@ -13,7 +13,6 @@
 		2010C84F235CE16B001B5FE0 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F4D6B1D180F9F00EB894A /* Case.swift */; };
 		2010C851235CE1A9001B5FE0 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2010C850235CE1A9001B5FE0 /* Case.swift */; };
 		201F4D601D17275600EB894A /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D5F1D17275600EB894A /* AppIcon.xcassets */; };
-		201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D671D17F7E600EB894A /* Launch.xcassets */; };
 		201F4D801D1812DE00EB894A /* closed0.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D6E1D1812DE00EB894A /* closed0.png */; };
 		201F4D811D1812DE00EB894A /* closed1.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D6F1D1812DE00EB894A /* closed1.png */; };
 		201F4D821D1812DE00EB894A /* closed2.png in Resources */ = {isa = PBXBuildFile; fileRef = 201F4D701D1812DE00EB894A /* closed2.png */; };
@@ -52,6 +51,7 @@
 		204289261D4E78FE00BDEE39 /* levelback.png in Resources */ = {isa = PBXBuildFile; fileRef = 204289251D4E78FE00BDEE39 /* levelback.png */; };
 		2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */; };
 		204FBB2F1D58D9B700971306 /* checkbox-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 204FBB2E1D58D9B700971306 /* checkbox-disabled.png */; };
+		205CADB52691136D00C0C508 /* IPhoneSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CADB42691136D00C0C508 /* IPhoneSettingScene.swift */; };
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
@@ -106,7 +106,6 @@
 		20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E877361D25AD9D00CCBA1A /* GameScene.swift */; };
 		20E877391D25B1B500CCBA1A /* import.png in Resources */ = {isa = PBXBuildFile; fileRef = 20E877381D25B1B500CCBA1A /* import.png */; };
 		20E9F7C423494D8900AF3A12 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20E9F7C323494D8800AF3A12 /* Settings.bundle */; };
-		20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */; };
 		20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */; };
 		20F188221D2821C30099F717 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20F188241D2821C30099F717 /* InfoPlist.strings */; };
 		20F1882A1D2830470099F717 /* quick_singleplayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F188271D2830470099F717 /* quick_singleplayer.png */; };
@@ -116,6 +115,7 @@
 		20F188301D2A62C70099F717 /* BBT1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1882F1D2A62C70099F717 /* BBT1.swift */; };
 		20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */; };
 		20FDCD9226907F5B00493C8E /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 20FDCD9126907F5B00493C8E /* ZIPFoundation */; };
+		20FDCDA12690A55500493C8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20FDCDA02690A55500493C8E /* LaunchScreen.storyboard */; };
 		20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */; };
 		20FF80DF1D197E4800E5A9EF /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80DE1D197E4800E5A9EF /* slider.png */; };
 		20FF80E11D197EFB00E5A9EF /* slidericon.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80E01D197EFB00E5A9EF /* slidericon.png */; };
@@ -188,7 +188,6 @@
 		200C7872235DD34B00E93468 /* Balloons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Balloons.xcassets; sourceTree = "<group>"; };
 		2010C850235CE1A9001B5FE0 /* Case.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
 		201F4D5F1D17275600EB894A /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
-		201F4D671D17F7E600EB894A /* Launch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Launch.xcassets; sourceTree = "<group>"; };
 		201F4D6B1D180F9F00EB894A /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
 		201F4D6E1D1812DE00EB894A /* closed0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closed0.png; sourceTree = "<group>"; };
 		201F4D6F1D1812DE00EB894A /* closed1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closed1.png; sourceTree = "<group>"; };
@@ -230,6 +229,7 @@
 		204289251D4E78FE00BDEE39 /* levelback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelback.png; sourceTree = "<group>"; };
 		2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelNode.swift; sourceTree = "<group>"; };
 		204FBB2E1D58D9B700971306 /* checkbox-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-disabled.png"; sourceTree = "<group>"; };
+		205CADB42691136D00C0C508 /* IPhoneSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneSettingScene.swift; sourceTree = "<group>"; };
 		206736751D16E26300FB9FFF /* BreakBaloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakBaloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		206736781D16E26300FB9FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -296,7 +296,6 @@
 		20E877361D25AD9D00CCBA1A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		20E877381D25B1B500CCBA1A /* import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import.png; sourceTree = "<group>"; };
 		20E9F7C323494D8800AF3A12 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneSettingScene.swift; sourceTree = "<group>"; };
 		20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationDeepLink.swift; sourceTree = "<group>"; };
 		20F188231D2821C30099F717 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		20F188251D2821C90099F717 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -308,6 +307,7 @@
 		20F1882F1D2A62C70099F717 /* BBT1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBT1.swift; sourceTree = "<group>"; };
 		20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelInfoNode.swift; sourceTree = "<group>"; };
 		20FDCD9426909FC200493C8E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		20FDCDA02690A55500493C8E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSlider.swift; sourceTree = "<group>"; };
 		20FF80DE1D197E4800E5A9EF /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		20FF80E01D197EFB00E5A9EF /* slidericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slidericon.png; sourceTree = "<group>"; };
@@ -410,7 +410,7 @@
 				20C9957D1D23EC2F0029312F /* StartScene.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
 				201F4D5F1D17275600EB894A /* AppIcon.xcassets */,
-				201F4D671D17F7E600EB894A /* Launch.xcassets */,
+				20FDCDA02690A55500493C8E /* LaunchScreen.storyboard */,
 				20A335A61D4BD33E00B54FBE /* Main.storyboard */,
 				206736881D16E26300FB9FFF /* Info.plist */,
 			);
@@ -530,7 +530,7 @@
 				20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */,
 				20C995811D23EC620029312F /* SettingScene.swift */,
 				20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */,
-				20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */,
+				205CADB42691136D00C0C508 /* IPhoneSettingScene.swift */,
 				20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */,
 				20C995831D23EC710029312F /* Selector.swift */,
 				20C995871D23EC9A0029312F /* MusicSelector.swift */,
@@ -753,6 +753,7 @@
 				20263AAA1D5CBFB6005E596B /* fake-closed5.png in Resources */,
 				204289261D4E78FE00BDEE39 /* levelback.png in Resources */,
 				20263AB41D5CC2A4005E596B /* fake-opened3.png in Resources */,
+				20FDCDA12690A55500493C8E /* LaunchScreen.storyboard in Resources */,
 				206736951D16FA5100FB9FFF /* buttonbg.png in Resources */,
 				20E877391D25B1B500CCBA1A /* import.png in Resources */,
 				20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */,
@@ -790,7 +791,6 @@
 				20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */,
 				201F4D811D1812DE00EB894A /* closed1.png in Resources */,
 				201F4D821D1812DE00EB894A /* closed2.png in Resources */,
-				201F4D681D17F7E600EB894A /* Launch.xcassets in Resources */,
 				20C9957C1D23EBA20029312F /* wpump.wav in Resources */,
 				20AFF9D61D568B0200B4CBF8 /* checkbox-check.png in Resources */,
 				20C995711D23EBA20029312F /* Welcome.wav in Resources */,
@@ -833,6 +833,7 @@
 			files = (
 				20F1882E1D29A5300099F717 /* ImportMusic.swift in Sources */,
 				20C9958C1D23ECE90029312F /* BBStoreScene.swift in Sources */,
+				205CADB52691136D00C0C508 /* IPhoneSettingScene.swift in Sources */,
 				208989541D5CAF07008CB986 /* FakeCase.swift in Sources */,
 				20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */,
 				2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */,
@@ -856,7 +857,6 @@
 				20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */,
 				20C995861D23EC7C0029312F /* ThemeSelector.swift in Sources */,
 				206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */,
-				20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */,
 				20C995801D23EC4E0029312F /* FileSaveHelper.swift in Sources */,
 				20AFF9D31D56822C00B4CBF8 /* ExtensionSettingScene.swift in Sources */,
 				20AFF9D11D54B4F200B4CBF8 /* CheckBox.swift in Sources */,
@@ -1218,7 +1218,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = EYTYK8J7PX;
 				INFOPLIST_FILE = BreakBaloon/Info.plist;
@@ -1240,7 +1239,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = EYTYK8J7PX;
 				INFOPLIST_FILE = BreakBaloon/Info.plist;

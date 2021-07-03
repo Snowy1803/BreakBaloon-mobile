@@ -83,7 +83,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
                 try Downloadable(type: .m4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
             } catch {
                 print("Couldn't download content")
-                _ = getNil()! //Crash
+                fatalError()
             }
         }
         let data = UserDefaults.standard
@@ -131,10 +131,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
         let scene:SKScene = StartScene(size: skView!.bounds.size)
         scene.scaleMode = .aspectFill
         skView!.presentScene(scene)
-    }
-    
-    func getNil() -> Any? {
-        return nil
     }
     
     func reloadBackgroundMusic() {
@@ -206,7 +202,11 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
+    }
+    
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        return .all
     }
     
     class func getLevel() -> Int {

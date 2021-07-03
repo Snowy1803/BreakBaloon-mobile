@@ -14,7 +14,7 @@ class RandGameBonusLevelInfoNode: RandGameLevelInfoNode {
         super.init(level: level, scene: scene)
         removeAllChildren()
         if !level.canPlay() {
-            _ = scene.gvc.getNil()! // CRASH
+            fatalError()
         }
         self.zPosition = 1000
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))

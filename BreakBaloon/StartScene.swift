@@ -92,14 +92,9 @@ class StartScene: SKScene {
         self.addChild(xpLabel)
         if growXPFrom > -1 {
             print("GrowXP: \(growXPFrom) -> \(GameViewController.getLevelXPFloat())")
-            xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(GameViewController.getLevelXPFloat()) / growXPFrom, duration: 1.0)]), completion: {() -> Void in
-                    self.xpLabel.removeFromParent()
-                    self.xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15))
-                    self.xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
-                    self.xpLabel.strokeColor = SKColor.clear
-                    self.xpLabel.zPosition = 2
-                    self.addChild(self.xpLabel)
-                })
+            xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(GameViewController.getLevelXPFloat()) / growXPFrom, duration: 1.0)])) { [self] in
+                    xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
+                }
         }
         txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), GameViewController.getLevel()))
         txpLabel.fontSize = 13
@@ -112,6 +107,13 @@ class StartScene: SKScene {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
+        DispatchQueue.main.async { // safeAreaInsets aren't initialized yet here. wait 1 tick
+            self.adjustPosition(false)
+        }
     }
     
     func initFirstPane(_ cancelled:Bool) {
@@ -191,36 +193,39 @@ class StartScene: SKScene {
         tbbstoreButton.zPosition = 2
         self.addChild(tbbstoreButton)
 
-        actualPane = 1;
+        actualPane = 1
         adjustPosition(cancelled)
     }
     
     func adjustPosition(_ cancelled:Bool, sizeChange:Bool = false) {
+        let bottomSA = view?.safeAreaInsets.bottom ?? 0
         if UIDevice.current.userInterfaceIdiom != .phone {
-            bbLabel.position = CGPoint(x: self.frame.midX, y: 40)
-            hsLabel.position = CGPoint(x: self.frame.midX, y: 120)
-            bsLabel.position = CGPoint(x: self.frame.midX, y: 95)
+            bbLabel.position = CGPoint(x: self.frame.midX, y: 40 + bottomSA)
+            hsLabel.position = CGPoint(x: self.frame.midX, y: 120 + bottomSA)
+            bsLabel.position = CGPoint(x: self.frame.midX, y: 95 + bottomSA)
         } else {
-            hsLabel.position = CGPoint(x: self.frame.midX, y: 70)
-            bsLabel.position = CGPoint(x: self.frame.midX, y: 45)
+            hsLabel.position = CGPoint(x: self.frame.midX, y: 70 + bottomSA)
+            bsLabel.position = CGPoint(x: self.frame.midX, y: 45 + bottomSA)
         }
-        cLabel.position = CGPoint(x: self.frame.midX, y: 20)
-        xpLabel.path = CGPath(rect: CGRect(x: 0, y: 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
-        txpLabel.position = CGPoint(x: size.width / 2, y: 0)
+        cLabel.position = CGPoint(x: self.frame.midX, y: 20 + bottomSA)
+        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
+        txpLabel.position = CGPoint(x: size.width / 2, y: 0 + bottomSA)
         if actualPane == 1 {
+            let bottomPadding = bottomSA - lowerButtonMinus()
+            // TODO fix animation on cancelled
             soloButton.position = CGPoint(x: cancelled ? -soloButton.size.width : self.frame.midX, y: getPositionYForButton(0, text: false))
             multiButton.position = CGPoint(x: cancelled ? -multiButton.size.width : self.frame.midX, y: getPositionYForButton(1, text: false))
             timedButton.position = CGPoint(x: cancelled ? -timedButton.size.width : self.frame.midX, y: getPositionYForButton(2, text: false))
             randButton.position = CGPoint(x: cancelled ? -randButton.size.width : self.frame.midX, y: getPositionYForButton(3, text: false))
-            prefsButton.position = CGPoint(x: cancelled ? -prefsButton.size.width : self.frame.width / 4, y: 170 - lowerButtonMinus())
-            bbstoreButton.position = CGPoint(x: cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, y: 170 - lowerButtonMinus())
+            prefsButton.position = CGPoint(x: cancelled ? -prefsButton.size.width : self.frame.width / 4, y: 170 + bottomPadding)
+            bbstoreButton.position = CGPoint(x: cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, y: 170 + bottomPadding)
             
             tsoloButton.position = CGPoint(x: cancelled ? -soloButton.size.width : self.frame.midX, y: getPositionYForButton(0, text: true))
             tmultiButton.position = CGPoint(x: cancelled ? -multiButton.size.width : self.frame.midX, y: getPositionYForButton(1, text: true))
             ttimedButton.position = CGPoint(x: cancelled ? -timedButton.size.width : self.frame.midX, y: getPositionYForButton(2, text: true))
             trandButton.position = CGPoint(x: cancelled ? -randButton.size.width : self.frame.midX, y: getPositionYForButton(3, text: true))
-            tprefsButton.position = CGPoint(x: cancelled ? -prefsButton.size.width : self.frame.width / 4, y: 160 - lowerButtonMinus())
-            tbbstoreButton.position = CGPoint(x: cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, y: 160 - lowerButtonMinus())
+            tprefsButton.position = CGPoint(x: cancelled ? -prefsButton.size.width : self.frame.width / 4, y: 160 + bottomPadding)
+            tbbstoreButton.position = CGPoint(x: cancelled ? -bbstoreButton.size.width : self.frame.width / 4 * 3, y: 160 + bottomPadding)
         } else if actualPane == 2 {
             smallButton.position = CGPoint(x: sizeChange ? self.frame.midX : self.frame.size.width + smallButton.size.width, y: getPositionYForButton(0, text: false))
             mediumButton.position = CGPoint(x: sizeChange ? self.frame.midX : self.frame.size.width + mediumButton.size.width, y: getPositionYForButton(1, text: false))
@@ -300,7 +305,8 @@ class StartScene: SKScene {
         adaptButton.zPosition = 1
         self.addChild(adaptButton)
         tadaptButton = SKLabelNode()
-        tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int(self.frame.size.width / 75), Int((self.frame.size.height - 35) / 75))
+        let safeSize = self.frame.inset(by: self.view!.safeAreaInsets).size
+        tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int(safeSize.width / 75), Int((safeSize.height - 35) / 75))
         tadaptButton.fontSize = 35
         tadaptButton.fontName = BUTTON_FONT
         tadaptButton.fontColor = SKColor.black
@@ -315,7 +321,7 @@ class StartScene: SKScene {
         let w = Int(self.frame.size.width / 75)
         for i in 0..<RandGameLevel.levels.count {
             let node = RandGameLevel.levels[i].createNode()
-            node.realPosition = CGPoint(x: CGFloat(i % w * 75 + 35), y: self.frame.size.height - CGFloat(i / w * 75 + 35))
+            node.realPosition = CGPoint(x: CGFloat(i % w * 75 + 35), y: self.frame.size.height - CGFloat(i / w * 75 + 35) - (self.view?.safeAreaInsets.top ?? 0))
             addChild(node)
         }
         
@@ -329,24 +335,25 @@ class StartScene: SKScene {
     }
     
     func greyIfNotFill(_ sprite:SKSpriteNode, size:Int) {
-        if Int(self.frame.size.width / 75) < size || Int((self.frame.size.height - 20) / 75) < size {
+        let safeSize = self.frame.inset(by: self.view!.safeAreaInsets).size
+        if Int(safeSize.width / 75) < size || Int((safeSize.height - 20) / 75) < size {
             grey(sprite)
         }
     }
     
     func getPositionYForButton(_ indexFromTop:Int, text:Bool) -> CGFloat {
-        var position:CGFloat = 0
+        var position:CGFloat = self.frame.size.height - (view?.safeAreaInsets.top ?? 0)
         let height = buttonTexture.size().height
         if UIDevice.current.userInterfaceIdiom == .pad {
             if indexFromTop == 0 {
-                position = self.frame.size.height - height/2
+                position -= height/2
             } else if indexFromTop == 1 {
-                position = self.frame.size.height - height*2
+                position -= height*2
             } else {
-                position = self.frame.size.height - height*(2 + 1.5*CGFloat(indexFromTop - 1))
+                position -= height*(2 + 1.5*CGFloat(indexFromTop - 1))
             }
         } else {
-            position = self.frame.size.height - height*CGFloat(indexFromTop)
+            position -= height*CGFloat(indexFromTop)
         }
         return text ? position - 45 : position - 30
     }
@@ -396,7 +403,8 @@ class StartScene: SKScene {
                     showResolutionAlert()
                 }
             } else if onNode(adaptButton, point: point) {
-                newGame(gametype, width: UInt(self.frame.size.width / 75), height: UInt((self.frame.size.height - 20) / 75))
+                let safeSize = self.frame.inset(by: self.view!.safeAreaInsets).size
+                newGame(gametype, width: UInt(safeSize.width / 75), height: UInt((safeSize.height - 20) / 75))
             } else if onNode(prefsButton, point: point) {
                 if littleScreen() {
                     self.view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: TimeInterval(1)))

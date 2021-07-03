@@ -55,7 +55,7 @@ class RandGameScene: AbstractGameScene {
             label.fontSize = 30
         }
         label.fontName = "Verdana-Bold"
-        label.position = CGPoint(x: label.frame.width/2, y: 5)
+        label.position = CGPoint(x: label.frame.width/2, y: 5 + view.safeAreaInsets.bottom)
         label.zPosition = 1
         updateLabel()
         addChild(label)
@@ -68,12 +68,15 @@ class RandGameScene: AbstractGameScene {
             }
             errors.text = "0"
             errors.fontName = "Verdana-Bold"
-            errors.position = CGPoint(x: self.frame.width - 30, y: 5)
+            errors.position = CGPoint(x: self.frame.width - 30, y: 5 + view.safeAreaInsets.bottom)
             errors.zPosition = 1
             addChild(errors)
         }
+        
         pause = SKSpriteNode(imageNamed: "pause")
-        pause.position = CGPoint(x: self.frame.width - pause.frame.width / 4 * 3, y: self.frame.height - pause.frame.height / 4 * 3)
+        pause.position = CGPoint(
+            x: self.frame.width - view.safeAreaInsets.right - pause.frame.width / 4 * 3,
+            y: self.frame.height - view.safeAreaInsets.top - pause.frame.height / 4 * 3)
         pause.zPosition = 2
         beginTime = Date().timeIntervalSince1970
     }
@@ -208,7 +211,8 @@ class RandGameScene: AbstractGameScene {
     
     /// Spawn a baloon at a random location
     func spawnBaloon() {
-        spawnBaloon(point: CGPoint(x: CGFloat(arc4random_uniform(UInt32(self.frame.width - 75))), y: CGFloat(arc4random_uniform(UInt32(self.frame.height - 105)) + 75)))
+        let area = self.frame.inset(by: self.view!.safeAreaInsets).inset(by: UIEdgeInsets(top: 105, left: 0, bottom: 75, right: 75))
+        spawnBaloon(point: CGPoint(x: CGFloat.random(in: area.minX..<area.maxX), y: CGFloat.random(in: area.minY..<area.maxY)))
     }
     
     func getMissingBaloons() -> Int {
@@ -237,7 +241,7 @@ class RandGameScene: AbstractGameScene {
     
     func updateLabel() {
         label.text = String(format: NSLocalizedString("game.score.\(points > 1 ? "more" : "one")", comment: "Points at end"), self.points)
-        label.position = CGPoint(x: label.frame.width/2, y: 5)
+        label.position.x = label.frame.width / 2
     }
     
     override func isGamePaused() -> Bool {

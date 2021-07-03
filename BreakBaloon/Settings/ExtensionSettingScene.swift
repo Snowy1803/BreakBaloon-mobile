@@ -30,27 +30,30 @@ class ExtensionSettingScene: SKScene {
         self.bee = CheckBox(checked: UserDefaults.standard.bool(forKey: "extension.bee.enabled"), label: sortArray["bee"])
         super.init(size: previous.size)
         backgroundColor = SKColor.brown
+        let top = self.frame.height - (previous.view?.safeAreaInsets.top ?? 0)
+        let bottom = previous.view?.safeAreaInsets.bottom ?? 0
+        let left = previous.view?.safeAreaInsets.left ?? 0
         
         ok = SKSpriteNode(imageNamed: "buttonminibg")
-        ok.position = CGPoint(x: self.frame.width/2, y: 50)
+        ok.position = CGPoint(x: self.frame.width/2, y: 50 + bottom)
         ok.zPosition = 1
         addChild(ok)
         tok.text = NSLocalizedString("ok", comment: "Ok")
         tok.fontName = BUTTON_FONT
         tok.fontColor = SKColor.black
         tok.fontSize = 20
-        tok.position = CGPoint(x: self.frame.width/2, y: 40)
+        tok.position = CGPoint(x: self.frame.width/2, y: 40 + bottom)
         tok.zPosition = 2
         addChild(tok)
         let array = [String](sortArray.values)
         self.animation.enable(GameViewController.getLevel() >= ANIMATION_REQUIREMENT)
-        animation.position = CGPoint(x: 32, y: self.frame.height - sort(sortArray["animation"]!, in: array))
+        animation.position = CGPoint(x: 32 + left, y: top - sort(sortArray["animation"]!, in: array))
         addChild(animation)
         self.hintarrow.enable(GameViewController.getLevel() >= HINTARROW_REQUIREMENT)
-        hintarrow.position = CGPoint(x: 32, y: self.frame.height - sort(sortArray["hintArrow"]!, in: array))
+        hintarrow.position = CGPoint(x: 32 + left, y: top - sort(sortArray["hintArrow"]!, in: array))
         addChild(hintarrow)
         self.bee.enable(GameViewController.getLevel() >= BEE_REQUIREMENT)
-        bee.position = CGPoint(x: 32, y: self.frame.height - sort(sortArray["bee"]!, in: array))
+        bee.position = CGPoint(x: 32 + left, y: top - sort(sortArray["bee"]!, in: array))
         addChild(bee)
     }
     
