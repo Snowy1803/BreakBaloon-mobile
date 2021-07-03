@@ -268,7 +268,7 @@
 		20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionSettingScene.swift; sourceTree = "<group>"; };
 		20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-check.png"; sourceTree = "<group>"; };
 		20AFF9D51D568B0200B4CBF8 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
-		20B004BC1D2BEF04005F706F /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		20B004BC1D2BEF04005F706F /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		20B004BE1D2BF952005F706F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20B004F61D2C4B59005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
 		20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BreakBaloon-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -456,7 +456,7 @@
 			children = (
 				20E9F7C323494D8800AF3A12 /* Settings.bundle */,
 				20F1881E1D27D7580099F717 /* libz.tbd */,
-				20B004BC1D2BEF04005F706F /* LICENSE.md */,
+				20B004BC1D2BEF04005F706F /* COPYING */,
 				20B004BE1D2BF952005F706F /* README.md */,
 				20BE2F661D54A029004A8B17 /* .gitattributes */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
