@@ -399,38 +399,16 @@
 				20BEA4391D193D4A00DE74FB /* Translations */,
 				20FDCD962690A05100493C8E /* Sounds */,
 				20FDCD972690A05700493C8E /* Sprites */,
+				20FDCD9C2690A35F00493C8E /* GameScene */,
+				20FDCD992690A27200493C8E /* RandGame */,
+				20FDCD9B2690A30300493C8E /* Theming */,
+				20FDCD9A2690A29900493C8E /* Settings */,
+				20FDCD9D2690A3B300493C8E /* BBStore */,
 				206736781D16E26300FB9FFF /* AppDelegate.swift */,
 				20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */,
 				2067367A1D16E26300FB9FFF /* StartScene.sks */,
-				20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */,
 				20C9957D1D23EC2F0029312F /* StartScene.swift */,
-				20C995811D23EC620029312F /* SettingScene.swift */,
-				20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */,
-				20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */,
-				20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */,
-				20C995831D23EC710029312F /* Selector.swift */,
-				20C995871D23EC9A0029312F /* MusicSelector.swift */,
-				2099709B1D6303CD00A3F268 /* AbstractTheme.swift */,
-				20F1882F1D2A62C70099F717 /* BBT1.swift */,
-				20CEC7E91D5F1C670031830C /* BBT2.swift */,
-				20C995851D23EC7C0029312F /* ThemeSelector.swift */,
-				20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */,
-				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
-				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
-				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
-				2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */,
-				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
-				20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */,
-				2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */,
-				20BE2F541D50F53B004A8B17 /* RandGameBonusLevel.swift */,
-				20BE2F561D510062004A8B17 /* RandGameBonusLevelInfoNode.swift */,
-				20BE2F581D5105D8004A8B17 /* RandGameBonusLevelNode.swift */,
-				201F4D6B1D180F9F00EB894A /* Case.swift */,
-				208989531D5CAF07008CB986 /* FakeCase.swift */,
-				20C9957F1D23EC4E0029312F /* FileSaveHelper.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
-				20F1882D1D29A5300099F717 /* ImportMusic.swift */,
-				20C9958D1D23ECF90029312F /* bbstore */,
 				201F4D5F1D17275600EB894A /* AppIcon.xcassets */,
 				201F4D671D17F7E600EB894A /* Launch.xcassets */,
 				20A335A61D4BD33E00B54FBE /* Main.storyboard */,
@@ -446,15 +424,6 @@
 				20F188241D2821C30099F717 /* InfoPlist.strings */,
 			);
 			name = Translations;
-			sourceTree = "<group>";
-		};
-		20C9958D1D23ECF90029312F /* bbstore */ = {
-			isa = PBXGroup;
-			children = (
-				20C9958B1D23ECE90029312F /* BBStoreScene.swift */,
-				20C9958E1D23ED100029312F /* Downloadable.swift */,
-			);
-			name = bbstore;
 			sourceTree = "<group>";
 		};
 		20FDCD962690A05100493C8E /* Sounds */ = {
@@ -536,6 +505,69 @@
 				20263AB01D5CC2A4005E596B /* fake-opened5.png */,
 			);
 			path = Baloons;
+			sourceTree = "<group>";
+		};
+		20FDCD992690A27200493C8E /* RandGame */ = {
+			isa = PBXGroup;
+			children = (
+				20A335B01D4BDE4000B54FBE /* RandGameScene.swift */,
+				20CB89CD1D4CE6E600A0408C /* RandGameLevel.swift */,
+				2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */,
+				20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */,
+				20CEC7E71D5DFE2B0031830C /* RandGamePauseNode.swift */,
+				2042891F1D4E670300BDEE39 /* RandGameLevelEndNode.swift */,
+				20BE2F541D50F53B004A8B17 /* RandGameBonusLevel.swift */,
+				20BE2F561D510062004A8B17 /* RandGameBonusLevelInfoNode.swift */,
+				20BE2F581D5105D8004A8B17 /* RandGameBonusLevelNode.swift */,
+				208989531D5CAF07008CB986 /* FakeCase.swift */,
+			);
+			path = RandGame;
+			sourceTree = "<group>";
+		};
+		20FDCD9A2690A29900493C8E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */,
+				20C995811D23EC620029312F /* SettingScene.swift */,
+				20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */,
+				20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */,
+				20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */,
+				20C995831D23EC710029312F /* Selector.swift */,
+				20C995871D23EC9A0029312F /* MusicSelector.swift */,
+				20C995851D23EC7C0029312F /* ThemeSelector.swift */,
+				20F1882D1D29A5300099F717 /* ImportMusic.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		20FDCD9B2690A30300493C8E /* Theming */ = {
+			isa = PBXGroup;
+			children = (
+				2099709B1D6303CD00A3F268 /* AbstractTheme.swift */,
+				20F1882F1D2A62C70099F717 /* BBT1.swift */,
+				20CEC7E91D5F1C670031830C /* BBT2.swift */,
+			);
+			path = Theming;
+			sourceTree = "<group>";
+		};
+		20FDCD9C2690A35F00493C8E /* GameScene */ = {
+			isa = PBXGroup;
+			children = (
+				20A335AE1D4BD8C300B54FBE /* AbstractGameScene.swift */,
+				20E877361D25AD9D00CCBA1A /* GameScene.swift */,
+				201F4D6B1D180F9F00EB894A /* Case.swift */,
+			);
+			path = GameScene;
+			sourceTree = "<group>";
+		};
+		20FDCD9D2690A3B300493C8E /* BBStore */ = {
+			isa = PBXGroup;
+			children = (
+				20C9958B1D23ECE90029312F /* BBStoreScene.swift */,
+				20C9958E1D23ED100029312F /* Downloadable.swift */,
+				20C9957F1D23EC4E0029312F /* FileSaveHelper.swift */,
+			);
+			path = BBStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
