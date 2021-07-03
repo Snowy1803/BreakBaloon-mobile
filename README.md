@@ -5,7 +5,7 @@ BreakBaloon is a game where you burst balloons aka break baloons. The Java versi
 ## Use
 You can use a part of BreakBaloon’s code for your Swift app, including the license. The BreakBaloon app will come on App Store when finished. You can still compile BreakBaloon using Xcode and load it on your iDevice.
 ## License
-BreakBaloon is published under the MIT license. It can be found in [COPYING](https://github.com/Snowy1803/BreakBaloon-mobile/blob/main/COPYING) file.
+BreakBaloon is published under the GPLv3 license. It can be found in [COPYING](https://github.com/Snowy1803/BreakBaloon-mobile/blob/main/COPYING) file.
 # Français
 ## BreakBaloon
 BreakBaloon est un jeu dont le but est de crever des ballons. La version Java, pour ordinateur peut être trouvé [ici](http://elementalcube.infos.st/product/1)

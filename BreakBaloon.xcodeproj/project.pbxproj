@@ -81,7 +81,6 @@
 		20BE2F611D5480AC004A8B17 /* levelbuttonbg-bonus.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */; };
 		20BE2F641D54832B004A8B17 /* levelbuttonbg-bonus-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */; };
 		20BE2F651D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */; };
-		20BE2F671D54A029004A8B17 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 20BE2F661D54A029004A8B17 /* .gitattributes */; };
 		20BEA43F1D19415500DE74FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20BEA43D1D19415500DE74FB /* Localizable.strings */; };
 		20BFC0861D4D08E3000B7A6A /* levelbuttonbg-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */; };
 		20BFC08A1D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png in Resources */ = {isa = PBXBuildFile; fileRef = 20BFC0891D4D0AF7000B7A6A /* levelbuttonbg-unlockable.png */; };
@@ -271,7 +270,6 @@
 		20BE2F5D1D5480AC004A8B17 /* levelbuttonbg-bonus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus.png"; sourceTree = "<group>"; };
 		20BE2F621D54832B004A8B17 /* levelbuttonbg-bonus-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-locked.png"; sourceTree = "<group>"; };
 		20BE2F631D54832B004A8B17 /* levelbuttonbg-bonus-unlockable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-bonus-unlockable.png"; sourceTree = "<group>"; };
-		20BE2F661D54A029004A8B17 /* .gitattributes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		20BEA43E1D19415500DE74FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BEA4401D19418300DE74FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		20BFC0851D4D08E3000B7A6A /* levelbuttonbg-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-locked.png"; sourceTree = "<group>"; };
@@ -309,6 +307,7 @@
 		20F1882D1D29A5300099F717 /* ImportMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportMusic.swift; sourceTree = "<group>"; };
 		20F1882F1D2A62C70099F717 /* BBT1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBT1.swift; sourceTree = "<group>"; };
 		20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelInfoNode.swift; sourceTree = "<group>"; };
+		20FDCD9426909FC200493C8E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSlider.swift; sourceTree = "<group>"; };
 		20FF80DE1D197E4800E5A9EF /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		20FF80E01D197EFB00E5A9EF /* slidericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slidericon.png; sourceTree = "<group>"; };
@@ -405,7 +404,7 @@
 				20E9F7C323494D8800AF3A12 /* Settings.bundle */,
 				20B004BC1D2BEF04005F706F /* COPYING */,
 				20B004BE1D2BF952005F706F /* README.md */,
-				20BE2F661D54A029004A8B17 /* .gitattributes */,
+				20FDCD9426909FC200493C8E /* .gitignore */,
 				206736771D16E26300FB9FFF /* BreakBaloon */,
 				200ADDFA1DBD071B00275668 /* BreakBaloonStickers */,
 				203EEC72234A6438002D81F2 /* BreakBaloon Watch */,
@@ -722,7 +721,6 @@
 				20263AAA1D5CBFB6005E596B /* fake-closed5.png in Resources */,
 				204289261D4E78FE00BDEE39 /* levelback.png in Resources */,
 				20263AB41D5CC2A4005E596B /* fake-opened3.png in Resources */,
-				20BE2F671D54A029004A8B17 /* .gitattributes in Resources */,
 				206736951D16FA5100FB9FFF /* buttonbg.png in Resources */,
 				20E877391D25B1B500CCBA1A /* import.png in Resources */,
 				20A335A41D4BD33E00B54FBE /* Main.storyboard in Resources */,
