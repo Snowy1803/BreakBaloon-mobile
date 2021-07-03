@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -107,24 +107,8 @@
 		20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E877361D25AD9D00CCBA1A /* GameScene.swift */; };
 		20E877391D25B1B500CCBA1A /* import.png in Resources */ = {isa = PBXBuildFile; fileRef = 20E877381D25B1B500CCBA1A /* import.png */; };
 		20E9F7C423494D8900AF3A12 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20E9F7C323494D8800AF3A12 /* Settings.bundle */; };
-		20ED215E1D4CDC1600DA86AF /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED213B1D4CDC1600DA86AF /* aescrypt.c */; };
-		20ED215F1D4CDC1600DA86AF /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED213C1D4CDC1600DA86AF /* aeskey.c */; };
-		20ED21601D4CDC1600DA86AF /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED213E1D4CDC1600DA86AF /* aestab.c */; };
-		20ED21611D4CDC1600DA86AF /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21421D4CDC1600DA86AF /* entropy.c */; };
-		20ED21621D4CDC1600DA86AF /* fileenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21441D4CDC1600DA86AF /* fileenc.c */; };
-		20ED21631D4CDC1600DA86AF /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21461D4CDC1600DA86AF /* hmac.c */; };
-		20ED21641D4CDC1600DA86AF /* prng.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21481D4CDC1600DA86AF /* prng.c */; };
-		20ED21651D4CDC1600DA86AF /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED214A1D4CDC1600DA86AF /* pwd2key.c */; };
-		20ED21661D4CDC1600DA86AF /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED214C1D4CDC1600DA86AF /* sha1.c */; };
-		20ED21681D4CDC1600DA86AF /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21521D4CDC1600DA86AF /* ioapi.c */; };
-		20ED21691D4CDC1600DA86AF /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21541D4CDC1600DA86AF /* mztools.c */; };
-		20ED216A1D4CDC1600DA86AF /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21561D4CDC1600DA86AF /* unzip.c */; };
-		20ED216B1D4CDC1600DA86AF /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 20ED21581D4CDC1600DA86AF /* zip.c */; };
-		20ED216C1D4CDC1600DA86AF /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 20ED215B1D4CDC1600DA86AF /* SSZipArchive.m */; };
-		20ED216D1D4CDC1600DA86AF /* SSZipArchive+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ED215C1D4CDC1600DA86AF /* SSZipArchive+Swift.swift */; };
 		20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */; };
 		20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */; };
-		20F1881F1D27D7580099F717 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F1881E1D27D7580099F717 /* libz.tbd */; };
 		20F188221D2821C30099F717 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 20F188241D2821C30099F717 /* InfoPlist.strings */; };
 		20F1882A1D2830470099F717 /* quick_singleplayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F188271D2830470099F717 /* quick_singleplayer.png */; };
 		20F1882B1D2830470099F717 /* quick_computer.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F188281D2830470099F717 /* quick_computer.png */; };
@@ -132,6 +116,7 @@
 		20F1882E1D29A5300099F717 /* ImportMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1882D1D29A5300099F717 /* ImportMusic.swift */; };
 		20F188301D2A62C70099F717 /* BBT1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1882F1D2A62C70099F717 /* BBT1.swift */; };
 		20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F89AE01D4D4A01004EA75E /* RandGameLevelInfoNode.swift */; };
+		20FDCD9226907F5B00493C8E /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 20FDCD9126907F5B00493C8E /* ZIPFoundation */; };
 		20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FF80DC1D19766D00E5A9EF /* AudioSlider.swift */; };
 		20FF80DF1D197E4800E5A9EF /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80DE1D197E4800E5A9EF /* slider.png */; };
 		20FF80E11D197EFB00E5A9EF /* slidericon.png in Resources */ = {isa = PBXBuildFile; fileRef = 20FF80E01D197EFB00E5A9EF /* slidericon.png */; };
@@ -271,7 +256,6 @@
 		20B004BC1D2BEF04005F706F /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		20B004BE1D2BF952005F706F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		20B004F61D2C4B59005F706F /* level.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level.png; sourceTree = "<group>"; };
-		20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BreakBaloon-Bridging-Header.h"; sourceTree = "<group>"; };
 		20BE2F481D50CFA7004A8B17 /* levelbuttonbg-finished1star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished1star.png"; sourceTree = "<group>"; };
 		20BE2F491D50CFA7004A8B17 /* levelbuttonbg-finished2star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished2star.png"; sourceTree = "<group>"; };
 		20BE2F4A1D50CFA7004A8B17 /* levelbuttonbg-finished3star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "levelbuttonbg-finished3star.png"; sourceTree = "<group>"; };
@@ -314,44 +298,8 @@
 		20E877361D25AD9D00CCBA1A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		20E877381D25B1B500CCBA1A /* import.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import.png; sourceTree = "<group>"; };
 		20E9F7C323494D8800AF3A12 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		20ED21391D4CDC1600DA86AF /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
-		20ED213A1D4CDC1600DA86AF /* aes_via_ace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes_via_ace.h; sourceTree = "<group>"; };
-		20ED213B1D4CDC1600DA86AF /* aescrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aescrypt.c; sourceTree = "<group>"; };
-		20ED213C1D4CDC1600DA86AF /* aeskey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aeskey.c; sourceTree = "<group>"; };
-		20ED213D1D4CDC1600DA86AF /* aesopt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aesopt.h; sourceTree = "<group>"; };
-		20ED213E1D4CDC1600DA86AF /* aestab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aestab.c; sourceTree = "<group>"; };
-		20ED213F1D4CDC1600DA86AF /* aestab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aestab.h; sourceTree = "<group>"; };
-		20ED21401D4CDC1600DA86AF /* brg_endian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brg_endian.h; sourceTree = "<group>"; };
-		20ED21411D4CDC1600DA86AF /* brg_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brg_types.h; sourceTree = "<group>"; };
-		20ED21421D4CDC1600DA86AF /* entropy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entropy.c; sourceTree = "<group>"; };
-		20ED21431D4CDC1600DA86AF /* entropy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entropy.h; sourceTree = "<group>"; };
-		20ED21441D4CDC1600DA86AF /* fileenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fileenc.c; sourceTree = "<group>"; };
-		20ED21451D4CDC1600DA86AF /* fileenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileenc.h; sourceTree = "<group>"; };
-		20ED21461D4CDC1600DA86AF /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
-		20ED21471D4CDC1600DA86AF /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
-		20ED21481D4CDC1600DA86AF /* prng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prng.c; sourceTree = "<group>"; };
-		20ED21491D4CDC1600DA86AF /* prng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prng.h; sourceTree = "<group>"; };
-		20ED214A1D4CDC1600DA86AF /* pwd2key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwd2key.c; sourceTree = "<group>"; };
-		20ED214B1D4CDC1600DA86AF /* pwd2key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pwd2key.h; sourceTree = "<group>"; };
-		20ED214C1D4CDC1600DA86AF /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
-		20ED214D1D4CDC1600DA86AF /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
-		20ED214E1D4CDC1600DA86AF /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = BreakBaloon/SSZipArchive/Common.h; sourceTree = SOURCE_ROOT; };
-		20ED21511D4CDC1600DA86AF /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		20ED21521D4CDC1600DA86AF /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
-		20ED21531D4CDC1600DA86AF /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
-		20ED21541D4CDC1600DA86AF /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
-		20ED21551D4CDC1600DA86AF /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		20ED21561D4CDC1600DA86AF /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
-		20ED21571D4CDC1600DA86AF /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		20ED21581D4CDC1600DA86AF /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
-		20ED21591D4CDC1600DA86AF /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		20ED215A1D4CDC1600DA86AF /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = BreakBaloon/SSZipArchive/SSZipArchive.h; sourceTree = SOURCE_ROOT; };
-		20ED215B1D4CDC1600DA86AF /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = BreakBaloon/SSZipArchive/SSZipArchive.m; sourceTree = SOURCE_ROOT; };
-		20ED215C1D4CDC1600DA86AF /* SSZipArchive+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SSZipArchive+Swift.swift"; path = "BreakBaloon/SSZipArchive/SSZipArchive+Swift.swift"; sourceTree = SOURCE_ROOT; };
-		20ED215D1D4CDC1600DA86AF /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = BreakBaloon/SSZipArchive/ZipArchive.h; sourceTree = SOURCE_ROOT; };
 		20F188141D2659CA0099F717 /* IPhoneSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneSettingScene.swift; sourceTree = "<group>"; };
 		20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationDeepLink.swift; sourceTree = "<group>"; };
-		20F1881E1D27D7580099F717 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		20F188231D2821C30099F717 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		20F188251D2821C90099F717 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		20F188261D2821CA0099F717 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -379,7 +327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20F1881F1D27D7580099F717 /* libz.tbd in Frameworks */,
+				20FDCD9226907F5B00493C8E /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +403,6 @@
 			isa = PBXGroup;
 			children = (
 				20E9F7C323494D8800AF3A12 /* Settings.bundle */,
-				20F1881E1D27D7580099F717 /* libz.tbd */,
 				20B004BC1D2BEF04005F706F /* COPYING */,
 				20B004BE1D2BF952005F706F /* README.md */,
 				20BE2F661D54A029004A8B17 /* .gitattributes */,
@@ -481,7 +428,6 @@
 		206736771D16E26300FB9FFF /* BreakBaloon */ = {
 			isa = PBXGroup;
 			children = (
-				20B004F81D2CF196005F706F /* BreakBaloon-Bridging-Header.h */,
 				20BEA4391D193D4A00DE74FB /* Translations */,
 				2067368F1D16E59F00FB9FFF /* sounds */,
 				2067368E1D16E57F00FB9FFF /* sprites */,
@@ -575,21 +521,6 @@
 			name = sounds;
 			sourceTree = "<group>";
 		};
-		20B004C01D2C0336005F706F /* SSZipArchive */ = {
-			isa = PBXGroup;
-			children = (
-				20ED21381D4CDC1600DA86AF /* aes */,
-				20ED214E1D4CDC1600DA86AF /* Common.h */,
-				20ED21501D4CDC1600DA86AF /* minizip */,
-				20ED215A1D4CDC1600DA86AF /* SSZipArchive.h */,
-				20ED215B1D4CDC1600DA86AF /* SSZipArchive.m */,
-				20ED215C1D4CDC1600DA86AF /* SSZipArchive+Swift.swift */,
-				20ED215D1D4CDC1600DA86AF /* ZipArchive.h */,
-			);
-			name = SSZipArchive;
-			path = "../../../../Downloads/ZipArchive-master/SSZipArchive";
-			sourceTree = "<group>";
-		};
 		20BEA4391D193D4A00DE74FB /* Translations */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,56 +535,9 @@
 			children = (
 				20C9958B1D23ECE90029312F /* BBStoreScene.swift */,
 				20C9958E1D23ED100029312F /* Downloadable.swift */,
-				20B004C01D2C0336005F706F /* SSZipArchive */,
 			);
 			name = bbstore;
 			sourceTree = "<group>";
-		};
-		20ED21381D4CDC1600DA86AF /* aes */ = {
-			isa = PBXGroup;
-			children = (
-				20ED21391D4CDC1600DA86AF /* aes.h */,
-				20ED213A1D4CDC1600DA86AF /* aes_via_ace.h */,
-				20ED213B1D4CDC1600DA86AF /* aescrypt.c */,
-				20ED213C1D4CDC1600DA86AF /* aeskey.c */,
-				20ED213D1D4CDC1600DA86AF /* aesopt.h */,
-				20ED213E1D4CDC1600DA86AF /* aestab.c */,
-				20ED213F1D4CDC1600DA86AF /* aestab.h */,
-				20ED21401D4CDC1600DA86AF /* brg_endian.h */,
-				20ED21411D4CDC1600DA86AF /* brg_types.h */,
-				20ED21421D4CDC1600DA86AF /* entropy.c */,
-				20ED21431D4CDC1600DA86AF /* entropy.h */,
-				20ED21441D4CDC1600DA86AF /* fileenc.c */,
-				20ED21451D4CDC1600DA86AF /* fileenc.h */,
-				20ED21461D4CDC1600DA86AF /* hmac.c */,
-				20ED21471D4CDC1600DA86AF /* hmac.h */,
-				20ED21481D4CDC1600DA86AF /* prng.c */,
-				20ED21491D4CDC1600DA86AF /* prng.h */,
-				20ED214A1D4CDC1600DA86AF /* pwd2key.c */,
-				20ED214B1D4CDC1600DA86AF /* pwd2key.h */,
-				20ED214C1D4CDC1600DA86AF /* sha1.c */,
-				20ED214D1D4CDC1600DA86AF /* sha1.h */,
-			);
-			name = aes;
-			path = BreakBaloon/SSZipArchive/aes;
-			sourceTree = SOURCE_ROOT;
-		};
-		20ED21501D4CDC1600DA86AF /* minizip */ = {
-			isa = PBXGroup;
-			children = (
-				20ED21511D4CDC1600DA86AF /* crypt.h */,
-				20ED21521D4CDC1600DA86AF /* ioapi.c */,
-				20ED21531D4CDC1600DA86AF /* ioapi.h */,
-				20ED21541D4CDC1600DA86AF /* mztools.c */,
-				20ED21551D4CDC1600DA86AF /* mztools.h */,
-				20ED21561D4CDC1600DA86AF /* unzip.c */,
-				20ED21571D4CDC1600DA86AF /* unzip.h */,
-				20ED21581D4CDC1600DA86AF /* zip.c */,
-				20ED21591D4CDC1600DA86AF /* zip.h */,
-			);
-			name = minizip;
-			path = BreakBaloon/SSZipArchive/minizip;
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -724,6 +608,9 @@
 				203EEC8E234A643A002D81F2 /* PBXTargetDependency */,
 			);
 			name = BreakBaloon;
+			packageProductDependencies = (
+				20FDCD9126907F5B00493C8E /* ZIPFoundation */,
+			);
 			productName = BreakBaloon;
 			productReference = 206736751D16E26300FB9FFF /* BreakBaloon.app */;
 			productType = "com.apple.product-type.application";
@@ -779,6 +666,9 @@
 				Base,
 			);
 			mainGroup = 2067366C1D16E26300FB9FFF;
+			packageReferences = (
+				20FDCD9026907F5B00493C8E /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
 			productRefGroup = 206736761D16E26300FB9FFF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -911,37 +801,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20ED21641D4CDC1600DA86AF /* prng.c in Sources */,
-				20ED216A1D4CDC1600DA86AF /* unzip.c in Sources */,
-				20ED21631D4CDC1600DA86AF /* hmac.c in Sources */,
-				20ED21621D4CDC1600DA86AF /* fileenc.c in Sources */,
-				20ED215F1D4CDC1600DA86AF /* aeskey.c in Sources */,
-				20ED21661D4CDC1600DA86AF /* sha1.c in Sources */,
 				20F1882E1D29A5300099F717 /* ImportMusic.swift in Sources */,
 				20C9958C1D23ECE90029312F /* BBStoreScene.swift in Sources */,
 				208989541D5CAF07008CB986 /* FakeCase.swift in Sources */,
 				20FF80DD1D19766D00E5A9EF /* AudioSlider.swift in Sources */,
 				2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */,
-				20ED216B1D4CDC1600DA86AF /* zip.c in Sources */,
 				20C995821D23EC620029312F /* SettingScene.swift in Sources */,
 				20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */,
 				20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */,
 				204289201D4E670300BDEE39 /* RandGameLevelEndNode.swift in Sources */,
 				20C995841D23EC710029312F /* Selector.swift in Sources */,
 				20CEC7E81D5DFE2B0031830C /* RandGamePauseNode.swift in Sources */,
-				20ED21681D4CDC1600DA86AF /* ioapi.c in Sources */,
 				20A335AF1D4BD8C300B54FBE /* AbstractGameScene.swift in Sources */,
 				2010C84F235CE16B001B5FE0 /* Case.swift in Sources */,
 				20C995911D23ED300029312F /* GameViewController.swift in Sources */,
 				20BE2F591D5105D8004A8B17 /* RandGameBonusLevelNode.swift in Sources */,
-				20ED21691D4CDC1600DA86AF /* mztools.c in Sources */,
 				20C9957E1D23EC2F0029312F /* StartScene.swift in Sources */,
 				20C9958F1D23ED100029312F /* Downloadable.swift in Sources */,
 				20BE2F571D510062004A8B17 /* RandGameBonusLevelInfoNode.swift in Sources */,
-				20ED21611D4CDC1600DA86AF /* entropy.c in Sources */,
 				20CEC7EA1D5F1C670031830C /* BBT2.swift in Sources */,
 				20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */,
-				20ED21601D4CDC1600DA86AF /* aestab.c in Sources */,
 				20F188301D2A62C70099F717 /* BBT1.swift in Sources */,
 				20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */,
 				20E877371D25AD9D00CCBA1A /* GameScene.swift in Sources */,
@@ -949,14 +828,10 @@
 				206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */,
 				20F188151D2659CA0099F717 /* IPhoneSettingScene.swift in Sources */,
 				20C995801D23EC4E0029312F /* FileSaveHelper.swift in Sources */,
-				20ED215E1D4CDC1600DA86AF /* aescrypt.c in Sources */,
-				20ED216D1D4CDC1600DA86AF /* SSZipArchive+Swift.swift in Sources */,
 				20AFF9D31D56822C00B4CBF8 /* ExtensionSettingScene.swift in Sources */,
-				20ED21651D4CDC1600DA86AF /* pwd2key.c in Sources */,
 				20AFF9D11D54B4F200B4CBF8 /* CheckBox.swift in Sources */,
 				2099709C1D6303CD00A3F268 /* AbstractTheme.swift in Sources */,
 				20C995881D23EC9A0029312F /* MusicSelector.swift in Sources */,
-				20ED216C1D4CDC1600DA86AF /* SSZipArchive.m in Sources */,
 				20BE2F551D50F53B004A8B17 /* RandGameBonusLevel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1147,7 +1022,11 @@
 				DEVELOPMENT_TEAM = EYTYK8J7PX;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "BreakBaloon Watch Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp.watchkitextension;
@@ -1175,7 +1054,11 @@
 				DEVELOPMENT_TEAM = EYTYK8J7PX;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "BreakBaloon Watch Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -1310,11 +1193,13 @@
 				DEVELOPMENT_TEAM = EYTYK8J7PX;
 				INFOPLIST_FILE = BreakBaloon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "BreakBaloon/BreakBaloon-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1330,11 +1215,13 @@
 				DEVELOPMENT_TEAM = EYTYK8J7PX;
 				INFOPLIST_FILE = BreakBaloon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "BreakBaloon/BreakBaloon-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1390,6 +1277,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		20FDCD9026907F5B00493C8E /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.12;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		20FDCD9126907F5B00493C8E /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20FDCD9026907F5B00493C8E /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2067366D1D16E26300FB9FFF /* Project object */;
 }

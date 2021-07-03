@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import ZIPFoundation
 
 class Downloadable: SKNode {
     static let WIDTH:CGFloat = 300
@@ -180,7 +181,7 @@ class Downloadable: SKNode {
             }
             
             print("Data is from", file.fullyQualifiedPath)
-            SSZipArchive.unzipFile(atPath: file.fullyQualifiedPath, toDestination: dir)
+            try FileManager.default.unzipItem(at: URL(fileURLWithPath: file.fullyQualifiedPath), to: URL(fileURLWithPath: dir))
             AbstractThemeUtils.reloadThemeList()
         }
     }

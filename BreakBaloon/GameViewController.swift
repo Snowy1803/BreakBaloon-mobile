@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import AVFoundation
 import WatchConnectivity
-
+import CommonCrypto
 
 class GameViewController: UIViewController, WCSessionDelegate {
     
