@@ -10,18 +10,16 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
     var loadedEnoughToDeepLink = false
-    var deepLink:RemoteNotificationDeepLink?
+    var deepLink: RemoteNotificationDeepLink?
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         if url.path.hasSuffix(".m4a") {
             do {
                 try FileManager.default.moveItem(at: url, to: URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]))
@@ -33,10 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
-    func application(_ application: UIApplication, open openURL: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    func application(_ application: UIApplication, open openURL: URL, sourceApplication _: String?, annotation _: Any) -> Bool {
         if openURL.host != nil {
             let url = openURL.absoluteString
-            let queryArray:[String] = url.components(separatedBy: "/")
+            let queryArray: [String] = url.components(separatedBy: "/")
             let query = queryArray[2]
             var parameter = ""
             
@@ -48,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else if query == "game" {
                 parameter = "singleplayer"
                 if queryArray.count > 3 {
-                    let query:[String] = Array(queryArray[3..<queryArray.count])
+                    let query: [String] = Array(queryArray[3 ..< queryArray.count])
                     parameter = query.joined(separator: "/")
                 }
             } else if query == "bbstore" {
@@ -59,57 +57,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 return true
             }
-            let userInfo = [query : parameter]
-            self.applicationHandleRemoteNotification(application, didReceiveRemoteNotification: userInfo)
+            let userInfo = [query: parameter]
+            applicationHandleRemoteNotification(application, didReceiveRemoteNotification: userInfo)
         }
         return true
     }
     
     func applicationHandleRemoteNotification(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         if application.applicationState == .background || application.applicationState == .inactive {
-            self.deepLink = RemoteNotificationDeepLink.create(userInfo)
+            deepLink = RemoteNotificationDeepLink.create(userInfo)
             if loadedEnoughToDeepLink {
-                _ = self.triggerDeepLinkIfPresent()
+                _ = triggerDeepLinkIfPresent()
             }
         }
     }
     
     func triggerDeepLinkIfPresent() -> Bool {
         loadedEnoughToDeepLink = true
-        let ret = (self.deepLink?.trigger() != nil)
-        self.deepLink = nil
+        let ret = (deepLink?.trigger() != nil)
+        deepLink = nil
         return ret
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
+    func applicationWillResignActive(_: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
-        let gvc:GameViewController = self.window!.rootViewController as! GameViewController
+        let gvc: GameViewController = window!.rootViewController as! GameViewController
         if gvc.currentGame != nil {
             gvc.currentGame!.pauseGame()
         }
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(_: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(_: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(_: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-        let gvc:GameViewController = self.window!.rootViewController as! GameViewController
+        let gvc: GameViewController = window!.rootViewController as! GameViewController
         if gvc.currentGame != nil {
             gvc.currentGame!.quitPause()
         }
     }
 
-    func applicationWillTerminate(_ application: UIApplication) {
+    func applicationWillTerminate(_: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
@@ -119,17 +117,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @available(iOS 9.0, *)
-    func handleQuickAction(_ application:UIApplication, _ shortcut: UIApplicationShortcutItem) -> Bool {
+    func handleQuickAction(_ application: UIApplication, _ shortcut: UIApplicationShortcutItem) -> Bool {
         var quickActionHandled = false
         let type = shortcut.type.components(separatedBy: ".").last!
-        if let shortcutType = QuickActions.init(rawValue: type) {
+        if let shortcutType = QuickActions(rawValue: type) {
             switch shortcutType {
             case .Singleplayer:
-                self.applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game" : "singleplayer"])
+                applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game": "singleplayer"])
             case .Computer:
-                self.applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game" : "computer"])
+                applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game": "computer"])
             case .Time:
-                self.applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game" : "time"])
+                applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game": "time"])
             }
             quickActionHandled = true
         }
@@ -137,9 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     enum QuickActions: String {
-        case Singleplayer = "Singleplayer"
-        case Computer = "Computer"
-        case Time = "Time"
+        case Singleplayer
+        case Computer
+        case Time
     }
 }
-

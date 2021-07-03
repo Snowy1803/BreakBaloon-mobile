@@ -230,6 +230,7 @@
 		2044493D1D4F6439000EE217 /* RandGameLevelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameLevelNode.swift; sourceTree = "<group>"; };
 		204FBB2E1D58D9B700971306 /* checkbox-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-disabled.png"; sourceTree = "<group>"; };
 		205CADB42691136D00C0C508 /* IPhoneSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneSettingScene.swift; sourceTree = "<group>"; };
+		205CADB726912C7900C0C508 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		206736751D16E26300FB9FFF /* BreakBaloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakBaloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		206736781D16E26300FB9FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -370,6 +371,7 @@
 		2067366C1D16E26300FB9FFF = {
 			isa = PBXGroup;
 			children = (
+				205CADB726912C7900C0C508 /* .swiftformat */,
 				20E9F7C323494D8800AF3A12 /* Settings.bundle */,
 				20B004BC1D2BEF04005F706F /* COPYING */,
 				20B004BE1D2BF952005F706F /* README.md */,

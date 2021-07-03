@@ -9,13 +9,13 @@
 import Foundation
 
 class FakeCase: Case {
-    
     override init(gvc: GameViewController, index: Int) {
         super.init(gvc: gvc, index: index)
         texture = gvc.currentTheme.getBaloonTexture(status: status, type: type, fake: true)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

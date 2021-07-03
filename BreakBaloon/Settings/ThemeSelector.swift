@@ -10,12 +10,13 @@ import Foundation
 import UIKit
 
 class ThemeSelector: Selector {
-    init(gvc:GameViewController) {
+    init(gvc: GameViewController) {
         super.init(gvc: gvc, value: 0)
         setSelectorValue(gvc.currentThemeInt)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

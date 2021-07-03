@@ -10,14 +10,14 @@ import Foundation
 import UIKit
 
 class FileSaveHelper {
-    fileprivate enum FileErrors:Error {
+    fileprivate enum FileErrors: Error {
         case fileNotSaved
         case imageNotConvertedToData
         case fileNotRead
         case fileNotFound
     }
     
-    enum FileExtension:String {
+    enum FileExtension: String {
         case NONE = ""
         case TXT = ".txt"
         case BBTHEME = ".bbtheme"
@@ -30,44 +30,40 @@ class FileSaveHelper {
         case JAR = ".jar"
     }
     
-    fileprivate let directory:FileManager.SearchPathDirectory
-    fileprivate let directoryPath:String
+    fileprivate let directory: FileManager.SearchPathDirectory
+    fileprivate let directoryPath: String
     fileprivate let fileManager = FileManager.default
-    fileprivate let fileName:String
-    fileprivate let filePath:String
-    let fullyQualifiedPath:String
-    fileprivate let subDirectory:String
+    fileprivate let fileName: String
+    fileprivate let filePath: String
+    let fullyQualifiedPath: String
+    fileprivate let subDirectory: String
     fileprivate(set) var downloadedSuccessfully = false
-    fileprivate(set) var downloadError:NSError?
+    fileprivate(set) var downloadError: NSError?
     
-    var fileExists:Bool {
-        get {
-            return fileManager.fileExists(atPath: fullyQualifiedPath)
-        }
+    var fileExists: Bool {
+        return fileManager.fileExists(atPath: fullyQualifiedPath)
     }
     
-    var directoryExists:Bool {
-        get {
-            var isDir = ObjCBool(true)
-            return fileManager.fileExists(atPath: filePath, isDirectory: &isDir)
-        }
+    var directoryExists: Bool {
+        var isDir = ObjCBool(true)
+        return fileManager.fileExists(atPath: filePath, isDirectory: &isDir)
     }
     
-    init(fileName:String, fileExtension:FileExtension, subDirectory:String?, directory:FileManager.SearchPathDirectory) {
+    init(fileName: String, fileExtension: FileExtension, subDirectory: String?, directory: FileManager.SearchPathDirectory) {
         self.fileName = fileName + fileExtension.rawValue
         self.subDirectory = (subDirectory == nil ? "" : "/\(subDirectory!)")
         self.directory = directory
-        self.directoryPath = NSSearchPathForDirectoriesInDomains(directory, .userDomainMask, true)[0]
-        self.filePath = directoryPath + self.subDirectory
-        self.fullyQualifiedPath = "\(filePath)/\(self.fileName)"
+        directoryPath = NSSearchPathForDirectoriesInDomains(directory, .userDomainMask, true)[0]
+        filePath = directoryPath + self.subDirectory
+        fullyQualifiedPath = "\(filePath)/\(self.fileName)"
         createDirectory()
     }
     
-    convenience init(fileName:String, fileExtension:FileExtension, subDirectory:String?) {
+    convenience init(fileName: String, fileExtension: FileExtension, subDirectory: String?) {
         self.init(fileName: fileName, fileExtension: fileExtension, subDirectory: subDirectory, directory: .documentDirectory)
     }
     
-    convenience init(fileName:String, fileExtension:FileExtension) {
+    convenience init(fileName: String, fileExtension: FileExtension) {
         self.init(fileName: fileName, fileExtension: fileExtension, subDirectory: nil)
     }
     
@@ -81,7 +77,7 @@ class FileSaveHelper {
         }
     }
     
-    func saveFile(string fileContents:String) throws {
+    func saveFile(string fileContents: String) throws {
         do {
             try fileContents.write(toFile: fullyQualifiedPath, atomically: true, encoding: String.Encoding.utf8)
         } catch {
@@ -89,7 +85,7 @@ class FileSaveHelper {
         }
     }
     
-    func saveFile(image:UIImage) throws {
+    func saveFile(image: UIImage) throws {
         guard let data = image.pngData() else {
             throw FileErrors.imageNotConvertedToData
         }
@@ -98,7 +94,7 @@ class FileSaveHelper {
         }
     }
     
-    func saveFile(data:Data) throws {
+    func saveFile(data: Data) throws {
         if !fileManager.createFile(atPath: fullyQualifiedPath, contents: data, attributes: nil) {
             throw FileErrors.fileNotSaved
         }
@@ -110,7 +106,7 @@ class FileSaveHelper {
             throw FileErrors.fileNotFound
         }
         
-        var returnString:String
+        var returnString: String
         do {
             returnString = try String(contentsOfFile: fullyQualifiedPath, encoding: String.Encoding.utf8)
         } catch {
@@ -155,7 +151,7 @@ class FileSaveHelper {
         let request = NSMutableURLRequest(url: URL)
         request.httpMethod = "GET"
         let task = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            if (error == nil) {
+            if error == nil {
                 // Success
                 let statusCode = (response as! HTTPURLResponse).statusCode
                 print("Success: \(statusCode)")
@@ -169,7 +165,7 @@ class FileSaveHelper {
                 self.downloadedSuccessfully = true
             } else {
                 // Failure
-                print("Failure: %@", error!.localizedDescription);
+                print("Failure: %@", error!.localizedDescription)
                 self.downloadError = error as NSError?
             }
         })

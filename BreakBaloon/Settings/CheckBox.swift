@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class CheckBox: SKSpriteNode {
-    fileprivate(set) var checked:Bool
+    fileprivate(set) var checked: Bool
     fileprivate(set) var enabled = true
     let label: SKLabelNode
     
@@ -23,17 +23,18 @@ class CheckBox: SKSpriteNode {
         self.label.fontSize = 16
         self.label.fontColor = SKColor.black
         self.label.fontName = "ChalkboardSE-Bold"
-        self.label.position = CGPoint(x: self.label.frame.width / 2 + self.frame.width, y: -8)
+        self.label.position = CGPoint(x: self.label.frame.width / 2 + frame.width, y: -8)
         addChild(self.label)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func check(_ check: Bool) {
         if enabled {
-            self.checked = check
+            checked = check
             texture = SKTexture(imageNamed: "checkbox\(check ? "-check" : "")")
         }
     }

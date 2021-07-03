@@ -15,7 +15,7 @@ class RandGamePauseNode: SKNode {
     let game: RandGameScene
     
     init(scene: RandGameScene) {
-        self.game = scene
+        game = scene
         grey = SKShapeNode(rect: scene.frame)
         grey.fillColor = SKColor(white: 0.5, alpha: 0.5)
         menu = SKSpriteNode(imageNamed: "levelback")
@@ -36,7 +36,8 @@ class RandGamePauseNode: SKNode {
         addChild(replay)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

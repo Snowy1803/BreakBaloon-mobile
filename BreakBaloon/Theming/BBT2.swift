@@ -10,26 +10,28 @@ import Foundation
 import SpriteKit
 
 class BBT2: AbstractTheme {
-    let null:String? = nil
+    let null: String? = nil
     
     let dir: String
     
-    var functions: [String: ((String) throws -> String?)] = [:]
-    var methods: [String: ((String, String) throws -> String?)] = [:]
+    var functions: [String: (String) throws -> String?] = [:]
+    var methods: [String: (String, String) throws -> String?] = [:]
     var properties: [String: String?] = [:]
     var localVariables: [String: String?] = [:]
     var constants: [String: String?] = [:]
     var baloons: [(UIImage, UIImage, UIImage, UIImage, UIImage)] = []
-    var animationColors:[UIColor?] = []
+    var animationColors: [UIColor?] = []
     
     let completeCode: String
     var line = 0
     
     init(dir: String, code: String) throws {
         self.dir = dir
-        self.completeCode = code.replacingOccurrences(of: "\r", with: "")
+        completeCode = code.replacingOccurrences(of: "\r", with: "")
         let lines = completeCode.components(separatedBy: "\n")
+
         // MARK: constants & default properties
+
         constants["_PLATFORM_OS"] = "iOS"
         constants["_PLATFORM_DEVICE_MODEL"] = UIDevice.current.localizedModel
         constants["_PLATFORM_DEVICE_NAME"] = UIDevice.current.name
@@ -57,7 +59,9 @@ class BBT2: AbstractTheme {
         properties["image.cursor"] = null
         properties["sound.pump"] = null
         properties["sound.wpump"] = null
+
         // MARK: functions & methods
+
         functions["print"] = printString
         functions["fileImage"] = fileImage
         functions["unicolor"] = unicolor
@@ -75,9 +79,11 @@ class BBT2: AbstractTheme {
         methods["darker"] = imageDarker
         methods["brighter"] = imageBrighter
         methods["add"] = add
+
         // MARK: parse
+
         var commands: [(Int, String)] = []
-        for line in 0..<lines.count {
+        for line in 0 ..< lines.count {
             if !lines[line].hasPrefix("//") {
                 for cmd in lines[line].components(separatedBy: "//")[0].components(separatedBy: ";") {
                     commands.append((line, cmd))
@@ -103,7 +109,7 @@ class BBT2: AbstractTheme {
     }
     
     func exec(_ cmd: String, properties: inout [String: String?]) throws -> String? {
-        if cmd.trimmingCharacters(in: CharacterSet.whitespaces).hasPrefix("image.baloons") && cmd.contains("=") {
+        if cmd.trimmingCharacters(in: CharacterSet.whitespaces).hasPrefix("image.baloons"), cmd.contains("=") {
             let vals = cmd.components(separatedBy: "=")
             if vals[1].trimmingCharacters(in: CharacterSet.whitespaces) == "[" {
                 try parseBaloonBlock()
@@ -145,13 +151,13 @@ class BBT2: AbstractTheme {
                     print("Missing closing bracket ')'")
                     throw ExecErrors.syntaxError
                 }
-                arg.removeSubrange(range!.lowerBound..<arg.endIndex)
+                arg.removeSubrange(range!.lowerBound ..< arg.endIndex)
                 return try functions[methodName]!(arg)
             }
             let lastDotRange = methodName.range(of: ".", options: .backwards)!
             let lastDot = lastDotRange.lowerBound
             let lastDotString = methodName[lastDotRange]
-            if methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])] != nil && valueExists(String(methodName[methodName.startIndex..<lastDot]), properties: properties) {
+            if methods[String(methodName[lastDotString.index(after: lastDot) ..< methodName.endIndex])] != nil, valueExists(String(methodName[methodName.startIndex ..< lastDot]), properties: properties) {
                 components.removeFirst()
                 var arg = components.joined(separator: "(")
                 let range = arg.range(of: ")", options: .backwards)
@@ -159,8 +165,8 @@ class BBT2: AbstractTheme {
                     print("Missing closing bracket ')'")
                     throw ExecErrors.syntaxError
                 }
-                arg.removeSubrange(range!.lowerBound..<arg.endIndex)
-                return try methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])]!(String(methodName[methodName.startIndex..<lastDot]), arg)
+                arg.removeSubrange(range!.lowerBound ..< arg.endIndex)
+                return try methods[String(methodName[lastDotString.index(after: lastDot) ..< methodName.endIndex])]!(String(methodName[methodName.startIndex ..< lastDot]), arg)
             }
             print("Couldn't resolve \(methodName)")
             throw ExecErrors.callUndeclaredMethodError
@@ -213,13 +219,13 @@ class BBT2: AbstractTheme {
             return try exec(cmd)
         } else if cmd.contains("++") {
             var valsToConcat = cmd.components(separatedBy: "++")
-            for i in 0..<valsToConcat.count {
+            for i in 0 ..< valsToConcat.count {
                 valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: CharacterSet.whitespaces))!
             }
             return valsToConcat.joined(separator: " ")
         } else if cmd.contains("+") {
             var valsToConcat = cmd.components(separatedBy: "+")
-            for i in 0..<valsToConcat.count {
+            for i in 0 ..< valsToConcat.count {
                 valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: CharacterSet.whitespaces))!
             }
             return valsToConcat.joined(separator: "")
@@ -235,7 +241,7 @@ class BBT2: AbstractTheme {
     func parseBaloonBlock() throws {
         var inBaloonBlock = -1
         var cmps = completeCode.components(separatedBy: "\n")
-        cmps.removeSubrange(0..<self.line)
+        cmps.removeSubrange(0 ..< line)
         for line in cmps {
             if inBaloonBlock != -1 {
                 if line.contains("}") {
@@ -255,7 +261,7 @@ class BBT2: AbstractTheme {
                 if line.contains(":") {
                     let cmps = line.trimmingCharacters(in: CharacterSet.whitespaces).components(separatedBy: ":")
                     let baloon = Int(cmps[0].trimmingCharacters(in: CharacterSet.whitespaces))
-                    if cmps[1].trimmingCharacters(in: CharacterSet.whitespaces) == "{" && baloon != nil {
+                    if cmps[1].trimmingCharacters(in: CharacterSet.whitespaces) == "{", baloon != nil {
                         inBaloonBlock = baloon!
                         localVariables["closed"] = null
                         localVariables["opened"] = null
@@ -294,7 +300,7 @@ class BBT2: AbstractTheme {
         return image.pngData()!.base64EncodedString(options: .lineLength64Characters)
     }
     
-    func emptyImage(_ stringLiteral: String) throws -> String? {
+    func emptyImage(_: String) throws -> String? {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0)
         UIColor.clear.setFill()
         UIRectFill(CGRect(x: 0, y: 0, width: 1, height: 1))
@@ -323,8 +329,8 @@ class BBT2: AbstractTheme {
         for cmp in cmps {
             let vals = cmp.components(separatedBy: ":")
             if vals.count != 2 {
-               print("There must be a ':' in each arguments of localized")
-               throw ExecErrors.syntaxError 
+                print("There must be a ':' in each arguments of localized")
+                throw ExecErrors.syntaxError
             }
             values[vals[0].trimmingCharacters(in: CharacterSet.whitespaces)] = try execIfNeeds(vals[1].trimmingCharacters(in: CharacterSet.whitespaces))
         }
@@ -340,13 +346,13 @@ class BBT2: AbstractTheme {
         return nil
     }
     
-    func grayscale(_ variable: String, stringLiteral: String) throws -> String? {
+    func grayscale(_ variable: String, stringLiteral _: String) throws -> String? {
         if get(variable) == nil {
             print("Tried to grayscale a null image")
             throw ExecErrors.nullPointerError
         }
         let ciImage = CIImage(data: Data(base64Encoded: get(variable)!, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)!)!
-        let grayscale = ciImage.applyingFilter("CIColorControls", parameters: [ kCIInputSaturationKey: 0.0 ])
+        let grayscale = ciImage.applyingFilter("CIColorControls", parameters: [kCIInputSaturationKey: 0.0])
         let context = CIContext(options: nil)
         try set(variable, value: UIImage(cgImage: context.createCGImage(grayscale, from: grayscale.extent)!).pngData()!.base64EncodedString(options: .lineLength64Characters))
         return nil
@@ -400,10 +406,10 @@ class BBT2: AbstractTheme {
         return nil
     }
     
-    func imageDarker(_ variable: String, stringLiteral: String) throws -> String? {
+    func imageDarker(_ variable: String, stringLiteral _: String) throws -> String? {
         // Get the original image and set up the CIExposureAdjust filter
         guard let inputImage = CIImage(image: getImage(variable)),
-            let filter = CIFilter(name: "CIExposureAdjust") else { return nil }
+              let filter = CIFilter(name: "CIExposureAdjust") else { return nil }
         
         // The inputEV value on the CIFilter adjusts exposure (negative values darken, positive values brighten)
         filter.setValue(inputImage, forKey: "inputImage")
@@ -419,10 +425,10 @@ class BBT2: AbstractTheme {
         return nil
     }
     
-    func imageBrighter(_ variable: String, stringLiteral: String) throws -> String? {
+    func imageBrighter(_ variable: String, stringLiteral _: String) throws -> String? {
         // Get the original image and set up the CIExposureAdjust filter
         guard let inputImage = CIImage(image: getImage(variable)),
-            let filter = CIFilter(name: "CIExposureAdjust") else { return nil }
+              let filter = CIFilter(name: "CIExposureAdjust") else { return nil }
         
         // The inputEV value on the CIFilter adjusts exposure (negative values darken, positive values brighten)
         filter.setValue(inputImage, forKey: "inputImage")
@@ -455,7 +461,7 @@ class BBT2: AbstractTheme {
         }
         var image = getImage(value: try execIfNeeds(images[0].trimmingCharacters(in: CharacterSet.whitespaces)))
         
-        for i in 1..<images.count {
+        for i in 1 ..< images.count {
             image = concatImageImpl(image, getImage(value: try execIfNeeds(images[i].trimmingCharacters(in: CharacterSet.whitespaces))))
         }
         
@@ -500,8 +506,8 @@ class BBT2: AbstractTheme {
         let pixelBuffer = buffer.bindMemory(to: RGBA32.self, capacity: width * height)
         var currentPixel = pixelBuffer
         
-        for _ in 0..<height {
-            for _ in 0..<width {
+        for _ in 0 ..< height {
+            for _ in 0 ..< width {
                 if currentPixel.pointee == from {
                     currentPixel.pointee = to
                 }
@@ -511,7 +517,6 @@ class BBT2: AbstractTheme {
         
         return UIImage(cgImage: context.makeImage()!)
     }
-    
     
     /// SO: 1309757
     func concatImageImpl(_ image1: UIImage, _ image2: UIImage) -> UIImage {
@@ -535,7 +540,7 @@ class BBT2: AbstractTheme {
         throw ExecErrors.syntaxError
     }
     
-    func toLower(_ variable: String, stringLiteral: String) throws -> String? {
+    func toLower(_ variable: String, stringLiteral _: String) throws -> String? {
         if properties[variable] == nil || properties[variable]! == nil {
             print("Tried to lowercase a null string")
             throw ExecErrors.nullPointerError
@@ -544,7 +549,7 @@ class BBT2: AbstractTheme {
         return nil
     }
     
-    func toUpper(_ variable: String, stringLiteral: String) throws -> String? {
+    func toUpper(_ variable: String, stringLiteral _: String) throws -> String? {
         if properties[variable] == nil || properties[variable]! == nil {
             print("Tried to uppercase a null string")
             throw ExecErrors.nullPointerError
@@ -553,7 +558,7 @@ class BBT2: AbstractTheme {
         return nil
     }
     
-    func toCap(_ variable: String, stringLiteral: String) throws -> String? {
+    func toCap(_ variable: String, stringLiteral _: String) throws -> String? {
         if properties[variable] == nil || properties[variable]! == nil {
             print("Tried to uppercase a null string")
             throw ExecErrors.nullPointerError
@@ -563,11 +568,11 @@ class BBT2: AbstractTheme {
     }
     
     func equals(_ theme: AbstractTheme) -> Bool {
-        return theme.themeID() == self.themeID()
+        return theme.themeID() == themeID()
     }
     
     func pumpSound(_ winner: Bool) -> Data {
-        if (properties["sound.\(winner ? "w" : "")pump"]! != nil) {
+        if properties["sound.\(winner ? "w" : "")pump"]! != nil {
             return properties["sound.\(winner ? "w" : "")pump"]!!.data(using: String.Encoding.utf8)!
         }
         return (try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!))
@@ -650,9 +655,7 @@ struct RGBA32: Equatable {
     static let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
     var color: UInt32
     var uiColor: UIColor {
-        get {
-            return UIColor(rgbValue: UInt(color))
-        }
+        return UIColor(rgbValue: UInt(color))
     }
     
     init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
@@ -665,6 +668,6 @@ struct RGBA32: Equatable {
     }
 }
 
-func ==(lhs: RGBA32, rhs: RGBA32) -> Bool {
+func == (lhs: RGBA32, rhs: RGBA32) -> Bool {
     return lhs.color == rhs.color
 }

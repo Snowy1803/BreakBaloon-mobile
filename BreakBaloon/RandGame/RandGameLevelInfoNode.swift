@@ -10,12 +10,12 @@ import Foundation
 import SpriteKit
 
 class RandGameLevelInfoNode: SKNode {
-    let level:RandGameLevel
+    let level: RandGameLevel
     
     init(level: RandGameLevel, scene: RandGameScene) {
         self.level = level
         super.init()
-        self.zPosition = 1000
+        zPosition = 1000
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))
         rect.fillColor = SKColor.lightGray
         addChild(rect)
@@ -53,16 +53,17 @@ class RandGameLevelInfoNode: SKNode {
         addChild(treq)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func speedString() -> String {
-        if level.secondsBeforeBaloonVanish > 1 && level.maxSecondsBeforeNextBaloon > 3 {
+        if level.secondsBeforeBaloonVanish > 1, level.maxSecondsBeforeNextBaloon > 3 {
             return "low"
-        } else if level.maxSecondsBeforeNextBaloon > 2 && level.secondsBeforeBaloonVanish > 0.5 {
+        } else if level.maxSecondsBeforeNextBaloon > 2, level.secondsBeforeBaloonVanish > 0.5 {
             return "medium"
-        } else if level.maxSecondsBeforeNextBaloon > 1 && level.secondsBeforeBaloonVanish > 0.25 {
+        } else if level.maxSecondsBeforeNextBaloon > 1, level.secondsBeforeBaloonVanish > 0.25 {
             return "high"
         }
         return "extreme"

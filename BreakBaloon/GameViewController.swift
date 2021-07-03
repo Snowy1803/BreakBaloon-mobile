@@ -6,28 +6,27 @@
 //  Copyright (c) 2016 Snowy_1803. All rights reserved.
 //
 
-import UIKit
-import SpriteKit
 import AVFoundation
-import WatchConnectivity
 import CommonCrypto
+import SpriteKit
+import UIKit
+import WatchConnectivity
 
 class GameViewController: UIViewController, WCSessionDelegate {
-    
-    static let DEFAULT_AUDIO:Float = 1.0
-    static let DEFAULT_MUSIC:Float = 0.8
+    static let DEFAULT_AUDIO: Float = 1.0
+    static let DEFAULT_MUSIC: Float = 0.8
     fileprivate static var loggedIn = false
     
     var skView: SKView?
     
     var wcSession: WCSession?
     
-    var backgroundMusicPlayer:AVAudioPlayer!
-    var audioPlayer:AVAudioPlayer!
-    var audioVolume:Float = GameViewController.DEFAULT_AUDIO
-    var currentGame:AbstractGameScene?
+    var backgroundMusicPlayer: AVAudioPlayer!
+    var audioPlayer: AVAudioPlayer!
+    var audioVolume: Float = GameViewController.DEFAULT_AUDIO
+    var currentGame: AbstractGameScene?
     var currentMusicFileName = "Race.m4a"
-    var currentMusicInt:Int {
+    var currentMusicInt: Int {
         get {
             for i in 0 ..< GameViewController.getMusicURLs().count {
                 if GameViewController.getMusicURLs()[i].absoluteString.hasSuffix(currentMusicFileName) {
@@ -45,11 +44,12 @@ class GameViewController: UIViewController, WCSessionDelegate {
             }
         }
     }
-    var currentTheme:AbstractTheme = AbstractThemeUtils.themeList.first!
-    var currentThemeInt:Int {
+
+    var currentTheme: AbstractTheme = AbstractThemeUtils.themeList.first!
+    var currentThemeInt: Int {
         get {
-            return AbstractThemeUtils.themeList.firstIndex(where: {theme in
-                return theme.equals(currentTheme)
+            return AbstractThemeUtils.themeList.firstIndex(where: { theme in
+                theme.equals(currentTheme)
             })!
         }
         set(value) {
@@ -103,17 +103,17 @@ class GameViewController: UIViewController, WCSessionDelegate {
             logIn(sessid: UserDefaults.standard.string(forKey: "elementalcube.sessid")!)
         }
         currentTheme = AbstractThemeUtils.withID(UserDefaults.standard.string(forKey: "currentTheme")!)!
-        let welcome:URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
+        let welcome: URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
         
         print(UserDefaults.standard.dictionaryRepresentation())
         do {
             print(try FileManager.default.contentsOfDirectory(atPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath))
         } catch let error as NSError {
-           print("Couldn't view documents. Error: \(error.localizedDescription)")
-       }
+            print("Couldn't view documents. Error: \(error.localizedDescription)")
+        }
         
         do {
-            self.audioPlayer = try AVAudioPlayer(contentsOf: welcome)
+            audioPlayer = try AVAudioPlayer(contentsOf: welcome)
         } catch {
             print(error)
         }
@@ -123,21 +123,21 @@ class GameViewController: UIViewController, WCSessionDelegate {
         audioPlayer.play()
         reloadBackgroundMusic()
         
-        skView = (self.view as! SKView)
-        //skView.showsFPS = true
-        //skView.showsNodeCount = true
+        skView = (view as! SKView)
+        // skView.showsFPS = true
+        // skView.showsNodeCount = true
         skView!.ignoresSiblingOrder = true
         
-        let scene:SKScene = StartScene(size: skView!.bounds.size)
+        let scene: SKScene = StartScene(size: skView!.bounds.size)
         scene.scaleMode = .aspectFill
         skView!.presentScene(scene)
     }
     
     func reloadBackgroundMusic() {
         currentMusicFileName = UserDefaults.standard.string(forKey: "currentMusic")!
-        let bgMusicURL:URL = GameViewController.getMusicURL(currentMusicFileName)!
+        let bgMusicURL: URL = GameViewController.getMusicURL(currentMusicFileName)!
         do {
-            try self.backgroundMusicPlayer = AVAudioPlayer(contentsOf: bgMusicURL)
+            try backgroundMusicPlayer = AVAudioPlayer(contentsOf: bgMusicURL)
         } catch let error as NSError {
             print("ERROR WHILE LOADING AUDIO FILE. REMOVING THE CORRUPTED AUDIO FILE. Error: \(error.localizedDescription)")
             do {
@@ -154,12 +154,12 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     class func getMusicURLs() -> [URL] {
-        var urls:[URL] = []
+        var urls: [URL] = []
         let path = FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath
         let enumerator = FileManager.default.enumerator(atPath: path)
         
         while let element = enumerator?.nextObject() as? String {
-            if(element.hasSuffix(".m4a")) {
+            if element.hasSuffix(".m4a") {
                 urls.append(URL(fileURLWithPath: "\(path)/\(element)"))
             }
         }
@@ -167,7 +167,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         return urls
     }
     
-    class func getMusicURL(_ fileName:String) -> URL? {
+    class func getMusicURL(_ fileName: String) -> URL? {
         if fileName == "_personnal" {
             return UserDefaults.standard.url(forKey: "usermusic")
         }
@@ -184,11 +184,11 @@ class GameViewController: UIViewController, WCSessionDelegate {
         return path.subdirectories
     }
     
-    override var shouldAutorotate : Bool {
+    override var shouldAutorotate: Bool {
         return skView!.scene is StartScene && self.view.frame.width > 400
     }
     
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
         } else {
@@ -201,7 +201,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
     
-    override var prefersStatusBarHidden : Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
     
@@ -225,19 +225,19 @@ class GameViewController: UIViewController, WCSessionDelegate {
         return Float(getLevelXP()) / 250
     }
     
-    func addXP(_ xp:Int) {
+    func addXP(_ xp: Int) {
         let levelBefore = GameViewController.getLevel()
         UserDefaults.standard.set(GameViewController.getTotalXP() + xp, forKey: "exp")
         print("Added \(xp) XP")
         if levelBefore < GameViewController.getLevel() {
             let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), GameViewController.getLevel()), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
         wcSession?.transferUserInfo(["exp": GameViewController.getTotalXP() + xp])
     }
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         let exp = userInfo["exp"] as? Int
         if exp != nil && GameViewController.getTotalXP() < exp! {
             UserDefaults.standard.set(exp!, forKey: "exp")
@@ -246,17 +246,11 @@ class GameViewController: UIViewController, WCSessionDelegate {
         }
     }
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
+    func session(_: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {}
     
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
+    func sessionDidBecomeInactive(_: WCSession) {}
     
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
+    func sessionDidDeactivate(_: WCSession) {}
     
     class func isLoggedIn() -> Bool {
         return loggedIn
@@ -275,11 +269,10 @@ class GameViewController: UIViewController, WCSessionDelegate {
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: {
-            action in
+            _ in
             self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!, completion: completion)
         }))
-        self.present(alert, animated: true, completion: nil)
-        
+        present(alert, animated: true, completion: nil)
     }
     
     func logIn(username: String, password: String, completion: (() -> Void)? = nil) {
@@ -295,19 +288,19 @@ class GameViewController: UIViewController, WCSessionDelegate {
         request.httpMethod = "POST"
         request.httpBody = query.data(using: String.Encoding.utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            guard error == nil && data != nil else {
+            guard error == nil, data != nil else {
                 print("[LOGIN] error=\(String(describing: error))")
                 return
             }
             
-            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
                 print("[LOGIN] status code: \(httpStatus.statusCode)")
                 print("[LOGIN] response: \(String(describing: response))")
             }
             DispatchQueue.main.async {
                 let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                 let authStatus = responseString?.components(separatedBy: "\r\n")[0]
-                if authStatus != nil && Int(authStatus!) != nil {
+                if authStatus != nil, Int(authStatus!) != nil {
                     let status = LoginStatus(rawValue: Int(authStatus!)!)
                     if status == .authenticated {
                         let sessid = responseString!.components(separatedBy: "\r\n")[1]
@@ -323,7 +316,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
                         })
                         alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
                         alert.addAction(UIAlertAction(title: NSLocalizedString("login.title", comment: ""), style: .default, handler: {
-                            action in
+                            _ in
                             self.logIn(query: "\(query)&code=\(alert.textFields![0].text!)")
                         }))
                         self.present(alert, animated: true, completion: completion)
@@ -331,7 +324,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
                         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
                         alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default, handler: {
-                            action in
+                            _ in
                             if status == .invalidUsername || status == .incorrectPassword {
                                 self.logInDialog(username: username, password: password)
                             } else {
@@ -342,7 +335,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
                     }
                 }
             }
-        }) 
+        })
         task.resume()
     }
     
@@ -369,17 +362,19 @@ extension URL {
         var bool: ObjCBool = false
         return FileManager().fileExists(atPath: path, isDirectory: &bool) ? bool.boolValue : false
     }
+
     var subdirectories: [URL] {
         guard isDirectory else { return [] }
         do {
             return try FileManager.default
                 .contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [])
-                .filter{ $0.isDirectory }
+                .filter { $0.isDirectory }
         } catch let error as NSError {
             print(error.localizedDescription)
             return []
         }
     }
+
     var content: [URL] {
         guard isDirectory else { return [] }
         do {
@@ -395,17 +390,17 @@ extension URL {
 extension String {
     func sha1() -> String {
         let data = self.data(using: String.Encoding.utf8)!
-        var digest = [UInt8] (repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
         CC_SHA1((data as NSData).bytes, CC_LONG(data.count), &digest)
-        let hexBytes = digest.map{String(format: "%02hhx", $0)}
+        let hexBytes = digest.map { String(format: "%02hhx", $0) }
         return hexBytes.joined(separator: "")
     }
     
     func md5() -> String {
         let data = self.data(using: String.Encoding.utf8)!
-        var digest = [UInt8] (repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+        var digest = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
         CC_MD5((data as NSData).bytes, CC_LONG(data.count), &digest)
-        let hexBytes = digest.map{String(format: "%02hhx", $0)}
+        let hexBytes = digest.map { String(format: "%02hhx", $0) }
         return hexBytes.joined(separator: "")
     }
 }
@@ -435,7 +430,7 @@ extension CGFloat {
 
 extension UIImage {
     func withSize(_ newWidth: CGFloat) -> UIImage {
-        if self.size.width == newWidth {
+        if size.width == newWidth {
             return self
         }
         let scale = newWidth / size.width

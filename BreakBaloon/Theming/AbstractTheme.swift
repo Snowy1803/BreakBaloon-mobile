@@ -21,10 +21,9 @@ protocol AbstractTheme {
     func getBaloonTexture(case aCase: Case) -> SKTexture
     func pumpSound(_ winner: Bool) -> Data
     func equals(_ theme: AbstractTheme) -> Bool
-    
 }
 
-struct AbstractThemeUtils {
+enum AbstractThemeUtils {
     static var themeList = AbstractThemeUtils.getThemeList()
     
     fileprivate static func getThemeList() -> [AbstractTheme] {
@@ -43,8 +42,8 @@ struct AbstractThemeUtils {
         themeList = getThemeList()
     }
     
-    static func parse(directoryUrl url:URL) -> AbstractTheme? {
-        if url.isDirectory {//isDirectory is defined in GameViewController
+    static func parse(directoryUrl url: URL) -> AbstractTheme? {
+        if url.isDirectory { // isDirectory is defined in GameViewController
             let bbt1 = FileSaveHelper(fileName: url.lastPathComponent, fileExtension: .BBTHEME, subDirectory: url.lastPathComponent)
             if bbt1.fileExists {
                 do {
@@ -65,9 +64,9 @@ struct AbstractThemeUtils {
         return nil
     }
     
-    static func withID(_ id:String) -> AbstractTheme? {
-        let index = themeList.firstIndex(where: {theme in
-            return theme.themeID() == id
+    static func withID(_ id: String) -> AbstractTheme? {
+        let index = themeList.firstIndex(where: { theme in
+            theme.themeID() == id
         })
         if index != nil {
             return themeList[index!]

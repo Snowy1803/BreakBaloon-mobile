@@ -10,8 +10,8 @@ import Foundation
 import SpriteKit
 
 class RandGameLevelNode: SKSpriteNode {
-    let level:RandGameLevel
-    var realPosition:CGPoint = CGPoint.zero
+    let level: RandGameLevel
+    var realPosition = CGPoint.zero
     
     init(level: RandGameLevel) {
         self.level = level
@@ -34,14 +34,15 @@ class RandGameLevelNode: SKSpriteNode {
         self.init(level: RandGameLevel.levels[index])
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func click(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: TimeInterval(1))) {
         if level.status != .locked {
             if level.status == .unlockable {
-                // TODO Display AD to unlock
+                // TODO: Display AD to unlock
             } else if level.canPlay() {
                 level.start(view, transition: transition)
             }
@@ -49,7 +50,7 @@ class RandGameLevelNode: SKSpriteNode {
     }
     
     func updateTexture() {
-        self.texture = level.status == .unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(describing: level.status).lowercased())")
+        texture = level.status == .unlocked ? SKTexture(imageNamed: "levelbuttonbg") : SKTexture(imageNamed: "levelbuttonbg-\(String(describing: level.status).lowercased())")
         level.save()
     }
 }

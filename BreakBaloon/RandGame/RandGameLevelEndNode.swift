@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class RandGameLevelEndNode: SKNode {
-    let level:RandGameLevel
+    let level: RandGameLevel
     let replay: SKSpriteNode
     let back: SKSpriteNode
     let nextlevel: SKSpriteNode?
@@ -20,17 +20,17 @@ class RandGameLevelEndNode: SKNode {
         let isBonusLevel = xpBonus > -1
         let successful = scene.points >= Int(level.numberOfBaloons - level.maxMissingBaloonToWin)
         self.level = level
-        self.replay = SKSpriteNode(imageNamed: "levelreplay")
-        self.back = SKSpriteNode(imageNamed: "levelback")
+        replay = SKSpriteNode(imageNamed: "levelreplay")
+        back = SKSpriteNode(imageNamed: "levelback")
         if successful {
-            self.nextlevel = SKSpriteNode(imageNamed: "levelnext")
+            nextlevel = SKSpriteNode(imageNamed: "levelnext")
             self.stars = SKSpriteNode(imageNamed: "levelstars\(stars)")
         } else {
-            self.nextlevel = nil
+            nextlevel = nil
             self.stars = nil
         }
         super.init()
-        self.zPosition = 1000
+        zPosition = 1000
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))
         rect.fillColor = SKColor.lightGray
         addChild(rect)
@@ -66,7 +66,7 @@ class RandGameLevelEndNode: SKNode {
         back.position = CGPoint(x: scene.frame.width / 2 - 80, y: scene.frame.height / 12 * 3)
         addChild(back)
         if successful {
-            if level.next != nil && level.next!.canPlay() {
+            if level.next != nil, level.next!.canPlay() {
                 nextlevel!.position = CGPoint(x: scene.frame.width / 2 + 80, y: scene.frame.height / 12 * 3)
                 nextlevel!.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
                 addChild(nextlevel!)
@@ -86,20 +86,21 @@ class RandGameLevelEndNode: SKNode {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func click(_ touch: CGPoint) {
         if back.contains(touch) {
-            backToMenu(self.scene!.view!)
+            backToMenu(scene!.view!)
         } else if replay.contains(touch) {
-            setLevel(level, view: self.scene!.view!)
-        } else if nextlevel != nil && nextlevel!.contains(touch) {
+            setLevel(level, view: scene!.view!)
+        } else if nextlevel != nil, nextlevel!.contains(touch) {
             if level.next != nil {
-                setLevel(level.next!, view: self.scene!.view!)
+                setLevel(level.next!, view: scene!.view!)
             } else {
-                backToMenu(self.scene!.view!)
+                backToMenu(scene!.view!)
             }
         }
     }

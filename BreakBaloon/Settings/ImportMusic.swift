@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import SpriteKit
 import MediaPlayer
+import SpriteKit
 
 class ImportMusic: SKSpriteNode, MPMediaPickerControllerDelegate {
     let gvc: GameViewController
@@ -20,7 +20,8 @@ class ImportMusic: SKSpriteNode, MPMediaPickerControllerDelegate {
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -31,7 +32,7 @@ class ImportMusic: SKSpriteNode, MPMediaPickerControllerDelegate {
         gvc.present(media, animated: true, completion: nil)
     }
     
-    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+    func mediaPicker(_: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         if mediaItemCollection.count == 1 {
             gvc.dismiss(animated: true, completion: nil)
             let item = mediaItemCollection.items.first!
@@ -41,7 +42,7 @@ class ImportMusic: SKSpriteNode, MPMediaPickerControllerDelegate {
         }
     }
     
-    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+    func mediaPickerDidCancel(_: MPMediaPickerController) {
         gvc.dismiss(animated: true, completion: nil)
     }
 }

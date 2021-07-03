@@ -10,17 +10,17 @@ import Foundation
 import SpriteKit
 
 class BBT1: AbstractTheme {
-    let name:String
-    let author:String
-    let description:String
-    let version:String
-    let baloons:UInt
-    let background:SKColor
-    let id:String
-    let differentBaloonsForPumpedGood:Bool
-    var animationColors:[Int: SKColor]?
+    let name: String
+    let author: String
+    let description: String
+    let version: String
+    let baloons: UInt
+    let background: SKColor
+    let id: String
+    let differentBaloonsForPumpedGood: Bool
+    var animationColors: [Int: SKColor]?
     
-    init(_ name:String, id:String, author:String, description:String, version:String, baloons:UInt, background:UInt, dbfpg:Bool) {
+    init(_ name: String, id: String, author: String, description: String, version: String, baloons: UInt, background: UInt, dbfpg: Bool) {
         self.name = name
         self.id = id
         self.author = author
@@ -28,41 +28,41 @@ class BBT1: AbstractTheme {
         self.version = version
         self.baloons = baloons
         self.background = SKColor(rgbValue: background)
-        self.differentBaloonsForPumpedGood = dbfpg
+        differentBaloonsForPumpedGood = dbfpg
     }
     
-    convenience init(_ name:String, id:String, author:String, description:String, version:String, baloons:String, background:String, dbfpg:Bool) {
+    convenience init(_ name: String, id: String, author: String, description: String, version: String, baloons: String, background: String, dbfpg: Bool) {
         self.init(name, id: id, author: author, description: description, version: version,
                   baloons: UInt(baloons)!,
                   background: UInt(background)!, dbfpg: dbfpg)
     }
     
-    func equals(_ other:AbstractTheme) -> Bool {
-        return self.themeID() == other.themeID()
+    func equals(_ other: AbstractTheme) -> Bool {
+        return themeID() == other.themeID()
     }
     
-    func getBaloonTexture(case baloon:Case) -> SKTexture {
+    func getBaloonTexture(case baloon: Case) -> SKTexture {
         if baloon is FakeCase {
             return getBaloonTexture(status: baloon.status, type: baloon.type, fake: true)
         }
         return getBaloonTexture(status: baloon.status, type: baloon.type, fake: false)
     }
     
-    func getBaloonTexture(status:Case.CaseStatus, type:Int, fake: Bool) -> SKTexture {
+    func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
         do {
             if fake {
                 if status == .closed {
-                    return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
                 } else {
-                    return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
                 }
             } else {
                 if status == .closed {
-                    return SKTexture(image: try FileSaveHelper(fileName: "closed\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
-                } else if differentBaloonsForPumpedGood  && status == .winnerOpened {
-                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)-good", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "closed\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
+                } else if differentBaloonsForPumpedGood, status == .winnerOpened {
+                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)-good", fileExtension: .PNG, subDirectory: themeID()).getImage())
                 } else {
-                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .PNG, subDirectory: self.themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
                 }
             }
         } catch {
@@ -87,11 +87,11 @@ class BBT1: AbstractTheme {
         return animationColors == nil ? nil : animationColors![type]
     }
     
-    func pumpSound(_ winner:Bool) -> Data {
-        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: self.themeID()).fullyQualifiedPath)))
+    func pumpSound(_ winner: Bool) -> Data {
+        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: themeID()).fullyQualifiedPath)))
     }
     
-    class func parse(id:String, bbtheme file:String) -> BBT1 {
+    class func parse(id: String, bbtheme file: String) -> BBT1 {
         let lines = file.components(separatedBy: "\n")
         var name = "", author = "", desc = "", version = "", baloons = "", background = "16777215", dbfpg = false, animation: [Int: SKColor]?
         for line in lines {
@@ -126,7 +126,7 @@ class BBT1: AbstractTheme {
         return theme
     }
     
-    fileprivate class func isMetadata(_ line:String, metadata:String) -> Bool {
+    fileprivate class func isMetadata(_ line: String, metadata: String) -> Bool {
         return line.hasPrefix("\(metadata)=") || line.hasPrefix("\(metadata)_\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))=")
     }
     
@@ -137,11 +137,11 @@ class BBT1: AbstractTheme {
 
 class DefaultTheme: BBT1 {
     init() {
-        super.init(NSLocalizedString("theme.default.name", comment: "Default theme name"), id: "/Default", author: "Snowy", description: "", version: "1.0", baloons: 6, background: 0xffffff, dbfpg: false)
-        animationColors = [0: SKColor.red, 1: SKColor.yellow, 2: SKColor.blue, 3: SKColor(red: 191/255, green: 1, blue: 0, alpha: 1), 4: SKColor(red: 1, green: 191/255, blue: 191/255, alpha: 1), 5: SKColor(red: 0.5, green: 0, blue: 1, alpha: 1)]
+        super.init(NSLocalizedString("theme.default.name", comment: "Default theme name"), id: "/Default", author: "Snowy", description: "", version: "1.0", baloons: 6, background: 0xFFFFFF, dbfpg: false)
+        animationColors = [0: SKColor.red, 1: SKColor.yellow, 2: SKColor.blue, 3: SKColor(red: 191 / 255, green: 1, blue: 0, alpha: 1), 4: SKColor(red: 1, green: 191 / 255, blue: 191 / 255, alpha: 1), 5: SKColor(red: 0.5, green: 0, blue: 1, alpha: 1)]
     }
     
-    override func getBaloonTexture(status:Case.CaseStatus, type:Int, fake: Bool) -> SKTexture {
+    override func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
         if fake {
             if status == .closed {
                 return SKTexture(imageNamed: "fake-closed\(type)")
@@ -151,7 +151,7 @@ class DefaultTheme: BBT1 {
         } else {
             if status == .closed {
                 return SKTexture(imageNamed: "closed\(type)")
-            } else if differentBaloonsForPumpedGood  && status == .winnerOpened {
+            } else if differentBaloonsForPumpedGood, status == .winnerOpened {
                 return SKTexture(imageNamed: "opened\(type)-good")
             } else {
                 return SKTexture(imageNamed: "opened\(type)")
@@ -159,7 +159,7 @@ class DefaultTheme: BBT1 {
         }
     }
     
-    override func pumpSound(_ winner:Bool) -> Data {
+    override func pumpSound(_ winner: Bool) -> Data {
         return (try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!))
     }
 }

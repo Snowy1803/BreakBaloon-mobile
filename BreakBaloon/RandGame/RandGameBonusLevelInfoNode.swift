@@ -16,14 +16,14 @@ class RandGameBonusLevelInfoNode: RandGameLevelInfoNode {
         if !level.canPlay() {
             fatalError()
         }
-        self.zPosition = 1000
+        zPosition = 1000
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))
         rect.fillColor = SKColor.lightGray
         addChild(rect)
         let tlevel = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.level", comment: "Level n"), level.index + 1))
         tlevel.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 32)
         tlevel.fontSize = 24
-        tlevel.fontColor = SKColor(red: 1, green: 192/255, blue: 0, alpha: 1)
+        tlevel.fontColor = SKColor(red: 1, green: 192 / 255, blue: 0, alpha: 1)
         tlevel.fontName = "Copperplate-Bold"
         addChild(tlevel)
         let tbonus = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.bonus", comment: "Bonus level"), level.numberOfBaloons))
@@ -52,7 +52,8 @@ class RandGameBonusLevelInfoNode: RandGameLevelInfoNode {
         addChild(treq)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

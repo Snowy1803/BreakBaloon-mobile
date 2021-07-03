@@ -10,25 +10,25 @@ import Foundation
 import SpriteKit
 
 class BBStoreScene: SKScene, UISearchBarDelegate {
-    let start:StartScene
-    let gvc:GameViewController
+    let start: StartScene
+    let gvc: GameViewController
     var downloads: [Downloadable]?
-    var loading:SKLabelNode
+    var loading: SKLabelNode
     var errored = false
-    var lastTouch:CGPoint?
-    var touchBegin:CGPoint?
-    var touchInterval:TimeInterval?
-    fileprivate var decY:CGFloat = 0
+    var lastTouch: CGPoint?
+    var touchBegin: CGPoint?
+    var touchInterval: TimeInterval?
+    fileprivate var decY: CGFloat = 0
     var title = SKLabelNode()
     var back = SKLabelNode()
     var upper = SKShapeNode()
     var search = UISearchBar()
     
     convenience init(start: StartScene) {
-        self.init(start: start, size: start.view!.frame.size, gvc: (start.view?.window?.rootViewController as! GameViewController))
+        self.init(start: start, size: start.view!.frame.size, gvc: start.view?.window?.rootViewController as! GameViewController)
     }
     
-    init(start: StartScene, size: CGSize, gvc:GameViewController) {
+    init(start: StartScene, size: CGSize, gvc: GameViewController) {
         self.start = start
         self.gvc = gvc
         
@@ -36,13 +36,14 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         loading.fontColor = SKColor.black
         
         super.init(size: size)
-        self.backgroundColor = SKColor.white
-        loading.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 - 10)
+        backgroundColor = SKColor.white
+        loading.position = CGPoint(x: frame.width / 2, y: frame.height / 2 - 10)
         addChild(loading)
         beginBBStoreLoading()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -59,10 +60,10 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                     }
                     let topSA = self.view?.safeAreaInsets.top ?? 0
                     let top = self.frame.height - topSA
-                    self.title = SKLabelNode(text: NSLocalizedString((UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title"), comment: "BBStore"))
+                    self.title = SKLabelNode(text: NSLocalizedString(UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title", comment: "BBStore"))
                     self.title.fontColor = SKColor.black
                     self.title.fontSize = 20
-                    self.title.position = CGPoint(x: self.frame.width/2, y: top - 25)
+                    self.title.position = CGPoint(x: self.frame.width / 2, y: top - 25)
                     self.title.alpha = 0
                     self.title.zPosition = 6
                     self.addChild(self.title)
@@ -70,7 +71,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                     self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
                     self.back.fontColor = SKColor.black
                     self.back.fontSize = 20
-                    self.back.position = CGPoint(x: self.back.frame.width/2 + 5, y: top - 25)
+                    self.back.position = CGPoint(x: self.back.frame.width / 2 + 5, y: top - 25)
                     self.back.alpha = 0
                     self.back.zPosition = 7
                     self.addChild(self.back)
@@ -101,7 +102,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with _: UIEvent?) {
         if errored {
             goBack()
         }
@@ -111,7 +112,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                 back.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
                 upper.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
                 search.removeFromSuperview()
-                let transition = SKTransition.push(with: .down, duration: TimeInterval((self.view!.frame.height + decY) * (CGFloat(Date().timeIntervalSince1970 - touchInterval!) / -decY)))
+                let transition = SKTransition.push(with: .down, duration: TimeInterval((view!.frame.height + decY) * (CGFloat(Date().timeIntervalSince1970 - touchInterval!) / -decY)))
                 transition.pausesOutgoingScene = false
                 view?.presentScene(BBStoreScene(start: start, size: view!.frame.size, gvc: gvc), transition: transition)
             } else {
@@ -122,29 +123,28 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
             let point = touches.first!.location(in: self)
             if back.frame.contains(point) {
                 goBack()
-            } else if downloads != nil && point.x + 10 > touchBegin!.x && point.x - 10 < touchBegin!.x && point.y + 10 > touchBegin!.y && point.y - 10 < touchBegin!.y {
+            } else if downloads != nil, point.x + 10 > touchBegin!.x, point.x - 10 < touchBegin!.x, point.y + 10 > touchBegin!.y, point.y - 10 < touchBegin!.y {
                 for dl in downloads! {
-                    if self.children.contains(dl) && dl.rect.frame.contains(touches.first!.location(in: dl)) {
+                    if children.contains(dl), dl.rect.frame.contains(touches.first!.location(in: dl)) {
                         dl.click(self)
                         break
                     }
                 }
             }
-            
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //if transition == false {
-            let point = touches.first?.location(in: self)
-            if touches.count == 1 && downloads != nil {
-                decalageY(lastTouch!.y - point!.y)
-            }
-            lastTouch = point
-        //}
+    override func touchesMoved(_ touches: Set<UITouch>, with _: UIEvent?) {
+        // if transition == false {
+        let point = touches.first?.location(in: self)
+        if touches.count == 1, downloads != nil {
+            decalageY(lastTouch!.y - point!.y)
+        }
+        lastTouch = point
+        // }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         if touches.count == 1 {
             lastTouch = touches.first?.location(in: self)
             touchBegin = touches.first?.location(in: self)
@@ -152,7 +152,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         }
     }
     
-    func decalageY(_ decY:CGFloat) {
+    func decalageY(_ decY: CGFloat) {
         self.decY -= decY
         
         for dl in downloads! {
@@ -162,10 +162,10 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     
     func goBack() {
         search.removeFromSuperview()
-        self.view?.presentScene(start, transition: SKTransition.doorsOpenVertical(withDuration: TimeInterval(1)))
+        view?.presentScene(start, transition: SKTransition.doorsOpenVertical(withDuration: TimeInterval(1)))
     }
     
-    func simulateClickOnDownload(_ id:String) {
+    func simulateClickOnDownload(_ id: String) {
         while downloads == nil {}
         for dl in downloads! {
             if dl.dlid == id {
@@ -176,28 +176,28 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ search: UISearchBar) {
-        search.frame = CGRect(x: back.frame.width + 10, y: self.view?.safeAreaInsets.top ?? 0, width: self.frame.width - back.frame.width - 5, height: 30)
+        search.frame = CGRect(x: back.frame.width + 10, y: view?.safeAreaInsets.top ?? 0, width: frame.width - back.frame.width - 5, height: 30)
         title.run(SKAction.fadeOut(withDuration: 0.2))
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        search.frame = CGRect(x: self.frame.width - 150, y: self.view?.safeAreaInsets.top ?? 0, width: 150, height: 30)
+    func searchBarTextDidEndEditing(_: UISearchBar) {
+        search.frame = CGRect(x: frame.width - 150, y: view?.safeAreaInsets.top ?? 0, width: 150, height: 30)
         title.run(SKAction.fadeIn(withDuration: 0.2))
     }
     
-    func searchBar(_ search: UISearchBar, textDidChange text: String) {
+    func searchBar(_: UISearchBar, textDidChange _: String) {
         adjustDownloadablePosition()
     }
     
     func adjustDownloadablePosition() {
-        let cols:Int = Int(self.frame.width / Downloadable.WIDTH)
+        let cols = Int(frame.width / Downloadable.WIDTH)
         var i = 0
         for dl in downloads! {
             if search.text!.isEmpty || dl.dlname.lowercased().contains(search.text!.lowercased()) {
                 if dl.parent == nil {
                     addChild(dl)
                 }
-                dl.position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: self.frame.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+                dl.position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: frame.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
                 i += 1
             } else {
                 dl.removeFromParent()
