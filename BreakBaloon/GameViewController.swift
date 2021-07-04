@@ -126,8 +126,10 @@ class GameViewController: UIViewController, WCSessionDelegate {
         // (enforced by storyboard)
         // swiftlint:disable:next force_cast
         skView = (view as! SKView)
+        #if DEBUG
         skView!.showsFPS = true
         skView!.showsNodeCount = true
+        #endif
         skView!.ignoresSiblingOrder = true
         skView!.preferredFramesPerSecond = 120
         
