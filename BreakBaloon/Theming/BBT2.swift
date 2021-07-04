@@ -105,7 +105,7 @@ class BBT2: AbstractTheme {
     }
     
     func exec(_ cmd: String) throws -> String? {
-        return try exec(cmd, properties: &properties)
+        try exec(cmd, properties: &properties)
     }
     
     func exec(_ cmd: String, properties: inout [String: String?]) throws -> String? {
@@ -175,7 +175,7 @@ class BBT2: AbstractTheme {
     }
     
     func valueExists(_ name: String, properties: [String: String?]) -> Bool {
-        return properties[name] != nil || constants[name] != nil || self.properties[name] != nil
+        properties[name] != nil || constants[name] != nil || self.properties[name] != nil
     }
     
     func set(_ name: String, value: String) throws {
@@ -201,7 +201,7 @@ class BBT2: AbstractTheme {
     }
     
     func value(_ vals: [String]) throws -> String? {
-        return vals.count == 1 ? null : try execIfNeeds(NSString(string: vals[1]).trimmingCharacters(in: CharacterSet.whitespaces))
+        vals.count == 1 ? null : try execIfNeeds(NSString(string: vals[1]).trimmingCharacters(in: CharacterSet.whitespaces))
     }
     
     func execIfNeeds(_ cmd: String) throws -> String? {
@@ -574,7 +574,7 @@ class BBT2: AbstractTheme {
     }
     
     func equals(_ theme: AbstractTheme) -> Bool {
-        return theme.themeID() == themeID()
+        theme.themeID() == themeID()
     }
     
     func pumpSound(_ winner: Bool) -> Data {
@@ -608,39 +608,39 @@ class BBT2: AbstractTheme {
     }
     
     func numberOfBaloons() -> UInt {
-        return UInt(baloons.count)
+        UInt(baloons.count)
     }
     
     func animationColor(type: Int) -> UIColor? {
-        return animationColors[type]
+        animationColors[type]
     }
     
     func backgroundColor() -> UIColor {
-        return properties["theme.background"]! == nil ? UIColor.white : UIColor(rgbValue: UInt(properties["theme.background"]!!)!)
+        properties["theme.background"]! == nil ? UIColor.white : UIColor(rgbValue: UInt(properties["theme.background"]!!)!)
     }
     
     func themeID() -> String {
-        return properties["theme.id"]! == nil ? "Undefined" : properties["theme.id"]!!
+        properties["theme.id"]! == nil ? "Undefined" : properties["theme.id"]!!
     }
     
     func themeName() -> String {
-        return properties["theme.name"]! == nil ? "Undefined" : properties["theme.name"]!!
+        properties["theme.name"]! == nil ? "Undefined" : properties["theme.name"]!!
     }
     
     func themeVersion() -> String {
-        return properties["theme.version"]! == nil ? "Undefined" : properties["theme.version"]!!
+        properties["theme.version"]! == nil ? "Undefined" : properties["theme.version"]!!
     }
     
     func themeAuthor() -> String {
-        return properties["theme.author"]! == nil ? "Undefined" : properties["theme.author"]!!
+        properties["theme.author"]! == nil ? "Undefined" : properties["theme.author"]!!
     }
     
     func themeDescription() -> String {
-        return properties["theme.description"]! == nil ? "Undefined" : properties["theme.description"]!!
+        properties["theme.description"]! == nil ? "Undefined" : properties["theme.description"]!!
     }
     
     func getImage(_ variable: String, default or: String? = nil) -> UIImage {
-        return getImage(value: get(variable), default: or)
+        getImage(value: get(variable), default: or)
     }
     
     func getImage(value string: String?, default or: String? = nil) -> UIImage {
@@ -673,7 +673,7 @@ struct RGBA32: Equatable {
     static let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
     var color: UInt32
     var uiColor: UIColor {
-        return UIColor(rgbValue: UInt(color))
+        UIColor(rgbValue: UInt(color))
     }
     
     init(red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {

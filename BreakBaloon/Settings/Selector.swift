@@ -71,10 +71,10 @@ class Selector: SKSpriteNode {
     }
     
     func maxValue() -> Int {
-        return -1
+        -1
     }
     
     func text() -> String {
-        return "Not implemented"
+        "Not implemented"
     }
 }

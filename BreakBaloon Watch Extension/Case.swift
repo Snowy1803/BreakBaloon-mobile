@@ -14,7 +14,7 @@ class Case: SKSpriteNode {
     let index: Int
     var status: CaseStatus = .closed
     var breaked: Bool {
-        return status != .closed
+        status != .closed
     }
     
     init(index: Int) {

@@ -213,7 +213,7 @@ class IPhoneMusicSettingScene: SKScene {
     }
     
     func onNode(_ node: SKSpriteNode, point: CGPoint) -> Bool {
-        return node.frame.contains(point)
+        node.frame.contains(point)
     }
     
     func resetSettings() {
@@ -305,7 +305,7 @@ class IPhoneOtherSettingScene: SKScene {
     }
     
     func onNode(_ node: SKSpriteNode, point: CGPoint) -> Bool {
-        return node.frame.contains(point)
+        node.frame.contains(point)
     }
     
     func resetSettings() {

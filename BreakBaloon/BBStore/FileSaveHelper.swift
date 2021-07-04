@@ -30,18 +30,18 @@ class FileSaveHelper {
         case jar = ".jar"
     }
     
-    fileprivate let directory: FileManager.SearchPathDirectory
-    fileprivate let directoryPath: String
-    fileprivate let fileManager = FileManager.default
-    fileprivate let fileName: String
-    fileprivate let filePath: String
+    private let directory: FileManager.SearchPathDirectory
+    private let directoryPath: String
+    private let fileManager = FileManager.default
+    private let fileName: String
+    private let filePath: String
     let fullyQualifiedPath: String
-    fileprivate let subDirectory: String
-    fileprivate(set) var downloadedSuccessfully = false
-    fileprivate(set) var downloadError: NSError?
+    private let subDirectory: String
+    private(set) var downloadedSuccessfully = false
+    private(set) var downloadError: NSError?
     
     var fileExists: Bool {
-        return fileManager.fileExists(atPath: fullyQualifiedPath)
+        fileManager.fileExists(atPath: fullyQualifiedPath)
     }
     
     var directoryExists: Bool {
@@ -67,7 +67,7 @@ class FileSaveHelper {
         self.init(fileName: fileName, fileExtension: fileExtension, subDirectory: nil)
     }
     
-    fileprivate func createDirectory() {
+    private func createDirectory() {
         if !directoryExists {
             do {
                 try fileManager.createDirectory(atPath: filePath, withIntermediateDirectories: false, attributes: nil)

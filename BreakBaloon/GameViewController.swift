@@ -48,7 +48,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     var currentTheme: AbstractTheme = AbstractThemeUtils.themeList.first!
     var currentThemeInt: Int {
         get {
-            return AbstractThemeUtils.themeList.firstIndex(where: { theme in
+            AbstractThemeUtils.themeList.firstIndex(where: { theme in
                 theme.equals(currentTheme)
             })!
         }
@@ -188,7 +188,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     override var shouldAutorotate: Bool {
-        return skView!.scene is StartScene && self.view.frame.width > 400
+        skView!.scene is StartScene && self.view.frame.width > 400
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -205,27 +205,27 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return false
+        false
     }
     
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
-        return .all
+        .all
     }
     
     class func getLevel() -> Int {
-        return getTotalXP() / 250 + 1
+        getTotalXP() / 250 + 1
     }
     
     class func getTotalXP() -> Int {
-        return UserDefaults.standard.integer(forKey: "exp")
+        UserDefaults.standard.integer(forKey: "exp")
     }
     
     class func getLevelXP() -> Int {
-        return getTotalXP() % 250
+        getTotalXP() % 250
     }
     
     class func getLevelXPFloat() -> Float {
-        return Float(getLevelXP()) / 250
+        Float(getLevelXP()) / 250
     }
     
     func addXP(_ xp: Int) {
@@ -242,7 +242,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         let exp = userInfo["exp"] as? Int
-        if exp != nil && GameViewController.getTotalXP() < exp! {
+        if exp != nil, GameViewController.getTotalXP() < exp! {
             UserDefaults.standard.set(exp!, forKey: "exp")
         } else {
             session.transferUserInfo(["exp": GameViewController.getTotalXP()])
@@ -256,7 +256,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     func sessionDidDeactivate(_: WCSession) {}
     
     class func isLoggedIn() -> Bool {
-        return loggedIn
+        loggedIn
     }
     
     func logInDialog(username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
@@ -358,7 +358,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
 extension URL {
     var isDirectory: Bool {
         var bool: ObjCBool = false
-        return FileManager().fileExists(atPath: path, isDirectory: &bool) ? bool.boolValue : false
+        return FileManager.default.fileExists(atPath: path, isDirectory: &bool) ? bool.boolValue : false
     }
 
     var subdirectories: [URL] {
@@ -366,7 +366,7 @@ extension URL {
         do {
             return try FileManager.default
                 .contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [])
-                .filter { $0.isDirectory }
+                .filter(\.isDirectory)
         } catch let error as NSError {
             print(error.localizedDescription)
             return []
@@ -416,13 +416,13 @@ extension SKColor {
 
 extension Float {
     static func random() -> Float {
-        return Float(arc4random()) / Float(UINT32_MAX)
+        Float(arc4random()) / Float(UINT32_MAX)
     }
 }
 
 extension CGFloat {
     static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UINT32_MAX)
+        CGFloat(arc4random()) / CGFloat(UINT32_MAX)
     }
 }
 

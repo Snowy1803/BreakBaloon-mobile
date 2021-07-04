@@ -27,10 +27,10 @@ class ThemeSelector: Selector {
     }
     
     override func maxValue() -> Int {
-        return AbstractThemeUtils.themeList.count - 1
+        AbstractThemeUtils.themeList.count - 1
     }
     
     override func text() -> String {
-        return gvc.currentTheme.themeName()
+        gvc.currentTheme.themeName()
     }
 }

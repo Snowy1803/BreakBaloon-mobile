@@ -38,7 +38,7 @@ class BBT1: AbstractTheme {
     }
     
     func equals(_ other: AbstractTheme) -> Bool {
-        return themeID() == other.themeID()
+        themeID() == other.themeID()
     }
     
     func getBaloonTexture(case baloon: Case) -> SKTexture {
@@ -72,23 +72,23 @@ class BBT1: AbstractTheme {
     }
     
     func numberOfBaloons() -> UInt {
-        return baloons
+        baloons
     }
     
     func themeName() -> String {
-        return name
+        name
     }
     
     func backgroundColor() -> UIColor {
-        return background
+        background
     }
     
     func animationColor(type: Int) -> UIColor? {
-        return animationColors == nil ? nil : animationColors![type]
+        animationColors == nil ? nil : animationColors![type]
     }
     
     func pumpSound(_ winner: Bool) -> Data {
-        return (try? Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: themeID()).fullyQualifiedPath))) ?? Data()
+        (try? Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: themeID()).fullyQualifiedPath))) ?? Data()
     }
     
     class func parse(id: String, bbtheme file: String) -> BBT1 {
@@ -127,11 +127,11 @@ class BBT1: AbstractTheme {
     }
     
     fileprivate class func isMetadata(_ line: String, metadata: String) -> Bool {
-        return line.hasPrefix("\(metadata)=") || line.hasPrefix("\(metadata)_\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))=")
+        line.hasPrefix("\(metadata)=") || line.hasPrefix("\(metadata)_\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))=")
     }
     
     func themeID() -> String {
-        return id
+        id
     }
 }
 
@@ -161,6 +161,6 @@ class DefaultTheme: BBT1 {
     
     override func pumpSound(_ winner: Bool) -> Data {
         // swiftlint:disable:next force_try
-        return (try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!))
+        try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!)
     }
 }

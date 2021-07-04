@@ -327,7 +327,7 @@ class StartScene: SKScene {
     // MARK: - Utils
     
     func littleScreen() -> Bool {
-        return frame.height < 575
+        frame.height < 575
     }
     
     func lowerButtonMinus() -> CGFloat {
@@ -435,7 +435,7 @@ class StartScene: SKScene {
     }
     
     func onNode(_ node: SKNode, point: CGPoint) -> Bool {
-        return node.frame.contains(point)
+        node.frame.contains(point)
     }
    
     override func update(_: TimeInterval) {

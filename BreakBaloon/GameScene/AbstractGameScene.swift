@@ -52,7 +52,7 @@ class AbstractGameScene: SKScene {
     }
     
     func isGamePaused() -> Bool {
-        return pauseTime != nil
+        pauseTime != nil
     }
     
     func playPump(winner: Bool) {

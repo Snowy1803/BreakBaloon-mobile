@@ -82,11 +82,11 @@ class RandGameScene: AbstractGameScene {
     }
     
     func isEmpty() -> Bool {
-        return !children.contains(where: { $0 is Case })
+        !children.contains(where: { $0 is Case })
     }
     
     func canSpawnBaloon() -> Bool {
-        return numberOfBaloonsInGame() < level.maxBaloonsAtSameTime
+        numberOfBaloonsInGame() < level.maxBaloonsAtSameTime
     }
     
     func numberOfBaloonsInGame() -> UInt {
@@ -184,7 +184,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     func getMissingBaloons() -> Int {
-        return ((Int(level.numberOfBaloons) - Int(baloonsToSpawn)) - points) - Int(numberOfClosedBaloonsInGame())
+        ((Int(level.numberOfBaloons) - Int(baloonsToSpawn)) - points) - Int(numberOfClosedBaloonsInGame())
     }
     
     func gameEnd() {
@@ -222,6 +222,6 @@ class RandGameScene: AbstractGameScene {
 
 extension CGRect {
     func extends(_ cubicRadius: CGFloat) -> CGRect {
-        return CGRect(x: minX - cubicRadius, y: minY - cubicRadius, width: width + cubicRadius * 2, height: height + cubicRadius * 2)
+        CGRect(x: minX - cubicRadius, y: minY - cubicRadius, width: width + cubicRadius * 2, height: height + cubicRadius * 2)
     }
 }

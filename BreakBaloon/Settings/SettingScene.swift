@@ -177,6 +177,6 @@ class SettingScene: SKScene {
     }
     
     func onNode(_ node: SKNode, point: CGPoint) -> Bool {
-        return node.frame.contains(point)
+        node.frame.contains(point)
     }
 }

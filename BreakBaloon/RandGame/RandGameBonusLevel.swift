@@ -29,7 +29,7 @@ class RandGameBonusLevel: RandGameLevel {
     
     override func canPlay() -> Bool {
         // Can only play one time
-        return status.isUnlocked() && !status.isFinished()
+        status.isUnlocked() && !status.isFinished()
     }
     
     override func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {
@@ -57,6 +57,6 @@ class RandGameBonusLevel: RandGameLevel {
     }
     
     override func createNode() -> RandGameLevelNode {
-        return RandGameBonusLevelNode(level: self)
+        RandGameBonusLevelNode(level: self)
     }
 }

@@ -45,40 +45,40 @@ class RandGameLevel {
     var gamescene: RandGameScene?
     
     // swiftlint:disable:next large_tuple
-    fileprivate var level: (UInt, TimeInterval, TimeInterval, UInt, UInt, Float) {
+    private var level: (UInt, TimeInterval, TimeInterval, UInt, UInt, Float) {
         return RandGameLevel.levelValues[index]
     }
     
     var numberOfBaloons: UInt {
-        return level.0
+        level.0
     }
     
     var secondsBeforeBaloonVanish: TimeInterval {
-        return level.1
+        level.1
     }
     
     var maxSecondsBeforeNextBaloon: TimeInterval {
-        return level.2
+        level.2
     }
     
     var maxMissingBaloonToWin: UInt {
-        return level.3
+        level.3
     }
     
     var maxBaloonsAtSameTime: UInt {
-        return level.4
+        level.4
     }
     
     var fakeBaloonsRate: Float {
-        return level.5
+        level.5
     }
     
     var precedent: RandGameLevel? {
-        return index > 0 ? RandGameLevel.levels[index - 1] : nil
+        index > 0 ? RandGameLevel.levels[index - 1] : nil
     }
     
     var next: RandGameLevel? {
-        return index + 1 < RandGameLevel.levels.count ? RandGameLevel.levels[index + 1] : nil
+        index + 1 < RandGameLevel.levels.count ? RandGameLevel.levels[index + 1] : nil
     }
     
     internal init(_ index: Int) {
@@ -126,11 +126,11 @@ class RandGameLevel {
     }
     
     func canPlay() -> Bool {
-        return status.isUnlocked()
+        status.isUnlocked()
     }
     
     func createNode() -> RandGameLevelNode {
-        return RandGameLevelNode(level: self)
+        RandGameLevelNode(level: self)
     }
     
     enum RandGameLevelStatus: Int {
@@ -155,11 +155,11 @@ class RandGameLevel {
         }
         
         func isUnlocked() -> Bool {
-            return self == .unlocked || isFinished()
+            self == .unlocked || isFinished()
         }
         
         func isFinished() -> Bool {
-            return self == .finished1Star || self == .finished2Star || self == .finished3Star
+            self == .finished1Star || self == .finished2Star || self == .finished3Star
         }
         
         func getStars() -> Int {

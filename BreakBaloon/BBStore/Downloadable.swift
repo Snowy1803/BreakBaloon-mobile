@@ -312,11 +312,11 @@ class Downloadable: SKNode {
         }
         
         func isTheme() -> Bool {
-            return self == .bbt1 || self == .bbt2
+            self == .bbt1 || self == .bbt2
         }
         
         func isSupported() -> Bool {
-            return isTheme() || self == .m4aMusic
+            isTheme() || self == .m4aMusic
         }
         
         func toString() -> String {

@@ -38,7 +38,7 @@ class MusicSelector: Selector {
     }
     
     override func maxValue() -> Int {
-        return GameViewController.getMusicURLs().count - (UserDefaults.standard.object(forKey: "usermusic") == nil ? 1 : 0)
+        GameViewController.getMusicURLs().count - (UserDefaults.standard.object(forKey: "usermusic") == nil ? 1 : 0)
     }
     
     override func text() -> String {
