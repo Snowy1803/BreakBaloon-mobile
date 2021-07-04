@@ -166,12 +166,15 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     }
     
     func simulateClickOnDownload(_ id: String) {
-        while downloads == nil {}
-        for dl in downloads! {
-            if dl.dlid == id {
-                print("Simulating download of \(String(describing: dl.name))")
-                dl.click(self)
+        guard let downloads = downloads else {
+            DispatchQueue.main.async {
+                self.simulateClickOnDownload(id)
             }
+            return
+        }
+        for dl in downloads where dl.dlid == id {
+            print("Simulating download of \(dl.name ?? "(unnamed)")")
+            dl.click(self)
         }
     }
     

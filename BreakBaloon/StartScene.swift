@@ -539,10 +539,8 @@ class StartScene: SKScene {
     
     func transitionThirdToFirst() {
         actualPane = -1
-        for child in children {
-            if child is RandGameLevelNode {
-                transitionQuitRight(child, relativeTo: child)
-            }
+        for child in children where child is RandGameLevelNode {
+            transitionQuitRight(child, relativeTo: child)
         }
         initFirstPane(true)
         actualPane = -1

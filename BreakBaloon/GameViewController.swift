@@ -270,10 +270,9 @@ class GameViewController: UIViewController, WCSessionDelegate {
             textField.isSecureTextEntry = true
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: {
-            _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { _ in
             self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!, completion: completion)
-        }))
+        })
         present(alert, animated: true, completion: nil)
     }
     
@@ -317,22 +316,20 @@ class GameViewController: UIViewController, WCSessionDelegate {
                             textField.placeholder = NSLocalizedString("login.2fa.placeholder", comment: "")
                         })
                         alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.title", comment: ""), style: .default, handler: {
-                            _ in
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.title", comment: ""), style: .default) { _ in
                             self.logIn(query: "\(query)&code=\(alert.textFields![0].text!)")
-                        }))
+                        })
                         self.present(alert, animated: true, completion: completion)
                     } else {
                         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default, handler: {
-                            _ in
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default) { _ in
                             if status == .invalidUsername || status == .incorrectPassword {
                                 self.logInDialog(username: username, password: password)
                             } else {
                                 self.logIn(query: query)
                             }
-                        }))
+                        })
                         self.present(alert, animated: true, completion: completion)
                     }
                 }

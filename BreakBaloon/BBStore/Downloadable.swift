@@ -121,8 +121,8 @@ class Downloadable: SKNode {
     func click(_ scene: BBStoreScene) {
         if levelRequirement <= GameViewController.getLevel() {
             let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.text", comment: ""), dlname), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default, handler: {
-                _ in do {
+            alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default) { _ in
+                do {
                     try self.download(scene, wait: false)
                 } catch {
                     let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.error", comment: ""), self.dlname), preferredStyle: .alert)
@@ -130,7 +130,7 @@ class Downloadable: SKNode {
                     alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
                     scene.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
                 }
-            }))
+            })
             alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
             scene.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
         }
