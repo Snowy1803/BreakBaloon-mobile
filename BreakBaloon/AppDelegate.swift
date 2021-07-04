@@ -6,8 +6,8 @@
 //  Copyright © 2016 Snowy_1803. All rights reserved.
 //
 
-import UIKit
 import AVFoundation
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

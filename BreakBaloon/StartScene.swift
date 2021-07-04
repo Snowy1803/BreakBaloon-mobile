@@ -453,28 +453,15 @@ class StartScene: SKScene {
     
     func transitionFirstToSecond() {
         actualPane = -1
-        transitionQuit(soloButton, relativeTo: soloButton)
-        transitionQuit(multiButton, relativeTo: multiButton)
-        transitionQuit(timedButton, relativeTo: timedButton)
-        transitionQuit(randButton, relativeTo: randButton)
-        transitionQuit(prefsButton, relativeTo: prefsButton)
-        transitionQuit(bbstoreButton, relativeTo: bbstoreButton)
-        transitionQuit(tsoloButton, relativeTo: soloButton)
-        transitionQuit(tmultiButton, relativeTo: multiButton)
-        transitionQuit(ttimedButton, relativeTo: timedButton)
-        transitionQuit(trandButton, relativeTo: randButton)
-        transitionQuit(tprefsButton, relativeTo: prefsButton)
-        transitionQuit(tbbstoreButton, relativeTo: bbstoreButton)
+        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
+                     tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
+            transitionQuit(node)
+        }
         initSecondPane()
         actualPane = -1
-        transitionJoinCenter(smallButton)
-        transitionJoinCenter(mediumButton)
-        transitionJoinCenter(bigButton)
-        transitionJoinCenter(adaptButton)
-        transitionJoinCenter(tsmallButton)
-        transitionJoinCenter(tmediumButton)
-        transitionJoinCenter(tbigButton)
-        transitionJoinCenter(tadaptButton)
+        for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
+            transitionJoinCenter(node)
+        }
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.actualPane = 2
         }]))
@@ -482,18 +469,10 @@ class StartScene: SKScene {
     
     func transitionFirstToThird() {
         actualPane = -1
-        transitionQuit(soloButton, relativeTo: soloButton)
-        transitionQuit(multiButton, relativeTo: multiButton)
-        transitionQuit(timedButton, relativeTo: timedButton)
-        transitionQuit(randButton, relativeTo: randButton)
-        transitionQuit(prefsButton, relativeTo: prefsButton)
-        transitionQuit(bbstoreButton, relativeTo: bbstoreButton)
-        transitionQuit(tsoloButton, relativeTo: soloButton)
-        transitionQuit(tmultiButton, relativeTo: multiButton)
-        transitionQuit(ttimedButton, relativeTo: timedButton)
-        transitionQuit(trandButton, relativeTo: randButton)
-        transitionQuit(tprefsButton, relativeTo: prefsButton)
-        transitionQuit(tbbstoreButton, relativeTo: bbstoreButton)
+        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
+                     tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
+            transitionQuit(node)
+        }
         initThirdPane()
         actualPane = -1
         for child in children {
@@ -508,26 +487,16 @@ class StartScene: SKScene {
     
     func transitionSecondToFirst() {
         actualPane = -1
-        transitionQuitRight(smallButton, relativeTo: smallButton)
-        transitionQuitRight(mediumButton, relativeTo: mediumButton)
-        transitionQuitRight(bigButton, relativeTo: bigButton)
-        transitionQuitRight(adaptButton, relativeTo: adaptButton)
-        transitionQuitRight(tsmallButton, relativeTo: smallButton)
-        transitionQuitRight(tmediumButton, relativeTo: mediumButton)
-        transitionQuitRight(tbigButton, relativeTo: bigButton)
-        transitionQuitRight(tadaptButton, relativeTo: adaptButton)
+        for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
+            transitionQuitRight(node)
+        }
         initFirstPane(true)
         actualPane = -1
-        transitionJoinCenter(soloButton)
-        transitionJoinCenter(multiButton)
-        transitionJoinCenter(timedButton)
-        transitionJoinCenter(randButton)
+        for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
+            transitionJoinCenter(node)
+        }
         transitionJoinAt(prefsButton, at: CGPoint(x: frame.width / 4, y: 170))
         transitionJoinAt(bbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 170))
-        transitionJoinCenter(tsoloButton)
-        transitionJoinCenter(tmultiButton)
-        transitionJoinCenter(ttimedButton)
-        transitionJoinCenter(trandButton)
         transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160))
         transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160))
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
@@ -538,20 +507,15 @@ class StartScene: SKScene {
     func transitionThirdToFirst() {
         actualPane = -1
         for child in children where child is RandGameLevelNode {
-            transitionQuitRight(child, relativeTo: child)
+            transitionQuitRight(child)
         }
         initFirstPane(true)
         actualPane = -1
-        transitionJoinCenter(soloButton)
-        transitionJoinCenter(multiButton)
-        transitionJoinCenter(timedButton)
-        transitionJoinCenter(randButton)
+        for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
+            transitionJoinCenter(node)
+        }
         transitionJoinAt(prefsButton, at: CGPoint(x: frame.width / 4, y: 170))
         transitionJoinAt(bbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 170))
-        transitionJoinCenter(tsoloButton)
-        transitionJoinCenter(tmultiButton)
-        transitionJoinCenter(ttimedButton)
-        transitionJoinCenter(trandButton)
         transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160))
         transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160))
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
@@ -559,10 +523,10 @@ class StartScene: SKScene {
         }]))
     }
     
-    func transitionQuit(_ node: SKNode, relativeTo: SKNode) {
+    func transitionQuit(_ node: SKNode) {
         node.run(SKAction.sequence([
             SKAction.move(to: CGPoint(x: node.position.x - frame.width, y: node.position.y), duration: 0.5),
-            SKAction.removeFromParent()
+            SKAction.removeFromParent(),
         ]))
     }
     
@@ -574,10 +538,10 @@ class StartScene: SKScene {
         node.run(SKAction.move(to: at, duration: 0.5))
     }
     
-    func transitionQuitRight(_ node: SKNode, relativeTo: SKNode) {
+    func transitionQuitRight(_ node: SKNode) {
         node.run(SKAction.sequence([
             SKAction.move(to: CGPoint(x: node.position.x + frame.width, y: node.position.y), duration: 0.5),
-            SKAction.removeFromParent()
+            SKAction.removeFromParent(),
         ]))
     }
     
