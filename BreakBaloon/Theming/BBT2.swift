@@ -19,7 +19,7 @@ class BBT2: AbstractTheme {
     var properties: [String: String?] = [:]
     var localVariables: [String: String?] = [:]
     var constants: [String: String?] = [:]
-    var baloons: [(UIImage, UIImage, UIImage, UIImage, UIImage)] = []
+    var baloons: [BaloonSet] = []
     var animationColors: [UIColor?] = []
     
     let completeCode: String
@@ -245,7 +245,13 @@ class BBT2: AbstractTheme {
         for line in cmps {
             if inBaloonBlock != -1 {
                 if line.contains("}") {
-                    baloons.insert((getImage("closed"), getImage("opened"), getImage("openedGood", default: "opened"), getImage("closedFake"), getImage("openedFake")), at: inBaloonBlock)
+                    baloons.insert(BaloonSet(
+                        closed: getImage("closed"),
+                        opened: getImage("opened"),
+                        openedGood: getImage("openedGood", default: "opened"),
+                        closedFake: getImage("closedFake"),
+                        openedFake: getImage("openedFake")
+                    ), at: inBaloonBlock)
                     if localVariables["extension.animationColor"]! != nil {
                         animationColors.insert(UIColor(rgbValue: UInt(localVariables["extension.animationColor"]!!)!), at: inBaloonBlock)
                     }
@@ -586,7 +592,21 @@ class BBT2: AbstractTheme {
     }
     
     func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
-        return SKTexture(image: (fake ? status == .closed ? baloons[type].3 : baloons[type].4 : status == .closed ? baloons[type].0 : status == .winnerOpened ? baloons[type].2 : baloons[type].1).withSize(75))
+        let assets = baloons[type]
+        let image: UIImage
+        switch (status, fake) {
+        case (.closed, true):
+            image = assets.closedFake
+        case (_, true):
+            image = assets.openedFake
+        case (.closed, false):
+            image = assets.closed
+        case (.opened, false):
+            image = assets.opened
+        case (.winnerOpened, false):
+            image = assets.openedGood
+        }
+        return SKTexture(image: image.withSize(75))
     }
     
     func numberOfBaloons() -> UInt {
@@ -668,6 +688,10 @@ struct RGBA32: Equatable {
     }
 }
 
-func == (lhs: RGBA32, rhs: RGBA32) -> Bool {
-    return lhs.color == rhs.color
+struct BaloonSet {
+    var closed: UIImage
+    var opened: UIImage
+    var openedGood: UIImage
+    var closedFake: UIImage
+    var openedFake: UIImage
 }

@@ -1,1 +1,3 @@
 --trimwhitespace nonblank-lines
+--guardelse same-line
+--disable wrapMultilineStatementBraces
