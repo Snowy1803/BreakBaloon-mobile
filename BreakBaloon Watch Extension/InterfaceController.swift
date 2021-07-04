@@ -6,12 +6,11 @@
 //  Copyright © 2019 Snowy_1803. All rights reserved.
 //
 
-import WatchKit
 import Foundation
 import WatchConnectivity
+import WatchKit
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
-
     @IBOutlet var skInterface: WKInterfaceSKScene!
     
     var scene: WatchGameScene?
@@ -30,12 +29,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         scene!.scaleMode = .aspectFill
         
         // Present the scene
-        self.skInterface.presentScene(scene)
+        skInterface.presentScene(scene)
             
-        
         // Use a value that will maintain a consistent frame rate
-        self.skInterface.preferredFramesPerSecond = 30
-    
+        skInterface.preferredFramesPerSecond = 30
     }
     
     override func willActivate() {
@@ -52,11 +49,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         super.didDeactivate()
     }
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
+    func session(_: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {}
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         let exp = userInfo["exp"] as? Int
         if exp != nil {
             if UserDefaults.standard.integer(forKey: "exp") < exp! {

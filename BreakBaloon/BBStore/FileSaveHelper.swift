@@ -153,7 +153,7 @@ class FileSaveHelper {
         let task = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if error == nil {
                 // Success
-                let statusCode = (response as! HTTPURLResponse).statusCode
+                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                 print("Success: \(statusCode)")
                 
                 do {

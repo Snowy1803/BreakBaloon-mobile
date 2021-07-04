@@ -63,20 +63,20 @@ class RemoteNotificationDeepLinkSettings: RemoteNotificationDeepLink {
             var scene: SKScene?
                 
             if start.littleScreen() {
-                scene = IPhoneSettingScene(previous: start)
+                let root = IPhoneSettingScene(previous: start)
                 if self.param == "music" {
-                    scene = IPhoneMusicSettingScene(scene as! IPhoneSettingScene)
+                    scene = IPhoneMusicSettingScene(root)
                 } else if self.param == "other" {
-                    scene = IPhoneOtherSettingScene(scene as! IPhoneSettingScene)
+                    scene = IPhoneOtherSettingScene(root)
                 } else if self.param == "extensions" {
-                    scene = ExtensionSettingScene(scene as! IPhoneSettingScene)
-                }
-            } else {
-                if self.param == "extensions" {
-                    scene = ExtensionSettingScene(SettingScene(StartScene(size: gvc.view!.frame.size), gvc))
+                    scene = ExtensionSettingScene(root)
                 } else {
-                    scene = SettingScene(StartScene(size: gvc.view!.frame.size), gvc)
+                    scene = root
                 }
+            } else if self.param == "extensions" {
+                scene = ExtensionSettingScene(SettingScene(StartScene(size: gvc.view!.frame.size), gvc))
+            } else {
+                scene = SettingScene(StartScene(size: gvc.view!.frame.size), gvc)
             }
                 
             gvc.skView?.presentScene(scene)

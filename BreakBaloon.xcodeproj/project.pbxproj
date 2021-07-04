@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -231,6 +231,7 @@
 		204FBB2E1D58D9B700971306 /* checkbox-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-disabled.png"; sourceTree = "<group>"; };
 		205CADB42691136D00C0C508 /* IPhoneSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPhoneSettingScene.swift; sourceTree = "<group>"; };
 		205CADB726912C7900C0C508 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
+		205CADB9269206A800C0C508 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		206736751D16E26300FB9FFF /* BreakBaloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakBaloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		206736781D16E26300FB9FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -371,6 +372,7 @@
 		2067366C1D16E26300FB9FFF = {
 			isa = PBXGroup;
 			children = (
+				205CADB9269206A800C0C508 /* .swiftlint.yml */,
 				205CADB726912C7900C0C508 /* .swiftformat */,
 				20E9F7C323494D8800AF3A12 /* Settings.bundle */,
 				20B004BC1D2BEF04005F706F /* COPYING */,
@@ -633,6 +635,7 @@
 				206736731D16E26300FB9FFF /* Resources */,
 				200ADE041DBD071C00275668 /* Embed App Extensions */,
 				203EEC90234A643A002D81F2 /* Embed Watch Content */,
+				205CADB8269204A800C0C508 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -816,6 +819,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		205CADB8269204A800C0C508 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "if test -f /opt/homebrew/bin/swiftlint; then\n  /opt/homebrew/bin/swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from homebrew\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		203EEC79234A6439002D81F2 /* Sources */ = {

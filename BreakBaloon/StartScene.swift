@@ -240,15 +240,15 @@ class StartScene: SKScene {
         } else if actualPane == 3 {
             if sizeChange {
                 for child in children {
-                    if child is RandGameLevelNode {
+                    if let child = child as? RandGameLevelNode {
                         child.removeFromParent()
                     }
                 }
                 initThirdPane()
             }
             for child in children {
-                if child is RandGameLevelNode {
-                    child.position = CGPoint(x: sizeChange ? (child as! RandGameLevelNode).realPosition.x : frame.size.width + adaptButton.size.width, y: (child as! RandGameLevelNode).realPosition.y)
+                if let child = child as? RandGameLevelNode {
+                    child.position = CGPoint(x: sizeChange ? child.realPosition.x : frame.size.width + adaptButton.size.width, y: child.realPosition.y)
                 }
             }
             
@@ -319,10 +319,10 @@ class StartScene: SKScene {
     }
     
     func initThirdPane() {
-        let w = Int(frame.size.width / 75)
+        let width = Int(frame.size.width / 75)
         for i in 0 ..< RandGameLevel.levels.count {
             let node = RandGameLevel.levels[i].createNode()
-            node.realPosition = CGPoint(x: CGFloat(i % w * 75 + 35), y: frame.size.height - CGFloat(i / w * 75 + 35) - (view?.safeAreaInsets.top ?? 0))
+            node.realPosition = CGPoint(x: CGFloat(i % width * 75 + 35), y: frame.size.height - CGFloat(i / width * 75 + 35) - (view?.safeAreaInsets.top ?? 0))
             addChild(node)
         }
         
@@ -416,8 +416,8 @@ class StartScene: SKScene {
                 view?.presentScene(BBStoreScene(start: self), transition: SKTransition.doorsCloseVertical(withDuration: TimeInterval(1)))
             } else if actualPane == 3 {
                 for child in children {
-                    if child is RandGameLevelNode, onNode(child, point: point) {
-                        (child as! RandGameLevelNode).click(view!)
+                    if let child = child as? RandGameLevelNode, onNode(child, point: point) {
+                        child.click(view!)
                         break
                     }
                 }
@@ -503,11 +503,11 @@ class StartScene: SKScene {
         initThirdPane()
         actualPane = -1
         for child in children {
-            if child is RandGameLevelNode {
-                child.run(SKAction.move(to: (child as! RandGameLevelNode).realPosition, duration: TimeInterval(0.5)))
+            if let child = child as? RandGameLevelNode {
+                child.run(SKAction.move(to: child.realPosition, duration: 0.5))
             }
         }
-        run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {
+        run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.actualPane = 3
         }]))
     }

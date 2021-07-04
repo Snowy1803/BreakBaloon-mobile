@@ -211,7 +211,7 @@ class Downloadable: SKNode {
     }
     
     class func loadAll(_ viewSize: CGSize, _ gvc: GameViewController) throws -> [Downloadable] {
-        let list = NSMutableArray()
+        var list: [Downloadable] = []
         let fsh = FileSaveHelper(fileName: "bbstore", fileExtension: .TXT, subDirectory: "", directory: .cachesDirectory)
         fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
         while !fsh.downloadedSuccessfully {
@@ -234,7 +234,7 @@ class Downloadable: SKNode {
                     let dl = Downloadable(type: DownloadType.getType(currentType, id: currentId), name: currentName, author: currentAuthor, id: currentId, version: currentVersion, description: currentDescription, levelRequirement: currentLevelRequirement)
                     // dl.position = CGPointMake(viewSize.width/2, viewSize.height/2)
                     
-                    list.add(dl)
+                    list.append(dl)
                     currentName = ""
                     currentId = ""
                     currentDescription = ""
@@ -259,25 +259,16 @@ class Downloadable: SKNode {
                 currentLevelRequirement = Int(line.components(separatedBy: "=")[1])!
             }
         }
-        list.sort(comparator: {
-            dl1, dl2 in
-            if (dl1 as AnyObject).levelRequirement > GameViewController.getLevel(), (dl1 as AnyObject).levelRequirement > (dl2 as AnyObject).levelRequirement {
-                return .orderedDescending
-            } else if (dl2 as AnyObject).levelRequirement > GameViewController.getLevel(), (dl1 as AnyObject).levelRequirement < (dl2 as AnyObject).levelRequirement {
-                return .orderedAscending
-            }
-            return .orderedSame
+        list.sort(by: { dl1, dl2 in
+            dl1.levelRequirement > GameViewController.getLevel() && dl2.levelRequirement < GameViewController.getLevel()
         })
         var i = 0
         for dl in list { // Setting position after sorting
-            (dl as! Downloadable).construct(gvc)
-            (dl as! Downloadable).position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+            dl.construct(gvc)
+            dl.position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
             i += 1
         }
-        if let array = list as NSArray as? [Downloadable] {
-            return array
-        }
-        return []
+        return list
     }
     
     enum DownloadType {

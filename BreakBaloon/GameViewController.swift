@@ -123,6 +123,8 @@ class GameViewController: UIViewController, WCSessionDelegate {
         audioPlayer.play()
         reloadBackgroundMusic()
         
+        // (enforced by storyboard)
+        // swiftlint:disable:next force_cast
         skView = (view as! SKView)
         // skView.showsFPS = true
         // skView.showsNodeCount = true
@@ -346,13 +348,11 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: nil, completion: {
-            _ in
-            if self.skView!.scene! is StartScene {
+        coordinator.animate(alongsideTransition: nil, completion: { _ in
+            if let scene = self.skView!.scene as? StartScene {
                 self.skView!.scene!.size = size
-                (self.skView!.scene! as! StartScene).adjustPosition(false, sizeChange: true)
+                scene.adjustPosition(false, sizeChange: true)
             }
-            
         })
     }
 }

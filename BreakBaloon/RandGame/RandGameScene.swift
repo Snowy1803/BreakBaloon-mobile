@@ -8,25 +8,6 @@
 
 import AVFoundation
 import SpriteKit
-private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-    switch (lhs, rhs) {
-    case let (l?, r?):
-        return l < r
-    case (nil, _?):
-        return true
-    default:
-        return false
-    }
-}
-
-private func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-    switch (lhs, rhs) {
-    case let (l?, r?):
-        return l >= r
-    default:
-        return !(lhs < rhs)
-    }
-}
 
 class RandGameScene: AbstractGameScene {
     static let REQUIREMENT = 6
@@ -88,7 +69,7 @@ class RandGameScene: AbstractGameScene {
     
     override func update(_: TimeInterval) {
         if !isGamePaused() {
-            if nextBaloon == nil || (baloonsToSpawn > 0 && Date().timeIntervalSince1970 >= nextBaloon) && canSpawnBaloon() {
+            if nextBaloon == nil || (baloonsToSpawn > 0 && Date().timeIntervalSince1970 >= nextBaloon!) && canSpawnBaloon() {
                 spawnBaloon()
             } else if baloonsToSpawn == 0, isEmpty(), endTime == nil {
                 gameEnd()
@@ -101,12 +82,7 @@ class RandGameScene: AbstractGameScene {
     }
     
     func isEmpty() -> Bool {
-        for aCase in children {
-            if aCase is Case {
-                return false
-            }
-        }
-        return true
+        return !children.contains(where: { $0 is Case })
     }
     
     func canSpawnBaloon() -> Bool {
@@ -115,10 +91,8 @@ class RandGameScene: AbstractGameScene {
     
     func numberOfBaloonsInGame() -> UInt {
         var i: UInt = 0
-        for aCase in children {
-            if aCase is Case {
-                i += 1
-            }
+        for aCase in children where aCase is Case {
+            i += 1
         }
         return i
     }
@@ -126,7 +100,7 @@ class RandGameScene: AbstractGameScene {
     func numberOfClosedBaloonsInGame() -> UInt {
         var i: UInt = 0
         for aCase in children {
-            if aCase is Case, (aCase as! Case).status == .closed, !(aCase is FakeCase) {
+            if let aCase = aCase as? Case, aCase.status == .closed, !(aCase is FakeCase) {
                 i += 1
             }
         }
@@ -138,8 +112,8 @@ class RandGameScene: AbstractGameScene {
             for touch in touches {
                 let point = touch.location(in: self)
                 for aCase in children {
-                    if aCase is Case, aCase.frame.extends(10).contains(point) {
-                        breakBaloon(case: aCase as! Case, touch: point)
+                    if let aCase = aCase as? Case, aCase.frame.extends(10).contains(point) {
+                        breakBaloon(case: aCase, touch: point)
                         return
                     }
                 }
@@ -162,10 +136,10 @@ class RandGameScene: AbstractGameScene {
                         child.removeFromParent()
                         addChild(pause)
                         break
-                    } else if child is RandGameLevelEndNode {
-                        (child as! RandGameLevelEndNode).click(touches.first!.location(in: self))
-                    } else if child is RandGamePauseNode {
-                        (child as! RandGamePauseNode).touchAt(touches.first!.location(in: self))
+                    } else if let child = child as? RandGameLevelEndNode {
+                        child.click(touches.first!.location(in: self))
+                    } else if let child = child as? RandGamePauseNode {
+                        child.touchAt(touches.first!.location(in: self))
                     }
                 }
             }
@@ -246,10 +220,8 @@ class RandGameScene: AbstractGameScene {
     }
     
     override func isGamePaused() -> Bool {
-        for aCase in children {
-            if aCase is RandGameLevelInfoNode {
-                return true
-            }
+        for aCase in children where aCase is RandGameLevelInfoNode {
+            return true
         }
         return endTime != nil || super.isGamePaused()
     }

@@ -10,8 +10,8 @@ import Foundation
 import SpriteKit
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
-    case let (l?, r?):
-        return l < r
+    case let (left?, right?):
+        return left < right
     case (nil, _?):
         return true
     default:

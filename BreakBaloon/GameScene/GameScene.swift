@@ -12,7 +12,7 @@ import SpriteKit
 class GameScene: AbstractGameScene {
     var width: Int
     var height: Int
-    var cases: NSMutableArray
+    var cases: [Case]
     var label = SKLabelNode()
     var winCaseNumber: Int = -1
     var computerpoints: Int = 0
@@ -21,7 +21,8 @@ class GameScene: AbstractGameScene {
     init(view: SKView, gametype: Int8, width: UInt, height: UInt) {
         self.width = Int(width)
         self.height = Int(height)
-        cases = NSMutableArray(capacity: self.width * self.height)
+        cases = []
+        cases.reserveCapacity(self.width * self.height)
         super.init(view: view, gametype: gametype)
     }
     
@@ -34,7 +35,7 @@ class GameScene: AbstractGameScene {
             theCase.position = CGPoint(x: left + CGFloat(i % width * 75 + 35), y: top - CGFloat(i / width * 75 + 35))
             theCase.zPosition = 1
             addChild(theCase)
-            cases.add(theCase)
+            cases.append(theCase)
         }
         if gametype == StartScene.GAMETYPE_SOLO {
             label.text = NSLocalizedString("game.score.no", comment: "No points")
@@ -68,10 +69,11 @@ class GameScene: AbstractGameScene {
         if beginTime == nil {
             beginTime = Date().timeIntervalSince1970
         }
-        if (cases.object(at: index) as! Case).breaked {
+        let touched = cases[index]
+        guard !touched.breaked else {
             return
         }
-        (cases.object(at: index) as! Case).breakBaloon(index == winCaseNumber)
+        touched.breakBaloon(index == winCaseNumber)
         var data: Data
         var gameEnded = false
         if gametype != StartScene.GAMETYPE_TIMED, index == winCaseNumber {
@@ -99,11 +101,9 @@ class GameScene: AbstractGameScene {
             addChild(plus)
             plus.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(5)), SKAction.removeFromParent()]))
             var isThereUnbreakedBaloons = false
-            for aCase in cases {
-                if !(aCase as! Case).breaked {
-                    isThereUnbreakedBaloons = true
-                    break
-                }
+            for aCase in cases where !aCase.breaked {
+                isThereUnbreakedBaloons = true
+                break
             }
             if !isThereUnbreakedBaloons {
                 gameEnd()
@@ -111,15 +111,13 @@ class GameScene: AbstractGameScene {
             }
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
-            } while (cases.object(at: winCaseNumber) as! Case).breaked && !gameEnded
+            } while cases[winCaseNumber].breaked && !gameEnded
             data = (view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
         } else if gametype == StartScene.GAMETYPE_TIMED {
             var isThereUnbreakedBaloons = false
-            for aCase in cases {
-                if !(aCase as! Case).breaked {
-                    isThereUnbreakedBaloons = true
-                    break
-                }
+            for aCase in cases where !aCase.breaked {
+                isThereUnbreakedBaloons = true
+                break
             }
             if !isThereUnbreakedBaloons {
                 gameEnd()
@@ -130,7 +128,7 @@ class GameScene: AbstractGameScene {
         }
         
         if !gameEnded {
-            (cases.object(at: index) as! Case).baloonBreaked()
+            touched.baloonBreaked()
         }
         
         do {
@@ -148,8 +146,8 @@ class GameScene: AbstractGameScene {
                 var wherebreak: Int
                 repeat {
                     wherebreak = Int(arc4random_uniform(UInt32(self.width) * UInt32(self.height)))
-                } while (self.cases.object(at: wherebreak) as! Case).breaked
-                self.breakBaloon(wherebreak, touch: (self.cases.object(at: wherebreak) as AnyObject).position, computer: true)
+                } while self.cases[wherebreak].breaked
+                self.breakBaloon(wherebreak, touch: self.cases[wherebreak].position, computer: true)
                 self.waitingForComputer = false
             }]))
         }
@@ -158,8 +156,8 @@ class GameScene: AbstractGameScene {
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         for touch in touches {
             let point = touch.location(in: self)
-            if atPoint(point) is Case {
-                breakBaloon((atPoint(point) as! Case).index, touch: point, computer: false)
+            if let touched = atPoint(point) as? Case {
+                breakBaloon(touched.index, touch: point, computer: false)
             }
         }
     }
