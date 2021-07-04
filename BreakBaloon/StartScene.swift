@@ -43,7 +43,7 @@ class StartScene: SKScene {
     var xpLabel = SKShapeNode()
     var txpLabel = SKLabelNode()
     
-    var actualPane: Int = 0
+    var currentPane = Pane.selectGameType
     var touchesBegan: CGPoint?
     var gametype = GameType.undefined
     var lastGameInfo: String?
@@ -56,7 +56,7 @@ class StartScene: SKScene {
         super.init(size: size)
         backgroundColor = SKColor.brown
         isPaused = true
-        initFirstPane(false)
+        initGameTypePane(false)
         
         if UIDevice.current.userInterfaceIdiom != .phone {
             bbLabel.text = "BreakBaloon"
@@ -113,7 +113,9 @@ class StartScene: SKScene {
         }
     }
     
-    func initFirstPane(_ cancelled: Bool) {
+    // MARK: - Pane initializers
+    
+    func initGameTypePane(_ cancelled: Bool) {
         soloButton = SKSpriteNode(texture: buttonTexture)
         soloButton.zPosition = 1
         addChild(soloButton)
@@ -190,76 +192,11 @@ class StartScene: SKScene {
         tbbstoreButton.zPosition = 2
         addChild(tbbstoreButton)
 
-        actualPane = 1
+        currentPane = .selectGameType
         adjustPosition(cancelled)
     }
     
-    func adjustPosition(_ cancelled: Bool, sizeChange: Bool = false) {
-        let bottomSA = view?.safeAreaInsets.bottom ?? 0
-        if UIDevice.current.userInterfaceIdiom != .phone {
-            bbLabel.position = CGPoint(x: frame.midX, y: 40 + bottomSA)
-            hsLabel.position = CGPoint(x: frame.midX, y: 120 + bottomSA)
-            bsLabel.position = CGPoint(x: frame.midX, y: 95 + bottomSA)
-        } else {
-            hsLabel.position = CGPoint(x: frame.midX, y: 70 + bottomSA)
-            bsLabel.position = CGPoint(x: frame.midX, y: 45 + bottomSA)
-        }
-        cLabel.position = CGPoint(x: frame.midX, y: 20 + bottomSA)
-        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
-        txpLabel.position = CGPoint(x: size.width / 2, y: 0 + bottomSA)
-        if actualPane == 1 {
-            let bottomPadding = bottomSA - lowerButtonMinus()
-            let translation = cancelled ? frame.width : 0
-            soloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: false))
-            multiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: false))
-            timedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2, text: false))
-            randButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3, text: false))
-            prefsButton.position = CGPoint(x: frame.width / 4 - translation, y: 170 + bottomPadding)
-            bbstoreButton.position = CGPoint(x: frame.width / 4 * 3 - translation, y: 170 + bottomPadding)
-            
-            tsoloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: true))
-            tmultiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: true))
-            ttimedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2, text: true))
-            trandButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3, text: true))
-            tprefsButton.position = CGPoint(x: frame.width / 4 - translation, y: 160 + bottomPadding)
-            tbbstoreButton.position = CGPoint(x: frame.width / 4 * 3 - translation, y: 160 + bottomPadding)
-        } else if actualPane == 2 {
-            let translation = sizeChange ? 0 : frame.size.width
-            smallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0, text: false))
-            mediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1, text: false))
-            bigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2, text: false))
-            adaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3, text: false))
-            
-            tsmallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0, text: true))
-            tmediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1, text: true))
-            tbigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2, text: true))
-            tadaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3, text: true))
-        } else if actualPane == 3 {
-            if sizeChange {
-                for child in children {
-                    if let child = child as? RandGameLevelNode {
-                        child.removeFromParent()
-                    }
-                }
-                initThirdPane()
-            }
-            let translation = sizeChange ? 0 : frame.size.width
-            for child in children {
-                if let child = child as? RandGameLevelNode {
-                    child.position = CGPoint(x: child.realPosition.x + translation, y: child.realPosition.y)
-                }
-            }
-        }
-    }
-    
-    func lowerButtonMinus() -> CGFloat {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return 50
-        }
-        return 0
-    }
-    
-    func initSecondPane() {
+    func initSizeSelectionPane() {
         smallButton = SKSpriteNode(texture: buttonTexture)
         smallButton.zPosition = 1
         greyIfNotFill(smallButton, size: 5)
@@ -308,11 +245,11 @@ class StartScene: SKScene {
         tadaptButton.zPosition = 2
         addChild(tadaptButton)
         
-        actualPane = 2
+        currentPane = .selectSize
         adjustPosition(false)
     }
     
-    func initThirdPane() {
+    func initLevelSelectionPane() {
         let width = Int(frame.size.width / 75)
         for i in 0 ..< RandGameLevel.levels.count {
             let node = RandGameLevel.levels[i].createNode()
@@ -320,8 +257,84 @@ class StartScene: SKScene {
             addChild(node)
         }
         
-        actualPane = 3
+        currentPane = .selectLevel
         adjustPosition(false)
+    }
+    
+    // MARK: - Layout
+    
+    func adjustPosition(_ cancelled: Bool, sizeChange: Bool = false) {
+        let bottomSA = view?.safeAreaInsets.bottom ?? 0
+        if UIDevice.current.userInterfaceIdiom != .phone {
+            bbLabel.position = CGPoint(x: frame.midX, y: 40 + bottomSA)
+            hsLabel.position = CGPoint(x: frame.midX, y: 120 + bottomSA)
+            bsLabel.position = CGPoint(x: frame.midX, y: 95 + bottomSA)
+        } else {
+            hsLabel.position = CGPoint(x: frame.midX, y: 70 + bottomSA)
+            bsLabel.position = CGPoint(x: frame.midX, y: 45 + bottomSA)
+        }
+        cLabel.position = CGPoint(x: frame.midX, y: 20 + bottomSA)
+        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
+        txpLabel.position = CGPoint(x: size.width / 2, y: 0 + bottomSA)
+        switch currentPane {
+        case .selectGameType:
+            let bottomPadding = bottomSA - lowerButtonMinus()
+            let translation = cancelled ? frame.width : 0
+            soloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: false))
+            multiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: false))
+            timedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2, text: false))
+            randButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3, text: false))
+            prefsButton.position = CGPoint(x: frame.width / 4 - translation, y: 170 + bottomPadding)
+            bbstoreButton.position = CGPoint(x: frame.width / 4 * 3 - translation, y: 170 + bottomPadding)
+            
+            tsoloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: true))
+            tmultiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: true))
+            ttimedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2, text: true))
+            trandButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3, text: true))
+            tprefsButton.position = CGPoint(x: frame.width / 4 - translation, y: 160 + bottomPadding)
+            tbbstoreButton.position = CGPoint(x: frame.width / 4 * 3 - translation, y: 160 + bottomPadding)
+        case .selectSize:
+            let translation = sizeChange ? 0 : frame.size.width
+            smallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0, text: false))
+            mediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1, text: false))
+            bigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2, text: false))
+            adaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3, text: false))
+            
+            tsmallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0, text: true))
+            tmediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1, text: true))
+            tbigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2, text: true))
+            tadaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3, text: true))
+        case .selectLevel:
+            if sizeChange {
+                for child in children {
+                    if let child = child as? RandGameLevelNode {
+                        child.removeFromParent()
+                    }
+                }
+                initLevelSelectionPane()
+            }
+            let translation = sizeChange ? 0 : frame.size.width
+            for child in children {
+                if let child = child as? RandGameLevelNode {
+                    child.position = CGPoint(x: child.realPosition.x + translation, y: child.realPosition.y)
+                }
+            }
+        case .inTransition:
+            break
+        }
+    }
+    
+    // MARK: - Utils
+    
+    func littleScreen() -> Bool {
+        return frame.height < 575
+    }
+    
+    func lowerButtonMinus() -> CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return 50
+        }
+        return 0
     }
     
     func grey(_ sprite: SKSpriteNode) {
@@ -353,6 +366,8 @@ class StartScene: SKScene {
         return text ? position - 45 : position - 30
     }
     
+    // MARK: - Events
+    
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         if touches.count == 1 {
             touchesBegan = touches.first?.location(in: self)
@@ -362,22 +377,22 @@ class StartScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with _: UIEvent?) {
         if touches.count == 1 {
             let point: CGPoint = (touches.first?.location(in: self))!
-            if !(touchesBegan!.x <= point.x + 10 && touchesBegan!.x >= point.x - 10 && touchesBegan!.y <= point.y + 10 && touchesBegan!.y >= point.y - 10) || actualPane == -1 {
+            if !(touchesBegan!.x <= point.x + 10 && touchesBegan!.x >= point.x - 10 && touchesBegan!.y <= point.y + 10 && touchesBegan!.y >= point.y - 10) {
                 if touchesBegan!.x < point.x - 100 {
                     cancelScreen()
                 }
             } else if onNode(soloButton, point: point) {
                 gametype = .solo
-                transitionFirstToSecond()
+                transitionGameTypeToSizeSelection()
             } else if onNode(multiButton, point: point) {
                 gametype = .computer
-                transitionFirstToSecond()
+                transitionGameTypeToSizeSelection()
             } else if onNode(timedButton, point: point) {
                 gametype = .random
-                transitionFirstToSecond()
+                transitionGameTypeToSizeSelection()
             } else if onNode(randButton, point: point) {
                 if GameViewController.getLevel() >= RandGameScene.REQUIREMENT {
-                    transitionFirstToThird()
+                    transitionGameTypeToLevelSelection()
                 }
             } else if onNode(smallButton, point: point) {
                 if smallButton.colorBlendFactor != 0.5 {
@@ -408,7 +423,7 @@ class StartScene: SKScene {
                 }
             } else if onNode(bbstoreButton, point: point) {
                 view?.presentScene(BBStoreScene(start: self), transition: SKTransition.doorsCloseVertical(withDuration: 1))
-            } else if actualPane == 3 {
+            } else if currentPane == .selectLevel {
                 for child in children {
                     if let child = child as? RandGameLevelNode, onNode(child, point: point) {
                         child.click(view!)
@@ -419,8 +434,15 @@ class StartScene: SKScene {
         }
     }
     
-    func littleScreen() -> Bool {
-        return frame.height < 575
+    func onNode(_ node: SKNode, point: CGPoint) -> Bool {
+        return node.frame.contains(point)
+    }
+   
+    override func update(_: TimeInterval) {
+        /* Called before each frame is rendered */
+        if isPaused {
+            isPaused = false
+        }
     }
     
     func showDialog(_ title: String, message: String) {
@@ -441,57 +463,64 @@ class StartScene: SKScene {
         view?.presentScene(GameScene(view: view!, gametype: gametype, width: width, height: height), transition: SKTransition.flipVertical(withDuration: 1))
     }
     
+    // MARK: - Transitions
+    
     func cancelScreen() {
-        if actualPane == 2 {
-            transitionSecondToFirst()
-        } else if actualPane == 3 {
-            transitionThirdToFirst()
-        } else if actualPane == 1, let lastGameInfo = lastGameInfo {
-            showDialog(NSLocalizedString("gameinfo.title", comment: "Last game information"), message: lastGameInfo)
+        switch currentPane {
+        case .selectGameType:
+            if let lastGameInfo = lastGameInfo {
+                showDialog(NSLocalizedString("gameinfo.title", comment: "Last game information"), message: lastGameInfo)
+            }
+        case .selectSize:
+            transitionSizeSelectionToGameType()
+        case .selectLevel:
+            transitionLevelSelectionToGameType()
+        case .inTransition:
+            break
         }
     }
     
-    func transitionFirstToSecond() {
-        actualPane = -1
+    func transitionGameTypeToSizeSelection() {
+        currentPane = .inTransition
         for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
                      tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
             transitionQuit(node)
         }
-        initSecondPane()
-        actualPane = -1
+        initSizeSelectionPane()
+        currentPane = .inTransition
         for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
             transitionJoinCenter(node)
         }
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
-            self.actualPane = 2
+            self.currentPane = .selectSize
         }]))
     }
     
-    func transitionFirstToThird() {
-        actualPane = -1
+    func transitionGameTypeToLevelSelection() {
+        currentPane = .inTransition
         for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
                      tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
             transitionQuit(node)
         }
-        initThirdPane()
-        actualPane = -1
+        initLevelSelectionPane()
+        currentPane = .inTransition
         for child in children {
             if let child = child as? RandGameLevelNode {
                 child.run(SKAction.move(to: child.realPosition, duration: 0.5))
             }
         }
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
-            self.actualPane = 3
+            self.currentPane = .selectLevel
         }]))
     }
     
-    func transitionSecondToFirst() {
-        actualPane = -1
+    func transitionSizeSelectionToGameType() {
+        currentPane = .inTransition
         for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
             transitionQuitRight(node)
         }
-        initFirstPane(true)
-        actualPane = -1
+        initGameTypePane(true)
+        currentPane = .inTransition
         for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
             transitionJoinCenter(node)
         }
@@ -500,17 +529,17 @@ class StartScene: SKScene {
         transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160))
         transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160))
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
-            self.actualPane = 1
+            self.currentPane = .selectGameType
         }]))
     }
     
-    func transitionThirdToFirst() {
-        actualPane = -1
+    func transitionLevelSelectionToGameType() {
+        currentPane = .inTransition
         for child in children where child is RandGameLevelNode {
             transitionQuitRight(child)
         }
-        initFirstPane(true)
-        actualPane = -1
+        initGameTypePane(true)
+        currentPane = .inTransition
         for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
             transitionJoinCenter(node)
         }
@@ -519,7 +548,7 @@ class StartScene: SKScene {
         transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160))
         transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160))
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
-            self.actualPane = 1
+            self.currentPane = .selectGameType
         }]))
     }
     
@@ -545,14 +574,10 @@ class StartScene: SKScene {
         ]))
     }
     
-    func onNode(_ node: SKNode, point: CGPoint) -> Bool {
-        return node.frame.contains(point)
-    }
-   
-    override func update(_: TimeInterval) {
-        /* Called before each frame is rendered */
-        if isPaused {
-            isPaused = false
-        }
+    enum Pane {
+        case inTransition
+        case selectGameType
+        case selectSize
+        case selectLevel
     }
 }
