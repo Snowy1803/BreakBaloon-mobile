@@ -115,7 +115,7 @@ class GameScene: AbstractGameScene {
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
             } while cases[winCaseNumber].breaked && !gameEnded
-            data = (view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
+            data = view!.gvc.currentTheme.pumpSound(true)
         } else if gametype == .timed {
             var isThereUnbreakedBaloons = false
             for aCase in cases where !aCase.breaked {
@@ -125,9 +125,9 @@ class GameScene: AbstractGameScene {
             if !isThereUnbreakedBaloons {
                 gameEnd()
             }
-            data = (view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
+            data = view!.gvc.currentTheme.pumpSound(false)
         } else {
-            data = (view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false)
+            data = view!.gvc.currentTheme.pumpSound(false)
         }
         
         if !gameEnded {
@@ -136,7 +136,7 @@ class GameScene: AbstractGameScene {
         
         do {
             avplayer = try AVAudioPlayer(data: data)
-            avplayer.volume = (view?.window?.rootViewController as! GameViewController).audioVolume
+            avplayer.volume = view!.gvc.audioVolume
             avplayer.prepareToPlay()
             avplayer.play()
         } catch {
@@ -202,7 +202,7 @@ class GameScene: AbstractGameScene {
             } else if self.gametype == .timed, data.integer(forKey: "bestTimedScore") < self.points {
                 data.set(self.points, forKey: "bestTimedScore")
             }
-            let gvc = self.view!.window!.rootViewController as! GameViewController
+            let gvc = self.view!.gvc!
             gvc.currentGame = nil
             let oldXP = CGFloat(GameViewController.getLevelXPFloat())
             let levelModifier = Float(max(10 - GameViewController.getLevel(), 1))

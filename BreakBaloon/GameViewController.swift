@@ -68,7 +68,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         print("Path:", FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath)
         loadMusicAndStartScene()
         
-        _ = (UIApplication.shared.delegate as! AppDelegate).triggerDeepLinkIfPresent()
+        _ = UIApplication.shared.appDelegate.triggerDeepLinkIfPresent()
 
         if WCSession.isSupported() {
             wcSession = WCSession.default

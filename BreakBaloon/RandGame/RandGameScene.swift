@@ -23,7 +23,7 @@ class RandGameScene: AbstractGameScene {
     var nextBaloon: TimeInterval?
     
     init(view: SKView, level: RandGameLevel) {
-        gvc = view.window?.rootViewController as! GameViewController
+        gvc = view.gvc
         self.level = level
         nextBaloonMax = level.maxSecondsBeforeNextBaloon
         baloonsToSpawn = level.numberOfBaloons
@@ -153,8 +153,8 @@ class RandGameScene: AbstractGameScene {
             updateLabel()
             aCase.baloonBreaked()
             do {
-                avplayer = try AVAudioPlayer(data: (view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(false))
-                avplayer.volume = (view?.window?.rootViewController as! GameViewController).audioVolume
+                avplayer = try AVAudioPlayer(data: view!.gvc.currentTheme.pumpSound(false))
+                avplayer.volume = view!.gvc.audioVolume
                 avplayer.prepareToPlay()
                 avplayer.play()
             } catch {
@@ -208,9 +208,9 @@ class RandGameScene: AbstractGameScene {
             if UserDefaults.standard.integer(forKey: "bestTimedScore") < self.points {
                 UserDefaults.standard.set(self.points, forKey: "bestRandomScore")
             }
-            let gvc = self.view!.window!.rootViewController as! GameViewController
+            let gvc = self.view!.gvc!
             gvc.currentGame = nil
-            gvc.addXP(Int(5))
+            gvc.addXP(5)
         }]))
     }
     

@@ -114,7 +114,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
                         GameViewController.logOut()
                         self.updateLoginLabel()
                     } else {
-                        (self.view!.window!.rootViewController! as! GameViewController).logInDialog(completion: self.updateLoginLabel)
+                        self.view!.gvc.logInDialog(completion: self.updateLoginLabel)
                     }
                 }
             } else if back.frame.contains(point) {
@@ -140,8 +140,8 @@ class IPhoneMusicSettingScene: SKScene {
     
     init(_ previous: IPhoneSettingScene) {
         settings = previous
-        musicSetting = AudioSlider(name: NSLocalizedString("settings.music", comment: "Music"), music: true, gvc: previous.view?.window?.rootViewController as! GameViewController)
-        musicIndexSetting = MusicSelector(gvc: previous.view?.window?.rootViewController as! GameViewController, importUnder: UIDevice.current.userInterfaceIdiom == .phone)
+        musicSetting = AudioSlider(name: NSLocalizedString("settings.music", comment: "Music"), music: true, gvc: previous.view!.gvc)
+        musicIndexSetting = MusicSelector(gvc: previous.view!.gvc, importUnder: UIDevice.current.userInterfaceIdiom == .phone)
         super.init(size: previous.frame.size)
         backgroundColor = SKColor.brown
         initPane()
@@ -153,7 +153,7 @@ class IPhoneMusicSettingScene: SKScene {
     }
     
     func initPane() {
-        musicSetting.setVolume((settings.view?.window?.rootViewController as! GameViewController).backgroundMusicPlayer.volume)
+        musicSetting.setVolume(settings.view!.gvc.backgroundMusicPlayer.volume)
         musicSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 100)
         addChild(musicSetting)
         musicIndexSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 175)
@@ -234,8 +234,8 @@ class IPhoneOtherSettingScene: SKScene {
     
     init(_ previous: IPhoneSettingScene) {
         settings = previous
-        audioSetting = AudioSlider(name: NSLocalizedString("settings.audio", comment: "Sound effects"), music: false, gvc: previous.view?.window?.rootViewController as! GameViewController)
-        themeIndexSetting = ThemeSelector(gvc: previous.view?.window?.rootViewController as! GameViewController)
+        audioSetting = AudioSlider(name: NSLocalizedString("settings.audio", comment: "Sound effects"), music: false, gvc: previous.view!.gvc)
+        themeIndexSetting = ThemeSelector(gvc: previous.view!.gvc)
         super.init(size: previous.frame.size)
         backgroundColor = SKColor.brown
         initPane()
@@ -247,7 +247,7 @@ class IPhoneOtherSettingScene: SKScene {
     }
     
     func initPane() {
-        audioSetting.setVolume((settings.view?.window?.rootViewController as! GameViewController).audioVolume)
+        audioSetting.setVolume(settings.view!.gvc.audioVolume)
         audioSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 100)
         addChild(audioSetting)
         themeIndexSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 175)

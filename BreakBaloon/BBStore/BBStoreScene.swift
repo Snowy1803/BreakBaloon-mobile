@@ -25,7 +25,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     var search = UISearchBar()
     
     convenience init(start: StartScene) {
-        self.init(start: start, size: start.view!.frame.size, gvc: start.view?.window?.rootViewController as! GameViewController)
+        self.init(start: start, size: start.view!.frame.size, gvc: start.view!.gvc)
     }
     
     init(start: StartScene, size: CGSize, gvc: GameViewController) {

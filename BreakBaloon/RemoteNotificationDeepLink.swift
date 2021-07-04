@@ -57,8 +57,7 @@ class RemoteNotificationDeepLink: NSObject {
 class RemoteNotificationDeepLinkSettings: RemoteNotificationDeepLink {
     override fileprivate func triggerImp(_ completion: (AnyObject?) -> Void) {
         super.triggerImp { _ in
-                
-            let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
+            let gvc = UIApplication.shared.keyWindow!.gvc!
             let start = StartScene(size: gvc.view!.frame.size)
             var scene: SKScene?
                 
@@ -89,8 +88,7 @@ class RemoteNotificationDeepLinkSettings: RemoteNotificationDeepLink {
 class RemoteNotificationDeepLinkNewGame: RemoteNotificationDeepLink {
     override fileprivate func triggerImp(_ completion: (AnyObject?) -> Void) {
         super.triggerImp { _ in
-                
-            let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
+            let gvc = UIApplication.shared.keyWindow!.gvc!
             // let start = StartScene(size: gvc.view!.frame.size)
             var scene: SKScene?
             let safeSize = gvc.view.frame.inset(by: gvc.view!.safeAreaInsets).size
@@ -141,8 +139,7 @@ class RemoteNotificationDeepLinkNewGame: RemoteNotificationDeepLink {
 class RemoteNotificationDeepLinkBBStore: RemoteNotificationDeepLink {
     override fileprivate func triggerImp(_ completion: (AnyObject?) -> Void) {
         super.triggerImp { _ in
-                
-            let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
+            let gvc = UIApplication.shared.keyWindow!.gvc!
             let scene = BBStoreScene(start: StartScene(size: gvc.view!.frame.size), size: gvc.view!.frame.size, gvc: gvc)
                 
             gvc.skView?.presentScene(scene)

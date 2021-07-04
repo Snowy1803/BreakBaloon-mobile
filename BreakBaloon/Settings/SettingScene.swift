@@ -26,7 +26,7 @@ class SettingScene: SKScene {
     var themeIndexSetting: ThemeSelector
     
     convenience init(previous: StartScene) {
-        self.init(previous, previous.view?.window?.rootViewController as! GameViewController)
+        self.init(previous, previous.view!.gvc)
     }
     
     init(_ previous: StartScene, _ gvc: GameViewController) {
@@ -127,7 +127,7 @@ class SettingScene: SKScene {
                         GameViewController.logOut()
                         self.updateLoginLabel()
                     } else {
-                        (self.view!.window!.rootViewController! as! GameViewController).logInDialog(completion: self.updateLoginLabel)
+                        self.view!.gvc.logInDialog(completion: self.updateLoginLabel)
                     }
                 }
             } else if onNode(audioSetting, point: point) {

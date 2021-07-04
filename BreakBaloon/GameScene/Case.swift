@@ -40,8 +40,10 @@ class Case: SKSpriteNode {
     }
     
     func baloonBreaked() {
-        if gvc.currentGame is GameScene, gvc.currentGame!.gametype != .timed, UserDefaults.standard.bool(forKey: "extension.hintarrow.enabled") {
-            showHintArrow()
+        if let game = gvc.currentGame as? GameScene,
+            game.gametype != .timed,
+            UserDefaults.standard.bool(forKey: "extension.hintarrow.enabled") {
+            showHintArrow(game: game)
         }
     }
     
@@ -64,8 +66,7 @@ class Case: SKSpriteNode {
         }
     }
     
-    func showHintArrow() {
-        let game = (gvc.currentGame as! GameScene)
+    func showHintArrow(game: GameScene) {
         let shape = SKShapeNode(path: polygon([(-15, 0), (-3, -15), (-3, -3), (15, -3), (15, 3), (-3, 3), (-3, 15)]))
         let deltaWinX = game.winCaseNumber % game.width - index % game.width
         let deltaWinY = game.winCaseNumber / game.height - index / game.height

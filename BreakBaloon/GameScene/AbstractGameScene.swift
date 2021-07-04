@@ -22,8 +22,8 @@ class AbstractGameScene: SKScene {
     init(view: SKView, gametype: GameType) {
         self.gametype = gametype
         super.init(size: view.bounds.size)
-        construct(view.window!.rootViewController as! GameViewController)
-        (view.window!.rootViewController as! GameViewController).currentGame = self
+        construct(view.gvc)
+        view.gvc.currentGame = self
     }
     
     @available(*, unavailable)
