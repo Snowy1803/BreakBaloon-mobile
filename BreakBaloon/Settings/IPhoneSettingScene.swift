@@ -42,7 +42,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         addChild(music)
         tmusic.text = NSLocalizedString("setting.category.music", comment: "")
         tmusic.fontSize = 35
-        tmusic.fontName = start.BUTTON_FONT
+        tmusic.fontName = StartScene.buttonFont
         tmusic.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(0, text: true))
         tmusic.fontColor = SKColor.black
         tmusic.zPosition = 2
@@ -54,7 +54,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         addChild(extensions)
         textensions.text = NSLocalizedString("settings.extensions", comment: "")
         textensions.fontSize = 35
-        textensions.fontName = start.BUTTON_FONT
+        textensions.fontName = StartScene.buttonFont
         textensions.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(1, text: true))
         textensions.fontColor = SKColor.black
         textensions.zPosition = 2
@@ -66,7 +66,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         addChild(login)
         tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
         tlogin.fontSize = 35
-        tlogin.fontName = start.BUTTON_FONT
+        tlogin.fontName = StartScene.buttonFont
         tlogin.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(2, text: true))
         tlogin.fontColor = SKColor.black
         tlogin.zPosition = 2
@@ -78,7 +78,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         addChild(other)
         tother.text = NSLocalizedString("setting.category.other", comment: "")
         tother.fontSize = 35
-        tother.fontName = start.BUTTON_FONT
+        tother.fontName = StartScene.buttonFont
         tother.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(3, text: true))
         tother.fontColor = SKColor.black
         tother.zPosition = 2
@@ -90,7 +90,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         addChild(back)
         tback.text = NSLocalizedString("back", comment: "")
         tback.fontSize = 35
-        tback.fontName = start.BUTTON_FONT
+        tback.fontName = StartScene.buttonFont
         tback.position = CGPoint(x: frame.midX, y: back.frame.height / 2 - 15 + (start.view?.safeAreaInsets.bottom ?? 0))
         tback.fontColor = SKColor.black
         tback.zPosition = 2
@@ -164,7 +164,7 @@ class IPhoneMusicSettingScene: SKScene {
         ok.zPosition = 1
         addChild(ok)
         tok.text = NSLocalizedString("ok", comment: "Ok")
-        tok.fontName = settings.start.BUTTON_FONT
+        tok.fontName = StartScene.buttonFont
         tok.fontColor = SKColor.black
         tok.fontSize = 20
         tok.position = CGPoint(x: frame.width / 3, y: 40)
@@ -176,7 +176,7 @@ class IPhoneMusicSettingScene: SKScene {
         reset.zPosition = 1
         addChild(reset)
         treset.text = NSLocalizedString("reset", comment: "Reset settings")
-        treset.fontName = settings.start.BUTTON_FONT
+        treset.fontName = StartScene.buttonFont
         treset.fontColor = SKColor.black
         treset.fontSize = 20
         treset.position = CGPoint(x: frame.width / 3 * 2, y: 40)
@@ -217,7 +217,7 @@ class IPhoneMusicSettingScene: SKScene {
     }
     
     func resetSettings() {
-        musicSetting.setVolume(GameViewController.DEFAULT_MUSIC)
+        musicSetting.setVolume(GameViewController.defaultMusicVolume)
         musicIndexSetting.reset()
     }
 }
@@ -258,7 +258,7 @@ class IPhoneOtherSettingScene: SKScene {
         ok.zPosition = 1
         addChild(ok)
         tok.text = NSLocalizedString("ok", comment: "Ok")
-        tok.fontName = settings.start.BUTTON_FONT
+        tok.fontName = StartScene.buttonFont
         tok.fontColor = SKColor.black
         tok.fontSize = 20
         tok.position = CGPoint(x: frame.width / 3, y: 40)
@@ -270,7 +270,7 @@ class IPhoneOtherSettingScene: SKScene {
         reset.zPosition = 1
         addChild(reset)
         treset.text = NSLocalizedString("reset", comment: "Reset settings")
-        treset.fontName = settings.start.BUTTON_FONT
+        treset.fontName = StartScene.buttonFont
         treset.fontColor = SKColor.black
         treset.fontSize = 20
         treset.position = CGPoint(x: frame.width / 3 * 2, y: 40)
@@ -309,6 +309,6 @@ class IPhoneOtherSettingScene: SKScene {
     }
     
     func resetSettings() {
-        audioSetting.setVolume(GameViewController.DEFAULT_MUSIC)
+        audioSetting.setVolume(GameViewController.defaultMusicVolume)
     }
 }

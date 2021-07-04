@@ -52,17 +52,17 @@ class BBT1: AbstractTheme {
         do {
             if fake {
                 if status == .closed {
-                    return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
                 } else {
-                    return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
                 }
             } else {
                 if status == .closed {
-                    return SKTexture(image: try FileSaveHelper(fileName: "closed\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "closed\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
                 } else if differentBaloonsForPumpedGood, status == .winnerOpened {
-                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)-good", fileExtension: .PNG, subDirectory: themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)-good", fileExtension: .png, subDirectory: themeID()).getImage())
                 } else {
-                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .PNG, subDirectory: themeID()).getImage())
+                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
                 }
             }
         } catch {
@@ -88,7 +88,7 @@ class BBT1: AbstractTheme {
     }
     
     func pumpSound(_ winner: Bool) -> Data {
-        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .WAV, subDirectory: themeID()).fullyQualifiedPath)))
+        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: themeID()).fullyQualifiedPath)))
     }
     
     class func parse(id: String, bbtheme file: String) -> BBT1 {

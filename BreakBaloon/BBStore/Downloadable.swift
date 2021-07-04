@@ -146,7 +146,7 @@ class Downloadable: SKNode {
             return
         }
         print("Beginning download of", dlname)
-        let file = FileSaveHelper(fileName: dlid, fileExtension: .NONE)
+        let file = FileSaveHelper(fileName: dlid, fileExtension: .none)
         file.download(URL(string: "http://elementalcube.infos.st/api/bbstore-dl.php?id=\(dlid)")!)
         do {
             if wait {
@@ -212,7 +212,7 @@ class Downloadable: SKNode {
     
     class func loadAll(_ viewSize: CGSize, _ gvc: GameViewController) throws -> [Downloadable] {
         var list: [Downloadable] = []
-        let fsh = FileSaveHelper(fileName: "bbstore", fileExtension: .TXT, subDirectory: "", directory: .cachesDirectory)
+        let fsh = FileSaveHelper(fileName: "bbstore", fileExtension: .txt, subDirectory: "", directory: .cachesDirectory)
         fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
         while !fsh.downloadedSuccessfully {
             if fsh.downloadError != nil {
@@ -299,15 +299,15 @@ class Downloadable: SKNode {
         static func getExtension(_ type: DownloadType) -> FileSaveHelper.FileExtension {
             switch type {
             case .bbt1, .bbt2:
-                return .ZIP
+                return .zip
             case .javaExtension:
-                return .JAR
+                return .jar
             case .wavMusic:
-                return .WAV
+                return .wav
             case .m4aMusic:
-                return .M4A
+                return .m4a
             default:
-                return .NONE
+                return .none
             }
         }
         

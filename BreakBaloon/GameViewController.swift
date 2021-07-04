@@ -13,8 +13,8 @@ import UIKit
 import WatchConnectivity
 
 class GameViewController: UIViewController, WCSessionDelegate {
-    static let DEFAULT_AUDIO: Float = 1.0
-    static let DEFAULT_MUSIC: Float = 0.8
+    static let defaultAudioVolume: Float = 1.0
+    static let defaultMusicVolume: Float = 0.8
     fileprivate static var loggedIn = false
     
     var skView: SKView?
@@ -23,7 +23,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     var backgroundMusicPlayer: AVAudioPlayer!
     var audioPlayer: AVAudioPlayer!
-    var audioVolume: Float = GameViewController.DEFAULT_AUDIO
+    var audioVolume: Float = GameViewController.defaultAudioVolume
     var currentGame: AbstractGameScene?
     var currentMusicFileName = "Race.m4a"
     var currentMusicInt: Int {
@@ -65,7 +65,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
             level.open()
         }
         
-        print("Path:", FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
+        print("Path:", FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath)
         loadMusicAndStartScene()
         
         _ = (UIApplication.shared.delegate as! AppDelegate).triggerDeepLinkIfPresent()
@@ -94,10 +94,10 @@ class GameViewController: UIViewController, WCSessionDelegate {
             data.set("/Default", forKey: "currentTheme")
         }
         if data.object(forKey: "audio-true") == nil {
-            data.set(GameViewController.DEFAULT_MUSIC, forKey: "audio-true")
+            data.set(GameViewController.defaultMusicVolume, forKey: "audio-true")
         }
         if data.object(forKey: "audio-false") == nil {
-            data.set(GameViewController.DEFAULT_AUDIO, forKey: "audio-false")
+            data.set(GameViewController.defaultAudioVolume, forKey: "audio-false")
         }
         if UserDefaults.standard.object(forKey: "elementalcube.sessid") != nil {
             logIn(sessid: UserDefaults.standard.string(forKey: "elementalcube.sessid")!)
@@ -107,7 +107,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         
         print(UserDefaults.standard.dictionaryRepresentation())
         do {
-            print(try FileManager.default.contentsOfDirectory(atPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath))
+            print(try FileManager.default.contentsOfDirectory(atPath: FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath))
         } catch let error as NSError {
             print("Couldn't view documents. Error: \(error.localizedDescription)")
         }
@@ -157,7 +157,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     class func getMusicURLs() -> [URL] {
         var urls: [URL] = []
-        let path = FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath
+        let path = FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath
         let enumerator = FileManager.default.enumerator(atPath: path)
         
         while let element = enumerator?.nextObject() as? String {
@@ -182,7 +182,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     class func getExternalThemes() -> [URL] {
-        let path = URL(fileURLWithPath: FileSaveHelper(fileName: "", fileExtension: .NONE).fullyQualifiedPath)
+        let path = URL(fileURLWithPath: FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath)
         return path.subdirectories
     }
     

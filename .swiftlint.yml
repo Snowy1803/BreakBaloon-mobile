@@ -12,5 +12,7 @@ trailing_whitespace:
 identifier_name:
   excluded:
     - i
-    - xp
     - dl
+    - id
+    - ok
+    - xp

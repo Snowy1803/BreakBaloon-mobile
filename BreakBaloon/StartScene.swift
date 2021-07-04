@@ -9,7 +9,7 @@
 import SpriteKit
 
 class StartScene: SKScene {
-    let BUTTON_FONT = "ChalkboardSE-Light"
+    static let buttonFont = "ChalkboardSE-Light"
     static let GAMETYPE_SOLO: Int8 = 0
     static let GAMETYPE_COMPUTER: Int8 = 1
     static let GAMETYPE_TIMED: Int8 = 2
@@ -123,7 +123,7 @@ class StartScene: SKScene {
         addChild(soloButton)
         tsoloButton.text = NSLocalizedString("gametype.singleplayer", comment: "Singleplayer")
         tsoloButton.fontSize = 35
-        tsoloButton.fontName = BUTTON_FONT
+        tsoloButton.fontName = StartScene.buttonFont
         tsoloButton.fontColor = SKColor.black
         tsoloButton.zPosition = 2
         addChild(tsoloButton)
@@ -133,7 +133,7 @@ class StartScene: SKScene {
         addChild(multiButton)
         tmultiButton.text = NSLocalizedString("gametype.computer", comment: "Versus computer")
         tmultiButton.fontSize = 35
-        tmultiButton.fontName = BUTTON_FONT
+        tmultiButton.fontName = StartScene.buttonFont
         tmultiButton.fontColor = SKColor.black
         tmultiButton.zPosition = 2
         addChild(tmultiButton)
@@ -143,7 +143,7 @@ class StartScene: SKScene {
         addChild(timedButton)
         ttimedButton.text = NSLocalizedString("gametype.timed", comment: "Timed game")
         ttimedButton.fontSize = 35
-        ttimedButton.fontName = BUTTON_FONT
+        ttimedButton.fontName = StartScene.buttonFont
         ttimedButton.fontColor = SKColor.black
         ttimedButton.zPosition = 2
         addChild(ttimedButton)
@@ -169,7 +169,7 @@ class StartScene: SKScene {
         addChild(randButton)
         trandButton.text = NSLocalizedString("gametype.rand", comment: "Game with random baloons spawning")
         trandButton.fontSize = 35
-        trandButton.fontName = BUTTON_FONT
+        trandButton.fontName = StartScene.buttonFont
         trandButton.fontColor = SKColor.black
         trandButton.zPosition = 2
         addChild(trandButton)
@@ -179,7 +179,7 @@ class StartScene: SKScene {
         addChild(prefsButton)
         tprefsButton.text = NSLocalizedString("settings.title", comment: "Settings")
         tprefsButton.fontSize = 20
-        tprefsButton.fontName = BUTTON_FONT
+        tprefsButton.fontName = StartScene.buttonFont
         tprefsButton.fontColor = SKColor.black
         tprefsButton.zPosition = 2
         addChild(tprefsButton)
@@ -189,7 +189,7 @@ class StartScene: SKScene {
         addChild(bbstoreButton)
         tbbstoreButton.text = NSLocalizedString("bbstore.button", comment: "BBStore")
         tbbstoreButton.fontSize = 20
-        tbbstoreButton.fontName = BUTTON_FONT
+        tbbstoreButton.fontName = StartScene.buttonFont
         tbbstoreButton.fontColor = SKColor.black
         tbbstoreButton.zPosition = 2
         addChild(tbbstoreButton)
@@ -273,7 +273,7 @@ class StartScene: SKScene {
         tsmallButton = SKLabelNode()
         tsmallButton.text = NSLocalizedString("gamesize.small", comment: "Small")
         tsmallButton.fontSize = 35
-        tsmallButton.fontName = BUTTON_FONT
+        tsmallButton.fontName = StartScene.buttonFont
         tsmallButton.fontColor = SKColor.black
         tsmallButton.zPosition = 2
         addChild(tsmallButton)
@@ -285,7 +285,7 @@ class StartScene: SKScene {
         tmediumButton = SKLabelNode()
         tmediumButton.text = NSLocalizedString("gamesize.medium", comment: "Normal")
         tmediumButton.fontSize = 35
-        tmediumButton.fontName = BUTTON_FONT
+        tmediumButton.fontName = StartScene.buttonFont
         tmediumButton.fontColor = SKColor.black
         tmediumButton.zPosition = 2
         addChild(tmediumButton)
@@ -297,7 +297,7 @@ class StartScene: SKScene {
         tbigButton = SKLabelNode()
         tbigButton.text = NSLocalizedString("gamesize.large", comment: "Large")
         tbigButton.fontSize = 35
-        tbigButton.fontName = BUTTON_FONT
+        tbigButton.fontName = StartScene.buttonFont
         tbigButton.fontColor = SKColor.black
         tbigButton.zPosition = 2
         addChild(tbigButton)
@@ -309,7 +309,7 @@ class StartScene: SKScene {
         let safeSize = frame.inset(by: view!.safeAreaInsets).size
         tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int(safeSize.width / 75), Int((safeSize.height - 35) / 75))
         tadaptButton.fontSize = 35
-        tadaptButton.fontName = BUTTON_FONT
+        tadaptButton.fontName = StartScene.buttonFont
         tadaptButton.fontColor = SKColor.black
         tadaptButton.zPosition = 2
         addChild(tadaptButton)

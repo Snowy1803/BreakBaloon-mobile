@@ -284,7 +284,7 @@ class BBT2: AbstractTheme {
     func fileImage(_ stringLiteral: String) throws -> String? {
         let argument = try execIfNeeds(stringLiteral)!
         do {
-            return try FileSaveHelper(fileName: argument, fileExtension: argument.contains(".") ? .NONE : .PNG, subDirectory: dir).getData().base64EncodedString(options: .lineLength64Characters)
+            return try FileSaveHelper(fileName: argument, fileExtension: argument.contains(".") ? .none : .png, subDirectory: dir).getData().base64EncodedString(options: .lineLength64Characters)
         } catch {
             print("Couldn't get file content of \(argument)\(argument.contains(".") ? "" : ".png"): \(error)")
             throw error

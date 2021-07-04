@@ -18,16 +18,16 @@ class FileSaveHelper {
     }
     
     enum FileExtension: String {
-        case NONE = ""
-        case TXT = ".txt"
-        case BBTHEME = ".bbtheme"
-        case BBTHEME2CODE = ".bbtc"
-        case PNG = ".png"
-        case GIF = ".gif"
-        case WAV = ".wav"
-        case M4A = ".m4a"
-        case ZIP = ".zip"
-        case JAR = ".jar"
+        case none = ""
+        case txt = ".txt"
+        case bbtheme = ".bbtheme"
+        case bbtc = ".bbtc"
+        case png = ".png"
+        case gif = ".gif"
+        case wav = ".wav"
+        case m4a = ".m4a"
+        case zip = ".zip"
+        case jar = ".jar"
     }
     
     fileprivate let directory: FileManager.SearchPathDirectory

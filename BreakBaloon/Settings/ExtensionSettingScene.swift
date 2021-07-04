@@ -10,10 +10,9 @@ import Foundation
 import SpriteKit
 
 class ExtensionSettingScene: SKScene {
-    let BUTTON_FONT = "ChalkboardSE-Light"
-    let ANIMATION_REQUIREMENT = 2
-    let HINTARROW_REQUIREMENT = 10
-    let BEE_REQUIREMENT = 15
+    let animationLevelRequirement = 2
+    let hintarrowLevelRequirement = 10
+    let beeLevelRequirement = 15
     let sortArray = ["animation": NSLocalizedString("extension.animation", comment: "Animation enabled?"), "hintArrow": NSLocalizedString("extension.hintarrow", comment: "HintArrow enabled?"), "bee": NSLocalizedString("extension.bee", comment: "Bee enabled?")]
     let previous: SKScene
     
@@ -38,28 +37,28 @@ class ExtensionSettingScene: SKScene {
         ok.zPosition = 1
         addChild(ok)
         tok.text = NSLocalizedString("ok", comment: "Ok")
-        tok.fontName = BUTTON_FONT
+        tok.fontName = StartScene.buttonFont
         tok.fontColor = SKColor.black
         tok.fontSize = 20
         tok.position = CGPoint(x: frame.width / 2, y: 40 + bottom)
         tok.zPosition = 2
         addChild(tok)
         let array = [String](sortArray.values)
-        animation.enable(GameViewController.getLevel() >= ANIMATION_REQUIREMENT)
+        animation.enable(GameViewController.getLevel() >= animationLevelRequirement)
         animation.position = CGPoint(x: 32 + left, y: top - sort(sortArray["animation"]!, in: array))
         addChild(animation)
-        hintarrow.enable(GameViewController.getLevel() >= HINTARROW_REQUIREMENT)
+        hintarrow.enable(GameViewController.getLevel() >= hintarrowLevelRequirement)
         hintarrow.position = CGPoint(x: 32 + left, y: top - sort(sortArray["hintArrow"]!, in: array))
         addChild(hintarrow)
-        bee.enable(GameViewController.getLevel() >= BEE_REQUIREMENT)
+        bee.enable(GameViewController.getLevel() >= beeLevelRequirement)
         bee.position = CGPoint(x: 32 + left, y: top - sort(sortArray["bee"]!, in: array))
         addChild(bee)
     }
     
     func initialize() {
-        animation.setTextureIfDisabled(view?.texture(from: getTexture(ANIMATION_REQUIREMENT)))
-        hintarrow.setTextureIfDisabled(view?.texture(from: getTexture(HINTARROW_REQUIREMENT)))
-        bee.setTextureIfDisabled(view?.texture(from: getTexture(BEE_REQUIREMENT)))
+        animation.setTextureIfDisabled(view?.texture(from: getTexture(animationLevelRequirement)))
+        hintarrow.setTextureIfDisabled(view?.texture(from: getTexture(hintarrowLevelRequirement)))
+        bee.setTextureIfDisabled(view?.texture(from: getTexture(beeLevelRequirement)))
     }
     
     @available(*, unavailable)

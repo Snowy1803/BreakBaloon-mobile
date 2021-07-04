@@ -122,11 +122,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let type = shortcut.type.components(separatedBy: ".").last!
         if let shortcutType = QuickActions(rawValue: type) {
             switch shortcutType {
-            case .Singleplayer:
+            case .singleplayer:
                 applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game": "singleplayer"])
-            case .Computer:
+            case .computer:
                 applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game": "computer"])
-            case .Time:
+            case .time:
                 applicationHandleRemoteNotification(application, didReceiveRemoteNotification: ["game": "time"])
             }
             quickActionHandled = true
@@ -135,8 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     enum QuickActions: String {
-        case Singleplayer
-        case Computer
-        case Time
+        case singleplayer = "Singleplayer"
+        case computer = "Computer"
+        case time = "Time"
     }
 }

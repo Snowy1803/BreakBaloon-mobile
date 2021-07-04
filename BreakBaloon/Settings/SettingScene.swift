@@ -10,7 +10,6 @@ import AVFoundation
 import SpriteKit
 
 class SettingScene: SKScene {
-    let FONT = "ChalkboardSE-Light"
     var previous: StartScene
     var ok = SKSpriteNode()
     var tok = SKLabelNode()
@@ -41,7 +40,7 @@ class SettingScene: SKScene {
         let top = frame.height - (gvc.skView?.safeAreaInsets.top ?? 0)
         
         let name = SKLabelNode(text: NSLocalizedString("settings.title", comment: "Settings"))
-        name.fontName = FONT
+        name.fontName = StartScene.buttonFont
         name.fontColor = SKColor.black
         name.position = CGPoint(x: frame.midX, y: top - 50)
         addChild(name)
@@ -62,7 +61,7 @@ class SettingScene: SKScene {
         extensions.zPosition = 1
         addChild(extensions)
         textensions = SKLabelNode(text: NSLocalizedString("settings.extensions", comment: "Extensions"))
-        textensions.fontName = FONT
+        textensions.fontName = StartScene.buttonFont
         textensions.fontColor = SKColor.black
         textensions.fontSize = 20
         textensions.position = CGPoint(x: frame.width / 3, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
@@ -74,7 +73,7 @@ class SettingScene: SKScene {
         login.zPosition = 1
         addChild(login)
         tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out"))
-        tlogin.fontName = FONT
+        tlogin.fontName = StartScene.buttonFont
         tlogin.fontColor = SKColor.black
         tlogin.fontSize = 20
         tlogin.position = CGPoint(x: frame.width / 3 * 2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
@@ -87,7 +86,7 @@ class SettingScene: SKScene {
         ok.zPosition = 1
         addChild(ok)
         tok = SKLabelNode(text: NSLocalizedString("ok", comment: "Ok"))
-        tok.fontName = FONT
+        tok.fontName = StartScene.buttonFont
         tok.fontColor = SKColor.black
         tok.fontSize = 20
         tok.position = CGPoint(x: frame.width / 3, y: 40 + bottom)
@@ -99,7 +98,7 @@ class SettingScene: SKScene {
         reset.zPosition = 1
         addChild(reset)
         treset = SKLabelNode(text: NSLocalizedString("reset", comment: "Reset settings"))
-        treset.fontName = FONT
+        treset.fontName = StartScene.buttonFont
         treset.fontColor = SKColor.black
         treset.fontSize = 20
         treset.position = CGPoint(x: frame.width / 3 * 2, y: 40 + bottom)
@@ -162,8 +161,8 @@ class SettingScene: SKScene {
     }
     
     func resetSettings() {
-        audioSetting.setVolume(GameViewController.DEFAULT_AUDIO)
-        musicSetting.setVolume(GameViewController.DEFAULT_MUSIC)
+        audioSetting.setVolume(GameViewController.defaultAudioVolume)
+        musicSetting.setVolume(GameViewController.defaultMusicVolume)
         musicIndexSetting.reset()
     }
     
