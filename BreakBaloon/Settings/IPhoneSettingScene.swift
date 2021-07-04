@@ -101,12 +101,12 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         if touches.count == 1 {
             let point = touches.first!.location(in: self)
             if music.frame.contains(point) {
-                view?.presentScene(IPhoneMusicSettingScene(self), transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
+                view?.presentScene(IPhoneMusicSettingScene(self), transition: SKTransition.push(with: .left, duration: 1))
             } else if other.frame.contains(point) {
-                view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
+                view?.presentScene(IPhoneOtherSettingScene(self), transition: SKTransition.push(with: .left, duration: 1))
             } else if extensions.frame.contains(point) {
                 let scene = ExtensionSettingScene(self)
-                view?.presentScene(scene, transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
+                view?.presentScene(scene, transition: SKTransition.push(with: .left, duration: 1))
                 scene.initialize()
             } else if login.frame.contains(point) {
                 DispatchQueue.main.async {
@@ -118,7 +118,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
                     }
                 }
             } else if back.frame.contains(point) {
-                view?.presentScene(start, transition: SKTransition.doorsCloseHorizontal(withDuration: TimeInterval(1)))
+                view?.presentScene(start, transition: SKTransition.doorsCloseHorizontal(withDuration: 1))
             }
         }
     }
@@ -189,7 +189,7 @@ class IPhoneMusicSettingScene: SKScene {
             let touch = touches.first!
             let point = touch.location(in: self)
             if onNode(ok, point: point) {
-                view?.presentScene(settings, transition: SKTransition.push(with: .right, duration: TimeInterval(1)))
+                view?.presentScene(settings, transition: SKTransition.push(with: .right, duration: 1))
             } else if onNode(reset, point: point) {
                 resetSettings()
             } else if onNode(musicSetting, point: point) {
@@ -283,7 +283,7 @@ class IPhoneOtherSettingScene: SKScene {
             let touch = touches.first!
             let point = touch.location(in: self)
             if onNode(ok, point: point) {
-                view?.presentScene(settings, transition: SKTransition.push(with: .right, duration: TimeInterval(1)))
+                view?.presentScene(settings, transition: SKTransition.push(with: .right, duration: 1))
             } else if onNode(reset, point: point) {
                 resetSettings()
             } else if onNode(audioSetting, point: point) {

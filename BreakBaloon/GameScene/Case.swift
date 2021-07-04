@@ -51,7 +51,7 @@ class Case: SKSpriteNode {
         let action = SKAction.run {
             self.animate(self.gvc.currentTheme.animationColor(type: self.type))
         }
-        run(SKAction.sequence([action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action]))
+        run(SKAction.sequence([action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action]))
     }
     
     func animate(_ color: SKColor?) {

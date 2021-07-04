@@ -32,7 +32,7 @@ class RandGameBonusLevel: RandGameLevel {
         return status.isUnlocked() && !status.isFinished()
     }
     
-    override func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: TimeInterval(1))) {
+    override func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {
         gamescene = RandGameScene(view: view, level: self)
         view.presentScene(gamescene!, transition: transition)
         gamescene!.addChild(RandGameBonusLevelInfoNode(level: self, scene: gamescene!))

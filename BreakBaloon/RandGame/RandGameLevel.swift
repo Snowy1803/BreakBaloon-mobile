@@ -86,7 +86,7 @@ class RandGameLevel {
         status = .locked
     }
     
-    func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: TimeInterval(1))) {
+    func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {
         gamescene = RandGameScene(view: view, level: self)
         view.presentScene(gamescene!, transition: transition)
         gamescene!.addChild(RandGameLevelInfoNode(level: self, scene: gamescene!))

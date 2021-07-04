@@ -74,7 +74,7 @@ class ExtensionSettingScene: SKScene {
                 UserDefaults.standard.set(hintarrow.checked, forKey: "extension.hintarrow.enabled")
                 UserDefaults.standard.set(bee.checked, forKey: "extension.bee.enabled")
                 view!.gvc.wcSession?.transferUserInfo(["extension.animation.enabled": animation.checked])
-                view!.presentScene(previous, transition: SKTransition.push(with: .right, duration: TimeInterval(1)))
+                view!.presentScene(previous, transition: SKTransition.push(with: .right, duration: 1))
             } else if animation.frame.contains(point) {
                 animation.reverseCheck()
             } else if hintarrow.frame.contains(point) {

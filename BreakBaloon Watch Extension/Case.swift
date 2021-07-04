@@ -44,7 +44,7 @@ class Case: SKSpriteNode {
         let action = SKAction.run {
             self.animate([0: SKColor.red, 1: SKColor.yellow, 2: SKColor.blue, 3: SKColor(red: 191 / 255, green: 1, blue: 0, alpha: 1), 4: SKColor(red: 1, green: 191 / 255, blue: 191 / 255, alpha: 1), 5: SKColor(red: 0.5, green: 0, blue: 1, alpha: 1)][self.type])
         }
-        run(SKAction.sequence([action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action, SKAction.wait(forDuration: TimeInterval(0.2)), action]))
+        run(SKAction.sequence([action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action]))
     }
     
     func animate(_ color: SKColor?) {

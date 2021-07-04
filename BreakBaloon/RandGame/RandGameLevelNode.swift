@@ -39,7 +39,7 @@ class RandGameLevelNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func click(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: TimeInterval(1))) {
+    func click(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {
         if level.status != .locked {
             if level.status == .unlockable {
                 // TODO: Display AD to unlock

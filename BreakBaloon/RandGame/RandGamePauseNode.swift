@@ -44,7 +44,7 @@ class RandGamePauseNode: SKNode {
     func touchAt(_ point: CGPoint) {
         if menu.frame.contains(point) {
             let scene = StartScene(size: self.scene!.frame.size)
-            self.scene!.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
+            self.scene!.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: 1))
             scene.adjustPosition(false, sizeChange: true)
         } else if play.frame.contains(point) {
             removeFromParent()

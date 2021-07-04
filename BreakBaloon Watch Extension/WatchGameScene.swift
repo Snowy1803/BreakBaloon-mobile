@@ -74,7 +74,7 @@ class WatchGameScene: SKScene {
             plus.zPosition = 3
             addChild(plus)
             print(plus, plus.frame)
-            plus.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(5)), SKAction.removeFromParent()]))
+            plus.run(SKAction.sequence([SKAction.wait(forDuration: 5), SKAction.removeFromParent()]))
             var isThereUnbreakedBaloons = false
             for aCase in cases where !aCase.breaked {
                 isThereUnbreakedBaloons = true
@@ -117,12 +117,12 @@ class WatchGameScene: SKScene {
         print(label)
         addChild(label)
         
-        label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(1)), SKAction.run {
+        label.run(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run {
             label.fontColor = SKColor.black
             if newRecord {
                 label.text = NSLocalizedString("game.highscore", comment: "")
             }
-        }, SKAction.wait(forDuration: TimeInterval(newRecord ? 1.5 : 0.5)), SKAction.run {
+        }, SKAction.wait(forDuration: newRecord ? 1.5 : 0.5), SKAction.run {
             self.cases.removeAll()
             self.removeAllChildren()
             self.construct()

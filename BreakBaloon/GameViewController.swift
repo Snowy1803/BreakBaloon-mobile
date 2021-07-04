@@ -126,9 +126,10 @@ class GameViewController: UIViewController, WCSessionDelegate {
         // (enforced by storyboard)
         // swiftlint:disable:next force_cast
         skView = (view as! SKView)
-        // skView.showsFPS = true
-        // skView.showsNodeCount = true
+        skView!.showsFPS = true
+        skView!.showsNodeCount = true
         skView!.ignoresSiblingOrder = true
+        skView!.preferredFramesPerSecond = 120
         
         let scene: SKScene = StartScene(size: skView!.bounds.size)
         scene.scaleMode = .aspectFill
@@ -345,12 +346,12 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: nil, completion: { _ in
+        coordinator.animate(alongsideTransition: { _ in
             if let scene = self.skView!.scene as? StartScene {
                 self.skView!.scene!.size = size
                 scene.adjustPosition(false, sizeChange: true)
             }
-        })
+        }, completion: nil)
     }
 }
 

@@ -108,11 +108,11 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         }
         if decY < 0 {
             if decY < -100 {
-                title.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
-                back.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
-                upper.run(SKAction.fadeOut(withDuration: TimeInterval(0.1)))
+                title.run(SKAction.fadeOut(withDuration: 0.1))
+                back.run(SKAction.fadeOut(withDuration: 0.1))
+                upper.run(SKAction.fadeOut(withDuration: 0.1))
                 search.removeFromSuperview()
-                let transition = SKTransition.push(with: .down, duration: TimeInterval((view!.frame.height + decY) * (CGFloat(Date().timeIntervalSince1970 - touchInterval!) / -decY)))
+                let transition = SKTransition.push(with: .down, duration: (view!.frame.height + decY) * (CGFloat(Date().timeIntervalSince1970 - touchInterval!) / -decY))
                 transition.pausesOutgoingScene = false
                 view?.presentScene(BBStoreScene(start: start, size: view!.frame.size, gvc: gvc), transition: transition)
             } else {
@@ -162,7 +162,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     
     func goBack() {
         search.removeFromSuperview()
-        view?.presentScene(start, transition: SKTransition.doorsOpenVertical(withDuration: TimeInterval(1)))
+        view?.presentScene(start, transition: SKTransition.doorsOpenVertical(withDuration: 1))
     }
     
     func simulateClickOnDownload(_ id: String) {

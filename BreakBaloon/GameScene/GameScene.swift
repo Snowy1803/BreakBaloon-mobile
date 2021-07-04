@@ -102,7 +102,7 @@ class GameScene: AbstractGameScene {
             plus.position = touch
             plus.zPosition = 3
             addChild(plus)
-            plus.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(5)), SKAction.removeFromParent()]))
+            plus.run(SKAction.sequence([SKAction.wait(forDuration: 5), SKAction.removeFromParent()]))
             var isThereUnbreakedBaloons = false
             for aCase in cases where !aCase.breaked {
                 isThereUnbreakedBaloons = true
@@ -175,9 +175,9 @@ class GameScene: AbstractGameScene {
             label.position.x = label.frame.width / 2
         }
         let newRecord = (gametype == .solo && UserDefaults.standard.integer(forKey: "highscore") < points) || (gametype == .timed && UserDefaults.standard.integer(forKey: "bestTimedScore") < points)
-        label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {
+        label.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.label.fontColor = SKColor.orange
-        }, SKAction.wait(forDuration: TimeInterval(1)), SKAction.run {
+        }, SKAction.wait(forDuration: 1), SKAction.run {
             self.label.fontColor = SKColor.black
             if newRecord {
                 let record = SKLabelNode(text: NSLocalizedString("game.end.newrecord", comment: ""))
@@ -188,7 +188,7 @@ class GameScene: AbstractGameScene {
                 record.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
                 self.addChild(record)
             }
-        }, SKAction.wait(forDuration: TimeInterval(newRecord ? 1.5 : 0.5)), SKAction.run {
+        }, SKAction.wait(forDuration: newRecord ? 1.5 : 0.5), SKAction.run {
             let data = UserDefaults.standard
             if self.gametype == .solo, data.integer(forKey: "highscore") < self.points {
                 data.set(self.points, forKey: "highscore")
@@ -203,7 +203,7 @@ class GameScene: AbstractGameScene {
             gvc.addXP(Int(5 * levelModifier * sizeModifier))
             let scene = StartScene(size: self.frame.size, growXPFrom: oldXP)
             scene.lastGameInfo = self.label.text!
-            self.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
+            self.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: 1))
         }]))
     }
     

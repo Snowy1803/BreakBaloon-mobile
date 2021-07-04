@@ -167,12 +167,12 @@ class SettingScene: SKScene {
     }
     
     func close() {
-        view?.presentScene(previous, transition: SKTransition.doorsCloseHorizontal(withDuration: TimeInterval(1)))
+        view?.presentScene(previous, transition: SKTransition.doorsCloseHorizontal(withDuration: 1))
     }
     
     func showExtConfig() {
         let scene = ExtensionSettingScene(self)
-        view?.presentScene(scene, transition: SKTransition.push(with: .left, duration: TimeInterval(1)))
+        view?.presentScene(scene, transition: SKTransition.push(with: .left, duration: 1))
         scene.initialize()
     }
     

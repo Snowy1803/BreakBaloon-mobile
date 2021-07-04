@@ -158,7 +158,7 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
-        nextBaloon = Date().timeIntervalSince1970 + TimeInterval(Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
+        nextBaloon = Date().timeIntervalSince1970 + (Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
         if !(aCase is FakeCase) {
             baloonsToSpawn -= 1
         }
@@ -193,11 +193,11 @@ class RandGameScene: AbstractGameScene {
         level.end(getMissingBaloons())
         updateLabel()
 
-        label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {
+        label.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.label.fontColor = SKColor.orange
-        }, SKAction.wait(forDuration: TimeInterval(1)), SKAction.run {
+        }, SKAction.wait(forDuration: 1), SKAction.run {
             self.label.fontColor = SKColor.black
-        }, SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {
+        }, SKAction.wait(forDuration: 0.5), SKAction.run {
             if UserDefaults.standard.integer(forKey: "bestTimedScore") < self.points {
                 UserDefaults.standard.set(self.points, forKey: "bestRandomScore")
             }
