@@ -18,9 +18,9 @@ class GameScene: AbstractGameScene {
     var computerpoints: Int = 0
     var waitingForComputer: Bool = false
     
-    init(view: SKView, gametype: Int8, width: UInt, height: UInt) {
-        self.width = Int(width)
-        self.height = Int(height)
+    init(view: SKView, gametype: GameType, width: Int, height: Int) {
+        self.width = width
+        self.height = height
         cases = []
         cases.reserveCapacity(self.width * self.height)
         super.init(view: view, gametype: gametype)
@@ -37,12 +37,15 @@ class GameScene: AbstractGameScene {
             addChild(theCase)
             cases.append(theCase)
         }
-        if gametype == StartScene.GAMETYPE_SOLO {
+        switch gametype {
+        case .solo:
             label.text = NSLocalizedString("game.score.no", comment: "No points")
-        } else if gametype == StartScene.GAMETYPE_COMPUTER {
+        case .computer:
             label.text = NSLocalizedString("game.score.vsc.no.no", comment: "No points both")
-        } else if gametype == StartScene.GAMETYPE_TIMED {
+        case .timed:
             label.text = String(format: NSLocalizedString("game.time", comment: "Time"), 0)
+        case .undefined, .random:
+            assertionFailure()
         }
         label.fontColor = SKColor.black
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -76,15 +79,15 @@ class GameScene: AbstractGameScene {
         touched.breakBaloon(index == winCaseNumber)
         var data: Data
         var gameEnded = false
-        if gametype != StartScene.GAMETYPE_TIMED, index == winCaseNumber {
+        if gametype != .timed, index == winCaseNumber {
             if computer {
                 computerpoints += 1
             } else {
                 points += 1
             }
-            if gametype == StartScene.GAMETYPE_SOLO {
+            if gametype == .solo {
                 label.text = String(format: NSLocalizedString("game.score.\(points > 1 ? "more" : "one")", comment: "Number of points"), points)
-            } else if gametype == StartScene.GAMETYPE_COMPUTER {
+            } else if gametype == .computer {
                 label.text = String(format: NSLocalizedString("game.score.vsc.\(points > 1 ? "more" : "one").\(computerpoints > 1 ? "more" : "one")", comment: "Number of points both"), points, computerpoints)
             }
             label.position.x = label.frame.width / 2
@@ -113,7 +116,7 @@ class GameScene: AbstractGameScene {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
             } while cases[winCaseNumber].breaked && !gameEnded
             data = (view?.window?.rootViewController as! GameViewController).currentTheme.pumpSound(true)
-        } else if gametype == StartScene.GAMETYPE_TIMED {
+        } else if gametype == .timed {
             var isThereUnbreakedBaloons = false
             for aCase in cases where !aCase.breaked {
                 isThereUnbreakedBaloons = true
@@ -140,7 +143,7 @@ class GameScene: AbstractGameScene {
             print("Error playing sound at \(data)")
         }
         
-        if !gameEnded, !computer, gametype == StartScene.GAMETYPE_COMPUTER {
+        if !gameEnded, !computer, gametype == .computer {
             waitingForComputer = true
             run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.25)), SKAction.run {
                 var wherebreak: Int
@@ -164,7 +167,7 @@ class GameScene: AbstractGameScene {
     
     func gameEnd() {
         endTime = Date().timeIntervalSince1970 - beginTime!
-        if gametype == StartScene.GAMETYPE_COMPUTER {
+        if gametype == .computer {
             if points > computerpoints {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.won", comment: "Points at end"), points, computerpoints)
             } else if computerpoints > points {
@@ -173,12 +176,12 @@ class GameScene: AbstractGameScene {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.same", comment: "Points at end"), points)
             }
             label.position.x = label.frame.width / 2
-        } else if gametype == StartScene.GAMETYPE_TIMED {
+        } else if gametype == .timed {
             points = Int((Float(width * height) / Float(endTime!)) * 5)
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), points, Int(endTime!))
             label.position.x = label.frame.width / 2
         }
-        let newRecord = gametype == StartScene.GAMETYPE_SOLO && UserDefaults.standard.integer(forKey: "highscore") < points || gametype == StartScene.GAMETYPE_TIMED && UserDefaults.standard.integer(forKey: "bestTimedScore") < points
+        let newRecord = (gametype == .solo && UserDefaults.standard.integer(forKey: "highscore") < points) || (gametype == .timed && UserDefaults.standard.integer(forKey: "bestTimedScore") < points)
         label.run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {
             self.label.fontColor = SKColor.orange
         }, SKAction.wait(forDuration: TimeInterval(1)), SKAction.run {
@@ -194,9 +197,9 @@ class GameScene: AbstractGameScene {
             }
         }, SKAction.wait(forDuration: TimeInterval(newRecord ? 1.5 : 0.5)), SKAction.run {
             let data = UserDefaults.standard
-            if self.gametype == StartScene.GAMETYPE_SOLO, data.integer(forKey: "highscore") < self.points {
+            if self.gametype == .solo, data.integer(forKey: "highscore") < self.points {
                 data.set(self.points, forKey: "highscore")
-            } else if self.gametype == StartScene.GAMETYPE_TIMED, data.integer(forKey: "bestTimedScore") < self.points {
+            } else if self.gametype == .timed, data.integer(forKey: "bestTimedScore") < self.points {
                 data.set(self.points, forKey: "bestTimedScore")
             }
             let gvc = self.view!.window!.rootViewController as! GameViewController
@@ -212,7 +215,7 @@ class GameScene: AbstractGameScene {
     }
     
     override func update(_: TimeInterval) {
-        if gametype == StartScene.GAMETYPE_TIMED, endTime == nil, !isGamePaused() {
+        if gametype == .timed, endTime == nil, !isGamePaused() {
             label.text = String(format: NSLocalizedString("game.time", comment: "Time"), beginTime == nil ? 0 : Int(Date().timeIntervalSince1970 - beginTime!))
             label.position.x = label.frame.width / 2
         }

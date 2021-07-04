@@ -10,7 +10,7 @@ import AVFoundation
 import SpriteKit
 
 class AbstractGameScene: SKScene {
-    var gametype: Int8
+    var gametype: GameType
     
     var points: Int = 0
     
@@ -19,7 +19,7 @@ class AbstractGameScene: SKScene {
     var endTime: TimeInterval?
     fileprivate var pauseTime: TimeInterval?
     
-    init(view: SKView, gametype: Int8) {
+    init(view: SKView, gametype: GameType) {
         self.gametype = gametype
         super.init(size: view.bounds.size)
         construct(view.window!.rootViewController as! GameViewController)

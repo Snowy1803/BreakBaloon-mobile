@@ -10,10 +10,6 @@ import SpriteKit
 
 class StartScene: SKScene {
     static let buttonFont = "ChalkboardSE-Light"
-    static let GAMETYPE_SOLO: Int8 = 0
-    static let GAMETYPE_COMPUTER: Int8 = 1
-    static let GAMETYPE_TIMED: Int8 = 2
-    static let GAMETYPE_RAND: Int8 = 3
     let buttonTexture = SKTexture(imageNamed: "buttonbg")
     let minibuttonTexture = SKTexture(imageNamed: "buttonminibg")
     
@@ -49,7 +45,7 @@ class StartScene: SKScene {
     
     var actualPane: Int = 0
     var touchesBegan: CGPoint?
-    var gametype: Int8 = -1
+    var gametype = GameType.undefined
     var lastGameInfo: String?
     
     override convenience init(size: CGSize) {
@@ -373,13 +369,13 @@ class StartScene: SKScene {
                     cancelScreen()
                 }
             } else if onNode(soloButton, point: point) {
-                gametype = StartScene.GAMETYPE_SOLO
+                gametype = .solo
                 transitionFirstToSecond()
             } else if onNode(multiButton, point: point) {
-                gametype = StartScene.GAMETYPE_COMPUTER
+                gametype = .computer
                 transitionFirstToSecond()
             } else if onNode(timedButton, point: point) {
-                gametype = StartScene.GAMETYPE_TIMED
+                gametype = .random
                 transitionFirstToSecond()
             } else if onNode(randButton, point: point) {
                 if GameViewController.getLevel() >= RandGameScene.REQUIREMENT {
@@ -405,7 +401,7 @@ class StartScene: SKScene {
                 }
             } else if onNode(adaptButton, point: point) {
                 let safeSize = frame.inset(by: view!.safeAreaInsets).size
-                newGame(gametype, width: UInt(safeSize.width / 75), height: UInt((safeSize.height - 20) / 75))
+                newGame(gametype, width: Int(safeSize.width / 75), height: Int((safeSize.height - 20) / 75))
             } else if onNode(prefsButton, point: point) {
                 if littleScreen() {
                     view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: TimeInterval(1)))
@@ -443,7 +439,7 @@ class StartScene: SKScene {
         showDialog(NSLocalizedString("error", comment: "error"), message: NSLocalizedString("gametype.error", comment: "play to unlock"))
     }
     
-    func newGame(_ gametype: Int8, width: UInt, height: UInt) {
+    func newGame(_ gametype: GameType, width: Int, height: Int) {
         view?.presentScene(GameScene(view: view!, gametype: gametype, width: width, height: height), transition: SKTransition.flipVertical(withDuration: TimeInterval(1)))
     }
     

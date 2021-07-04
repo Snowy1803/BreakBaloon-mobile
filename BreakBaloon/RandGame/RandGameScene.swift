@@ -27,7 +27,7 @@ class RandGameScene: AbstractGameScene {
         self.level = level
         nextBaloonMax = level.maxSecondsBeforeNextBaloon
         baloonsToSpawn = level.numberOfBaloons
-        super.init(view: view, gametype: StartScene.GAMETYPE_RAND)
+        super.init(view: view, gametype: .random)
         label.fontColor = SKColor.black
         if UIDevice.current.userInterfaceIdiom == .phone {
             label.fontSize = 12

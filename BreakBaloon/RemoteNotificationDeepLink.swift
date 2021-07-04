@@ -93,12 +93,13 @@ class RemoteNotificationDeepLinkNewGame: RemoteNotificationDeepLink {
             let gvc = (UIApplication.shared.delegate!.window!!.rootViewController as! GameViewController)
             // let start = StartScene(size: gvc.view!.frame.size)
             var scene: SKScene?
+            let safeSize = gvc.view.frame.inset(by: gvc.view!.safeAreaInsets).size
             if self.param == "singleplayer" {
-                scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_SOLO, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
+                scene = GameScene(view: gvc.skView!, gametype: .solo, width: Int(safeSize.width / 75), height: Int((safeSize.height - 35) / 75))
             } else if self.param == "computer" {
-                scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_COMPUTER, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
+                scene = GameScene(view: gvc.skView!, gametype: .computer, width: Int(safeSize.width / 75), height: Int((safeSize.height - 35) / 75))
             } else if self.param == "time" {
-                scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: UInt(gvc.view!.frame.size.width / 70), height: UInt((gvc.view!.frame.size.height - 20) / 70))
+                scene = GameScene(view: gvc.skView!, gametype: .timed, width: Int(safeSize.width / 75), height: Int((safeSize.height - 35) / 75))
             } else if self.param.hasPrefix("randombaloons") {
                 let level = RandGameLevel.levels[Int(self.param.components(separatedBy: "/")[1])! - 1]
                 if level.canPlay() {
@@ -108,17 +109,26 @@ class RemoteNotificationDeepLinkNewGame: RemoteNotificationDeepLink {
                 completion(nil)
                 return
             } else if self.param.hasPrefix("singleplayer") {
-                let ints = self.param.components(separatedBy: "ingleplayer")[1].components(separatedBy: "x")
-                let width = UInt(ints[0])!, height = UInt(ints[1])!
-                scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_SOLO, width: width, height: height)
+                let ints = self.param.dropFirst(12).components(separatedBy: "x")
+                guard let width = Int(ints[0]),
+                      let height = Int(ints[1]) else {
+                    return
+                }
+                scene = GameScene(view: gvc.skView!, gametype: .solo, width: width, height: height)
             } else if self.param.hasPrefix("computer") {
-                let ints = self.param.components(separatedBy: "omputer")[1].components(separatedBy: "x")
-                let width = UInt(ints[0])!, height = UInt(ints[1])!
-                scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_COMPUTER, width: width, height: height)
+                let ints = self.param.dropFirst(8).components(separatedBy: "x")
+                guard let width = Int(ints[0]),
+                      let height = Int(ints[1]) else {
+                    return
+                }
+                scene = GameScene(view: gvc.skView!, gametype: .computer, width: width, height: height)
             } else if self.param.hasPrefix("time") {
-                let ints = self.param.components(separatedBy: "ime")[1].components(separatedBy: "x")
-                let width = UInt(ints[0])!, height = UInt(ints[1])!
-                scene = GameScene(view: gvc.skView!, gametype: StartScene.GAMETYPE_TIMED, width: width, height: height)
+                let ints = self.param.dropFirst(4).components(separatedBy: "x")
+                guard let width = Int(ints[0]),
+                      let height = Int(ints[1]) else {
+                    return
+                }
+                scene = GameScene(view: gvc.skView!, gametype: .timed, width: width, height: height)
             }
                 
             gvc.skView?.presentScene(scene)
