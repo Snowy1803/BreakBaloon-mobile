@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, policy: .default, options: .mixWithOthers)
+        } catch {
+            print(error)
+        }
         return true
     }
     
@@ -101,7 +107,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-        let gvc = window!.gvc!
+        guard let gvc = window?.gvc else {
+            return
+        }
         if gvc.currentGame != nil {
             gvc.currentGame!.quitPause()
         }

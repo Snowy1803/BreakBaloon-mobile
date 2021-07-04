@@ -77,7 +77,7 @@ class GameScene: AbstractGameScene {
             return
         }
         touched.breakBaloon(index == winCaseNumber)
-        var data: Data
+        var winningSound: Bool
         var gameEnded = false
         if gametype != .timed, index == winCaseNumber {
             if computer {
@@ -115,7 +115,7 @@ class GameScene: AbstractGameScene {
             repeat {
                 winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
             } while cases[winCaseNumber].breaked && !gameEnded
-            data = view!.gvc.currentTheme.pumpSound(true)
+            winningSound = true
         } else if gametype == .timed {
             var isThereUnbreakedBaloons = false
             for aCase in cases where !aCase.breaked {
@@ -125,23 +125,16 @@ class GameScene: AbstractGameScene {
             if !isThereUnbreakedBaloons {
                 gameEnd()
             }
-            data = view!.gvc.currentTheme.pumpSound(false)
+            winningSound = false
         } else {
-            data = view!.gvc.currentTheme.pumpSound(false)
+            winningSound = false
         }
         
         if !gameEnded {
             touched.baloonBreaked()
         }
         
-        do {
-            avplayer = try AVAudioPlayer(data: data)
-            avplayer.volume = view!.gvc.audioVolume
-            avplayer.prepareToPlay()
-            avplayer.play()
-        } catch {
-            print("Error playing sound at \(data)")
-        }
+        playPump(winner: winningSound)
         
         if !gameEnded, !computer, gametype == .computer {
             waitingForComputer = true

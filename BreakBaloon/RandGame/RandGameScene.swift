@@ -152,14 +152,7 @@ class RandGameScene: AbstractGameScene {
             points += 1
             updateLabel()
             aCase.baloonBreaked()
-            do {
-                avplayer = try AVAudioPlayer(data: view!.gvc.currentTheme.pumpSound(false))
-                avplayer.volume = view!.gvc.audioVolume
-                avplayer.prepareToPlay()
-                avplayer.play()
-            } catch {
-                print("Error playing pump sound")
-            }
+            playPump(winner: false)
         }
     }
     
