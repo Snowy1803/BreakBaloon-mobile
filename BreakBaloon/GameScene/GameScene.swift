@@ -145,7 +145,7 @@ class GameScene: AbstractGameScene {
         
         if !gameEnded, !computer, gametype == .computer {
             waitingForComputer = true
-            run(SKAction.sequence([SKAction.wait(forDuration: TimeInterval(0.25)), SKAction.run {
+            run(SKAction.sequence([SKAction.wait(forDuration: 0.25), SKAction.run {
                 var wherebreak: Int
                 repeat {
                     wherebreak = Int(arc4random_uniform(UInt32(self.width) * UInt32(self.height)))

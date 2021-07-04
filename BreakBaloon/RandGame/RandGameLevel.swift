@@ -10,6 +10,7 @@ import Foundation
 import SpriteKit
 
 class RandGameLevel {
+    // swiftlint:disable:next large_tuple
     fileprivate static let levelValues: [(UInt, TimeInterval, TimeInterval, UInt, UInt, Float)] = [
         /* 1 */ (10, 1.25, 4, 2, 2, 0),
         /* 2 */ (10, 0.75, 4, 2, 2, 0),
@@ -43,6 +44,7 @@ class RandGameLevel {
     var status: RandGameLevelStatus
     var gamescene: RandGameScene?
     
+    // swiftlint:disable:next large_tuple
     fileprivate var level: (UInt, TimeInterval, TimeInterval, UInt, UInt, Float) {
         return RandGameLevel.levelValues[index]
     }

@@ -88,7 +88,7 @@ class BBT1: AbstractTheme {
     }
     
     func pumpSound(_ winner: Bool) -> Data {
-        return (try! Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: themeID()).fullyQualifiedPath)))
+        return (try? Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: themeID()).fullyQualifiedPath))) ?? Data()
     }
     
     class func parse(id: String, bbtheme file: String) -> BBT1 {
@@ -160,6 +160,7 @@ class DefaultTheme: BBT1 {
     }
     
     override func pumpSound(_ winner: Bool) -> Data {
+        // swiftlint:disable:next force_try
         return (try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!))
     }
 }

@@ -578,17 +578,15 @@ class BBT2: AbstractTheme {
     }
     
     func pumpSound(_ winner: Bool) -> Data {
-        if properties["sound.\(winner ? "w" : "")pump"]! != nil {
-            return properties["sound.\(winner ? "w" : "")pump"]!!.data(using: String.Encoding.utf8)!
+        if let prop = properties["sound.\(winner ? "w" : "")pump"]! {
+            return prop.data(using: .utf8)!
         }
+        // swiftlint:disable:next force_try
         return (try! Data(contentsOf: Bundle.main.url(forResource: "\(winner ? "w" : "")pump", withExtension: "wav")!))
     }
     
     func getBaloonTexture(case aCase: Case) -> SKTexture {
-        if aCase is FakeCase {
-            return getBaloonTexture(status: aCase.status, type: aCase.type, fake: true)
-        }
-        return getBaloonTexture(status: aCase.status, type: aCase.type, fake: false)
+        getBaloonTexture(status: aCase.status, type: aCase.type, fake: aCase is FakeCase)
     }
     
     func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
