@@ -68,7 +68,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         print("receive raw: \(userInfo)")
         if let exp = userInfo["exp"] as? Int {
-            if UserDefaults.standard.integer(forKey: "exp") < exp {
+            if UserDefaults.standard.integer(forKey: "exp") <= exp {
                 UserDefaults.standard.set(exp, forKey: "exp")
                 print("Received XP:", exp)
             } else {

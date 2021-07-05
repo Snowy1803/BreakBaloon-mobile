@@ -220,8 +220,11 @@ class GameViewController: UIViewController, WCSessionDelegate {
         guard let exp = userInfo["exp"] as? Int else {
             return
         }
-        if PlayerXP.totalXP < exp {
+        if PlayerXP.totalXP <= exp {
             UserDefaults.standard.set(exp, forKey: "exp")
+            if let start = skView?.scene as? StartScene {
+                start.growXP()
+            }
         } else {
             session.transferUserInfo(["exp": PlayerXP.totalXP])
         }

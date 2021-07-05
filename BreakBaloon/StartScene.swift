@@ -42,6 +42,7 @@ class StartScene: SKScene {
     
     var xpLabel = SKShapeNode()
     var txpLabel = SKLabelNode()
+    var levelProgressionShown: CGFloat = 0
     
     var currentPane = Pane.selectGameType
     var touchesBegan: CGPoint?
@@ -80,17 +81,15 @@ class StartScene: SKScene {
         bsLabel.fontName = "ChalkboardSE-Regular"
         bsLabel.fontColor = SKColor.orange
         addChild(bsLabel)
-        print(growXPFrom > -1 ? growXPFrom : CGFloat(PlayerXP.levelProgression))
-        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: (growXPFrom > -1 ? growXPFrom : CGFloat(PlayerXP.levelProgression)) * size.width, height: 15))
+        levelProgressionShown = growXPFrom > -1 ? growXPFrom : CGFloat(PlayerXP.levelProgression)
+        print("init StartScene: XP: \(levelProgressionShown)")
+        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: levelProgressionShown * size.width, height: 15))
         xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
         xpLabel.strokeColor = SKColor.clear
         xpLabel.zPosition = 2
         addChild(xpLabel)
         if growXPFrom > -1 {
-            print("GrowXP: \(growXPFrom) -> \(PlayerXP.levelProgression)")
-            xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(PlayerXP.levelProgression) / growXPFrom, duration: 1.0)])) { [self] in
-                xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(PlayerXP.levelProgression) * size.width, height: 15), transform: nil)
-            }
+            growXP()
         }
         txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerXP.currentLevel))
         txpLabel.fontSize = 13
@@ -110,6 +109,17 @@ class StartScene: SKScene {
         super.didMove(to: view)
         DispatchQueue.main.async { // safeAreaInsets aren't initialized yet here. wait 1 tick
             self.adjustPosition(false)
+        }
+    }
+    
+    func growXP() {
+        let growXPFrom = levelProgressionShown
+        print("GrowXP: \(growXPFrom) -> \(PlayerXP.levelProgression)")
+        xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(PlayerXP.levelProgression) / growXPFrom, duration: 1.0)])) { [self] in
+            xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(PlayerXP.levelProgression) * size.width, height: 15), transform: nil)
+            xpLabel.xScale = 1
+            levelProgressionShown = PlayerXP.levelProgression
+            txpLabel.text = String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerXP.currentLevel)
         }
     }
     
@@ -274,7 +284,7 @@ class StartScene: SKScene {
             bsLabel.position = CGPoint(x: frame.midX, y: 45 + bottomSA)
         }
         cLabel.position = CGPoint(x: frame.midX, y: 20 + bottomSA)
-        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(PlayerXP.levelProgression) * size.width, height: 15), transform: nil)
+        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(levelProgressionShown) * size.width, height: 15), transform: nil)
         txpLabel.position = CGPoint(x: size.width / 2, y: 0 + bottomSA)
         switch currentPane {
         case .selectGameType:
