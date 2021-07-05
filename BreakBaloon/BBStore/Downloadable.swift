@@ -223,7 +223,7 @@ class Downloadable: SKNode {
         return false
     }
     
-    class func loadAll(_ viewSize: CGSize, _ gvc: GameViewController) throws -> [Downloadable] {
+    class func loadAll(gvc: GameViewController) throws -> [Downloadable] {
         var list: [Downloadable] = []
         let fsh = FileSaveHelper(fileName: "bbstore", fileExtension: .txt, subDirectory: "", directory: .cachesDirectory)
         fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
@@ -240,7 +240,6 @@ class Downloadable: SKNode {
         }
         let lines = file.components(separatedBy: "\n")
         var currentName: String = "", currentId: String = "", currentDescription: String = "", currentAuthor: String = "", currentVersion: String = "", currentType: Int = -1, currentLevelRequirement = 0
-        let /* rows:Int = Int((viewSize.width - 30) % (Downloadable.WIDTH + 5)), */ cols = Int(viewSize.width / Downloadable.WIDTH)
         for line in lines {
             if line == "===============COCH===============" {
                 if DownloadType.getType(currentType, id: currentId).supported {
@@ -275,11 +274,8 @@ class Downloadable: SKNode {
         list.sort(by: { dl1, dl2 in // move locked items to the end
             dl1.levelRequirement <= PlayerXP.currentLevel && dl2.levelRequirement > PlayerXP.currentLevel
         })
-        var i = 0
-        for dl in list { // Setting position after sorting
+        for dl in list {
             dl.construct(gvc)
-            dl.position = CGPoint(x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5, y: viewSize.height - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
-            i += 1
         }
         return list
     }
