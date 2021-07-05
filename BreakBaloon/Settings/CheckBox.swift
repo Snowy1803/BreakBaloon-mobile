@@ -10,8 +10,18 @@ import Foundation
 import SpriteKit
 
 class CheckBox: SKSpriteNode {
-    fileprivate(set) var checked: Bool
-    fileprivate(set) var enabled = true
+    var checked: Bool {
+        didSet {
+            texture = SKTexture(imageNamed: "checkbox\(checked ? "-check" : "")")
+        }
+    }
+
+    var enabled = true {
+        didSet {
+            texture = SKTexture(imageNamed: "checkbox\(enabled ? (checked ? "-check" : "") : "-disabled")")
+        }
+    }
+
     let label: SKLabelNode
     
     init(checked: Bool = false, label: String? = nil) {
@@ -32,28 +42,10 @@ class CheckBox: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func check(_ check: Bool) {
+    func didTap() {
         if enabled {
-            checked = check
-            texture = SKTexture(imageNamed: "checkbox\(check ? "-check" : "")")
+            checked.toggle()
         }
-    }
-    
-    func reverseCheck() {
-        check(!checked)
-    }
-    
-    func check() {
-        check(true)
-    }
-    
-    func uncheck() {
-        check(false)
-    }
-    
-    func enable(_ enable: Bool) {
-        enabled = enable
-        texture = SKTexture(imageNamed: "checkbox\(enable ? checked ? "-check" : "" : "-disabled")")
     }
     
     func setTextureIfDisabled(_ texture: SKTexture?) {

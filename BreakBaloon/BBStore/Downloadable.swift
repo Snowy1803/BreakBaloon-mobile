@@ -90,7 +90,7 @@ class Downloadable: SKNode {
             tttext.zPosition = 4
             addChild(tttext)
         }
-        if levelRequirement > GameViewController.getLevel() {
+        if levelRequirement > PlayerXP.currentLevel {
             let disable = SKShapeNode(rect: rect.frame)
             disable.fillColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
             disable.zPosition = 10
@@ -107,7 +107,7 @@ class Downloadable: SKNode {
             tlevel.fontColor = SKColor.white
             tlevel.zPosition = 12
             addChild(tlevel)
-        } else if levelRequirement == GameViewController.getLevel(), !isInPossession() {
+        } else if levelRequirement == PlayerXP.currentLevel, !isInPossession() {
             let tlevel = SKLabelNode(text: NSLocalizedString("level.new", comment: ""))
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
@@ -119,7 +119,7 @@ class Downloadable: SKNode {
     }
     
     func click(_ scene: BBStoreScene) {
-        if levelRequirement <= GameViewController.getLevel() {
+        if levelRequirement <= PlayerXP.currentLevel {
             let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.text", comment: ""), dlname), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default) { _ in
                 do {
@@ -205,7 +205,7 @@ class Downloadable: SKNode {
         if dltype == .m4aMusic {
             return dlid == gvc.currentMusicFileName
         } else if dltype.isTheme() {
-            return dlid == gvc.currentTheme.themeID()
+            return dlid == gvc.currentTheme.id
         }
         return false
     }
@@ -260,7 +260,7 @@ class Downloadable: SKNode {
             }
         }
         list.sort(by: { dl1, dl2 in
-            dl1.levelRequirement > GameViewController.getLevel() && dl2.levelRequirement < GameViewController.getLevel()
+            dl1.levelRequirement > PlayerXP.currentLevel && dl2.levelRequirement < PlayerXP.currentLevel
         })
         var i = 0
         for dl in list { // Setting position after sorting

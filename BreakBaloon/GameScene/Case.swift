@@ -19,7 +19,7 @@ class Case: SKSpriteNode {
     }
     
     init(gvc: GameViewController, index: Int) {
-        type = Int(arc4random_uniform(UInt32(gvc.currentTheme.numberOfBaloons())))
+        type = Int(arc4random_uniform(UInt32(gvc.currentTheme.baloonCount)))
         self.index = index
         self.gvc = gvc
         let texture = gvc.currentTheme.getBaloonTexture(status: status, type: type, fake: false)

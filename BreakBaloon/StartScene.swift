@@ -80,19 +80,19 @@ class StartScene: SKScene {
         bsLabel.fontName = "ChalkboardSE-Regular"
         bsLabel.fontColor = SKColor.orange
         addChild(bsLabel)
-        print(growXPFrom > -1 ? growXPFrom : CGFloat(GameViewController.getLevelXPFloat()))
-        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: (growXPFrom > -1 ? growXPFrom : CGFloat(GameViewController.getLevelXPFloat())) * size.width, height: 15))
+        print(growXPFrom > -1 ? growXPFrom : CGFloat(PlayerXP.levelProgression))
+        xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: (growXPFrom > -1 ? growXPFrom : CGFloat(PlayerXP.levelProgression)) * size.width, height: 15))
         xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
         xpLabel.strokeColor = SKColor.clear
         xpLabel.zPosition = 2
         addChild(xpLabel)
         if growXPFrom > -1 {
-            print("GrowXP: \(growXPFrom) -> \(GameViewController.getLevelXPFloat())")
-            xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(GameViewController.getLevelXPFloat()) / growXPFrom, duration: 1.0)])) { [self] in
-                xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
+            print("GrowXP: \(growXPFrom) -> \(PlayerXP.levelProgression)")
+            xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(PlayerXP.levelProgression) / growXPFrom, duration: 1.0)])) { [self] in
+                xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(PlayerXP.levelProgression) * size.width, height: 15), transform: nil)
             }
         }
-        txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), GameViewController.getLevel()))
+        txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerXP.currentLevel))
         txpLabel.fontSize = 13
         txpLabel.fontName = "AppleSDGothicNeo-Bold"
         txpLabel.fontColor = SKColor.white
@@ -148,7 +148,7 @@ class StartScene: SKScene {
         
         randButton = SKSpriteNode(texture: buttonTexture)
         randButton.zPosition = 1
-        if GameViewController.getLevel() < RandGameScene.REQUIREMENT {
+        if PlayerXP.currentLevel < RandGameScene.requirement {
             grey(randButton)
             let level = SKSpriteNode(imageNamed: "level")
             level.position = CGPoint(x: min(randButton.frame.width / 2, frame.width / 2) - 30, y: randButton.frame.midY)
@@ -156,7 +156,7 @@ class StartScene: SKScene {
             level.zPosition = 1
             level.setScale(1.5)
             randButton.addChild(level)
-            let tlevel = SKLabelNode(text: "\(RandGameScene.REQUIREMENT)")
+            let tlevel = SKLabelNode(text: "\(RandGameScene.requirement)")
             tlevel.position = CGPoint(x: min(randButton.frame.width / 2, frame.width / 2) - 30, y: randButton.frame.midY - 12)
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
@@ -274,7 +274,7 @@ class StartScene: SKScene {
             bsLabel.position = CGPoint(x: frame.midX, y: 45 + bottomSA)
         }
         cLabel.position = CGPoint(x: frame.midX, y: 20 + bottomSA)
-        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(GameViewController.getLevelXPFloat()) * size.width, height: 15), transform: nil)
+        xpLabel.path = CGPath(rect: CGRect(x: 0, y: bottomSA, width: CGFloat(PlayerXP.levelProgression) * size.width, height: 15), transform: nil)
         txpLabel.position = CGPoint(x: size.width / 2, y: 0 + bottomSA)
         switch currentPane {
         case .selectGameType:
@@ -391,7 +391,7 @@ class StartScene: SKScene {
                 gametype = .random
                 transitionGameTypeToSizeSelection()
             } else if onNode(randButton, point: point) {
-                if GameViewController.getLevel() >= RandGameScene.REQUIREMENT {
+                if PlayerXP.currentLevel >= RandGameScene.requirement {
                     transitionGameTypeToLevelSelection()
                 }
             } else if onNode(smallButton, point: point) {

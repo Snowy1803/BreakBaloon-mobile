@@ -44,13 +44,13 @@ class ExtensionSettingScene: SKScene {
         tok.zPosition = 2
         addChild(tok)
         let array = [String](sortArray.values)
-        animation.enable(GameViewController.getLevel() >= animationLevelRequirement)
+        animation.enabled = (PlayerXP.currentLevel >= animationLevelRequirement)
         animation.position = CGPoint(x: 32 + left, y: top - sort(sortArray["animation"]!, in: array))
         addChild(animation)
-        hintarrow.enable(GameViewController.getLevel() >= hintarrowLevelRequirement)
+        hintarrow.enabled = (PlayerXP.currentLevel >= hintarrowLevelRequirement)
         hintarrow.position = CGPoint(x: 32 + left, y: top - sort(sortArray["hintArrow"]!, in: array))
         addChild(hintarrow)
-        bee.enable(GameViewController.getLevel() >= beeLevelRequirement)
+        bee.enabled = (PlayerXP.currentLevel >= beeLevelRequirement)
         bee.position = CGPoint(x: 32 + left, y: top - sort(sortArray["bee"]!, in: array))
         addChild(bee)
     }
@@ -76,11 +76,11 @@ class ExtensionSettingScene: SKScene {
                 view!.gvc.wcSession?.transferUserInfo(["extension.animation.enabled": animation.checked])
                 view!.presentScene(previous, transition: SKTransition.push(with: .right, duration: 1))
             } else if animation.frame.contains(point) {
-                animation.reverseCheck()
+                animation.didTap()
             } else if hintarrow.frame.contains(point) {
-                hintarrow.reverseCheck()
+                hintarrow.didTap()
             } else if bee.frame.contains(point) {
-                bee.reverseCheck()
+                bee.didTap()
             }
         }
     }

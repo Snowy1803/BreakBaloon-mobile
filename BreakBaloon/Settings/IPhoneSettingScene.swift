@@ -64,7 +64,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         login.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(2, text: false))
         login.zPosition = 1
         addChild(login)
-        tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
+        tlogin.text = NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out")
         tlogin.fontSize = 35
         tlogin.fontName = StartScene.buttonFont
         tlogin.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(2, text: true))
@@ -110,7 +110,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
                 scene.initialize()
             } else if login.frame.contains(point) {
                 DispatchQueue.main.async {
-                    if GameViewController.isLoggedIn() {
+                    if GameViewController.loggedIn {
                         GameViewController.logOut()
                         self.updateLoginLabel()
                     } else {
@@ -124,7 +124,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
     }
     
     func updateLoginLabel() {
-        tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
+        tlogin.text = NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out")
     }
 }
 
@@ -153,7 +153,7 @@ class IPhoneMusicSettingScene: SKScene {
     }
     
     func initPane() {
-        musicSetting.setVolume(settings.view!.gvc.backgroundMusicPlayer.volume)
+        musicSetting.volume = settings.view!.gvc.backgroundMusicPlayer.volume
         musicSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 100)
         addChild(musicSetting)
         musicIndexSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 175)
@@ -215,7 +215,7 @@ class IPhoneMusicSettingScene: SKScene {
     }
     
     func resetSettings() {
-        musicSetting.setVolume(GameViewController.defaultMusicVolume)
+        musicSetting.volume = GameViewController.defaultMusicVolume
         musicIndexSetting.reset()
     }
 }
@@ -245,7 +245,7 @@ class IPhoneOtherSettingScene: SKScene {
     }
     
     func initPane() {
-        audioSetting.setVolume(settings.view!.gvc.audioVolume)
+        audioSetting.volume = settings.view!.gvc.audioVolume
         audioSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 100)
         addChild(audioSetting)
         themeIndexSetting.position = CGPoint(x: frame.width / 2, y: frame.height - 175)
@@ -307,6 +307,6 @@ class IPhoneOtherSettingScene: SKScene {
     }
     
     func resetSettings() {
-        audioSetting.setVolume(GameViewController.defaultMusicVolume)
+        audioSetting.volume = GameViewController.defaultMusicVolume
     }
 }

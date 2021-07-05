@@ -45,10 +45,10 @@ class SettingScene: SKScene {
         name.position = CGPoint(x: frame.midX, y: top - 50)
         addChild(name)
         
-        audioSetting.setVolume(gvc.audioVolume)
+        audioSetting.volume = gvc.audioVolume
         audioSetting.position = CGPoint(x: frame.width / 2, y: top - 150)
         addChild(audioSetting)
-        musicSetting.setVolume(gvc.backgroundMusicPlayer.volume)
+        musicSetting.volume = gvc.backgroundMusicPlayer.volume
         musicSetting.position = CGPoint(x: frame.width / 2, y: top - 250)
         addChild(musicSetting)
         musicIndexSetting.position = CGPoint(x: frame.width / 2, y: top - 300)
@@ -72,7 +72,7 @@ class SettingScene: SKScene {
         login.position = CGPoint(x: frame.width / 3 * 2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
         login.zPosition = 1
         addChild(login)
-        tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out"))
+        tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out"))
         tlogin.fontName = StartScene.buttonFont
         tlogin.fontColor = SKColor.black
         tlogin.fontSize = 20
@@ -123,7 +123,7 @@ class SettingScene: SKScene {
                 showExtConfig()
             } else if onNode(login, point: point) {
                 DispatchQueue.main.async {
-                    if GameViewController.isLoggedIn() {
+                    if GameViewController.loggedIn {
                         GameViewController.logOut()
                         self.updateLoginLabel()
                     } else {
@@ -143,7 +143,7 @@ class SettingScene: SKScene {
     }
     
     func updateLoginLabel() {
-        tlogin.text = NSLocalizedString("settings.log\(GameViewController.isLoggedIn() ? "out" : "in")", comment: "login/out")
+        tlogin.text = NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with _: UIEvent?) {
@@ -159,8 +159,8 @@ class SettingScene: SKScene {
     }
     
     func resetSettings() {
-        audioSetting.setVolume(GameViewController.defaultAudioVolume)
-        musicSetting.setVolume(GameViewController.defaultMusicVolume)
+        audioSetting.volume = GameViewController.defaultAudioVolume
+        musicSetting.volume = GameViewController.defaultMusicVolume
         musicIndexSetting.reset()
     }
     

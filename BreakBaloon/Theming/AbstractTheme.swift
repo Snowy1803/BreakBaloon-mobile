@@ -10,17 +10,17 @@ import Foundation
 import SpriteKit
 
 protocol AbstractTheme {
-    func themeID() -> String
-    func backgroundColor() -> UIColor
-    func numberOfBaloons() -> UInt
-    func themeName() -> String
+    var id: String { get }
+    var name: String { get }
+    
+    var background: UIColor { get }
+    var baloonCount: Int { get }
     
     func animationColor(type: Int) -> UIColor?
     
     func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture
     func getBaloonTexture(case aCase: Case) -> SKTexture
     func pumpSound(_ winner: Bool) -> Data
-    func equals(_ theme: AbstractTheme) -> Bool
 }
 
 enum AbstractThemeUtils {
@@ -66,7 +66,7 @@ enum AbstractThemeUtils {
     
     static func withID(_ id: String) -> AbstractTheme? {
         let index = themeList.firstIndex(where: { theme in
-            theme.themeID() == id
+            theme.id == id
         })
         if index != nil {
             return themeList[index!]

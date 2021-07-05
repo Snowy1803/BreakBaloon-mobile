@@ -234,7 +234,7 @@ class BBT2: AbstractTheme {
     }
     
     func printString(_ stringLiteral: String) throws -> String? {
-        print("[BBTC] [\(themeID())] \(try execIfNeeds(stringLiteral)!)")
+        print("[BBTC] [\(id)] \(try execIfNeeds(stringLiteral)!)")
         return nil
     }
     
@@ -573,10 +573,6 @@ class BBT2: AbstractTheme {
         return nil
     }
     
-    func equals(_ theme: AbstractTheme) -> Bool {
-        theme.themeID() == themeID()
-    }
-    
     func pumpSound(_ winner: Bool) -> Data {
         if let prop = properties["sound.\(winner ? "w" : "")pump"]! {
             return prop.data(using: .utf8)!
@@ -607,35 +603,35 @@ class BBT2: AbstractTheme {
         return SKTexture(image: image.withSize(75))
     }
     
-    func numberOfBaloons() -> UInt {
-        UInt(baloons.count)
+    var baloonCount: Int {
+        baloons.count
     }
     
     func animationColor(type: Int) -> UIColor? {
         animationColors[type]
     }
     
-    func backgroundColor() -> UIColor {
+    var background: UIColor {
         properties["theme.background"]! == nil ? UIColor.white : UIColor(rgbValue: UInt(properties["theme.background"]!!)!)
     }
     
-    func themeID() -> String {
+    var id: String {
         properties["theme.id"]! == nil ? "Undefined" : properties["theme.id"]!!
     }
     
-    func themeName() -> String {
+    var name: String {
         properties["theme.name"]! == nil ? "Undefined" : properties["theme.name"]!!
     }
     
-    func themeVersion() -> String {
+    var version: String {
         properties["theme.version"]! == nil ? "Undefined" : properties["theme.version"]!!
     }
     
-    func themeAuthor() -> String {
+    var author: String {
         properties["theme.author"]! == nil ? "Undefined" : properties["theme.author"]!!
     }
     
-    func themeDescription() -> String {
+    var description: String {
         properties["theme.description"]! == nil ? "Undefined" : properties["theme.description"]!!
     }
     

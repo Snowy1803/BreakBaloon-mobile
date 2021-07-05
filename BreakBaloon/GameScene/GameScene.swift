@@ -197,8 +197,8 @@ class GameScene: AbstractGameScene {
             }
             let gvc = self.view!.gvc!
             gvc.currentGame = nil
-            let oldXP = CGFloat(GameViewController.getLevelXPFloat())
-            let levelModifier = Float(max(10 - GameViewController.getLevel(), 1))
+            let oldXP = CGFloat(PlayerXP.levelProgression)
+            let levelModifier = Float(max(10 - PlayerXP.currentLevel, 1))
             let sizeModifier = Float(self.width * self.height) / 100
             gvc.addXP(Int(5 * levelModifier * sizeModifier))
             let scene = StartScene(size: self.frame.size, growXPFrom: oldXP)

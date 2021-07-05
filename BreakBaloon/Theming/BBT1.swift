@@ -14,31 +14,27 @@ class BBT1: AbstractTheme {
     let author: String
     let description: String
     let version: String
-    let baloons: UInt
+    let baloonCount: Int
     let background: SKColor
     let id: String
     let differentBaloonsForPumpedGood: Bool
     var animationColors: [Int: SKColor]?
     
-    init(_ name: String, id: String, author: String, description: String, version: String, baloons: UInt, background: UInt, dbfpg: Bool) {
+    init(_ name: String, id: String, author: String, description: String, version: String, baloons: Int, background: UInt, dbfpg: Bool) {
         self.name = name
         self.id = id
         self.author = author
         self.description = description
         self.version = version
-        self.baloons = baloons
+        baloonCount = baloons
         self.background = SKColor(rgbValue: background)
         differentBaloonsForPumpedGood = dbfpg
     }
     
     convenience init(_ name: String, id: String, author: String, description: String, version: String, baloons: String, background: String, dbfpg: Bool) {
         self.init(name, id: id, author: author, description: description, version: version,
-                  baloons: UInt(baloons)!,
+                  baloons: Int(baloons)!,
                   background: UInt(background)!, dbfpg: dbfpg)
-    }
-    
-    func equals(_ other: AbstractTheme) -> Bool {
-        themeID() == other.themeID()
     }
     
     func getBaloonTexture(case baloon: Case) -> SKTexture {
@@ -50,37 +46,27 @@ class BBT1: AbstractTheme {
     
     func getBaloonTexture(status: Case.CaseStatus, type: Int, fake: Bool) -> SKTexture {
         do {
+            let name: String
             if fake {
                 if status == .closed {
-                    return SKTexture(image: try FileSaveHelper(fileName: "fake-closed\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
+                    name = "fake-closed\(type)"
                 } else {
-                    return SKTexture(image: try FileSaveHelper(fileName: "fake-opened\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
+                    name = "fake-opened\(type)"
                 }
             } else {
                 if status == .closed {
-                    return SKTexture(image: try FileSaveHelper(fileName: "closed\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
+                    name = "closed\(type)"
                 } else if differentBaloonsForPumpedGood, status == .winnerOpened {
-                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)-good", fileExtension: .png, subDirectory: themeID()).getImage())
+                    name = "opened\(type)-good"
                 } else {
-                    return SKTexture(image: try FileSaveHelper(fileName: "opened\(type)", fileExtension: .png, subDirectory: themeID()).getImage())
+                    name = "opened\(type)"
                 }
             }
+            return SKTexture(image: try FileSaveHelper(fileName: name, fileExtension: .png, subDirectory: id).getImage())
         } catch {
             print("Error reading\(fake ? " fake" : "") baloon texture of type \(type):", error)
         }
         return SKTexture()
-    }
-    
-    func numberOfBaloons() -> UInt {
-        baloons
-    }
-    
-    func themeName() -> String {
-        name
-    }
-    
-    func backgroundColor() -> UIColor {
-        background
     }
     
     func animationColor(type: Int) -> UIColor? {
@@ -88,7 +74,7 @@ class BBT1: AbstractTheme {
     }
     
     func pumpSound(_ winner: Bool) -> Data {
-        (try? Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: themeID()).fullyQualifiedPath))) ?? Data()
+        (try? Data(contentsOf: URL(fileURLWithPath: FileSaveHelper(fileName: "\(winner ? "w" : "")pump", fileExtension: .wav, subDirectory: id).fullyQualifiedPath))) ?? Data()
     }
     
     class func parse(id: String, bbtheme file: String) -> BBT1 {
@@ -128,10 +114,6 @@ class BBT1: AbstractTheme {
     
     fileprivate class func isMetadata(_ line: String, metadata: String) -> Bool {
         line.hasPrefix("\(metadata)=") || line.hasPrefix("\(metadata)_\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))=")
-    }
-    
-    func themeID() -> String {
-        id
     }
 }
 

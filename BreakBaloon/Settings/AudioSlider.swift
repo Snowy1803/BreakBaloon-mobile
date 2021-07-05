@@ -10,7 +10,12 @@ import AVFoundation
 import SpriteKit
 
 class AudioSlider: SKSpriteNode {
-    fileprivate(set) var value: Float = 1.0
+    var volume: Float = 1.0 {
+        didSet {
+            didSetVolume()
+        }
+    }
+
     var slidericon: SKSpriteNode
     var tname: SKLabelNode
     var music: Bool
@@ -39,27 +44,20 @@ class AudioSlider: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setVolume(_ value: Float) {
-        self.value = value
-        slidericon.position = CGPoint(x: CGFloat(value) / 2 * frame.width - 0.5 - frame.width / 4, y: frame.height / 4)
-        updateAfterVolumeChange()
-    }
-    
     func calculateVolume(_ touch: UITouch) {
-        value = Float(touch.location(in: self).x * 2 / frame.width) + 0.5
-        slidericon.position = CGPoint(x: touch.location(in: self).x, y: frame.height / 4)
-        updateAfterVolumeChange()
+        volume = Float(touch.location(in: self).x * 2 / frame.width) + 0.5
     }
     
-    fileprivate func updateAfterVolumeChange() {
+    private func didSetVolume() {
+        slidericon.position = CGPoint(x: CGFloat(volume) / 2 * frame.width - 0.5 - frame.width / 4, y: frame.height / 4)
         if UIDevice.current.userInterfaceIdiom != .phone {
             tname.position = CGPoint(x: slidericon.position.x, y: frame.height / 4 * 3)
         }
         if music {
-            gvc.backgroundMusicPlayer.volume = value
+            gvc.backgroundMusicPlayer.volume = volume
         } else {
-            gvc.audioVolume = value
+            gvc.audioVolume = volume
         }
-        UserDefaults.standard.set(value, forKey: "audio-\(music)")
+        UserDefaults.standard.set(volume, forKey: "audio-\(music)")
     }
 }

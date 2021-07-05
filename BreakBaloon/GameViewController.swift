@@ -15,7 +15,7 @@ import WatchConnectivity
 class GameViewController: UIViewController, WCSessionDelegate {
     static let defaultAudioVolume: Float = 1.0
     static let defaultMusicVolume: Float = 0.8
-    fileprivate static var loggedIn = false
+    private(set) static var loggedIn = false
     
     var skView: SKView?
     
@@ -45,7 +45,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     var currentThemeInt: Int {
         get {
             AbstractThemeUtils.themeList.firstIndex(where: { theme in
-                theme.equals(currentTheme)
+                theme.id == currentTheme.id
             })!
         }
         set(value) {
@@ -123,8 +123,8 @@ class GameViewController: UIViewController, WCSessionDelegate {
         // swiftlint:disable:next force_cast
         skView = (view as! SKView)
         #if DEBUG
-        skView!.showsFPS = true
-        skView!.showsNodeCount = true
+            skView!.showsFPS = true
+            skView!.showsNodeCount = true
         #endif
         skView!.ignoresSiblingOrder = true
         skView!.preferredFramesPerSecond = 120
@@ -207,40 +207,26 @@ class GameViewController: UIViewController, WCSessionDelegate {
         .all
     }
     
-    class func getLevel() -> Int {
-        getTotalXP() / 250 + 1
-    }
-    
-    class func getTotalXP() -> Int {
-        UserDefaults.standard.integer(forKey: "exp")
-    }
-    
-    class func getLevelXP() -> Int {
-        getTotalXP() % 250
-    }
-    
-    class func getLevelXPFloat() -> Float {
-        Float(getLevelXP()) / 250
-    }
-    
     func addXP(_ xp: Int) {
-        let levelBefore = GameViewController.getLevel()
-        UserDefaults.standard.set(GameViewController.getTotalXP() + xp, forKey: "exp")
+        let levelBefore = PlayerXP.currentLevel
+        UserDefaults.standard.set(PlayerXP.totalXP + xp, forKey: "exp")
         print("Added \(xp) XP")
-        if levelBefore < GameViewController.getLevel() {
-            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), GameViewController.getLevel()), preferredStyle: .alert)
+        if levelBefore < PlayerXP.currentLevel {
+            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), PlayerXP.currentLevel), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
-        wcSession?.transferUserInfo(["exp": GameViewController.getTotalXP() + xp])
+        wcSession?.transferUserInfo(["exp": PlayerXP.totalXP])
     }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        let exp = userInfo["exp"] as? Int
-        if exp != nil, GameViewController.getTotalXP() < exp! {
-            UserDefaults.standard.set(exp!, forKey: "exp")
+        guard let exp = userInfo["exp"] as? Int else {
+            return
+        }
+        if PlayerXP.totalXP < exp {
+            UserDefaults.standard.set(exp, forKey: "exp")
         } else {
-            session.transferUserInfo(["exp": GameViewController.getTotalXP()])
+            session.transferUserInfo(["exp": PlayerXP.totalXP])
         }
     }
     
@@ -249,10 +235,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
     func sessionDidBecomeInactive(_: WCSession) {}
     
     func sessionDidDeactivate(_: WCSession) {}
-    
-    class func isLoggedIn() -> Bool {
-        loggedIn
-    }
     
     func logInDialog(username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .alert)

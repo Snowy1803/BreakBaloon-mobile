@@ -8,16 +8,6 @@
 
 import Foundation
 import SpriteKit
-private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-    switch (lhs, rhs) {
-    case let (left?, right?):
-        return left < right
-    case (nil, _?):
-        return true
-    default:
-        return false
-    }
-}
 
 class RandGameBonusLevel: RandGameLevel {
     let modifier: Float
@@ -42,7 +32,7 @@ class RandGameBonusLevel: RandGameLevel {
         let xp = Int((Float(numberOfBaloons) - Float(missing)) * modifier)
         gamescene!.gvc.addXP(xp)
         
-        let stars = missing == 0 ? 3 : (Int(numberOfBaloons) - Int(maxMissingBaloonToWin)) < gamescene?.points ? 2 : 1
+        let stars = missing == 0 ? 3 : (Int(numberOfBaloons) - Int(maxMissingBaloonToWin)) < gamescene!.points ? 2 : 1
         status = RandGameLevelStatus.getFinished(stars: stars)
         save()
         if next != nil, next!.status == .unlockable || next!.status == .locked {

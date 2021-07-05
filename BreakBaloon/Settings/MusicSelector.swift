@@ -20,18 +20,18 @@ class MusicSelector: Selector {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func updateAfterValueChange() {
+    override func didSetSelectorValue() {
         gvc.currentMusicInt = value
         UserDefaults.standard.set(gvc.currentMusicFileName, forKey: "currentMusic")
-        super.updateAfterValueChange()
+        super.didSetSelectorValue()
         gvc.reloadBackgroundMusic()
     }
     
-    override func maxValue() -> Int {
+    override var maxValue: Int {
         GameViewController.getMusicURLs().count - 1
     }
     
-    override func text() -> String {
+    override var text: String {
         let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
         return cmps[cmps.count - 1].components(separatedBy: ".")[0].removingPercentEncoding!
     }

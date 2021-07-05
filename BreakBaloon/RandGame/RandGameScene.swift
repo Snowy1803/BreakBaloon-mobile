@@ -10,7 +10,7 @@ import AVFoundation
 import SpriteKit
 
 class RandGameScene: AbstractGameScene {
-    static let REQUIREMENT = 6
+    static let requirement = 6
     
     let gvc: GameViewController
     let nextBaloonMax: TimeInterval

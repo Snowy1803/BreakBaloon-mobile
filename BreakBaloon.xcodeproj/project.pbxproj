@@ -53,6 +53,7 @@
 		204FBB2F1D58D9B700971306 /* checkbox-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 204FBB2E1D58D9B700971306 /* checkbox-disabled.png */; };
 		205CADB52691136D00C0C508 /* IPhoneSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CADB42691136D00C0C508 /* IPhoneSettingScene.swift */; };
 		205CADBB26921C6900C0C508 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CADBA26921C6900C0C508 /* GameType.swift */; };
+		205CADBD2693467200C0C508 /* PlayerXP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CADBC2693467200C0C508 /* PlayerXP.swift */; };
 		206736791D16E26300FB9FFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206736781D16E26300FB9FFF /* AppDelegate.swift */; };
 		2067367B1D16E26300FB9FFF /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2067367A1D16E26300FB9FFF /* StartScene.sks */; };
 		206736951D16FA5100FB9FFF /* buttonbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 206736941D16FA5100FB9FFF /* buttonbg.png */; };
@@ -233,6 +234,7 @@
 		205CADB726912C7900C0C508 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		205CADB9269206A800C0C508 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		205CADBA26921C6900C0C508 /* GameType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
+		205CADBC2693467200C0C508 /* PlayerXP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerXP.swift; sourceTree = "<group>"; };
 		206736751D16E26300FB9FFF /* BreakBaloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakBaloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		206736781D16E26300FB9FFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2067367A1D16E26300FB9FFF /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				20C9957D1D23EC2F0029312F /* StartScene.swift */,
 				205CADBA26921C6900C0C508 /* GameType.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
+				205CADBC2693467200C0C508 /* PlayerXP.swift */,
 				201F4D5F1D17275600EB894A /* AppIcon.xcassets */,
 				20FDCDA02690A55500493C8E /* LaunchScreen.storyboard */,
 				20A335A61D4BD33E00B54FBE /* Main.storyboard */,
@@ -876,6 +879,7 @@
 				205CADBB26921C6900C0C508 /* GameType.swift in Sources */,
 				20C9958F1D23ED100029312F /* Downloadable.swift in Sources */,
 				20BE2F571D510062004A8B17 /* RandGameBonusLevelInfoNode.swift in Sources */,
+				205CADBD2693467200C0C508 /* PlayerXP.swift in Sources */,
 				20CEC7EA1D5F1C670031830C /* BBT2.swift in Sources */,
 				20CB89CE1D4CE6E600A0408C /* RandGameLevel.swift in Sources */,
 				20F188301D2A62C70099F717 /* BBT1.swift in Sources */,

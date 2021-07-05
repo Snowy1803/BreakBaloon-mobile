@@ -19,17 +19,17 @@ class ThemeSelector: Selector {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func updateAfterValueChange() {
+    override func didSetSelectorValue() {
         gvc.currentThemeInt = value
-        UserDefaults.standard.set(gvc.currentTheme.themeID(), forKey: "currentTheme")
-        super.updateAfterValueChange()
+        UserDefaults.standard.set(gvc.currentTheme.id, forKey: "currentTheme")
+        super.didSetSelectorValue()
     }
     
-    override func maxValue() -> Int {
+    override var maxValue: Int {
         AbstractThemeUtils.themeList.count - 1
     }
     
-    override func text() -> String {
-        gvc.currentTheme.themeName()
+    override var text: String {
+        gvc.currentTheme.name
     }
 }
