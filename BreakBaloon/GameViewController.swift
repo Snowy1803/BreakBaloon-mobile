@@ -33,15 +33,11 @@ class GameViewController: UIViewController, WCSessionDelegate {
                     return i
                 }
             }
-            return GameViewController.getMusicURLs().count // Personnal
+            return -1
         }
         set(value) {
-            if value < GameViewController.getMusicURLs().count {
-                let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
-                currentMusicFileName = cmps[cmps.count - 1]
-            } else {
-                currentMusicFileName = "_personnal"
-            }
+            let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
+            currentMusicFileName = cmps[cmps.count - 1]
         }
     }
 
@@ -173,9 +169,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     class func getMusicURL(_ fileName: String) -> URL? {
-        if fileName == "_personnal" {
-            return UserDefaults.standard.url(forKey: "usermusic")
-        }
         for url in getMusicURLs() {
             if url.absoluteString.hasSuffix("/\(fileName)") {
                 return url

@@ -11,18 +11,8 @@ import MediaPlayer
 import SpriteKit
 
 class MusicSelector: Selector {
-    let importBtn: ImportMusic
-    
-    init(gvc: GameViewController, importUnder: Bool) {
-        importBtn = ImportMusic(gvc: gvc)
+    init(gvc: GameViewController) {
         super.init(gvc: gvc, value: gvc.currentMusicInt)
-        importBtn.selector = self
-        if importUnder {
-            importBtn.position = CGPoint(x: 0, y: -(frame.height / 4 + importBtn.frame.width / 4))
-        } else {
-            importBtn.position = CGPoint(x: frame.width / 4 + importBtn.frame.width / 4, y: 0)
-        }
-        addChild(importBtn)
     }
     
     @available(*, unavailable)
@@ -38,14 +28,10 @@ class MusicSelector: Selector {
     }
     
     override func maxValue() -> Int {
-        GameViewController.getMusicURLs().count - (UserDefaults.standard.object(forKey: "usermusic") == nil ? 1 : 0)
+        GameViewController.getMusicURLs().count - 1
     }
     
     override func text() -> String {
-        if value == GameViewController.getMusicURLs().count {
-            let name = UserDefaults.standard.string(forKey: "usermusicName")
-            return name == nil ? "Custom" : name!
-        }
         let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
         return cmps[cmps.count - 1].components(separatedBy: ".")[0].removingPercentEncoding!
     }

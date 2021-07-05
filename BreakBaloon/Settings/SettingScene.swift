@@ -33,7 +33,7 @@ class SettingScene: SKScene {
         self.previous = previous
         audioSetting = AudioSlider(name: NSLocalizedString("settings.audio", comment: "Sound effects"), music: false, gvc: gvc)
         musicSetting = AudioSlider(name: NSLocalizedString("settings.music", comment: "Music"), music: true, gvc: gvc)
-        musicIndexSetting = MusicSelector(gvc: gvc, importUnder: UIDevice.current.userInterfaceIdiom == .phone)
+        musicIndexSetting = MusicSelector(gvc: gvc)
         themeIndexSetting = ThemeSelector(gvc: gvc)
         super.init(size: previous.frame.size)
         backgroundColor = SKColor.brown
@@ -134,8 +134,6 @@ class SettingScene: SKScene {
                 audioSetting.calculateVolume(touch)
             } else if onNode(musicSetting, point: point) {
                 musicSetting.calculateVolume(touch)
-            } else if onNode(musicIndexSetting.importBtn, point: touch.location(in: musicIndexSetting)) {
-                musicIndexSetting.importBtn.showImportDialog()
             } else if onNode(musicIndexSetting, point: point) {
                 musicIndexSetting.click(touch)
             } else if onNode(themeIndexSetting, point: point) {
