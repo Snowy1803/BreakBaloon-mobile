@@ -19,8 +19,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     var skView: SKView?
     
-    var wcSession: WCSession?
-    
     var backgroundMusicPlayer: AVAudioPlayer!
     var audioPlayer: AVAudioPlayer!
     var audioVolume: Float = GameViewController.defaultAudioVolume
@@ -67,9 +65,9 @@ class GameViewController: UIViewController, WCSessionDelegate {
         _ = UIApplication.shared.appDelegate.triggerDeepLinkIfPresent()
 
         if WCSession.isSupported() {
-            wcSession = WCSession.default
-            wcSession!.delegate = self
-            wcSession!.activate()
+            print("Activating Watch Connectivity")
+            WCSession.default.delegate = self
+            WCSession.default.activate()
         }
     }
     
@@ -203,10 +201,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
         false
     }
     
-    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
-        .all
-    }
-    
     func addXP(_ xp: Int) {
         let levelBefore = PlayerXP.currentLevel
         UserDefaults.standard.set(PlayerXP.totalXP + xp, forKey: "exp")
@@ -216,10 +210,13 @@ class GameViewController: UIViewController, WCSessionDelegate {
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
-        wcSession?.transferUserInfo(["exp": PlayerXP.totalXP])
+        if WCSession.isSupported() {
+            WCSession.default.transferUserInfo(["exp": PlayerXP.totalXP])
+        }
     }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        print("receive raw: \(userInfo)")
         guard let exp = userInfo["exp"] as? Int else {
             return
         }
@@ -230,11 +227,24 @@ class GameViewController: UIViewController, WCSessionDelegate {
         }
     }
     
-    func session(_: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {}
+    func session(_ session: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {
+        session.transferUserInfo(["exp": PlayerXP.totalXP])
+    }
+    
+    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
+        if let error = error {
+            print("transfer failed", error)
+        } else {
+            print("successful transfer")
+        }
+    }
     
     func sessionDidBecomeInactive(_: WCSession) {}
     
-    func sessionDidDeactivate(_: WCSession) {}
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("changed watch")
+        session.activate()
+    }
     
     func logInDialog(username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .alert)

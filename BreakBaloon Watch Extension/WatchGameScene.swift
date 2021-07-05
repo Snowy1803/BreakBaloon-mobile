@@ -8,6 +8,7 @@
 
 import SpriteKit
 import WatchKit
+import WatchConnectivity
 
 class WatchGameScene: SKScene {
     var cases: [Case]
@@ -177,7 +178,7 @@ class WatchGameScene: SKScene {
             // Level up
         }
         print("XP:", oldXP + xp)
-        controller.wcSession?.transferUserInfo(["exp": oldXP + xp])
+        WCSession.default.transferUserInfo(["exp": oldXP + xp])
     }
     
     override func update(_: TimeInterval) {

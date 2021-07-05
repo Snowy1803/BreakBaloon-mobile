@@ -7,10 +7,16 @@
 //
 
 import WatchKit
+import WatchConnectivity
 
-class ExtensionDelegate: NSObject, WKExtensionDelegate {
+class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
+    
+    private var backgroundTasks: [WKWatchConnectivityRefreshBackgroundTask] = []
+    
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+        WCSession.default.delegate = self
+        WCSession.default.activate()
     }
 
     func applicationDidBecomeActive() {
@@ -34,8 +40,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 // Snapshot tasks have a unique completion call, make sure to set your expiration date
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
-                // Be sure to complete the connectivity task once you’re done.
-                connectivityTask.setTaskCompletedWithSnapshot(false)
+                let session = WCSession.default
+                print("Waking up for connectivity background task")
+                if session.delegate == nil {
+                    session.delegate = self
+                    session.activate()
+                }
+                self.backgroundTasks.append(connectivityTask)
             case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
                 // Be sure to complete the URL session task once you’re done.
                 urlSessionTask.setTaskCompletedWithSnapshot(false)
@@ -48,6 +59,29 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             default:
                 // make sure to complete unhandled task types
                 task.setTaskCompletedWithSnapshot(false)
+            }
+        }
+    }
+    
+    func session(_: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {}
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        print("receive raw: \(userInfo)")
+        if let exp = userInfo["exp"] as? Int {
+            if UserDefaults.standard.integer(forKey: "exp") < exp {
+                UserDefaults.standard.set(exp, forKey: "exp")
+                print("Received XP:", exp)
+            } else {
+                session.transferUserInfo(["exp": UserDefaults.standard.integer(forKey: "exp")])
+            }
+        }
+        if let animate = userInfo["extension.animation.enabled"] as? Bool {
+            UserDefaults.standard.set(animate, forKey: "extension.animation.enabled")
+        }
+        if !backgroundTasks.isEmpty && !session.hasContentPending {
+            backgroundTasks.removeAll {
+                $0.setTaskCompletedWithSnapshot(false)
+                return true
             }
         }
     }

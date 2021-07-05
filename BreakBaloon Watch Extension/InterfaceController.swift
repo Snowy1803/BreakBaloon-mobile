@@ -7,15 +7,12 @@
 //
 
 import Foundation
-import WatchConnectivity
 import WatchKit
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate {
+class InterfaceController: WKInterfaceController {
     @IBOutlet var skInterface: WKInterfaceSKScene!
     
     var scene: WatchGameScene?
-    
-    var wcSession: WCSession!
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -38,33 +35,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        
-        wcSession = WCSession.default
-        wcSession.delegate = self
-        wcSession.activate()
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-    }
-    
-    func session(_: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {}
-    
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        let exp = userInfo["exp"] as? Int
-        if exp != nil {
-            if UserDefaults.standard.integer(forKey: "exp") < exp! {
-                UserDefaults.standard.set(exp!, forKey: "exp")
-                print("Received XP:", exp!)
-            } else {
-                session.transferUserInfo(["exp": UserDefaults.standard.integer(forKey: "exp")])
-            }
-        }
-        let animate = userInfo["extension.animation.enabled"] as? Bool
-        if animate != nil {
-            UserDefaults.standard.set(animate, forKey: "extension.animation.enabled")
-        }
     }
     
     @IBAction func onRecognizerStateChange(_ recognizer: WKLongPressGestureRecognizer) {
