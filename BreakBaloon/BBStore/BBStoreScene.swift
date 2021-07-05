@@ -33,10 +33,10 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         self.gvc = gvc
         
         loading = SKLabelNode(text: NSLocalizedString("bbstore.loading", comment: "Loading text"))
-        loading.fontColor = SKColor.black
+        loading.fontColor = .foreground
         
         super.init(size: size)
-        backgroundColor = SKColor.white
+        backgroundColor = .background
         loading.position = CGPoint(x: frame.width / 2, y: frame.height / 2 - 10)
         addChild(loading)
         beginBBStoreLoading()
@@ -61,7 +61,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                     let topSA = self.view?.safeAreaInsets.top ?? 0
                     let top = self.frame.height - topSA
                     self.title = SKLabelNode(text: NSLocalizedString(UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title", comment: "BBStore"))
-                    self.title.fontColor = SKColor.black
+                    self.title.fontColor = .foreground
                     self.title.fontSize = 20
                     self.title.position = CGPoint(x: self.frame.width / 2, y: top - 25)
                     self.title.alpha = 0
@@ -69,7 +69,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                     self.addChild(self.title)
                     self.title.run(SKAction.fadeIn(withDuration: 1))
                     self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
-                    self.back.fontColor = SKColor.black
+                    self.back.fontColor = .foreground
                     self.back.fontSize = 20
                     self.back.position = CGPoint(x: self.back.frame.width / 2 + 5, y: top - 25)
                     self.back.alpha = 0
@@ -77,7 +77,8 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                     self.addChild(self.back)
                     self.back.run(SKAction.fadeIn(withDuration: 1))
                     self.upper = SKShapeNode(rect: CGRect(x: 0, y: top - 30, width: self.frame.width, height: 30 + topSA))
-                    self.upper.fillColor = SKColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+                    self.upper.fillColor = .background
+                    self.upper.strokeColor = .clear
                     self.upper.alpha = 0.75
                     self.upper.zPosition = 5
                     self.addChild(self.upper)
@@ -205,6 +206,24 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
             } else {
                 dl.removeFromParent()
             }
+        }
+    }
+}
+
+extension UIColor {
+    static var foreground: UIColor {
+        if #available(iOS 13, *) {
+            return .label
+        } else {
+            return .black
+        }
+    }
+    
+    static var background: UIColor {
+        if #available(iOS 13, *) {
+            return .secondarySystemGroupedBackground
+        } else {
+            return .white
         }
     }
 }

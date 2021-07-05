@@ -20,7 +20,7 @@ class Case: SKSpriteNode {
     init(index: Int) {
         type = Int(arc4random_uniform(UInt32(6)))
         self.index = index
-        let texture = SKTexture(imageNamed: "closed" + String(type))
+        let texture = SKTexture(imageNamed: "closed\(type)")
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         blendMode = .replace
     }
@@ -32,7 +32,7 @@ class Case: SKSpriteNode {
     
     func breakBaloon(_ winner: Bool) {
         status = winner ? .winnerOpened : .opened
-        texture = SKTexture(imageNamed: "opened" + String(type))
+        texture = SKTexture(imageNamed: "opened\(type)")
         if UserDefaults.standard.bool(forKey: "extension.animation.enabled") {
             triggerAnimationExtension()
         }

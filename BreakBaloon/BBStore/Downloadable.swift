@@ -21,7 +21,7 @@ class Downloadable: SKNode {
     let dldescription: String
     let dlid: String
     let dlversion: String
-    @objc let levelRequirement: Int
+    let levelRequirement: Int
     
     init(type: DownloadType, name: String, author: String, id: String, version: String, description: String, levelRequirement: Int) {
         dltype = type
@@ -42,33 +42,46 @@ class Downloadable: SKNode {
     
     func construct(_ gvc: GameViewController) {
         rect = SKShapeNode(rect: CGRect(x: position.x, y: position.y, width: Downloadable.WIDTH, height: Downloadable.HEIGHT))
-        rect.fillColor = SKColor.lightGray
+        rect.fillColor = .groupTableViewBackground
+        rect.strokeColor = .clear
         rect.zPosition = 1
         addChild(rect)
         let name = SKLabelNode(text: dlname)
-        name.fontColor = SKColor.white
+        name.fontColor = .foreground
         name.fontSize = 20
         name.position = CGPoint(x: rect.frame.minX + name.frame.width / 2 + 5, y: rect.frame.maxY - 20)
         name.zPosition = 2
         addChild(name)
         let auth = SKLabelNode(text: dlauthor)
-        auth.fontColor = SKColor.white
+        auth.fontColor = .foreground
         auth.fontSize = 20
         auth.position = CGPoint(x: rect.frame.maxX - auth.frame.width / 2 - 5, y: rect.frame.maxY - 20)
         auth.zPosition = 2
         addChild(auth)
-        let type = SKLabelNode(text: dltype.toString())
+        let type = SKLabelNode(text: dltype.localizedDescription)
         type.fontColor = SKColor.gray
         type.fontSize = 20
         type.position = CGPoint(x: rect.frame.minX + type.frame.width / 2 + 5, y: rect.frame.maxY - 45)
         type.zPosition = 2
         addChild(type)
         let btn = SKLabelNode(text: NSLocalizedString("bbstore.clickToDownload", comment: "button"))
-        btn.fontColor = SKColor.white
+        btn.fontColor = .foreground
         btn.fontSize = 16
         btn.position = CGPoint(x: rect.frame.midX, y: rect.frame.minY + 5)
         btn.zPosition = 2
         addChild(btn)
+        
+        let desc = SKLabelNode(text: dldescription)
+        desc.fontColor = .foreground
+        desc.fontSize = 18
+        desc.position = CGPoint(x: rect.frame.minX + 5, y: rect.frame.maxY - 50)
+        desc.horizontalAlignmentMode = .left
+        desc.verticalAlignmentMode = .top
+        desc.preferredMaxLayoutWidth = Downloadable.WIDTH - 10
+        desc.lineBreakMode = .byWordWrapping
+        desc.numberOfLines = 6
+        desc.zPosition = 2
+        addChild(desc)
         
         if isInPossession() {
             let lenght: CGFloat = 40
@@ -137,7 +150,7 @@ class Downloadable: SKNode {
     }
     
     func download(_ scene: BBStoreScene?, wait: Bool) throws {
-        if !dltype.isSupported() {
+        if !dltype.supported {
             if scene != nil {
                 let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: NSLocalizedString("bbstore.download.unsupported", comment: ""), preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
@@ -171,7 +184,7 @@ class Downloadable: SKNode {
                 throw file.downloadError!
             }
         }
-        if dltype.isTheme() {
+        if dltype.isTheme {
             let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             do {
                 var pathToRemove = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
@@ -195,7 +208,7 @@ class Downloadable: SKNode {
                     return true
                 }
             }
-        } else if dltype.isTheme() {
+        } else if dltype.isTheme {
             return AbstractThemeUtils.withID(dlid.components(separatedBy: ".").first!) != nil
         }
         return false
@@ -204,7 +217,7 @@ class Downloadable: SKNode {
     func isInUse(_ gvc: GameViewController) -> Bool {
         if dltype == .m4aMusic {
             return dlid == gvc.currentMusicFileName
-        } else if dltype.isTheme() {
+        } else if dltype.isTheme {
             return dlid == gvc.currentTheme.id
         }
         return false
@@ -230,7 +243,7 @@ class Downloadable: SKNode {
         let /* rows:Int = Int((viewSize.width - 30) % (Downloadable.WIDTH + 5)), */ cols = Int(viewSize.width / Downloadable.WIDTH)
         for line in lines {
             if line == "===============COCH===============" {
-                if DownloadType.getType(currentType, id: currentId).isSupported() {
+                if DownloadType.getType(currentType, id: currentId).supported {
                     let dl = Downloadable(type: DownloadType.getType(currentType, id: currentId), name: currentName, author: currentAuthor, id: currentId, version: currentVersion, description: currentDescription, levelRequirement: currentLevelRequirement)
                     // dl.position = CGPointMake(viewSize.width/2, viewSize.height/2)
                     
@@ -259,8 +272,8 @@ class Downloadable: SKNode {
                 currentLevelRequirement = Int(line.components(separatedBy: "=")[1])!
             }
         }
-        list.sort(by: { dl1, dl2 in
-            dl1.levelRequirement > PlayerXP.currentLevel && dl2.levelRequirement < PlayerXP.currentLevel
+        list.sort(by: { dl1, dl2 in // move locked items to the end
+            dl1.levelRequirement <= PlayerXP.currentLevel && dl2.levelRequirement > PlayerXP.currentLevel
         })
         var i = 0
         for dl in list { // Setting position after sorting
@@ -311,15 +324,15 @@ class Downloadable: SKNode {
             }
         }
         
-        func isTheme() -> Bool {
+        var isTheme: Bool {
             self == .bbt1 || self == .bbt2
         }
         
-        func isSupported() -> Bool {
-            isTheme() || self == .m4aMusic
+        var supported: Bool {
+            isTheme || self == .m4aMusic
         }
         
-        func toString() -> String {
+        var localizedDescription: String {
             switch self {
             case .bbt1, .bbt2:
                 return NSLocalizedString("bbstore.type.theme", comment: "Theme")
