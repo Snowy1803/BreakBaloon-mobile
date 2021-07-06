@@ -48,7 +48,7 @@ class WatchGameScene: SKScene {
             cases.append(theCase)
         }
         points = 0
-        winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
+        winCaseNumber = Int.random(in: 0..<(width*height))
     }
     
     override func sceneDidLoad() {
@@ -76,18 +76,16 @@ class WatchGameScene: SKScene {
             addChild(plus)
             print(plus, plus.frame)
             plus.run(SKAction.sequence([SKAction.wait(forDuration: 5), SKAction.removeFromParent()]))
-            var isThereUnbreakedBaloons = false
-            for aCase in cases where !aCase.breaked {
-                isThereUnbreakedBaloons = true
-                break
+            var unbreakedIndices: [Int] = []
+            for (index, aCase) in cases.enumerated() where !aCase.breaked {
+                unbreakedIndices.append(index)
             }
-            if !isThereUnbreakedBaloons {
+            if let randomElement = unbreakedIndices.randomElement() {
+                winCaseNumber = randomElement
+            } else { // nothing left
                 gameEnd()
                 gameEnded = true
             }
-            repeat {
-                winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
-            } while cases[winCaseNumber].breaked && !gameEnded
         }
         
         if !gameEnded {

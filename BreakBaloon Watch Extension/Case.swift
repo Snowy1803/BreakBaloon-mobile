@@ -18,7 +18,7 @@ class Case: SKSpriteNode {
     }
     
     init(index: Int) {
-        type = Int(arc4random_uniform(UInt32(6)))
+        type = Int.random(in: 0..<6)
         self.index = index
         let texture = SKTexture(imageNamed: "closed\(type)")
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
@@ -48,10 +48,10 @@ class Case: SKSpriteNode {
     }
     
     func animate(_ color: SKColor?) {
-        for _ in 0 ..< arc4random_uniform(10) {
-            let shape = SKShapeNode(circleOfRadius: CGFloat(arc4random_uniform(10) + 1) / 300.0)
-            shape.position = CGPoint(x: (CGFloat(arc4random_uniform(75)) - 75.0 / 2) / 300.0, y: (CGFloat(arc4random_uniform(75)) - 75.0 / 2) / 300.0)
-            shape.fillColor = color != nil ? color! : SKColor(red: CGFloat.random(in: 0 ..< 1), green: CGFloat.random(in: 0 ..< 1), blue: CGFloat.random(in: 0 ..< 1), alpha: 1)
+        for _ in 0 ..< Int.random(in: 0..<10) {
+            let shape = SKShapeNode(circleOfRadius: CGFloat.random(in: 1...10))
+            shape.position = CGPoint(x: CGFloat.random(in: -37...37), y: CGFloat.random(in: -37...37))
+            shape.fillColor = color ?? SKColor(red: CGFloat.random(in: 0..<1), green: CGFloat.random(in: 0..<1), blue: CGFloat.random(in: 0..<1), alpha: 1)
             shape.strokeColor = SKColor.clear
             shape.zPosition = 1
             shape.run(SKAction.sequence([SKAction.wait(forDuration: 0.2), SKAction.removeFromParent()]))

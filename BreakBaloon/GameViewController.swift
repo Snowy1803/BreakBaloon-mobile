@@ -404,18 +404,6 @@ extension SKColor {
     }
 }
 
-extension Float {
-    static func random() -> Float {
-        Float(arc4random()) / Float(UINT32_MAX)
-    }
-}
-
-extension CGFloat {
-    static func random() -> CGFloat {
-        CGFloat(arc4random()) / CGFloat(UINT32_MAX)
-    }
-}
-
 extension UIImage {
     func withSize(_ newWidth: CGFloat) -> UIImage {
         if size.width == newWidth {

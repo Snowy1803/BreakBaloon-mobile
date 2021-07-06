@@ -57,7 +57,7 @@ class GameScene: AbstractGameScene {
         label.position = CGPoint(x: label.frame.width / 2, y: 5 + (gvc.view?.safeAreaInsets.bottom ?? 0))
         label.zPosition = 2
         addChild(label)
-        winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
+        winCaseNumber = Int.random(in: 0..<(width*height))
     }
     
     @available(*, unavailable)
@@ -103,18 +103,16 @@ class GameScene: AbstractGameScene {
             plus.zPosition = 3
             addChild(plus)
             plus.run(SKAction.sequence([SKAction.wait(forDuration: 5), SKAction.removeFromParent()]))
-            var isThereUnbreakedBaloons = false
-            for aCase in cases where !aCase.breaked {
-                isThereUnbreakedBaloons = true
-                break
+            var unbreakedIndices: [Int] = []
+            for (index, aCase) in cases.enumerated() where !aCase.breaked {
+                unbreakedIndices.append(index)
             }
-            if !isThereUnbreakedBaloons {
+            if let randomElement = unbreakedIndices.randomElement() {
+                winCaseNumber = randomElement
+            } else { // nothing left
                 gameEnd()
                 gameEnded = true
             }
-            repeat {
-                winCaseNumber = Int(arc4random_uniform(UInt32(width) * UInt32(height)))
-            } while cases[winCaseNumber].breaked && !gameEnded
             winningSound = true
         } else if gametype == .timed {
             var isThereUnbreakedBaloons = false
@@ -138,13 +136,16 @@ class GameScene: AbstractGameScene {
         
         if !gameEnded, !computer, gametype == .computer {
             waitingForComputer = true
-            run(SKAction.sequence([SKAction.wait(forDuration: 0.25), SKAction.run {
-                var wherebreak: Int
-                repeat {
-                    wherebreak = Int(arc4random_uniform(UInt32(self.width) * UInt32(self.height)))
-                } while self.cases[wherebreak].breaked
-                self.breakBaloon(wherebreak, touch: self.cases[wherebreak].position, computer: true)
-                self.waitingForComputer = false
+            run(SKAction.sequence([SKAction.wait(forDuration: 0.25), SKAction.run { [self] in
+                var unbreakedIndices: [Int] = []
+                for (index, aCase) in cases.enumerated() where !aCase.breaked {
+                    unbreakedIndices.append(index)
+                }
+                
+                if let wherebreak = unbreakedIndices.randomElement() {
+                    self.breakBaloon(wherebreak, touch: self.cases[wherebreak].position, computer: true)
+                    self.waitingForComputer = false
+                }
             }]))
         }
     }

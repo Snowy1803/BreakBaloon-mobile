@@ -158,7 +158,7 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(case aCase: Case) {
         addChild(aCase)
-        nextBaloon = Date().timeIntervalSince1970 + (Double(arc4random_uniform(UInt32(nextBaloonMax * 1000))) / 1000)
+        nextBaloon = Date().timeIntervalSince1970 + Double.random(in: 0...nextBaloonMax)
         if !(aCase is FakeCase) {
             baloonsToSpawn -= 1
         }
@@ -166,7 +166,7 @@ class RandGameScene: AbstractGameScene {
     
     func spawnBaloon(point: CGPoint) {
         let aCase: Case
-        if level.fakeBaloonsRate > Float.random() {
+        if level.fakeBaloonsRate > Float.random(in: 0..<1) {
             aCase = FakeCase(gvc: gvc, index: -1)
         } else {
             aCase = Case(gvc: gvc, index: -1)
