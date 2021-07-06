@@ -6,11 +6,10 @@
 //  Copyright © 2019 Snowy_1803. All rights reserved.
 //
 
-import WatchKit
 import WatchConnectivity
+import WatchKit
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
-    
     private var backgroundTasks: [WKWatchConnectivityRefreshBackgroundTask] = []
     
     func applicationDidFinishLaunching() {
@@ -78,7 +77,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         if let animate = userInfo["extension.animation.enabled"] as? Bool {
             UserDefaults.standard.set(animate, forKey: "extension.animation.enabled")
         }
-        if !backgroundTasks.isEmpty && !session.hasContentPending {
+        if !backgroundTasks.isEmpty, !session.hasContentPending {
             backgroundTasks.removeAll {
                 $0.setTaskCompletedWithSnapshot(false)
                 return true

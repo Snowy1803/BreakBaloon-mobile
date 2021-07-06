@@ -55,7 +55,7 @@ class Case: SKSpriteNode {
     }
     
     func animate(_ color: SKColor?) {
-        for _ in 0 ..< Int.random(in: 0..<10) {
+        for _ in 0..<Int.random(in: 0..<10) {
             let shape = SKShapeNode(circleOfRadius: CGFloat.random(in: 1...10))
             shape.position = CGPoint(x: CGFloat.random(in: -37...37), y: CGFloat.random(in: -37...37))
             shape.fillColor = color ?? SKColor(red: CGFloat.random(in: 0..<1), green: CGFloat.random(in: 0..<1), blue: CGFloat.random(in: 0..<1), alpha: 1)
@@ -84,7 +84,7 @@ class Case: SKSpriteNode {
     func polygon(_ points: [(CGFloat, CGFloat)]) -> CGPath {
         let path = CGMutablePath()
         path.move(to: CGPoint(x: points[0].0, y: points[0].1))
-        for i in 1 ..< points.count {
+        for i in 1..<points.count {
             path.addLine(to: CGPoint(x: points[i].0, y: points[i].1))
         }
         path.addLine(to: CGPoint(x: points[0].0, y: points[0].1))

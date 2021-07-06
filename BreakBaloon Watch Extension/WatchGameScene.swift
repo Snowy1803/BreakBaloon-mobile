@@ -7,8 +7,8 @@
 //
 
 import SpriteKit
-import WatchKit
 import WatchConnectivity
+import WatchKit
 
 class WatchGameScene: SKScene {
     var cases: [Case]
@@ -39,7 +39,7 @@ class WatchGameScene: SKScene {
         backgroundColor = .white
         let baloonSize = min(size.width, size.height) / 4
         print("construct")
-        for i in 0 ..< (width * height) {
+        for i in 0..<(width * height) {
             let theCase = Case(index: i)
             theCase.position = CGPoint(x: (CGFloat(i % width) + 0.5) * baloonSize + size.width / 8, y: (CGFloat(i / width) + 0.5) * baloonSize + size.height / 8)
             theCase.zPosition = 1
@@ -48,7 +48,7 @@ class WatchGameScene: SKScene {
             cases.append(theCase)
         }
         points = 0
-        winCaseNumber = Int.random(in: 0..<(width*height))
+        winCaseNumber = Int.random(in: 0..<(width * height))
     }
     
     override func sceneDidLoad() {

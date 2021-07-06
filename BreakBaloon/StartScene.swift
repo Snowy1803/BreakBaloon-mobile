@@ -261,7 +261,7 @@ class StartScene: SKScene {
     
     func initLevelSelectionPane() {
         let width = Int(frame.size.width / 75)
-        for i in 0 ..< RandGameLevel.levels.count {
+        for i in 0..<RandGameLevel.levels.count {
             let node = RandGameLevel.levels[i].createNode()
             node.realPosition = CGPoint(x: CGFloat(i % width * 75 + 35), y: frame.size.height - CGFloat(i / width * 75 + 35) - (view?.safeAreaInsets.top ?? 0))
             addChild(node)

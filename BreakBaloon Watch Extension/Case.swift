@@ -48,7 +48,7 @@ class Case: SKSpriteNode {
     }
     
     func animate(_ color: SKColor?) {
-        for _ in 0 ..< Int.random(in: 0..<10) {
+        for _ in 0..<Int.random(in: 0..<10) {
             let shape = SKShapeNode(circleOfRadius: CGFloat.random(in: 1...10))
             shape.position = CGPoint(x: CGFloat.random(in: -37...37), y: CGFloat.random(in: -37...37))
             shape.fillColor = color ?? SKColor(red: CGFloat.random(in: 0..<1), green: CGFloat.random(in: 0..<1), blue: CGFloat.random(in: 0..<1), alpha: 1)

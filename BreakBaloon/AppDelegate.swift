@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else if query == "game" {
                 parameter = "singleplayer"
                 if queryArray.count > 3 {
-                    let query: [String] = Array(queryArray[3 ..< queryArray.count])
+                    let query: [String] = Array(queryArray[3..<queryArray.count])
                     parameter = query.joined(separator: "/")
                 }
             } else if query == "bbstore" {

@@ -30,7 +30,7 @@ class GameScene: AbstractGameScene {
         super.construct(gvc)
         let top = frame.size.height - (gvc.view?.safeAreaInsets.top ?? 0)
         let left = gvc.view?.safeAreaInsets.left ?? 0
-        for i in 0 ..< (width * height) {
+        for i in 0..<(width * height) {
             let theCase = Case(gvc: gvc, index: i)
             theCase.position = CGPoint(x: left + CGFloat(i % width * 75 + 35), y: top - CGFloat(i / width * 75 + 35))
             theCase.zPosition = 1
@@ -57,7 +57,7 @@ class GameScene: AbstractGameScene {
         label.position = CGPoint(x: label.frame.width / 2, y: 5 + (gvc.view?.safeAreaInsets.bottom ?? 0))
         label.zPosition = 2
         addChild(label)
-        winCaseNumber = Int.random(in: 0..<(width*height))
+        winCaseNumber = Int.random(in: 0..<(width * height))
     }
     
     @available(*, unavailable)

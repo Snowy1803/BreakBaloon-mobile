@@ -187,9 +187,9 @@ class Downloadable: SKNode {
         if dltype.isTheme {
             let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             do {
-                var pathToRemove = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
-                pathToRemove.removeSubrange(pathToRemove.index(before: pathToRemove.index(before: pathToRemove.index(before: pathToRemove.index(before: pathToRemove.endIndex)))) ..< pathToRemove.endIndex)
-                try FileManager.default.removeItem(atPath: "\(dir)/\(pathToRemove)")
+                // remove previous version (same name without .zip extension)
+                let zipFile = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
+                try FileManager.default.removeItem(atPath: "\(dir)/\(zipFile.dropLast(4))")
             } catch {
                 print(error)
             }

@@ -83,7 +83,7 @@ class BBT2: AbstractTheme {
         // MARK: parse
 
         var commands: [(Int, String)] = []
-        for line in 0 ..< lines.count {
+        for line in 0..<lines.count {
             if !lines[line].hasPrefix("//") {
                 for cmd in lines[line].components(separatedBy: "//")[0].components(separatedBy: ";") {
                     commands.append((line, cmd))
@@ -151,13 +151,13 @@ class BBT2: AbstractTheme {
                     print("Missing closing bracket ')'")
                     throw ExecErrors.syntaxError
                 }
-                arg.removeSubrange(range!.lowerBound ..< arg.endIndex)
+                arg.removeSubrange(range!.lowerBound..<arg.endIndex)
                 return try functions[methodName]!(arg)
             }
             let lastDotRange = methodName.range(of: ".", options: .backwards)!
             let lastDot = lastDotRange.lowerBound
             let lastDotString = methodName[lastDotRange]
-            if methods[String(methodName[lastDotString.index(after: lastDot) ..< methodName.endIndex])] != nil, valueExists(String(methodName[methodName.startIndex ..< lastDot]), properties: properties) {
+            if methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])] != nil, valueExists(String(methodName[methodName.startIndex..<lastDot]), properties: properties) {
                 components.removeFirst()
                 var arg = components.joined(separator: "(")
                 let range = arg.range(of: ")", options: .backwards)
@@ -165,8 +165,8 @@ class BBT2: AbstractTheme {
                     print("Missing closing bracket ')'")
                     throw ExecErrors.syntaxError
                 }
-                arg.removeSubrange(range!.lowerBound ..< arg.endIndex)
-                return try methods[String(methodName[lastDotString.index(after: lastDot) ..< methodName.endIndex])]!(String(methodName[methodName.startIndex ..< lastDot]), arg)
+                arg.removeSubrange(range!.lowerBound..<arg.endIndex)
+                return try methods[String(methodName[lastDotString.index(after: lastDot)..<methodName.endIndex])]!(String(methodName[methodName.startIndex..<lastDot]), arg)
             }
             print("Couldn't resolve \(methodName)")
             throw ExecErrors.callUndeclaredMethodError
@@ -219,13 +219,13 @@ class BBT2: AbstractTheme {
             return try exec(cmd)
         } else if cmd.contains("++") {
             var valsToConcat = cmd.components(separatedBy: "++")
-            for i in 0 ..< valsToConcat.count {
+            for i in 0..<valsToConcat.count {
                 valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: CharacterSet.whitespaces))!
             }
             return valsToConcat.joined(separator: " ")
         } else if cmd.contains("+") {
             var valsToConcat = cmd.components(separatedBy: "+")
-            for i in 0 ..< valsToConcat.count {
+            for i in 0..<valsToConcat.count {
                 valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: CharacterSet.whitespaces))!
             }
             return valsToConcat.joined(separator: "")
@@ -241,7 +241,7 @@ class BBT2: AbstractTheme {
     func parseBaloonBlock() throws {
         var inBaloonBlock = -1
         var cmps = completeCode.components(separatedBy: "\n")
-        cmps.removeSubrange(0 ..< line)
+        cmps.removeSubrange(0..<line)
         for line in cmps {
             if inBaloonBlock != -1 {
                 if line.contains("}") {
@@ -371,8 +371,7 @@ class BBT2: AbstractTheme {
         }
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
-            var degrees = stringLiteral
-            degrees.remove(at: stringLiteral.index(before: stringLiteral.endIndex))
+            let degrees = stringLiteral.dropLast()
             radians = CGFloat(Int(degrees)!) * (CGFloat.pi / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
@@ -388,8 +387,7 @@ class BBT2: AbstractTheme {
         }
         var radians: CGFloat
         if stringLiteral.hasSuffix("°") {
-            var degrees = stringLiteral
-            degrees.remove(at: stringLiteral.index(before: stringLiteral.endIndex))
+            let degrees = stringLiteral.dropLast()
             radians = CGFloat(Int(degrees)!) * (CGFloat.pi / 180)
         } else {
             radians = CGFloat(Float(stringLiteral)!)
@@ -467,7 +465,7 @@ class BBT2: AbstractTheme {
         }
         var image = getImage(value: try execIfNeeds(images[0].trimmingCharacters(in: CharacterSet.whitespaces)))
         
-        for i in 1 ..< images.count {
+        for i in 1..<images.count {
             image = concatImageImpl(image, getImage(value: try execIfNeeds(images[i].trimmingCharacters(in: CharacterSet.whitespaces))))
         }
         
@@ -512,8 +510,8 @@ class BBT2: AbstractTheme {
         let pixelBuffer = buffer.bindMemory(to: RGBA32.self, capacity: width * height)
         var currentPixel = pixelBuffer
         
-        for _ in 0 ..< height {
-            for _ in 0 ..< width {
+        for _ in 0..<height {
+            for _ in 0..<width {
                 if currentPixel.pointee == from {
                     currentPixel.pointee = to
                 }

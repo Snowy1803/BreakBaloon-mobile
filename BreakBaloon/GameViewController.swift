@@ -26,7 +26,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     var currentMusicFileName = "Race.m4a"
     var currentMusicInt: Int {
         get {
-            for i in 0 ..< GameViewController.getMusicURLs().count {
+            for i in 0..<GameViewController.getMusicURLs().count {
                 if GameViewController.getMusicURLs()[i].absoluteString.hasSuffix(currentMusicFileName) {
                     return i
                 }
@@ -234,7 +234,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         session.transferUserInfo(["exp": PlayerXP.totalXP])
     }
     
-    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
+    func session(_: WCSession, didFinish _: WCSessionUserInfoTransfer, error: Error?) {
         if let error = error {
             print("transfer failed", error)
         } else {

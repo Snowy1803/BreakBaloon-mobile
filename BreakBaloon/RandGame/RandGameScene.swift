@@ -180,7 +180,7 @@ class RandGameScene: AbstractGameScene {
     /// Spawn a baloon at a random location
     func spawnBaloon() {
         let area = frame.inset(by: view!.safeAreaInsets).inset(by: UIEdgeInsets(top: 105, left: 0, bottom: 75, right: 75))
-        spawnBaloon(point: CGPoint(x: CGFloat.random(in: area.minX ..< area.maxX), y: CGFloat.random(in: area.minY ..< area.maxY)))
+        spawnBaloon(point: CGPoint(x: CGFloat.random(in: area.minX..<area.maxX), y: CGFloat.random(in: area.minY..<area.maxY)))
     }
     
     func getMissingBaloons() -> Int {

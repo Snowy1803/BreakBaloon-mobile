@@ -206,7 +206,8 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
                 }
                 dl.position = CGPoint(
                     x: CGFloat(i % cols) * (Downloadable.WIDTH + 5) + 5 + insets.left,
-                    y: frame.height - insets.top - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT))
+                    y: frame.height - insets.top - (CGFloat(i / cols) * (Downloadable.HEIGHT + 5) + 30 + Downloadable.HEIGHT)
+                )
                 i += 1
             } else {
                 dl.removeFromParent()
