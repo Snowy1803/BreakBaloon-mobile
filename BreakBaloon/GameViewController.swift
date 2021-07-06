@@ -15,7 +15,6 @@ import WatchConnectivity
 class GameViewController: UIViewController, WCSessionDelegate {
     static let defaultAudioVolume: Float = 1.0
     static let defaultMusicVolume: Float = 0.8
-    private(set) static var loggedIn = false
     
     var skView: SKView?
     
@@ -94,7 +93,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
             data.set(GameViewController.defaultAudioVolume, forKey: "audio-false")
         }
         if UserDefaults.standard.object(forKey: "elementalcube.sessid") != nil {
-            logIn(sessid: UserDefaults.standard.string(forKey: "elementalcube.sessid")!)
+            ECLoginManager.shared.logIn(sessid: UserDefaults.standard.string(forKey: "elementalcube.sessid")!, delegate: nil)
         }
         currentTheme = AbstractThemeUtils.withID(UserDefaults.standard.string(forKey: "currentTheme")!)!
         let welcome: URL = Bundle.main.url(forResource: "Welcome", withExtension: "wav")!
@@ -249,91 +248,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
         session.activate()
     }
     
-    func logInDialog(username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.text", comment: ""), preferredStyle: .alert)
-        alert.addTextField(configurationHandler: { textField in
-            textField.placeholder = NSLocalizedString("login.username.placeholder", comment: "")
-            textField.text = username
-        })
-        alert.addTextField(configurationHandler: { textField in
-            textField.placeholder = NSLocalizedString("login.password.placeholder", comment: "")
-            textField.text = password
-            textField.isSecureTextEntry = true
-        })
-        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { _ in
-            self.logIn(username: alert.textFields![0].text!, password: alert.textFields![1].text!, completion: completion)
-        })
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func logIn(username: String, password: String, completion: (() -> Void)? = nil) {
-        logIn(query: "user=\(username)&passwd=\(password)&v2&appid=ibb", username: username, password: password, completion: completion)
-    }
-    
-    func logIn(sessid: String, completion: (() -> Void)? = nil) {
-        logIn(query: "sessid=\(sessid)", completion: completion)
-    }
-    
-    func logIn(query: String, username: String? = nil, password: String? = nil, completion: (() -> Void)? = nil) {
-        let request = NSMutableURLRequest(url: URL(string: "http://elementalcube.infos.st/api/auth.php")!)
-        request.httpMethod = "POST"
-        request.httpBody = query.data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            guard error == nil, data != nil else {
-                print("[LOGIN] error=\(String(describing: error))")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                print("[LOGIN] status code: \(httpStatus.statusCode)")
-                print("[LOGIN] response: \(String(describing: response))")
-            }
-            DispatchQueue.main.async {
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                let authStatus = responseString?.components(separatedBy: "\r\n")[0]
-                if authStatus != nil, Int(authStatus!) != nil {
-                    let status = LoginStatus(rawValue: Int(authStatus!)!)
-                    if status == .authenticated {
-                        let sessid = responseString!.components(separatedBy: "\r\n")[1]
-                        UserDefaults.standard.set(sessid, forKey: "elementalcube.sessid")
-                        GameViewController.loggedIn = true
-                        if completion != nil {
-                            completion!()
-                        }
-                    } else if status == .tfaRequired {
-                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
-                        alert.addTextField(configurationHandler: { textField in
-                            textField.placeholder = NSLocalizedString("login.2fa.placeholder", comment: "")
-                        })
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.title", comment: ""), style: .default) { _ in
-                            self.logIn(query: "\(query)&code=\(alert.textFields![0].text!)")
-                        })
-                        self.present(alert, animated: true, completion: completion)
-                    } else {
-                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default) { _ in
-                            if status == .invalidUsername || status == .incorrectPassword {
-                                self.logInDialog(username: username, password: password)
-                            } else {
-                                self.logIn(query: query)
-                            }
-                        })
-                        self.present(alert, animated: true, completion: completion)
-                    }
-                }
-            }
-        })
-        task.resume()
-    }
-    
-    class func logOut() {
-        UserDefaults.standard.set(nil, forKey: "elementalcube.sessid")
-        GameViewController.loggedIn = false
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
@@ -418,14 +332,4 @@ extension UIImage {
 
         return newImage!
     }
-}
-
-enum LoginStatus: Int {
-    case authenticated = 1
-    case invalidUsername = -1
-    case dbError = -2
-    case invalidSessID = -3
-    case incorrectPassword = -4
-    case profileDeactivated = -5
-    case tfaRequired = -6
 }

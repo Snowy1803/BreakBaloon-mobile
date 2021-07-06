@@ -9,7 +9,7 @@
 import AVFoundation
 import SpriteKit
 
-class SettingScene: SKScene {
+class SettingScene: SKScene, ECLoginDelegate {
     var previous: StartScene
     var ok = SKSpriteNode()
     var tok = SKLabelNode()
@@ -72,7 +72,7 @@ class SettingScene: SKScene {
         login.position = CGPoint(x: frame.width / 3 * 2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
         login.zPosition = 1
         addChild(login)
-        tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out"))
+        tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out"))
         tlogin.fontName = StartScene.buttonFont
         tlogin.fontColor = SKColor.black
         tlogin.fontSize = 20
@@ -122,12 +122,12 @@ class SettingScene: SKScene {
             } else if onNode(extensions, point: point) {
                 showExtConfig()
             } else if onNode(login, point: point) {
-                DispatchQueue.main.async {
-                    if GameViewController.loggedIn {
-                        GameViewController.logOut()
-                        self.updateLoginLabel()
+                DispatchQueue.main.async { [self] in
+                    if ECLoginManager.shared.loggedIn {
+                        ECLoginManager.shared.logOut()
+                        loginDidComplete()
                     } else {
-                        self.view!.gvc.logInDialog(completion: self.updateLoginLabel)
+                        ECLoginManager.shared.logInDialog(delegate: self)
                     }
                 }
             } else if onNode(audioSetting, point: point) {
@@ -142,8 +142,12 @@ class SettingScene: SKScene {
         }
     }
     
-    func updateLoginLabel() {
-        tlogin.text = NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out")
+    func present(alert: UIAlertController) {
+        view?.gvc.present(alert, animated: true, completion: nil)
+    }
+    
+    func loginDidComplete() {
+        tlogin.text = NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with _: UIEvent?) {

@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
+class IPhoneSettingScene: SKScene, ECLoginDelegate { // Used in landscape on iPhones
     let start: StartScene
     var music = SKSpriteNode()
     var other = SKSpriteNode()
@@ -64,7 +64,7 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         login.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(2, text: false))
         login.zPosition = 1
         addChild(login)
-        tlogin.text = NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out")
+        tlogin.text = NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out")
         tlogin.fontSize = 35
         tlogin.fontName = StartScene.buttonFont
         tlogin.position = CGPoint(x: frame.midX, y: start.getPositionYForButton(2, text: true))
@@ -109,12 +109,12 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
                 view?.presentScene(scene, transition: SKTransition.push(with: .left, duration: 1))
                 scene.initialize()
             } else if login.frame.contains(point) {
-                DispatchQueue.main.async {
-                    if GameViewController.loggedIn {
-                        GameViewController.logOut()
-                        self.updateLoginLabel()
+                DispatchQueue.main.async { [self] in
+                    if ECLoginManager.shared.loggedIn {
+                        ECLoginManager.shared.logOut()
+                        loginDidComplete()
                     } else {
-                        self.view!.gvc.logInDialog(completion: self.updateLoginLabel)
+                        ECLoginManager.shared.logInDialog(delegate: self)
                     }
                 }
             } else if back.frame.contains(point) {
@@ -123,8 +123,12 @@ class IPhoneSettingScene: SKScene { // Used in landscape on iPhones
         }
     }
     
-    func updateLoginLabel() {
-        tlogin.text = NSLocalizedString("settings.log\(GameViewController.loggedIn ? "out" : "in")", comment: "login/out")
+    func loginDidComplete() {
+        tlogin.text = NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out")
+    }
+    
+    func present(alert: UIAlertController) {
+        view?.gvc.present(alert, animated: true, completion: nil)
     }
 }
 
