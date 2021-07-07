@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum RandGameLevelStatus: Int {
+enum RandGameLevelStatus: Int, Codable {
     case locked
     case unlockable
     case unlocked

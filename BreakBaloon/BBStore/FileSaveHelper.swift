@@ -28,6 +28,7 @@ class FileSaveHelper {
         case m4a = ".m4a"
         case zip = ".zip"
         case jar = ".jar"
+        case json = ".json"
     }
     
     private let directory: FileManager.SearchPathDirectory

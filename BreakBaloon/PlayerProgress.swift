@@ -8,14 +8,23 @@
 
 import Foundation
 
-class PlayerProgress {
-    static let current = PlayerProgress(loadFromUserDefaults: UserDefaults.standard)
+class PlayerProgress: Codable {
+    static let savefile = FileSaveHelper(fileName: "progress", fileExtension: .json)
+    static let current: PlayerProgress = {
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(PlayerProgress.self, from: try savefile.getData())
+        } catch {
+            print("failed to read player progress file, falling back on user defaults", error)
+            return PlayerProgress(loadFromUserDefaults: UserDefaults.standard)
+        }
+    }()
     
-    init(loadFromUserDefaults defaults: UserDefaults) {
+    private init(loadFromUserDefaults defaults: UserDefaults) {
         totalXP = defaults.integer(forKey: "exp")
         soloHighscore = defaults.integer(forKey: "highscore")
         timedHighscore = defaults.integer(forKey: "bestTimedScore")
-        randomLevelStatus = []
+        var randomLevelStatus: [RandGameLevelStatus] = []
         let levels = RandGameLevel.levels.count
         randomLevelStatus.reserveCapacity(levels)
         var previous: RandGameLevelStatus?
@@ -29,29 +38,35 @@ class PlayerProgress {
             randomLevelStatus.append(status)
             previous = status
         }
+        self.randomLevelStatus = randomLevelStatus
+        save()
     }
     
     // MARK: Stored properties
     
     var totalXP: Int {
         didSet {
-            UserDefaults.standard.set(totalXP, forKey: "exp")
+            save()
         }
     }
     
     var soloHighscore: Int {
         didSet {
-            UserDefaults.standard.set(soloHighscore, forKey: "highscore")
+            save()
         }
     }
     
     var timedHighscore: Int {
         didSet {
-            UserDefaults.standard.set(timedHighscore, forKey: "bestTimedScore")
+            save()
         }
     }
     
-    private(set) var randomLevelStatus: [RandGameLevelStatus]
+    var randomLevelStatus: [RandGameLevelStatus] {
+        didSet {
+            save()
+        }
+    }
     
     // MARK: Convenience computed properties
     
@@ -67,13 +82,13 @@ class PlayerProgress {
         Double(levelXP) / 250
     }
     
-    subscript(statusForRandomLevel level: Int) -> RandGameLevelStatus {
-        get {
-            randomLevelStatus[level]
-        }
-        set {
-            randomLevelStatus[level] = newValue
-            UserDefaults.standard.set(newValue.rawValue, forKey: "rand.level.\(level)")
+    func save() {
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(self)
+            try PlayerProgress.savefile.saveFile(data: data)
+        } catch {
+            print("Save failed!", error)
         }
     }
 }
