@@ -202,7 +202,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     func addXP(_ xp: Int) {
         let levelBefore = PlayerXP.currentLevel
-        UserDefaults.standard.set(PlayerXP.totalXP + xp, forKey: "exp")
+        PlayerXP.totalXP += xp
         print("Added \(xp) XP")
         if levelBefore < PlayerXP.currentLevel {
             let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), PlayerXP.currentLevel), preferredStyle: .alert)
@@ -220,7 +220,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
             return
         }
         if PlayerXP.totalXP <= exp {
-            UserDefaults.standard.set(exp, forKey: "exp")
+            PlayerXP.totalXP = exp
             if let start = skView?.scene as? StartScene {
                 start.growXP()
             }

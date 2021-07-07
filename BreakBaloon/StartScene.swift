@@ -71,12 +71,12 @@ class StartScene: SKScene {
         cLabel.fontName = "ChalkboardSE-Regular"
         cLabel.fontColor = SKColor.white
         addChild(cLabel)
-        hsLabel.text = String(format: NSLocalizedString("highscore.score", comment: "Highscore"), UserDefaults.standard.integer(forKey: "highscore"))
+        hsLabel.text = String(format: NSLocalizedString("highscore.score", comment: "Highscore"), PlayerXP.soloHighscore)
         hsLabel.fontSize = 25
         hsLabel.fontName = "ChalkboardSE-Regular"
         hsLabel.fontColor = SKColor.orange
         addChild(hsLabel)
-        bsLabel.text = String(format: NSLocalizedString("highscore.time", comment: "Best timed score"), UserDefaults.standard.integer(forKey: "bestTimedScore"))
+        bsLabel.text = String(format: NSLocalizedString("highscore.time", comment: "Best timed score"), PlayerXP.timedHighscore)
         bsLabel.fontSize = 25
         bsLabel.fontName = "ChalkboardSE-Regular"
         bsLabel.fontColor = SKColor.orange

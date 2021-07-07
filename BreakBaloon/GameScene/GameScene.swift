@@ -175,7 +175,7 @@ class GameScene: AbstractGameScene {
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), points, Int(endTime!))
             label.position.x = label.frame.width / 2
         }
-        let newRecord = (gametype == .solo && UserDefaults.standard.integer(forKey: "highscore") < points) || (gametype == .timed && UserDefaults.standard.integer(forKey: "bestTimedScore") < points)
+        let newRecord = (gametype == .solo && PlayerXP.soloHighscore < points) || (gametype == .timed && PlayerXP.timedHighscore < points)
         label.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.label.fontColor = SKColor.orange
         }, SKAction.wait(forDuration: 1), SKAction.run {
@@ -190,11 +190,10 @@ class GameScene: AbstractGameScene {
                 self.addChild(record)
             }
         }, SKAction.wait(forDuration: newRecord ? 1.5 : 0.5), SKAction.run {
-            let data = UserDefaults.standard
-            if self.gametype == .solo, data.integer(forKey: "highscore") < self.points {
-                data.set(self.points, forKey: "highscore")
-            } else if self.gametype == .timed, data.integer(forKey: "bestTimedScore") < self.points {
-                data.set(self.points, forKey: "bestTimedScore")
+            if self.gametype == .solo, PlayerXP.soloHighscore < self.points {
+                PlayerXP.soloHighscore = self.points
+            } else if self.gametype == .timed, PlayerXP.timedHighscore < self.points {
+                PlayerXP.timedHighscore = self.points
             }
             let gvc = self.view!.gvc!
             gvc.currentGame = nil

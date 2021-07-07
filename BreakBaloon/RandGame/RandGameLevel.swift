@@ -113,15 +113,11 @@ class RandGameLevel {
     }
     
     func save() {
-        UserDefaults.standard.set(status.rawValue, forKey: "rand.level.\(index)")
+        PlayerXP[statusForRandomLevel: index] = status
     }
     
     func open() {
-        let data = UserDefaults.standard
-        if data.object(forKey: "rand.level.\(index)") == nil {
-            data.set(RandGameLevelStatus.defaultValue(index, pre: precedent?.status).rawValue, forKey: "rand.level.\(index)")
-        }
-        status = RandGameLevelStatus(rawValue: data.integer(forKey: "rand.level.\(index)"))!
+        status = PlayerXP[statusForRandomLevel: index]
         save()
     }
     
@@ -132,56 +128,56 @@ class RandGameLevel {
     func createNode() -> RandGameLevelNode {
         RandGameLevelNode(level: self)
     }
+}
+
+enum RandGameLevelStatus: Int {
+    case locked
+    case unlockable
+    case unlocked
+    case finished1Star
+    case finished2Star
+    case finished3Star
     
-    enum RandGameLevelStatus: Int {
-        case locked
-        case unlockable
-        case unlocked
-        case finished1Star
-        case finished2Star
-        case finished3Star
-        
-        static func defaultValue(_ index: Int, pre: RandGameLevelStatus?) -> RandGameLevelStatus {
-            if index == 0 {
-                return .unlocked
-            } else if index == 1 {
-                return .unlockable
-            } else if pre != nil, pre!.isFinished() {
-                return .unlocked
-            } else if pre == .unlocked {
-                return .unlockable
-            }
-            return .locked
-        }
-        
-        func isUnlocked() -> Bool {
-            self == .unlocked || isFinished()
-        }
-        
-        func isFinished() -> Bool {
-            self == .finished1Star || self == .finished2Star || self == .finished3Star
-        }
-        
-        func getStars() -> Int {
-            if self == .finished1Star {
-                return 1
-            } else if self == .finished2Star {
-                return 2
-            } else if self == .finished3Star {
-                return 3
-            }
-            return 0
-        }
-        
-        static func getFinished(stars: Int) -> RandGameLevelStatus {
-            if stars == 1 {
-                return .finished1Star
-            } else if stars == 2 {
-                return .finished2Star
-            } else if stars == 3 {
-                return .finished3Star
-            }
+    static func defaultValue(_ index: Int, pre: RandGameLevelStatus?) -> RandGameLevelStatus {
+        if index == 0 {
             return .unlocked
+        } else if index == 1 {
+            return .unlockable
+        } else if pre?.isFinished() == true {
+            return .unlocked
+        } else if pre == .unlocked {
+            return .unlockable
         }
+        return .locked
+    }
+    
+    func isUnlocked() -> Bool {
+        self == .unlocked || isFinished()
+    }
+    
+    func isFinished() -> Bool {
+        self == .finished1Star || self == .finished2Star || self == .finished3Star
+    }
+    
+    func getStars() -> Int {
+        if self == .finished1Star {
+            return 1
+        } else if self == .finished2Star {
+            return 2
+        } else if self == .finished3Star {
+            return 3
+        }
+        return 0
+    }
+    
+    static func getFinished(stars: Int) -> RandGameLevelStatus {
+        if stars == 1 {
+            return .finished1Star
+        } else if stars == 2 {
+            return .finished2Star
+        } else if stars == 3 {
+            return .finished3Star
+        }
+        return .unlocked
     }
 }
