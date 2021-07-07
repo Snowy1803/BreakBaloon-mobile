@@ -201,16 +201,16 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     func addXP(_ xp: Int) {
-        let levelBefore = PlayerXP.currentLevel
-        PlayerXP.totalXP += xp
+        let levelBefore = PlayerProgress.current.currentLevel
+        PlayerProgress.current.totalXP += xp
         print("Added \(xp) XP")
-        if levelBefore < PlayerXP.currentLevel {
-            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), PlayerXP.currentLevel), preferredStyle: .alert)
+        if levelBefore < PlayerProgress.current.currentLevel {
+            let alert = UIAlertController(title: NSLocalizedString("level.up.title", comment: ""), message: String(format: NSLocalizedString("level.up.text", comment: ""), PlayerProgress.current.currentLevel), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
         if WCSession.isSupported() {
-            WCSession.default.transferUserInfo(["exp": PlayerXP.totalXP])
+            WCSession.default.transferUserInfo(["exp": PlayerProgress.current.totalXP])
         }
     }
     
@@ -219,18 +219,18 @@ class GameViewController: UIViewController, WCSessionDelegate {
         guard let exp = userInfo["exp"] as? Int else {
             return
         }
-        if PlayerXP.totalXP <= exp {
-            PlayerXP.totalXP = exp
+        if PlayerProgress.current.totalXP <= exp {
+            PlayerProgress.current.totalXP = exp
             if let start = skView?.scene as? StartScene {
                 start.growXP()
             }
         } else {
-            session.transferUserInfo(["exp": PlayerXP.totalXP])
+            session.transferUserInfo(["exp": PlayerProgress.current.totalXP])
         }
     }
     
     func session(_ session: WCSession, activationDidCompleteWith _: WCSessionActivationState, error _: Error?) {
-        session.transferUserInfo(["exp": PlayerXP.totalXP])
+        session.transferUserInfo(["exp": PlayerProgress.current.totalXP])
     }
     
     func session(_: WCSession, didFinish _: WCSessionUserInfoTransfer, error: Error?) {

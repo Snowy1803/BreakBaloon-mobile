@@ -71,17 +71,17 @@ class StartScene: SKScene {
         cLabel.fontName = "ChalkboardSE-Regular"
         cLabel.fontColor = SKColor.white
         addChild(cLabel)
-        hsLabel.text = String(format: NSLocalizedString("highscore.score", comment: "Highscore"), PlayerXP.soloHighscore)
+        hsLabel.text = String(format: NSLocalizedString("highscore.score", comment: "Highscore"), PlayerProgress.current.soloHighscore)
         hsLabel.fontSize = 25
         hsLabel.fontName = "ChalkboardSE-Regular"
         hsLabel.fontColor = SKColor.orange
         addChild(hsLabel)
-        bsLabel.text = String(format: NSLocalizedString("highscore.time", comment: "Best timed score"), PlayerXP.timedHighscore)
+        bsLabel.text = String(format: NSLocalizedString("highscore.time", comment: "Best timed score"), PlayerProgress.current.timedHighscore)
         bsLabel.fontSize = 25
         bsLabel.fontName = "ChalkboardSE-Regular"
         bsLabel.fontColor = SKColor.orange
         addChild(bsLabel)
-        levelProgressionShown = growXPFrom > -1 ? growXPFrom : CGFloat(PlayerXP.levelProgression)
+        levelProgressionShown = growXPFrom > -1 ? growXPFrom : CGFloat(PlayerProgress.current.levelProgression)
         print("init StartScene: XP: \(levelProgressionShown)")
         xpLabel = SKShapeNode(rect: CGRect(x: 0, y: 0, width: levelProgressionShown * size.width, height: 15))
         xpLabel.fillColor = SKColor(red: 0, green: 0.5, blue: 1, alpha: 1)
@@ -91,7 +91,7 @@ class StartScene: SKScene {
         if growXPFrom > -1 {
             growXP()
         }
-        txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerXP.currentLevel))
+        txpLabel = SKLabelNode(text: String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerProgress.current.currentLevel))
         txpLabel.fontSize = 13
         txpLabel.fontName = "AppleSDGothicNeo-Bold"
         txpLabel.fontColor = SKColor.white
@@ -114,12 +114,12 @@ class StartScene: SKScene {
     
     func growXP() {
         let growXPFrom = levelProgressionShown
-        print("GrowXP: \(growXPFrom) -> \(PlayerXP.levelProgression)")
-        xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(PlayerXP.levelProgression) / growXPFrom, duration: 1.0)])) { [self] in
-            xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(PlayerXP.levelProgression) * size.width, height: 15), transform: nil)
+        print("GrowXP: \(growXPFrom) -> \(PlayerProgress.current.levelProgression)")
+        xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(PlayerProgress.current.levelProgression) / growXPFrom, duration: 1.0)])) { [self] in
+            xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(PlayerProgress.current.levelProgression) * size.width, height: 15), transform: nil)
             xpLabel.xScale = 1
-            levelProgressionShown = PlayerXP.levelProgression
-            txpLabel.text = String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerXP.currentLevel)
+            levelProgressionShown = PlayerProgress.current.levelProgression
+            txpLabel.text = String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerProgress.current.currentLevel)
         }
     }
     
@@ -158,7 +158,7 @@ class StartScene: SKScene {
         
         randButton = SKSpriteNode(texture: buttonTexture)
         randButton.zPosition = 1
-        if PlayerXP.currentLevel < RandGameScene.requirement {
+        if PlayerProgress.current.currentLevel < RandGameScene.requirement {
             grey(randButton)
             let level = SKSpriteNode(imageNamed: "level")
             level.position = CGPoint(x: min(randButton.frame.width / 2, frame.width / 2) - 30, y: randButton.frame.midY)
@@ -401,7 +401,7 @@ class StartScene: SKScene {
                 gametype = .random
                 transitionGameTypeToSizeSelection()
             } else if onNode(randButton, point: point) {
-                if PlayerXP.currentLevel >= RandGameScene.requirement {
+                if PlayerProgress.current.currentLevel >= RandGameScene.requirement {
                     transitionGameTypeToLevelSelection()
                 }
             } else if onNode(smallButton, point: point) {

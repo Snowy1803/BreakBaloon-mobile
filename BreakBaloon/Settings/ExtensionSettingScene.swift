@@ -45,13 +45,13 @@ class ExtensionSettingScene: SKScene {
         tok.zPosition = 2
         addChild(tok)
         let array = [String](sortArray.values)
-        animation.enabled = (PlayerXP.currentLevel >= animationLevelRequirement)
+        animation.enabled = (PlayerProgress.current.currentLevel >= animationLevelRequirement)
         animation.position = CGPoint(x: 32 + left, y: top - sort(sortArray["animation"]!, in: array))
         addChild(animation)
-        hintarrow.enabled = (PlayerXP.currentLevel >= hintarrowLevelRequirement)
+        hintarrow.enabled = (PlayerProgress.current.currentLevel >= hintarrowLevelRequirement)
         hintarrow.position = CGPoint(x: 32 + left, y: top - sort(sortArray["hintArrow"]!, in: array))
         addChild(hintarrow)
-        bee.enabled = (PlayerXP.currentLevel >= beeLevelRequirement)
+        bee.enabled = (PlayerProgress.current.currentLevel >= beeLevelRequirement)
         bee.position = CGPoint(x: 32 + left, y: top - sort(sortArray["bee"]!, in: array))
         addChild(bee)
     }

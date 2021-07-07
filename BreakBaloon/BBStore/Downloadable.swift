@@ -103,7 +103,7 @@ class Downloadable: SKNode {
             tttext.zPosition = 4
             addChild(tttext)
         }
-        if levelRequirement > PlayerXP.currentLevel {
+        if levelRequirement > PlayerProgress.current.currentLevel {
             let disable = SKShapeNode(rect: rect.frame)
             disable.fillColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
             disable.zPosition = 10
@@ -120,7 +120,7 @@ class Downloadable: SKNode {
             tlevel.fontColor = SKColor.white
             tlevel.zPosition = 12
             addChild(tlevel)
-        } else if levelRequirement == PlayerXP.currentLevel, !isInPossession() {
+        } else if levelRequirement == PlayerProgress.current.currentLevel, !isInPossession() {
             let tlevel = SKLabelNode(text: NSLocalizedString("level.new", comment: ""))
             tlevel.fontName = "AppleSDGothicNeo-Bold"
             tlevel.fontSize = 24
@@ -132,7 +132,7 @@ class Downloadable: SKNode {
     }
     
     func click(_ scene: BBStoreScene) {
-        if levelRequirement <= PlayerXP.currentLevel {
+        if levelRequirement <= PlayerProgress.current.currentLevel {
             let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.text", comment: ""), dlname), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default) { _ in
                 do {
@@ -272,7 +272,7 @@ class Downloadable: SKNode {
             }
         }
         list.sort(by: { dl1, dl2 in // move locked items to the end
-            dl1.levelRequirement <= PlayerXP.currentLevel && dl2.levelRequirement > PlayerXP.currentLevel
+            dl1.levelRequirement <= PlayerProgress.current.currentLevel && dl2.levelRequirement > PlayerProgress.current.currentLevel
         })
         for dl in list {
             dl.construct(gvc)

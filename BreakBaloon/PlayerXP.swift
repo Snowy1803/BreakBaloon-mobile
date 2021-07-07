@@ -8,8 +8,10 @@
 
 import Foundation
 
-enum PlayerXP {
-    static var totalXP: Int {
+class PlayerProgress {
+    static let current = PlayerProgress()
+    
+    var totalXP: Int {
         get {
             UserDefaults.standard.integer(forKey: "exp")
         }
@@ -18,19 +20,19 @@ enum PlayerXP {
         }
     }
     
-    static var currentLevel: Int {
+    var currentLevel: Int {
         totalXP / 250 + 1
     }
     
-    static var levelXP: Int {
+    var levelXP: Int {
         totalXP % 250
     }
     
-    static var levelProgression: Double {
+    var levelProgression: Double {
         Double(levelXP) / 250
     }
     
-    static var soloHighscore: Int {
+    var soloHighscore: Int {
         get {
             UserDefaults.standard.integer(forKey: "highscore")
         }
@@ -39,7 +41,7 @@ enum PlayerXP {
         }
     }
     
-    static var timedHighscore: Int {
+    var timedHighscore: Int {
         get {
             UserDefaults.standard.integer(forKey: "bestTimedScore")
         }
@@ -48,7 +50,7 @@ enum PlayerXP {
         }
     }
     
-    static subscript(statusForRandomLevel level: Int) -> RandGameLevelStatus {
+    subscript(statusForRandomLevel level: Int) -> RandGameLevelStatus {
         get {
             let data = UserDefaults.standard
             if data.object(forKey: "rand.level.\(level)") == nil {

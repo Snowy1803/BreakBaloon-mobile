@@ -113,11 +113,11 @@ class RandGameLevel {
     }
     
     func save() {
-        PlayerXP[statusForRandomLevel: index] = status
+        PlayerProgress.current[statusForRandomLevel: index] = status
     }
     
     func load() {
-        status = PlayerXP[statusForRandomLevel: index]
+        status = PlayerProgress.current[statusForRandomLevel: index]
         save()
     }
     
