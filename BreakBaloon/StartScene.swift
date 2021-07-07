@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 Snowy_1803. All rights reserved.
 //
 
+import GameKit
 import SpriteKit
 
 class StartScene: SKScene {
@@ -109,6 +110,16 @@ class StartScene: SKScene {
         super.didMove(to: view)
         DispatchQueue.main.async { // safeAreaInsets aren't initialized yet here. wait 1 tick
             self.adjustPosition(false)
+        }
+        if #available(iOS 14.0, *) {
+            GKAccessPoint.shared.isActive = true
+        }
+    }
+    
+    override func willMove(from view: SKView) {
+        super.willMove(from: view)
+        if #available(iOS 14.0, *) {
+            GKAccessPoint.shared.isActive = false
         }
     }
     
@@ -363,15 +374,9 @@ class StartScene: SKScene {
         var position: CGFloat = frame.size.height - (view?.safeAreaInsets.top ?? 0)
         let height = buttonTexture.size().height
         if UIDevice.current.userInterfaceIdiom == .pad {
-            if indexFromTop == 0 {
-                position -= height / 2
-            } else if indexFromTop == 1 {
-                position -= height * 2
-            } else {
-                position -= height * (2 + 1.5 * CGFloat(indexFromTop - 1))
-            }
+            position -= height * (2 + 1.5 * CGFloat(indexFromTop - 1))
         } else {
-            position -= height * CGFloat(indexFromTop)
+            position -= height * CGFloat(indexFromTop) + (UIDevice.current.orientation.isLandscape ? 0 : 100)
         }
         return text ? position - 45 : position - 30
     }
@@ -491,11 +496,7 @@ class StartScene: SKScene {
     }
     
     func transitionGameTypeToSizeSelection() {
-        currentPane = .inTransition
-        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
-                     tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
-            transitionQuit(node)
-        }
+        transitionLeaveGameType()
         initSizeSelectionPane()
         currentPane = .inTransition
         for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
@@ -507,11 +508,7 @@ class StartScene: SKScene {
     }
     
     func transitionGameTypeToLevelSelection() {
-        currentPane = .inTransition
-        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
-                     tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
-            transitionQuit(node)
-        }
+        transitionLeaveGameType()
         initLevelSelectionPane()
         currentPane = .inTransition
         for child in children {
@@ -529,18 +526,7 @@ class StartScene: SKScene {
         for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
             transitionQuitRight(node)
         }
-        initGameTypePane(true)
-        currentPane = .inTransition
-        for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
-            transitionJoinCenter(node)
-        }
-        transitionJoinAt(prefsButton, at: CGPoint(x: frame.width / 4, y: 170))
-        transitionJoinAt(bbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 170))
-        transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160))
-        transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160))
-        run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
-            self.currentPane = .selectGameType
-        }]))
+        transitionEnterGameType()
     }
     
     func transitionLevelSelectionToGameType() {
@@ -548,6 +534,21 @@ class StartScene: SKScene {
         for child in children where child is RandGameLevelNode {
             transitionQuitRight(child)
         }
+        transitionEnterGameType()
+    }
+    
+    func transitionLeaveGameType() {
+        if #available(iOS 14.0, *) {
+            GKAccessPoint.shared.isActive = false
+        }
+        currentPane = .inTransition
+        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
+                     tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
+            transitionQuit(node)
+        }
+    }
+    
+    func transitionEnterGameType() {
         initGameTypePane(true)
         currentPane = .inTransition
         for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
@@ -560,6 +561,9 @@ class StartScene: SKScene {
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.currentPane = .selectGameType
         }]))
+        if #available(iOS 14.0, *) {
+            GKAccessPoint.shared.isActive = true
+        }
     }
     
     func transitionQuit(_ node: SKNode) {

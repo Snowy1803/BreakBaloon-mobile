@@ -8,6 +8,7 @@
 
 import AVFoundation
 import CommonCrypto
+import GameKit
 import SpriteKit
 import UIKit
 import WatchConnectivity
@@ -129,6 +130,18 @@ class GameViewController: UIViewController, WCSessionDelegate {
         let scene: SKScene = StartScene(size: skView!.bounds.size)
         scene.scaleMode = .aspectFill
         skView!.presentScene(scene)
+        
+        // Game Center setup
+        GKLocalPlayer.local.authenticateHandler = { [unowned self] viewController, error in
+            if let viewController = viewController {
+                present(viewController, animated: true)
+            } else if let error = error {
+                print("Game Center auth failed")
+                print(error)
+            } else {
+                print("Game Center authenticated!")
+            }
+        }
     }
     
     func reloadBackgroundMusic() {

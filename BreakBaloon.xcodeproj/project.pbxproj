@@ -65,6 +65,7 @@
 		20A335B11D4BDE4000B54FBE /* RandGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A335B01D4BDE4000B54FBE /* RandGameScene.swift */; };
 		20A9AE7C2694B49400F94859 /* ECLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A9AE7B2694B49400F94859 /* ECLoginManager.swift */; };
 		20A9AE7E2696102300F94859 /* RandGameLevelStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A9AE7D2696102300F94859 /* RandGameLevelStatus.swift */; };
+		20A9AE8126965B7400F94859 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20A9AE8026965B7400F94859 /* GameKit.framework */; };
 		20AFF9D11D54B4F200B4CBF8 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */; };
 		20AFF9D31D56822C00B4CBF8 /* ExtensionSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */; };
 		20AFF9D61D568B0200B4CBF8 /* checkbox-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */; };
@@ -257,6 +258,7 @@
 		20A335B01D4BDE4000B54FBE /* RandGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandGameScene.swift; sourceTree = "<group>"; };
 		20A9AE7B2694B49400F94859 /* ECLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECLoginManager.swift; sourceTree = "<group>"; };
 		20A9AE7D2696102300F94859 /* RandGameLevelStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandGameLevelStatus.swift; sourceTree = "<group>"; };
+		20A9AE8026965B7400F94859 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		20AFF9D01D54B4F200B4CBF8 /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		20AFF9D21D56822C00B4CBF8 /* ExtensionSettingScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionSettingScene.swift; sourceTree = "<group>"; };
 		20AFF9D41D568B0200B4CBF8 /* checkbox-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-check.png"; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20FDCD9226907F5B00493C8E /* ZIPFoundation in Frameworks */,
+				20A9AE8126965B7400F94859 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +392,7 @@
 				203EEC72234A6438002D81F2 /* BreakBaloon Watch */,
 				203EEC81234A6439002D81F2 /* BreakBaloon Watch Extension */,
 				206736761D16E26300FB9FFF /* Products */,
+				20A9AE7F26965B7400F94859 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -428,6 +432,14 @@
 				206736881D16E26300FB9FFF /* Info.plist */,
 			);
 			path = BreakBaloon;
+			sourceTree = "<group>";
+		};
+		20A9AE7F26965B7400F94859 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20A9AE8026965B7400F94859 /* GameKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		20BEA4391D193D4A00DE74FB /* Translations */ = {
