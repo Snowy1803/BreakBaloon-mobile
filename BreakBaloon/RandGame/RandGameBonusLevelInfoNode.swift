@@ -13,7 +13,7 @@ class RandGameBonusLevelInfoNode: RandGameLevelInfoNode {
     init(level: RandGameBonusLevel, scene: RandGameScene) {
         super.init(level: level, scene: scene)
         removeAllChildren()
-        if !level.canPlay() {
+        if !level.playable {
             fatalError()
         }
         zPosition = 1000

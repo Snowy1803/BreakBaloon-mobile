@@ -96,7 +96,7 @@ class RandGameLevel {
         var stars = 0
         if missing <= Int(maxMissingBaloonToWin) {
             stars = missing == 0 ? 3 : Int(maxMissingBaloonToWin) / 2 < missing ? 2 : 1
-            if status.getStars() < stars {
+            if status.stars < stars {
                 status = RandGameLevelStatus.getFinished(stars: stars)
             }
             save()
@@ -116,13 +116,13 @@ class RandGameLevel {
         PlayerXP[statusForRandomLevel: index] = status
     }
     
-    func open() {
+    func load() {
         status = PlayerXP[statusForRandomLevel: index]
         save()
     }
     
-    func canPlay() -> Bool {
-        status.isUnlocked()
+    var playable: Bool {
+        status.unlocked
     }
     
     func createNode() -> RandGameLevelNode {
@@ -143,7 +143,7 @@ enum RandGameLevelStatus: Int {
             return .unlocked
         } else if index == 1 {
             return .unlockable
-        } else if pre?.isFinished() == true {
+        } else if pre?.finished == true {
             return .unlocked
         } else if pre == .unlocked {
             return .unlockable
@@ -151,23 +151,35 @@ enum RandGameLevelStatus: Int {
         return .locked
     }
     
-    func isUnlocked() -> Bool {
-        self == .unlocked || isFinished()
+    var unlocked: Bool {
+        switch self {
+        case .locked, .unlockable:
+            return false
+        case .unlocked, .finished1Star, .finished2Star, .finished3Star:
+            return true
+        }
     }
     
-    func isFinished() -> Bool {
-        self == .finished1Star || self == .finished2Star || self == .finished3Star
+    var finished: Bool {
+        switch self {
+        case .locked, .unlockable, .unlocked:
+            return false
+        case .finished1Star, .finished2Star, .finished3Star:
+            return true
+        }
     }
     
-    func getStars() -> Int {
-        if self == .finished1Star {
+    var stars: Int {
+        switch self {
+        case .locked, .unlockable, .unlocked:
+            return 0
+        case .finished1Star:
             return 1
-        } else if self == .finished2Star {
+        case .finished2Star:
             return 2
-        } else if self == .finished3Star {
+        case .finished3Star:
             return 3
         }
-        return 0
     }
     
     static func getFinished(stars: Int) -> RandGameLevelStatus {

@@ -100,7 +100,7 @@ class RemoteNotificationDeepLinkNewGame: RemoteNotificationDeepLink {
                 scene = GameScene(view: gvc.skView!, gametype: .timed, width: Int(safeSize.width / 75), height: Int((safeSize.height - 35) / 75))
             } else if self.param.hasPrefix("randombaloons") {
                 let level = RandGameLevel.levels[Int(self.param.components(separatedBy: "/")[1])! - 1]
-                if level.canPlay() {
+                if level.playable {
                     level.start(gvc.skView!)
                 }
                 // Avoid presentScene

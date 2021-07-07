@@ -17,9 +17,9 @@ class RandGameBonusLevel: RandGameLevel {
         super.init(index)
     }
     
-    override func canPlay() -> Bool {
+    override var playable: Bool {
         // Can only play one time
-        status.isUnlocked() && !status.isFinished()
+        status.unlocked && !status.finished
     }
     
     override func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {

@@ -55,7 +55,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         
         // INIT RANDOM BALOONS LEVELS
         for level in RandGameLevel.levels {
-            level.open()
+            level.load()
         }
         
         print("Path:", FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath)

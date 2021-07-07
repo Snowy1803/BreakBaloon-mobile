@@ -66,7 +66,7 @@ class RandGameLevelEndNode: SKNode {
         back.position = CGPoint(x: scene.frame.width / 2 - 80, y: scene.frame.height / 12 * 3)
         addChild(back)
         if successful {
-            if level.next != nil, level.next!.canPlay() {
+            if let next = level.next, next.playable {
                 nextlevel!.position = CGPoint(x: scene.frame.width / 2 + 80, y: scene.frame.height / 12 * 3)
                 nextlevel!.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
                 addChild(nextlevel!)
@@ -112,7 +112,7 @@ class RandGameLevelEndNode: SKNode {
     }
     
     func setLevel(_ level: RandGameLevel, view: SKView) {
-        if level.canPlay() {
+        if level.playable {
             level.start(view, transition: SKTransition.fade(with: SKColor.white, duration: 1))
         }
     }
