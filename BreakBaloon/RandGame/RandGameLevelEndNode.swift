@@ -18,7 +18,7 @@ class RandGameLevelEndNode: SKNode {
     
     init(level: RandGameLevel, scene: RandGameScene, stars: Int, xpBonus: Int = -1) {
         let isBonusLevel = xpBonus > -1
-        let successful = scene.points >= Int(level.numberOfBaloons - level.maxMissingBaloonToWin)
+        let successful = scene.points >= level.numberOfBaloons - level.maxMissingBaloonToWin
         self.level = level
         replay = SKSpriteNode(imageNamed: "levelreplay")
         back = SKSpriteNode(imageNamed: "levelback")
@@ -74,7 +74,7 @@ class RandGameLevelEndNode: SKNode {
             self.stars!.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 224)
             addChild(self.stars!)
             if stars < 3 {
-                let remaining = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.end.remaining\(Int(level.numberOfBaloons) - scene.points == 1 ? ".one" : "")", comment: "n remaining"), Int(level.numberOfBaloons) - scene.points))
+                let remaining = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.end.remaining\(level.numberOfBaloons - scene.points == 1 ? ".one" : "")", comment: "n remaining"), level.numberOfBaloons - scene.points))
                 remaining.fontColor = SKColor.darkGray
                 remaining.fontSize = 20
                 remaining.fontName = "HelveticaNeue-Bold"

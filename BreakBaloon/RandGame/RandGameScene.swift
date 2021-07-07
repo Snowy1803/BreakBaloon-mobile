@@ -19,7 +19,7 @@ class RandGameScene: AbstractGameScene {
     var pause = SKSpriteNode()
     let level: RandGameLevel
     
-    var baloonsToSpawn: UInt
+    var baloonsToSpawn: Int
     var nextBaloon: TimeInterval?
     
     init(view: SKView, level: RandGameLevel) {
@@ -71,17 +71,17 @@ class RandGameScene: AbstractGameScene {
         if !isGamePaused() {
             if nextBaloon == nil || (baloonsToSpawn > 0 && Date().timeIntervalSince1970 >= nextBaloon!) && canSpawnBaloon() {
                 spawnBaloon()
-            } else if baloonsToSpawn == 0, isEmpty(), endTime == nil {
+            } else if baloonsToSpawn == 0, empty, endTime == nil {
                 gameEnd()
             }
-            errors.text = "\(getMissingBaloons())"
-            if endTime == nil, getMissingBaloons() > Int(level.maxMissingBaloonToWin) {
+            errors.text = "\(baloonsMissed)"
+            if endTime == nil, baloonsMissed > level.maxMissingBaloonToWin {
                 gameEnd()
             }
         }
     }
     
-    func isEmpty() -> Bool {
+    var empty: Bool {
         !children.contains(where: { $0 is Case })
     }
     
@@ -89,16 +89,16 @@ class RandGameScene: AbstractGameScene {
         numberOfBaloonsInGame() < level.maxBaloonsAtSameTime
     }
     
-    func numberOfBaloonsInGame() -> UInt {
-        var i: UInt = 0
+    func numberOfBaloonsInGame() -> Int {
+        var i: Int = 0
         for aCase in children where aCase is Case {
             i += 1
         }
         return i
     }
     
-    func numberOfClosedBaloonsInGame() -> UInt {
-        var i: UInt = 0
+    var closedBaloonsInGame: Int {
+        var i: Int = 0
         for aCase in children {
             if let aCase = aCase as? Case, aCase.status == .closed, !(aCase is FakeCase) {
                 i += 1
@@ -183,14 +183,14 @@ class RandGameScene: AbstractGameScene {
         spawnBaloon(point: CGPoint(x: CGFloat.random(in: area.minX..<area.maxX), y: CGFloat.random(in: area.minY..<area.maxY)))
     }
     
-    func getMissingBaloons() -> Int {
-        ((Int(level.numberOfBaloons) - Int(baloonsToSpawn)) - points) - Int(numberOfClosedBaloonsInGame())
+    var baloonsMissed: Int {
+        level.numberOfBaloons - baloonsToSpawn - points - closedBaloonsInGame
     }
     
     func gameEnd() {
         pause.removeFromParent()
         endTime = Date().timeIntervalSince1970 - beginTime!
-        level.end(getMissingBaloons())
+        level.end(baloonsMissed)
         updateLabel()
 
         label.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
