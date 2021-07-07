@@ -675,22 +675,18 @@
 				TargetAttributes = {
 					200ADDF81DBD071B00275668 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = EYTYK8J7PX;
 						ProvisioningStyle = Automatic;
 					};
 					203EEC70234A6438002D81F2 = {
 						CreatedOnToolsVersion = 11.0;
-						DevelopmentTeam = EYTYK8J7PX;
 						ProvisioningStyle = Automatic;
 					};
 					203EEC7C234A6439002D81F2 = {
 						CreatedOnToolsVersion = 11.0;
-						DevelopmentTeam = EYTYK8J7PX;
 						ProvisioningStyle = Automatic;
 					};
 					206736741D16E26300FB9FFF = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = EYTYK8J7PX;
 						LastSwiftMigration = 1100;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -989,10 +985,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = BreakBaloonStickers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.BreakBaloonStickers;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon.BreakBaloonStickers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1007,10 +1003,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = BreakBaloonStickers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.BreakBaloonStickers;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon.BreakBaloonStickers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1030,13 +1026,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = BreakBaloon_Watch_Extension;
 				INFOPLIST_FILE = "BreakBaloon Watch/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -1060,12 +1056,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = BreakBaloon_Watch_Extension;
 				INFOPLIST_FILE = "BreakBaloon Watch/Info.plist";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -1087,7 +1083,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "BreakBaloon Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1097,7 +1093,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1119,7 +1115,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "BreakBaloon Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1128,7 +1124,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1257,7 +1253,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = BreakBaloon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1265,7 +1261,7 @@
 					"@executable_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -1279,14 +1275,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				DEVELOPMENT_TEAM = EYTYK8J7PX;
+				DEVELOPMENT_TEAM = PKKP3P6RGM;
 				INFOPLIST_FILE = BreakBaloon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = st.infos.elementalcube.BreakBaloon;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.orbisec.BreakBaloon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
