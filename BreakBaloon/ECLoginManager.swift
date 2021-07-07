@@ -40,11 +40,11 @@ class ECLoginManager {
     }
     
     func logIn(query: String, username: String? = nil, password: String? = nil, delegate: Delegate?) {
-        let request = NSMutableURLRequest(url: URL(string: "http://elementalcube.infos.st/api/auth.php")!)
+        var request = URLRequest(url: URL(string: "http://elementalcube.infos.st/api/auth.php")!)
         request.httpMethod = "POST"
-        request.httpBody = query.data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-            guard error == nil, data != nil else {
+        request.httpBody = query.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+            guard let data = data, error == nil else {
                 print("[LOGIN] error=\(String(describing: error))")
                 return
             }
@@ -53,12 +53,13 @@ class ECLoginManager {
                 print("[LOGIN] status code: \(httpStatus.statusCode)")
                 print("[LOGIN] response: \(String(describing: response))")
             }
+            
             DispatchQueue.main.async {
-                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                let responseString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                 let authStatus = responseString?.components(separatedBy: "\r\n")[0]
                 if let authStatus = authStatus,
-                   let authStatusInt = Int(authStatus) {
-                    let status = LoginStatus(rawValue: authStatusInt)
+                   let authStatusInt = Int(authStatus),
+                   let status = LoginStatus(rawValue: authStatusInt) {
                     switch status {
                     case .authenticated:
                         let sessid = responseString!.components(separatedBy: "\r\n")[1]
@@ -66,7 +67,7 @@ class ECLoginManager {
                         self.loggedIn = true
                         delegate?.loginDidComplete()
                     case .tfaRequired:
-                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(String(describing: status!))", comment: ""), preferredStyle: .alert)
+                        let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(status)", comment: ""), preferredStyle: .alert)
                         alert.addTextField(configurationHandler: { textField in
                             textField.placeholder = NSLocalizedString("login.2fa.placeholder", comment: "")
                         })
@@ -75,7 +76,7 @@ class ECLoginManager {
                             self.logIn(query: "\(query)&code=\(alert.textFields![0].text!)", delegate: delegate)
                         })
                         delegate?.present(alert: alert)
-                    case let .some(status):
+                    default:
                         let alert = UIAlertController(title: NSLocalizedString("login.title", comment: ""), message: NSLocalizedString("login.error.\(status)", comment: ""), preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: nil))
                         alert.addAction(UIAlertAction(title: NSLocalizedString("login.tryagain", comment: ""), style: .default) { _ in
@@ -86,8 +87,6 @@ class ECLoginManager {
                             }
                         })
                         delegate?.present(alert: alert)
-                    case .none:
-                        break
                     }
                 }
             }

@@ -129,11 +129,11 @@ class BBT2: AbstractTheme {
         } else if cmd.contains("=") {
             // Assignation
             let vals = cmd.components(separatedBy: "=")
-            let property = NSString(string: vals[0]).trimmingCharacters(in: CharacterSet.whitespaces)
+            let property = vals[0].trimmingCharacters(in: .whitespaces)
             if property.hasPrefix("val ") {
-                constants[String(property[property.index(property.startIndex, offsetBy: 4)...])] = try value(vals)
+                constants[String(property.dropFirst(4))] = try value(vals)
             } else if property.hasPrefix("var ") {
-                properties[String(property[property.index(property.startIndex, offsetBy: 4)...])] = try value(vals)
+                properties[String(property.dropFirst(4))] = try value(vals)
             } else if properties[property] != nil || self.properties[property] != nil {
                 try set(property, value: value(vals)!)
             } else {
@@ -201,7 +201,7 @@ class BBT2: AbstractTheme {
     }
     
     func value(_ vals: [String]) throws -> String? {
-        vals.count == 1 ? null : try execIfNeeds(NSString(string: vals[1]).trimmingCharacters(in: CharacterSet.whitespaces))
+        vals.count == 1 ? null : try execIfNeeds(vals[1].trimmingCharacters(in: .whitespaces))
     }
     
     func execIfNeeds(_ cmd: String) throws -> String? {
@@ -357,7 +357,7 @@ class BBT2: AbstractTheme {
             print("Tried to grayscale a null image")
             throw ExecErrors.nullPointerError
         }
-        let ciImage = CIImage(data: Data(base64Encoded: get(variable)!, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)!)!
+        let ciImage = CIImage(data: Data(base64Encoded: get(variable)!, options: .ignoreUnknownCharacters)!)!
         let grayscale = ciImage.applyingFilter("CIColorControls", parameters: [kCIInputSaturationKey: 0.0])
         let context = CIContext(options: nil)
         try set(variable, value: UIImage(cgImage: context.createCGImage(grayscale, from: grayscale.extent)!).pngData()!.base64EncodedString(options: .lineLength64Characters))
@@ -638,17 +638,13 @@ class BBT2: AbstractTheme {
     }
     
     func getImage(value string: String?, default or: String? = nil) -> UIImage {
-        if string != nil {
-            let data = Data(base64Encoded: string!, options: NSData.Base64DecodingOptions.ignoreUnknownCharacters)
-            if data != nil {
-                let image = UIImage(data: data!)
-                if image != nil {
-                    return image!
-                }
-            }
+        if let string = string,
+           let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters),
+           let image = UIImage(data: data) {
+            return image
         }
-        if or != nil {
-            return getImage(or!)
+        if let or = or {
+            return getImage(or)
         } else {
             return UIImage()
         }
