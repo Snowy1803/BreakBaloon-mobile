@@ -187,6 +187,9 @@ class GameScene: AbstractGameScene {
                     print("score submitted")
                 }
             }
+            if points == 1 {
+                GKAchievement.unlock(id: "solo1pt")
+            }
         } else if gametype == .timed {
             let score = GKScore(leaderboardIdentifier: "timedHighscore")
             score.value = Int64(points)

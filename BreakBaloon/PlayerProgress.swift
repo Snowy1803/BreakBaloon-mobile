@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GameKit
 
 class PlayerProgress: Codable {
     static let savefile = FileSaveHelper(fileName: "progress", fileExtension: .json)
@@ -89,6 +90,28 @@ class PlayerProgress: Codable {
             try PlayerProgress.savefile.saveFile(data: data)
         } catch {
             print("Save failed!", error)
+        }
+    }
+}
+
+extension GKAchievement {
+    static func unlock(id: String) {
+        GKAchievement.loadAchievements { (achievements: [GKAchievement]?, error: Error?) in
+            let achievement = achievements?.first(where: { $0.identifier == id}) ?? GKAchievement(identifier: id)
+            
+            achievement.showsCompletionBanner = true
+            achievement.percentComplete = 100
+            GKAchievement.report([achievement]) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("achievement submitted")
+                }
+            }
+            
+            if let error = error {
+                print(error)
+            }
         }
     }
 }

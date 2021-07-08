@@ -101,25 +101,7 @@ class RandGameLevel {
                 status = RandGameLevelStatus.getFinished(stars: stars)
             }
             if index == 0 {
-                GKAchievement.loadAchievements { (achievements: [GKAchievement]?, error: Error?) in
-                    let achievementID = "playRandomBalloons"
-                    
-                    let achievement = achievements?.first(where: { $0.identifier == achievementID}) ?? GKAchievement(identifier: achievementID)
-                    
-                    achievement.showsCompletionBanner = true
-                    achievement.percentComplete = 100
-                    GKAchievement.report([achievement]) { error in
-                        if let error = error {
-                            print(error)
-                        } else {
-                            print("achievement submitted")
-                        }
-                    }
-                    
-                    if let error = error {
-                        print(error)
-                    }
-                }
+                GKAchievement.unlock(id: "playRandomBalloons")
             }
             save()
             if next != nil, next!.status == .unlockable || next!.status == .locked {
