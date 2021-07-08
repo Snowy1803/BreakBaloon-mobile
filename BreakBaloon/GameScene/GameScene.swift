@@ -8,6 +8,7 @@
 
 import AVFoundation
 import SpriteKit
+import GameKit
 
 class GameScene: AbstractGameScene {
     var width: Int
@@ -174,6 +175,28 @@ class GameScene: AbstractGameScene {
             points = Int((Float(width * height) / Float(endTime!)) * 5)
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), points, Int(endTime!))
             label.position.x = label.frame.width / 2
+        }
+        if gametype == .solo {
+            let lbid = "soloHighscore\(width)x\(height)\(UserDefaults.standard.bool(forKey: "extension.hintarrow.enabled") ? "HintArrow" : "")"
+            let score = GKScore(leaderboardIdentifier: lbid)
+            score.value = Int64(points)
+            GKScore.report([score]) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("score submitted")
+                }
+            }
+        } else if gametype == .timed {
+            let score = GKScore(leaderboardIdentifier: "timedHighscore")
+            score.value = Int64(points)
+            GKScore.report([score]) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("score submitted")
+                }
+            }
         }
         let newRecord = (gametype == .solo && PlayerProgress.current.soloHighscore < points) || (gametype == .timed && PlayerProgress.current.timedHighscore < points)
         label.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {

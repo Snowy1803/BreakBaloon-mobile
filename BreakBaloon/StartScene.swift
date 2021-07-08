@@ -403,7 +403,7 @@ class StartScene: SKScene {
                 gametype = .computer
                 transitionGameTypeToSizeSelection()
             } else if onNode(timedButton, point: point) {
-                gametype = .random
+                gametype = .timed
                 transitionGameTypeToSizeSelection()
             } else if onNode(randButton, point: point) {
                 if PlayerProgress.current.currentLevel >= RandGameScene.requirement {

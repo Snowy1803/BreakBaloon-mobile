@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import GameKit
 
 class RandGameLevel {
     // swiftlint:disable:next large_tuple
@@ -98,6 +99,27 @@ class RandGameLevel {
             stars = missing == 0 ? 3 : maxMissingBaloonToWin / 2 < missing ? 2 : 1
             if status.stars < stars {
                 status = RandGameLevelStatus.getFinished(stars: stars)
+            }
+            if index == 0 {
+                GKAchievement.loadAchievements { (achievements: [GKAchievement]?, error: Error?) in
+                    let achievementID = "playRandomBalloons"
+                    
+                    let achievement = achievements?.first(where: { $0.identifier == achievementID}) ?? GKAchievement(identifier: achievementID)
+                    
+                    achievement.showsCompletionBanner = true
+                    achievement.percentComplete = 100
+                    GKAchievement.report([achievement]) { error in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            print("achievement submitted")
+                        }
+                    }
+                    
+                    if let error = error {
+                        print(error)
+                    }
+                }
             }
             save()
             if next != nil, next!.status == .unlockable || next!.status == .locked {
