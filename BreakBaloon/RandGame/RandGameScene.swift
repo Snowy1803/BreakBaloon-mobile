@@ -200,7 +200,7 @@ class RandGameScene: AbstractGameScene {
         }, SKAction.wait(forDuration: 0.5), SKAction.run {
             let gvc = self.view!.gvc!
             gvc.currentGame = nil
-            gvc.addXP(5)
+            gvc.addXP(Int(10 * log10(Double(self.level.index + 1))) + 10)
         }]))
     }
     

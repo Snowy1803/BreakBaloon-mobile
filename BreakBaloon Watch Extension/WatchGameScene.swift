@@ -134,9 +134,12 @@ class WatchGameScene: SKScene {
         }
         // xp
         let oldXP = UserDefaults.standard.integer(forKey: "exp")
-        let levelModifier = Float(max(10 - (oldXP / 250 + 1), 1))
-        let sizeModifier = Float(width * height) / 100
-        let addedXP = Int(5 * levelModifier * sizeModifier)
+        // modifier(level: 1) = 3.25, converges slowly towards 1
+        let levelModifier = 9 / Double(oldXP / 250 + 4) + 1
+        // modifier(size: 3*3) = 3
+        // number of baloons count, but number of games too, by making it degressive
+        let sizeModifier = sqrt(Double(self.width * self.height))
+        let addedXP = Int(2 * levelModifier * sizeModifier)
         addXP(oldXP, addedXP)
         
         // xp animation

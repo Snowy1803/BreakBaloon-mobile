@@ -225,9 +225,12 @@ class GameScene: AbstractGameScene {
             let gvc = self.view!.gvc!
             gvc.currentGame = nil
             let oldXP = CGFloat(PlayerProgress.current.levelProgression)
-            let levelModifier = Float(max(10 - PlayerProgress.current.currentLevel, 1))
-            let sizeModifier = Float(self.width * self.height) / 100
-            gvc.addXP(Int(5 * levelModifier * sizeModifier))
+            // modifier(level: 1) = 3.25, converges slowly towards 1
+            let levelModifier = 9 / Double(PlayerProgress.current.currentLevel + 3) + 1
+            // modifier(size: 5*5) = 5, modifier(size: 18*12) ≈ 14.7
+            // number of baloons count, but number of games too, by making it degressive
+            let sizeModifier = sqrt(Double(self.width * self.height))
+            gvc.addXP(Int(2 * levelModifier * sizeModifier))
             let scene = StartScene(size: self.frame.size, growXPFrom: oldXP)
             scene.lastGameInfo = self.label.text!
             self.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: 1))
