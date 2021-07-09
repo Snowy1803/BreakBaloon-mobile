@@ -161,7 +161,8 @@ class GameScene: AbstractGameScene {
     }
     
     func gameEnd() {
-        endTime = Date().timeIntervalSince1970 - beginTime!
+        let endTime = Date().timeIntervalSince1970 - beginTime!
+        self.endTime = endTime
         if gametype == .computer {
             if points > computerpoints {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.won", comment: "Points at end"), points, computerpoints)
@@ -172,8 +173,8 @@ class GameScene: AbstractGameScene {
             }
             label.position.x = label.frame.width / 2
         } else if gametype == .timed {
-            points = Int((Float(width * height) / Float(endTime!)) * 5)
-            label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), points, Int(endTime!))
+            points = Int((Float(width * height) / Float(endTime)) * 5)
+            label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), points, endTime)
             label.position.x = label.frame.width / 2
         }
         if gametype == .solo {
@@ -235,7 +236,7 @@ class GameScene: AbstractGameScene {
     
     override func update(_: TimeInterval) {
         if gametype == .timed, endTime == nil, !isGamePaused() {
-            label.text = String(format: NSLocalizedString("game.time", comment: "Time"), beginTime == nil ? 0 : Int(Date().timeIntervalSince1970 - beginTime!))
+            label.text = String(format: NSLocalizedString("game.time", comment: "Time"), beginTime == nil ? 0 : (Date().timeIntervalSince1970 - beginTime!))
             label.position.x = label.frame.width / 2
         }
     }

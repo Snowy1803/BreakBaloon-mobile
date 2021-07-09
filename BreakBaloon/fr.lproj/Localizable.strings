@@ -26,9 +26,9 @@
 "game.score.vsc.end.won" = "Vous avez avez gagné %d-%d !";
 "game.score.vsc.end.lost" = "Vous avez avez perdu %d-%d !";
 "game.score.vsc.end.same" = "Vous êtes à ex-aequo avec %d points !";
-"game.score.time" = "Vous avez un score de %d points, avec un temps de %d secondes !";
+"game.score.time" = "Vous avez un score de %d points, avec un temps de %.2f secondes !";
 "game.end.newrecord" = "Nouveau record!";
-"game.time" = "Temps : %d secondes";
+"game.time" = "Temps : %.2f secondes";
 "gameinfo.title" = "Dernière partie";
 "gameinfo.level" = "NIVEAU %d";
 "gameinfo.bonus" = "NIVEAU BONUS";

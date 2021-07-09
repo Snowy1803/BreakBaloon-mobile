@@ -26,9 +26,9 @@
 "game.score.vsc.end.won" = "Du vandt %d-%d!";
 "game.score.vsc.end.lost" = "Du tabt %d-%d!";
 "game.score.vsc.end.same" = "I har begge to %d points!";
-"game.score.time" = "Du har %d points med en tid på %d sekunder";
+"game.score.time" = "Du har %d points med en tid på %.2f sekunder";
 "game.end.newrecord" = "Ny rekord!";
-"game.time" = "Tid: %d sekunder";
+"game.time" = "Tid: %.2f sekunder";
 "gameinfo.title" = "Sidste spil";
 "gameinfo.level" = "NIVEAU %d";
 "gameinfo.bonus" = "BONUS NIVEAU";
