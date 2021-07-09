@@ -138,7 +138,7 @@ class WatchGameScene: SKScene {
         let levelModifier = 9 / Double(oldXP / 250 + 4) + 1
         // modifier(size: 3*3) = 3
         // number of baloons count, but number of games too, by making it degressive
-        let sizeModifier = sqrt(Double(self.width * self.height))
+        let sizeModifier = sqrt(Double(width * height))
         let addedXP = Int(2 * levelModifier * sizeModifier)
         addXP(oldXP, addedXP)
         

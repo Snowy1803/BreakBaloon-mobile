@@ -216,23 +216,23 @@ class GameScene: AbstractGameScene {
                 record.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
                 self.addChild(record)
             }
-        }, SKAction.wait(forDuration: newRecord ? 1.5 : 0.5), SKAction.run {
-            if self.gametype == .solo, PlayerProgress.current.soloHighscore < self.points {
-                PlayerProgress.current.soloHighscore = self.points
-            } else if self.gametype == .timed, PlayerProgress.current.timedHighscore < self.points {
-                PlayerProgress.current.timedHighscore = self.points
+        }, SKAction.wait(forDuration: newRecord ? 1.5 : 0.5), SKAction.run { [self] in
+            if gametype == .solo, PlayerProgress.current.soloHighscore < points {
+                PlayerProgress.current.soloHighscore = points
+            } else if gametype == .timed, PlayerProgress.current.timedHighscore < points {
+                PlayerProgress.current.timedHighscore = points
             }
-            let gvc = self.view!.gvc!
+            let gvc = view!.gvc!
             gvc.currentGame = nil
             let oldXP = CGFloat(PlayerProgress.current.levelProgression)
             // modifier(level: 1) = 3.25, converges slowly towards 1
             let levelModifier = 9 / Double(PlayerProgress.current.currentLevel + 3) + 1
             // modifier(size: 5*5) = 5, modifier(size: 18*12) ≈ 14.7
             // number of baloons count, but number of games too, by making it degressive
-            let sizeModifier = sqrt(Double(self.width * self.height))
+            let sizeModifier = sqrt(Double(width * height))
             gvc.addXP(Int(2 * levelModifier * sizeModifier))
-            let scene = StartScene(size: self.frame.size, growXPFrom: oldXP)
-            scene.lastGameInfo = self.label.text!
+            let scene = StartScene(size: frame.size, growXPFrom: oldXP)
+            scene.lastGameInfo = label.text!
             self.view!.presentScene(scene, transition: SKTransition.flipVertical(withDuration: 1))
         }]))
     }
