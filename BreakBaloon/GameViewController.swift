@@ -76,8 +76,8 @@ class GameViewController: UIViewController, WCSessionDelegate {
             do {
                 try Downloadable(type: .m4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
             } catch {
-                print("Couldn't download content")
-                fatalError()
+                print("Couldn't download Race.m4a :(")
+                print(error)
             }
         }
         let data = UserDefaults.standard
@@ -145,23 +145,28 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     func reloadBackgroundMusic() {
-        currentMusicFileName = UserDefaults.standard.string(forKey: "currentMusic")!
-        let bgMusicURL: URL = GameViewController.getMusicURL(currentMusicFileName)!
+        currentMusicFileName = UserDefaults.standard.string(forKey: "currentMusic") ?? "Race.m4a"
+        guard let bgMusicURL = GameViewController.getMusicURL(currentMusicFileName) else {
+            print("Could not find the background music")
+            return // fail
+        }
         do {
             try backgroundMusicPlayer = AVAudioPlayer(contentsOf: bgMusicURL)
-        } catch let error as NSError {
-            print("ERROR WHILE LOADING AUDIO FILE. REMOVING THE CORRUPTED AUDIO FILE. Error: \(error.localizedDescription)")
+            backgroundMusicPlayer.numberOfLoops = -1
+            backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
+            backgroundMusicPlayer.prepareToPlay()
+            backgroundMusicPlayer.play()
+        } catch {
+            print("ERROR WHILE LOADING AUDIO FILE. REMOVING THE CORRUPTED AUDIO FILE")
+            print(error)
             do {
                 try FileManager.default.removeItem(at: bgMusicURL)
-            } catch let error as NSError {
-                print("Couldn't delete the corrupted file. Error: \(error.localizedDescription)")
+            } catch {
+                print("Couldn't delete the corrupted file")
+                print(error)
             }
             UserDefaults.standard.set("Race.m4a", forKey: "currentMusic")
         }
-        backgroundMusicPlayer.numberOfLoops = -1
-        backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
-        backgroundMusicPlayer.prepareToPlay()
-        backgroundMusicPlayer.play()
     }
     
     class func getMusicURLs() -> [URL] {
