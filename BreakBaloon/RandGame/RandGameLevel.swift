@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import SpriteKit
 import GameKit
+import SpriteKit
 
 class RandGameLevel {
     // swiftlint:disable:next large_tuple

@@ -14,19 +14,25 @@ class ExtensionSettingScene: SKScene {
     let animationLevelRequirement = 2
     let hintarrowLevelRequirement = 10
     let beeLevelRequirement = 15
-    let sortArray = ["animation": NSLocalizedString("extension.animation", comment: "Animation enabled?"), "hintArrow": NSLocalizedString("extension.hintarrow", comment: "HintArrow enabled?"), "bee": NSLocalizedString("extension.bee", comment: "Bee enabled?")]
+    let sortArray = [
+        "animation": NSLocalizedString("extension.animation", comment: "Animation enabled?"),
+        "hintArrow": NSLocalizedString("extension.hintarrow", comment: "HintArrow enabled?"),
+        // "bee": NSLocalizedString("extension.bee", comment: "Bee enabled?")
+    ]
     let previous: SKScene
     
     var ok = SKSpriteNode()
     let tok = SKLabelNode()
     
-    var animation, hintarrow, bee: CheckBox
+    var animation: CheckBox
+    var hintarrow: CheckBox
+//    var bee: CheckBox
     
     init(_ previous: SKScene) {
         self.previous = previous
         animation = CheckBox(checked: UserDefaults.standard.bool(forKey: "extension.animation.enabled"), label: sortArray["animation"])
         hintarrow = CheckBox(checked: UserDefaults.standard.bool(forKey: "extension.hintarrow.enabled"), label: sortArray["hintArrow"])
-        bee = CheckBox(checked: UserDefaults.standard.bool(forKey: "extension.bee.enabled"), label: sortArray["bee"])
+//        bee = CheckBox(checked: UserDefaults.standard.bool(forKey: "extension.bee.enabled"), label: sortArray["bee"])
         super.init(size: previous.size)
         backgroundColor = SKColor.brown
         let top = frame.height - (previous.view?.safeAreaInsets.top ?? 0)
@@ -51,15 +57,15 @@ class ExtensionSettingScene: SKScene {
         hintarrow.enabled = (PlayerProgress.current.currentLevel >= hintarrowLevelRequirement)
         hintarrow.position = CGPoint(x: 32 + left, y: top - sort(sortArray["hintArrow"]!, in: array))
         addChild(hintarrow)
-        bee.enabled = (PlayerProgress.current.currentLevel >= beeLevelRequirement)
-        bee.position = CGPoint(x: 32 + left, y: top - sort(sortArray["bee"]!, in: array))
-        addChild(bee)
+//        bee.enabled = (PlayerProgress.current.currentLevel >= beeLevelRequirement)
+//        bee.position = CGPoint(x: 32 + left, y: top - sort(sortArray["bee"]!, in: array))
+//        addChild(bee)
     }
     
     func initialize() {
         animation.setTextureIfDisabled(view?.texture(from: getTexture(animationLevelRequirement)))
         hintarrow.setTextureIfDisabled(view?.texture(from: getTexture(hintarrowLevelRequirement)))
-        bee.setTextureIfDisabled(view?.texture(from: getTexture(beeLevelRequirement)))
+//        bee.setTextureIfDisabled(view?.texture(from: getTexture(beeLevelRequirement)))
     }
     
     @available(*, unavailable)
@@ -73,7 +79,7 @@ class ExtensionSettingScene: SKScene {
             if ok.frame.contains(point) {
                 UserDefaults.standard.set(animation.checked, forKey: "extension.animation.enabled")
                 UserDefaults.standard.set(hintarrow.checked, forKey: "extension.hintarrow.enabled")
-                UserDefaults.standard.set(bee.checked, forKey: "extension.bee.enabled")
+//                UserDefaults.standard.set(bee.checked, forKey: "extension.bee.enabled")
                 if WCSession.isSupported() {
                     WCSession.default.transferUserInfo(["extension.animation.enabled": animation.checked])
                 }
@@ -82,8 +88,8 @@ class ExtensionSettingScene: SKScene {
                 animation.didTap()
             } else if hintarrow.frame.contains(point) {
                 hintarrow.didTap()
-            } else if bee.frame.contains(point) {
-                bee.didTap()
+//            } else if bee.frame.contains(point) {
+//                bee.didTap()
             }
         }
     }

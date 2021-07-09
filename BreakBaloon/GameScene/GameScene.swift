@@ -7,8 +7,8 @@
 //
 
 import AVFoundation
-import SpriteKit
 import GameKit
+import SpriteKit
 
 class GameScene: AbstractGameScene {
     var width: Int
