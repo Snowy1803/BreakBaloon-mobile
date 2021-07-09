@@ -76,6 +76,10 @@ class AbstractGameScene: SKScene {
                 return
             }
         }
+        if avplayer.isPlaying {
+            avplayer.pause()
+        }
+        avplayer.currentTime = 0
         avplayer.play()
     }
     
