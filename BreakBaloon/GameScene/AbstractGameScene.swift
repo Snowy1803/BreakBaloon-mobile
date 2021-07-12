@@ -18,8 +18,8 @@ class AbstractGameScene: SKScene {
     var endTime: TimeInterval?
     fileprivate var pauseTime: TimeInterval?
     
-    var normalPumpPlayer: AVAudioPlayer?
-    var winnerPumpPlayer: AVAudioPlayer?
+    private var normalPumpPlayers: Set<AVAudioPlayer> = []
+    private var winnerPumpPlayers: Set<AVAudioPlayer> = []
     
     init(view: SKView, gametype: GameType) {
         self.gametype = gametype
@@ -56,31 +56,8 @@ class AbstractGameScene: SKScene {
     }
     
     func playPump(winner: Bool) {
-        let avplayer: AVAudioPlayer
-        if winner {
-            if let winnerPumpPlayer = winnerPumpPlayer {
-                avplayer = winnerPumpPlayer
-            } else if let prepared = preparePlayer(winner: winner) {
-                avplayer = prepared
-                winnerPumpPlayer = prepared
-            } else {
-                return
-            }
-        } else {
-            if let normalPumpPlayer = normalPumpPlayer {
-                avplayer = normalPumpPlayer
-            } else if let prepared = preparePlayer(winner: winner) {
-                avplayer = prepared
-                normalPumpPlayer = prepared
-            } else {
-                return
-            }
-        }
-        if avplayer.isPlaying {
-            avplayer.pause()
-        }
-        avplayer.currentTime = 0
-        avplayer.play()
+        let avplayer = (winner ? winnerPumpPlayers : normalPumpPlayers).first(where: { !$0.isPlaying }) ?? preparePlayer(winner: winner)
+        avplayer?.play()
     }
     
     private func preparePlayer(winner: Bool) -> AVAudioPlayer? {
@@ -88,6 +65,11 @@ class AbstractGameScene: SKScene {
             let avplayer = try AVAudioPlayer(data: view!.gvc.currentTheme.pumpSound(winner))
             avplayer.volume = view!.gvc.audioVolume
             avplayer.prepareToPlay()
+            if winner {
+                winnerPumpPlayers.insert(avplayer)
+            } else {
+                normalPumpPlayers.insert(avplayer)
+            }
             return avplayer
         } catch {
             print("Error playing sound <winner \(winner)>")
