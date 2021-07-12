@@ -151,7 +151,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
             return // fail
         }
         do {
-            try backgroundMusicPlayer = AVAudioPlayer(contentsOf: bgMusicURL)
+            backgroundMusicPlayer = try AVAudioPlayer(contentsOf: bgMusicURL)
             backgroundMusicPlayer.numberOfLoops = -1
             backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
             backgroundMusicPlayer.prepareToPlay()
@@ -166,6 +166,9 @@ class GameViewController: UIViewController, WCSessionDelegate {
                 print(error)
             }
             UserDefaults.standard.set("Race.m4a", forKey: "currentMusic")
+            // placeholder
+            backgroundMusicPlayer = AVAudioPlayer()
+            backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
         }
     }
     
