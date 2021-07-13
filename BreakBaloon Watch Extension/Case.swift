@@ -10,6 +10,7 @@ import Foundation
 import SpriteKit
 
 class Case: SKSpriteNode {
+    static let baloonSize: CGFloat = 0.25
     let type: Int
     let index: Int
     var status: CaseStatus = .closed
@@ -48,9 +49,11 @@ class Case: SKSpriteNode {
     }
     
     func animate(_ color: SKColor?) {
+        let sizeRange = (1/300)...(1/30 as CGFloat)
+        let posRange = (-Case.baloonSize/2)...(Case.baloonSize/2)
         for _ in 0..<Int.random(in: 0..<10) {
-            let shape = SKShapeNode(circleOfRadius: CGFloat.random(in: 1...10))
-            shape.position = CGPoint(x: CGFloat.random(in: -37...37), y: CGFloat.random(in: -37...37))
+            let shape = SKShapeNode(circleOfRadius: CGFloat.random(in: sizeRange))
+            shape.position = CGPoint(x: CGFloat.random(in: posRange), y: CGFloat.random(in: posRange))
             shape.fillColor = color ?? SKColor(red: CGFloat.random(in: 0..<1), green: CGFloat.random(in: 0..<1), blue: CGFloat.random(in: 0..<1), alpha: 1)
             shape.strokeColor = SKColor.clear
             shape.zPosition = 1

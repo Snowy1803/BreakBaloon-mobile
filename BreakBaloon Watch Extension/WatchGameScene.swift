@@ -37,7 +37,7 @@ class WatchGameScene: SKScene {
     
     func construct() {
         backgroundColor = .white
-        let baloonSize = min(size.width, size.height) / 4
+        let baloonSize = Case.baloonSize
         print("construct")
         for i in 0..<(width * height) {
             let theCase = Case(index: i)
