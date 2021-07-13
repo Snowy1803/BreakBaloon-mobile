@@ -390,67 +390,68 @@ class StartScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with _: UIEvent?) {
-        if touches.count == 1 {
-            let point: CGPoint = (touches.first?.location(in: self))!
-            if !(touchesBegan!.x <= point.x + 10 && touchesBegan!.x >= point.x - 10 && touchesBegan!.y <= point.y + 10 && touchesBegan!.y >= point.y - 10) {
-                if touchesBegan!.x < point.x - 100 {
-                    cancelScreen()
-                }
-            } else if onNode(soloButton, point: point) {
-                gametype = .solo
-                transitionGameTypeToSizeSelection()
-            } else if onNode(multiButton, point: point) {
-                gametype = .computer
-                transitionGameTypeToSizeSelection()
-            } else if onNode(timedButton, point: point) {
-                gametype = .timed
-                transitionGameTypeToSizeSelection()
-            } else if onNode(randButton, point: point) {
-                if PlayerProgress.current.currentLevel >= RandGameScene.requirement {
-                    transitionGameTypeToLevelSelection()
-                }
-            } else if onNode(smallButton, point: point) {
-                if smallButton.colorBlendFactor != 0.5 {
-                    newGame(gametype, width: 5, height: 5)
-                } else {
-                    showResolutionAlert()
-                }
-            } else if onNode(mediumButton, point: point) {
-                if smallButton.colorBlendFactor != 0.5 {
-                    newGame(gametype, width: 7, height: 7)
-                } else {
-                    showResolutionAlert()
-                }
-            } else if onNode(bigButton, point: point) {
-                if smallButton.colorBlendFactor != 0.5 {
-                    newGame(gametype, width: 10, height: 10)
-                } else {
-                    showResolutionAlert()
-                }
-            } else if onNode(adaptButton, point: point) {
-                let safeSize = frame.inset(by: view!.safeAreaInsets).size
-                newGame(gametype, width: Int(safeSize.width / 75), height: Int((safeSize.height - 20) / 75))
-            } else if onNode(prefsButton, point: point) {
-                if littleScreen() {
-                    view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: 1))
-                } else {
-                    view?.presentScene(SettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: 1))
-                }
-            } else if onNode(bbstoreButton, point: point) {
-                view?.presentScene(BBStoreScene(start: self), transition: SKTransition.doorsCloseVertical(withDuration: 1))
-            } else if currentPane == .selectLevel {
-                for child in children {
-                    if let child = child as? RandGameLevelNode, onNode(child, point: point) {
-                        child.click(view!)
-                        break
-                    }
+        guard touches.count == 1, currentPane != .inTransition else {
+            return
+        }
+        let point: CGPoint = (touches.first?.location(in: self))!
+        if !(touchesBegan!.x <= point.x + 10 && touchesBegan!.x >= point.x - 10 && touchesBegan!.y <= point.y + 10 && touchesBegan!.y >= point.y - 10) {
+            if touchesBegan!.x < point.x - 100 {
+                cancelScreen()
+            }
+        } else if onNode(soloButton, point: point) {
+            gametype = .solo
+            transitionGameTypeToSizeSelection()
+        } else if onNode(multiButton, point: point) {
+            gametype = .computer
+            transitionGameTypeToSizeSelection()
+        } else if onNode(timedButton, point: point) {
+            gametype = .timed
+            transitionGameTypeToSizeSelection()
+        } else if onNode(randButton, point: point) {
+            if PlayerProgress.current.currentLevel >= RandGameScene.requirement {
+                transitionGameTypeToLevelSelection()
+            }
+        } else if onNode(smallButton, point: point) {
+            if smallButton.colorBlendFactor != 0.5 {
+                newGame(gametype, width: 5, height: 5)
+            } else {
+                showResolutionAlert()
+            }
+        } else if onNode(mediumButton, point: point) {
+            if smallButton.colorBlendFactor != 0.5 {
+                newGame(gametype, width: 7, height: 7)
+            } else {
+                showResolutionAlert()
+            }
+        } else if onNode(bigButton, point: point) {
+            if smallButton.colorBlendFactor != 0.5 {
+                newGame(gametype, width: 10, height: 10)
+            } else {
+                showResolutionAlert()
+            }
+        } else if onNode(adaptButton, point: point) {
+            let safeSize = frame.inset(by: view!.safeAreaInsets).size
+            newGame(gametype, width: Int(safeSize.width / 75), height: Int((safeSize.height - 20) / 75))
+        } else if onNode(prefsButton, point: point) {
+            if littleScreen() {
+                view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: 1))
+            } else {
+                view?.presentScene(SettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: 1))
+            }
+        } else if onNode(bbstoreButton, point: point) {
+            view?.presentScene(BBStoreScene(start: self), transition: SKTransition.doorsCloseVertical(withDuration: 1))
+        } else if currentPane == .selectLevel {
+            for child in children {
+                if let child = child as? RandGameLevelNode, onNode(child, point: point) {
+                    child.click(view!)
+                    break
                 }
             }
         }
     }
     
     func onNode(_ node: SKNode, point: CGPoint) -> Bool {
-        node.frame.contains(point)
+        node.frame.contains(point) && node.parent != nil
     }
    
     override func update(_: TimeInterval) {
