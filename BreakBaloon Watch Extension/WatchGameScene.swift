@@ -106,7 +106,8 @@ class WatchGameScene: SKScene {
     
     func gameEnd() {
         let newRecord = UserDefaults.standard.integer(forKey: "highscore") < points
-        let label = SKLabelNode(text: String(format: NSLocalizedString("game.points", comment: ""), points))
+        let str = points == 1 ? NSLocalizedString("game.points.one", comment: "User got 1 point") : NSLocalizedString("game.points", comment: "User got a given number of points")
+        let label = SKLabelNode(text: String(format: str, points))
         label.fontColor = SKColor.orange
         label.fontName = "HelveticaNeue-Bold"
         label.fontSize = 30
@@ -119,7 +120,7 @@ class WatchGameScene: SKScene {
         label.run(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run {
             label.fontColor = SKColor.black
             if newRecord {
-                label.text = NSLocalizedString("game.highscore", comment: "")
+                label.text = NSLocalizedString("game.highscore", comment: "User increased their watchOS high score")
             }
         }, SKAction.wait(forDuration: newRecord ? 1.5 : 0.5), SKAction.run {
             self.cases.removeAll()

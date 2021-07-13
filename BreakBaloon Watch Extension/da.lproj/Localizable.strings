@@ -1,2 +1,3 @@
 "game.points" = "%d points";
+"game.points.one" = "%d point";
 "game.highscore" = "Rekord!";
