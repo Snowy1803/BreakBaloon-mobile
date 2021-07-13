@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14868" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="19115.3" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
     <device id="watch40"/>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14643"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="19026"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -14,7 +14,7 @@
                     <items>
                         <spriteKitScene alignment="left" id="ARY-87-yzO">
                             <gestureRecognizers>
-                                <longPressGestureRecognizer minimumPressDuration="0.10000000000000001" id="h1c-CT-5km">
+                                <longPressGestureRecognizer minimumPressDuration="0.001" id="h1c-CT-5km">
                                     <connections>
                                         <action selector="onRecognizerStateChange:" destination="AgC-eL-Hgc" id="44q-iO-4mI"/>
                                     </connections>
