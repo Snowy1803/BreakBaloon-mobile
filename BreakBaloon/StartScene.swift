@@ -418,13 +418,13 @@ class StartScene: SKScene {
                 showResolutionAlert()
             }
         } else if onNode(mediumButton, point: point) {
-            if smallButton.colorBlendFactor != 0.5 {
+            if mediumButton.colorBlendFactor != 0.5 {
                 newGame(gametype, width: 7, height: 7)
             } else {
                 showResolutionAlert()
             }
         } else if onNode(bigButton, point: point) {
-            if smallButton.colorBlendFactor != 0.5 {
+            if bigButton.colorBlendFactor != 0.5 {
                 newGame(gametype, width: 10, height: 10)
             } else {
                 showResolutionAlert()
