@@ -94,9 +94,9 @@ class RandGameLevel {
     }
     
     func end(_ missing: Int) {
-        var stars = 0
+        let stars: Int
         if missing <= maxMissingBaloonToWin {
-            stars = missing == 0 ? 3 : maxMissingBaloonToWin / 2 < missing ? 2 : 1
+            stars = missing == 0 ? 3 : missing < maxMissingBaloonToWin / 2 ? 2 : 1
             if status.stars < stars {
                 status = RandGameLevelStatus.getFinished(stars: stars)
             }
@@ -112,6 +112,8 @@ class RandGameLevel {
                     next!.next!.save()
                 }
             }
+        } else {
+            stars = 0
         }
         gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars))
     }
