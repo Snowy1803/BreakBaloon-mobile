@@ -160,30 +160,27 @@ class Downloadable: SKNode {
         }
         print("Beginning download of", dlname)
         let file = FileSaveHelper(fileName: dlid, fileExtension: .none)
-        file.download(URL(string: "http://elementalcube.infos.st/api/bbstore-dl.php?id=\(dlid)")!)
-        do {
+        var unblock = false
+        file.download(URL(string: "http://elementalcube.infos.st/api/bbstore-dl.php?id=\(dlid)")!) { error in
             if wait {
-                try afterDownload(file)
+                unblock = true
             } else {
-                DispatchQueue.main.async {
-                    do {
-                        try self.afterDownload(file)
-                    } catch {
-                        print("Errored treating download asynchronisously:", error)
-                    }
+                do {
+                    try self.afterDownload(file)
+                } catch {
+                    print("Errored treating download asynchronisously:", error)
                 }
             }
-        } catch {
-            throw error
+        }
+        if wait {
+            while !unblock {
+                Thread.sleep(forTimeInterval: 1/1000)
+            }
+            try afterDownload(file)
         }
     }
     
     fileprivate func afterDownload(_ file: FileSaveHelper) throws {
-        while !file.downloadedSuccessfully {
-            if file.downloadError != nil {
-                throw file.downloadError!
-            }
-        }
         if dltype.isTheme {
             let dir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
             do {
@@ -195,8 +192,10 @@ class Downloadable: SKNode {
             }
             
             print("Data is from", file.fullyQualifiedPath)
-            try FileManager.default.unzipItem(at: URL(fileURLWithPath: file.fullyQualifiedPath), to: URL(fileURLWithPath: dir))
+            let zip = URL(fileURLWithPath: file.fullyQualifiedPath)
+            try FileManager.default.unzipItem(at: zip, to: URL(fileURLWithPath: dir))
             AbstractThemeUtils.reloadThemeList()
+            try FileManager.default.removeItem(at: zip)
         }
     }
     
@@ -223,20 +222,27 @@ class Downloadable: SKNode {
         return false
     }
     
-    class func loadAll(gvc: GameViewController) throws -> [Downloadable] {
-        var list: [Downloadable] = []
+    class func loadAll(gvc: GameViewController, completion: @escaping ([Downloadable], Error?) -> Void) {
         let fsh = FileSaveHelper(fileName: "bbstore", fileExtension: .txt, subDirectory: "", directory: .cachesDirectory)
-        fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!)
-        while !fsh.downloadedSuccessfully {
-            if fsh.downloadError != nil {
-                throw fsh.downloadError!
+        fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!) { err in
+            if let err = err {
+                print(err)
+                completion([], err)
+            } else {
+                decodeListing(gvc: gvc, fsh: fsh, completion: completion)
             }
-        } // Wait for downloading is finished
+        }
+    }
+    
+    class func decodeListing(gvc: GameViewController, fsh: FileSaveHelper, completion: ([Downloadable], Error?) -> Void) {
+        var list: [Downloadable] = []
         var file = ""
         do {
             file = try fsh.getContentsOfFile()
         } catch {
             print("Error \(error)")
+            completion([], error)
+            return
         }
         let lines = file.components(separatedBy: "\n")
         var currentName: String = "", currentId: String = "", currentDescription: String = "", currentAuthor: String = "", currentVersion: String = "", currentType: Int = -1, currentLevelRequirement = 0
@@ -277,7 +283,7 @@ class Downloadable: SKNode {
         for dl in list {
             dl.construct(gvc)
         }
-        return list
+        completion(list, nil)
     }
     
     enum DownloadType {

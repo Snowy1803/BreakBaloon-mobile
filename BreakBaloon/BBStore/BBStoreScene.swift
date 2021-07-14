@@ -49,60 +49,64 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     
     func beginBBStoreLoading() {
         DispatchQueue.global(qos: .default).async {
-            do {
-                self.downloads = try Downloadable.loadAll(gvc: self.gvc)
+            Downloadable.loadAll(gvc: self.gvc) { dls, error in
+                self.downloads = dls
                 DispatchQueue.main.async {
-                    self.loading.run(SKAction.sequence([SKAction.fadeOut(withDuration: 1), SKAction.removeFromParent()]))
-                    for dl in self.downloads! {
-                        dl.alpha = 0
-                        self.addChild(dl)
-                        dl.run(SKAction.fadeIn(withDuration: 1))
+                    if let error = error {
+                        self.loading.text = NSLocalizedString("bbstore.error", comment: "Error text")
+                        self.errored = true
+                        let errorInfo = SKLabelNode(text: error.localizedDescription)
+                        errorInfo.position = CGPoint(x: self.loading.position.x, y: self.loading.position.y - 30)
+                        errorInfo.fontColor = SKColor.black
+                        self.addChild(errorInfo)
                     }
-                    self.adjustDownloadablePosition()
-                    let topSA = self.view?.safeAreaInsets.top ?? 0
-                    let top = self.frame.height - topSA
-                    self.title = SKLabelNode(text: NSLocalizedString(UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title", comment: "BBStore"))
-                    self.title.fontColor = .foreground
-                    self.title.fontSize = 20
-                    self.title.position = CGPoint(x: self.frame.width / 2, y: top - 25)
-                    self.title.alpha = 0
-                    self.title.zPosition = 6
-                    self.addChild(self.title)
-                    self.title.run(SKAction.fadeIn(withDuration: 1))
-                    self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
-                    self.back.fontColor = .foreground
-                    self.back.fontSize = 20
-                    self.back.position = CGPoint(x: 5 + (self.view?.safeAreaInsets.left ?? 0), y: top - 25)
-                    self.back.horizontalAlignmentMode = .left
-                    self.back.alpha = 0
-                    self.back.zPosition = 7
-                    self.addChild(self.back)
-                    self.back.run(SKAction.fadeIn(withDuration: 1))
-                    self.upper = SKShapeNode(rect: CGRect(x: 0, y: top - 30, width: self.frame.width, height: 30 + topSA))
-                    self.upper.fillColor = .background
-                    self.upper.strokeColor = .clear
-                    self.upper.alpha = 0.75
-                    self.upper.zPosition = 5
-                    self.addChild(self.upper)
-                    
-                    self.search = UISearchBar(frame: CGRect(x: self.frame.width - 150 - (self.view?.safeAreaInsets.right ?? 0), y: topSA, width: 150, height: 30))
-                    self.search.placeholder = NSLocalizedString("bbstore.search", comment: "Search")
-                    self.search.searchBarStyle = .minimal
-                    self.search.isTranslucent = false
-                    self.search.delegate = self
-                    self.view?.addSubview(self.search)
+                    self.downloadsReceived()
                 }
-            } catch {
-                DispatchQueue.main.async {
-                    self.loading.text = NSLocalizedString("bbstore.error", comment: "Error text")
-                    self.errored = true
-                    let errorInfo = SKLabelNode(text: (error as NSError).localizedDescription)
-                    errorInfo.position = CGPoint(x: self.loading.position.x, y: self.loading.position.y - 30)
-                    errorInfo.fontColor = SKColor.black
-                    self.addChild(errorInfo)
-                }
+                
             }
         }
+    }
+    
+    func downloadsReceived() {
+        self.loading.run(SKAction.sequence([SKAction.fadeOut(withDuration: 1), SKAction.removeFromParent()]))
+        for dl in self.downloads! {
+            dl.alpha = 0
+            self.addChild(dl)
+            dl.run(SKAction.fadeIn(withDuration: 1))
+        }
+        self.adjustDownloadablePosition()
+        let topSA = self.view?.safeAreaInsets.top ?? 0
+        let top = self.frame.height - topSA
+        self.title = SKLabelNode(text: NSLocalizedString(UIDevice.current.userInterfaceIdiom != .pad ? "bbstore.button" : "bbstore.title", comment: "BBStore"))
+        self.title.fontColor = .foreground
+        self.title.fontSize = 20
+        self.title.position = CGPoint(x: self.frame.width / 2, y: top - 25)
+        self.title.alpha = 0
+        self.title.zPosition = 6
+        self.addChild(self.title)
+        self.title.run(SKAction.fadeIn(withDuration: 1))
+        self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
+        self.back.fontColor = .foreground
+        self.back.fontSize = 20
+        self.back.position = CGPoint(x: 5 + (self.view?.safeAreaInsets.left ?? 0), y: top - 25)
+        self.back.horizontalAlignmentMode = .left
+        self.back.alpha = 0
+        self.back.zPosition = 7
+        self.addChild(self.back)
+        self.back.run(SKAction.fadeIn(withDuration: 1))
+        self.upper = SKShapeNode(rect: CGRect(x: 0, y: top - 30, width: self.frame.width, height: 30 + topSA))
+        self.upper.fillColor = .background
+        self.upper.strokeColor = .clear
+        self.upper.alpha = 0.75
+        self.upper.zPosition = 5
+        self.addChild(self.upper)
+        
+        self.search = UISearchBar(frame: CGRect(x: self.frame.width - 150 - (self.view?.safeAreaInsets.right ?? 0), y: topSA, width: 150, height: 30))
+        self.search.placeholder = NSLocalizedString("bbstore.search", comment: "Search")
+        self.search.searchBarStyle = .minimal
+        self.search.isTranslucent = false
+        self.search.delegate = self
+        self.view?.addSubview(self.search)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with _: UIEvent?) {

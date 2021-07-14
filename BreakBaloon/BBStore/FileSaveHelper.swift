@@ -38,8 +38,6 @@ class FileSaveHelper {
     private let filePath: String
     let fullyQualifiedPath: String
     private let subDirectory: String
-    private(set) var downloadedSuccessfully = false
-    private(set) var downloadError: NSError?
     
     var fileExists: Bool {
         fileManager.fileExists(atPath: fullyQualifiedPath)
@@ -140,36 +138,32 @@ class FileSaveHelper {
         return data
     }
     
-    func download(_ URL: Foundation.URL) {
-        do {
-            try fileManager.removeItem(atPath: fullyQualifiedPath)
-        } catch {
-            print(error)
-        }
+    func download(_ URL: Foundation.URL, completion: @escaping (Error?) -> Void) {
         createDirectory()
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-        let request = NSMutableURLRequest(url: URL)
+        var request = URLRequest(url: URL)
         request.httpMethod = "GET"
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            if error == nil {
-                // Success
-                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
-                print("Success: \(statusCode)")
-                
-                do {
-                    try self.saveFile(data: data!)
-                } catch {
-                    print(error)
-                }
-                
-                self.downloadedSuccessfully = true
-            } else {
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
                 // Failure
-                print("Failure: %@", error!.localizedDescription)
-                self.downloadError = error as NSError?
+                print("DL Failure")
+                print(error)
+                completion(error)
+                return
             }
-        })
+            // Success
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+            print("Success: \(statusCode)")
+            
+            do {
+                try self.saveFile(data: data!)
+                completion(nil)
+            } catch {
+                print(error)
+                completion(error)
+            }
+        }
         task.resume()
     }
 }
