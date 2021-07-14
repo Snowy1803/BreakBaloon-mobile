@@ -83,6 +83,10 @@ class PlayerProgress: Codable {
         Double(levelXP) / 250
     }
     
+    var gameCenterLevel: Int64 {
+        Int64((Double(currentLevel) + levelProgression) * 1000)
+    }
+    
     func save() {
         do {
             let encoder = JSONEncoder()

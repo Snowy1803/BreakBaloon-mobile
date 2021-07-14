@@ -233,6 +233,15 @@ class GameViewController: UIViewController, WCSessionDelegate {
         if WCSession.isSupported() {
             WCSession.default.transferUserInfo(["exp": PlayerProgress.current.totalXP])
         }
+        let score = GKScore(leaderboardIdentifier: "xpLevel")
+        score.value = PlayerProgress.current.gameCenterLevel
+        GKScore.report([score]) { error in
+            if let error = error {
+                print(error)
+            } else {
+                print("score submitted")
+            }
+        }
     }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
