@@ -173,7 +173,7 @@ class GameScene: AbstractGameScene {
             }
             label.position.x = label.frame.width / 2
         } else if gametype == .timed {
-            points = Int((Float(width * height) / Float(endTime)) * 5)
+            points = Int(Double(width * height * 60) / endTime)
             label.text = String(format: NSLocalizedString("game.score.time", comment: "Points at end"), points, endTime)
             label.position.x = label.frame.width / 2
         }
