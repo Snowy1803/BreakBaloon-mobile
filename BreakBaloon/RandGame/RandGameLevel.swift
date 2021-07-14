@@ -96,7 +96,7 @@ class RandGameLevel {
     func end(_ missing: Int) {
         let stars: Int
         if missing <= maxMissingBaloonToWin {
-            stars = missing == 0 ? 3 : missing < maxMissingBaloonToWin / 2 ? 2 : 1
+            stars = missing == 0 ? 3 : missing <= maxMissingBaloonToWin / 2 ? 2 : 1
             if status.stars < stars {
                 status = RandGameLevelStatus.getFinished(stars: stars)
             }
