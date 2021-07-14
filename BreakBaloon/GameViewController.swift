@@ -221,7 +221,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
         false
     }
     
-    func addXP(_ xp: Int) {
+    func addXP(_ xp: Double) {
         let levelBefore = PlayerProgress.current.currentLevel
         PlayerProgress.current.totalXP += xp
         print("Added \(xp) XP")
@@ -246,7 +246,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         print("receive raw: \(userInfo)")
-        guard let exp = userInfo["exp"] as? Int else {
+        guard let exp = userInfo["exp"] as? Double else {
             return
         }
         if PlayerProgress.current.totalXP <= exp {

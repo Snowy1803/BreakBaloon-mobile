@@ -134,13 +134,13 @@ class WatchGameScene: SKScene {
             data.set(points, forKey: "highscore")
         }
         // xp
-        let oldXP = UserDefaults.standard.integer(forKey: "exp")
+        let oldXP = UserDefaults.standard.double(forKey: "exp")
         // modifier(level: 1) = 3.25, converges slowly towards 1
         let levelModifier = 9 / Double(oldXP / 250 + 4) + 1
         // modifier(size: 3*3) = 3
         // number of baloons count, but number of games too, by making it degressive
         let sizeModifier = sqrt(Double(width * height))
-        let addedXP = Int(2 * levelModifier * sizeModifier)
+        let addedXP = 2 * levelModifier * sizeModifier
         addXP(oldXP, addedXP)
         
         // xp animation
@@ -149,7 +149,7 @@ class WatchGameScene: SKScene {
         level.zPosition = 500
         level.size = CGSize(width: 0.2, height: 0.2)
         addChild(level)
-        let tlevel = SKLabelNode(text: "\(oldXP / 250 + 1)")
+        let tlevel = SKLabelNode(text: "\(Int(oldXP) / 250 + 1)")
         tlevel.position = CGPoint(x: 0.25, y: 0.15)
         tlevel.fontName = "AppleSDGothicNeo-Bold"
         tlevel.fontSize = 20
@@ -161,18 +161,18 @@ class WatchGameScene: SKScene {
         progressTotal.position = CGPoint(x: 0.55, y: 0.2)
         progressTotal.zPosition = 498
         addChild(progressTotal)
-        let progress = SKSpriteNode(color: .blue, size: CGSize(width: CGFloat(oldXP % 250) / 500, height: 0.05))
+        let progress = SKSpriteNode(color: .blue, size: CGSize(width: CGFloat(oldXP.truncatingRemainder(dividingBy: 250)) / 500, height: 0.05))
         progress.position = CGPoint(x: 0.3, y: 0.2)
         progress.anchorPoint = CGPoint(x: 0, y: 0.5)
         progress.zPosition = 499
         addChild(progress)
-        progress.run(SKAction.resize(toWidth: CGFloat((oldXP + addedXP) % 250) / 500, duration: 1))
+        progress.run(SKAction.resize(toWidth: CGFloat(oldXP + addedXP).truncatingRemainder(dividingBy: 250) / 500, duration: 1))
         tlevel.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
-            tlevel.text = "\((oldXP + addedXP) / 250 + 1)"
+            tlevel.text = "\(Int(oldXP + addedXP) / 250 + 1)"
         }]))
     }
     
-    func addXP(_ oldXP: Int, _ xp: Int) {
+    func addXP(_ oldXP: Double, _ xp: Double) {
         let levelBefore = (oldXP / 250 + 1)
         UserDefaults.standard.set(oldXP + xp, forKey: "exp")
         print("Added \(xp) XP")

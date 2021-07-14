@@ -22,7 +22,7 @@ class PlayerProgress: Codable {
     }()
     
     private init(loadFromUserDefaults defaults: UserDefaults) {
-        totalXP = defaults.integer(forKey: "exp")
+        totalXP = Double(defaults.integer(forKey: "exp"))
         soloHighscore = defaults.integer(forKey: "highscore")
         timedHighscore = defaults.integer(forKey: "bestTimedScore")
         var randomLevelStatus: [RandGameLevelStatus] = []
@@ -45,7 +45,7 @@ class PlayerProgress: Codable {
     
     // MARK: Stored properties
     
-    var totalXP: Int {
+    var totalXP: Double {
         didSet {
             save()
         }
@@ -71,20 +71,24 @@ class PlayerProgress: Codable {
     
     // MARK: Convenience computed properties
     
-    var currentLevel: Int {
+    var currentLevelFractional: Double {
         totalXP / 250 + 1
     }
     
-    var levelXP: Int {
-        totalXP % 250
+    var currentLevel: Int {
+        Int(currentLevelFractional)
+    }
+    
+    var levelXP: Double {
+        totalXP.truncatingRemainder(dividingBy: 250)
     }
     
     var levelProgression: Double {
-        Double(levelXP) / 250
+        levelXP / 250
     }
     
     var gameCenterLevel: Int64 {
-        Int64((Double(currentLevel) + levelProgression) * 1000)
+        Int64(currentLevelFractional * 1000)
     }
     
     func save() {

@@ -10,9 +10,9 @@ import Foundation
 import SpriteKit
 
 class RandGameBonusLevel: RandGameLevel {
-    let modifier: Float
+    let modifier: Double
     
-    init(_ index: Int, modifier: Float) {
+    init(_ index: Int, modifier: Double) {
         self.modifier = modifier
         super.init(index)
     }
@@ -29,7 +29,7 @@ class RandGameBonusLevel: RandGameLevel {
     }
     
     override func end(_ missing: Int) {
-        let xp = Int((Float(numberOfBaloons) - Float(missing)) * modifier)
+        let xp = Double(numberOfBaloons - missing) * modifier
         gamescene!.gvc.addXP(xp)
         
         let stars = missing == 0 ? 3 : (numberOfBaloons - maxMissingBaloonToWin) < gamescene!.points ? 2 : 1
@@ -43,7 +43,7 @@ class RandGameBonusLevel: RandGameLevel {
                 next!.next!.save()
             }
         }
-        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: xp))
+        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: Int(xp)))
     }
     
     override func createNode() -> RandGameLevelNode {
