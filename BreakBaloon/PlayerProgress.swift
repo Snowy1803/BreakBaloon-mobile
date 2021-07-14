@@ -91,6 +91,12 @@ class PlayerProgress: Codable {
         Int64(currentLevelFractional * 1000)
     }
     
+    var randomLevelStarCount: Int64 {
+        randomLevelStatus.reduce(into: 0 as Int64) { result, current in
+            result += Int64(current.stars)
+        }
+    }
+    
     func save() {
         do {
             let encoder = JSONEncoder()

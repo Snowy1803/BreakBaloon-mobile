@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import GameKit
 import SpriteKit
 
 class RandGameScene: AbstractGameScene {
@@ -197,11 +198,21 @@ class RandGameScene: AbstractGameScene {
             self.label.fontColor = SKColor.orange
         }, SKAction.wait(forDuration: 1), SKAction.run {
             self.label.fontColor = SKColor.black
-        }, SKAction.wait(forDuration: 0.5), SKAction.run {
-            let gvc = self.view!.gvc!
-            gvc.currentGame = nil
-            gvc.addXP(10 * log10(Double(self.level.index + 1)) + 10)
         }]))
+        
+        let gvc = self.view!.gvc!
+        gvc.currentGame = nil
+        gvc.addXP(10 * log10(Double(self.level.index + 1)) + 10)
+        
+        let score = GKScore(leaderboardIdentifier: "randomStars")
+        score.value = PlayerProgress.current.randomLevelStarCount
+        GKScore.report([score]) { error in
+            if let error = error {
+                print(error)
+            } else {
+                print("score submitted")
+            }
+        }
     }
     
     func updateLabel() {
