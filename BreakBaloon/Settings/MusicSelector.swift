@@ -12,7 +12,7 @@ import SpriteKit
 
 class MusicSelector: Selector {
     init(gvc: GameViewController) {
-        super.init(gvc: gvc, value: gvc.currentMusicInt)
+        super.init(gvc: gvc, title: NSLocalizedString("settings.music", comment: "Music"), value: gvc.currentMusicInt)
     }
     
     @available(*, unavailable)
@@ -33,6 +33,7 @@ class MusicSelector: Selector {
     
     override var text: String {
         let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
-        return cmps[cmps.count - 1].components(separatedBy: ".")[0].removingPercentEncoding!
+        let text = cmps[cmps.count - 1].components(separatedBy: ".")[0].removingPercentEncoding!
+        return text == "Race" ? NSLocalizedString("theme.default.name", comment: "Default theme name") : text
     }
 }

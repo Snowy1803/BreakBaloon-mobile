@@ -54,7 +54,7 @@
 "settings.extensions" = "Extensions";
 "settings.login" = "Log in";
 "settings.logout" = "Log out";
-"theme.selector.text" = "Theme: %@";
+"settings.theme" = "Theme";
 "theme.default.name" = "Default";
 "bbstore.button" = "BBStore";
 "bbstore.loading" = "Loading...";

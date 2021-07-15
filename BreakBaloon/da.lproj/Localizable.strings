@@ -54,7 +54,7 @@
 "settings.extensions" = "Extensions";
 "settings.login" = "Log på";
 "settings.logout" = "Log ud";
-"theme.selector.text" = "Tema: %@";
+"settings.theme" = "Tema";
 "theme.default.name" = "Standard";
 "bbstore.button" = "BBStore";
 "bbstore.loading" = "Vent et øjeblik...";

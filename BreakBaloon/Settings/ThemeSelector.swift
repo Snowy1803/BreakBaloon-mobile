@@ -11,7 +11,7 @@ import UIKit
 
 class ThemeSelector: Selector {
     init(gvc: GameViewController) {
-        super.init(gvc: gvc, value: gvc.currentThemeInt)
+        super.init(gvc: gvc, title: NSLocalizedString("settings.theme", comment: "Theme"), value: gvc.currentThemeInt)
     }
     
     @available(*, unavailable)

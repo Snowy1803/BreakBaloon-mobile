@@ -53,30 +53,30 @@ class SettingScene: SKScene, ECLoginDelegate {
         addChild(musicSetting)
         musicIndexSetting.position = CGPoint(x: frame.width / 2, y: top - 300)
         addChild(musicIndexSetting)
-        themeIndexSetting.position = CGPoint(x: frame.width / 2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 450 : 350))
+        themeIndexSetting.position = CGPoint(x: frame.width / 2, y: top - 400)
         addChild(themeIndexSetting)
         
         extensions = SKSpriteNode(imageNamed: "buttonminibg")
-        extensions.position = CGPoint(x: frame.width / 3, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
+        extensions.position = CGPoint(x: frame.width / 3, y: top - 500)
         extensions.zPosition = 1
         addChild(extensions)
         textensions = SKLabelNode(text: NSLocalizedString("settings.extensions", comment: "Extensions"))
         textensions.fontName = StartScene.buttonFont
         textensions.fontColor = SKColor.black
         textensions.fontSize = 20
-        textensions.position = CGPoint(x: frame.width / 3, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
+        textensions.position = CGPoint(x: frame.width / 3, y: top - 510)
         textensions.zPosition = 2
         addChild(textensions)
         
         login = SKSpriteNode(imageNamed: "buttonminibg")
-        login.position = CGPoint(x: frame.width / 3 * 2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 500 : 400))
+        login.position = CGPoint(x: frame.width / 3 * 2, y: top - 500)
         login.zPosition = 1
         addChild(login)
         tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out"))
         tlogin.fontName = StartScene.buttonFont
         tlogin.fontColor = SKColor.black
         tlogin.fontSize = 20
-        tlogin.position = CGPoint(x: frame.width / 3 * 2, y: top - (UIDevice.current.userInterfaceIdiom == .phone ? 510 : 410))
+        tlogin.position = CGPoint(x: frame.width / 3 * 2, y: top - 510)
         tlogin.zPosition = 2
         addChild(tlogin)
         

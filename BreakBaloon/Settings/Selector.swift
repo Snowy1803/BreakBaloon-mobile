@@ -19,7 +19,7 @@ class Selector: SKSpriteNode {
         }
     }
     
-    init(gvc: GameViewController, value: Int) {
+    init(gvc: GameViewController, title: String, value: Int) {
         let texture = SKTexture(imageNamed: "select")
         self.value = value
         tname = SKLabelNode()
@@ -33,6 +33,16 @@ class Selector: SKSpriteNode {
         tname.fontSize = 12
         tname.zPosition = 3
         addChild(tname)
+        
+        let ttitle = SKLabelNode()
+        ttitle.text = title
+        ttitle.position = CGPoint(x: -self.frame.width / 4, y: self.frame.height / 4 - 15)
+        ttitle.fontName = "ChalkboardSE-Light"
+        ttitle.fontColor = SKColor.black
+        ttitle.fontSize = 8
+        ttitle.zPosition = 3.5
+        ttitle.horizontalAlignmentMode = .left
+        addChild(ttitle)
     }
     
     @available(*, unavailable)
