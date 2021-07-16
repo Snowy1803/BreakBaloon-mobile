@@ -194,6 +194,7 @@ class GameScene: AbstractGameScene {
         } else if gametype == .timed {
             let score = GKScore(leaderboardIdentifier: "timedHighscore")
             score.value = Int64(points)
+            score.context = UInt64(width * height) // nb of balloons
             GKScore.report([score]) { error in
                 if let error = error {
                     print(error)
