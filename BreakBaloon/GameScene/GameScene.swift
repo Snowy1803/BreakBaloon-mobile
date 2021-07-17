@@ -166,6 +166,8 @@ class GameScene: AbstractGameScene {
         if gametype == .computer {
             if points > computerpoints {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.won", comment: "Points at end"), points, computerpoints)
+                // won against computer; progress 10%
+                GKAchievement.unlock(id: "winAgainstComputer10", orAddProgress: 10)
             } else if computerpoints > points {
                 label.text = String(format: NSLocalizedString("game.score.vsc.end.lost", comment: "Points at end"), computerpoints, points)
             } else {

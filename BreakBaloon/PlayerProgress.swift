@@ -109,12 +109,15 @@ class PlayerProgress: Codable {
 }
 
 extension GKAchievement {
-    static func unlock(id: String) {
+    static func unlock(id: String, orAddProgress progress: Double = 100) {
         GKAchievement.loadAchievements { (achievements: [GKAchievement]?, error: Error?) in
             let achievement = achievements?.first(where: { $0.identifier == id }) ?? GKAchievement(identifier: id)
             
             achievement.showsCompletionBanner = true
-            achievement.percentComplete = 100
+            
+            let percent = achievement.percentComplete + progress
+            achievement.percentComplete = percent >= 100 ? 100 : percent
+            
             GKAchievement.report([achievement]) { error in
                 if let error = error {
                     print(error)
