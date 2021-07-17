@@ -32,7 +32,11 @@ class MusicSelector: Selector {
     }
     
     override var text: String {
-        let cmps = GameViewController.getMusicURLs()[value].absoluteString.components(separatedBy: "/")
+        let urls = GameViewController.getMusicURLs()
+        guard urls.indices.contains(value) else {
+            return NSLocalizedString("error", comment: "Error")
+        }
+        let cmps = urls[value].absoluteString.components(separatedBy: "/")
         let text = cmps[cmps.count - 1].components(separatedBy: ".")[0].removingPercentEncoding!
         return text == "Race" ? NSLocalizedString("theme.default.name", comment: "Default theme name") : text
     }
