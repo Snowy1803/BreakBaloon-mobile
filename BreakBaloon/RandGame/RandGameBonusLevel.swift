@@ -32,7 +32,6 @@ class RandGameBonusLevel: RandGameLevel {
         gamescene!.gvc.addXP(xp)
         let stars = missing == 0 ? 3 : missing <= maxMissingBaloonToWin / 2 ? 2 : 1
         status = RandGameLevelStatus.getFinished(stars: stars)
-        save()
         unlockNextLevel()
         gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: Int(xp)))
     }

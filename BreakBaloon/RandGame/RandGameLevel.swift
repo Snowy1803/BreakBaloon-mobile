@@ -42,7 +42,14 @@ class RandGameLevel {
     static let levels: [RandGameLevel] = [RandGameLevel(0), RandGameLevel(1), RandGameLevel(2), RandGameLevel(3), RandGameLevel(4), RandGameLevel(5), RandGameLevel(6), RandGameLevel(7), RandGameLevel(8), RandGameLevel(9), RandGameLevel(10), RandGameLevel(11), RandGameLevel(12), RandGameLevel(13), RandGameLevel(14), RandGameBonusLevel(15, modifier: 5), RandGameLevel(16), RandGameLevel(17), RandGameLevel(18), RandGameLevel(19), RandGameLevel(20), RandGameLevel(21), RandGameLevel(22), RandGameBonusLevel(23, modifier: 5)]
     
     let index: Int
-    var status: RandGameLevelStatus
+    var status: RandGameLevelStatus {
+        get {
+            PlayerProgress.current.randomLevelStatus[index]
+        }
+        set {
+            PlayerProgress.current.randomLevelStatus[index] = newValue
+        }
+    }
     var gamescene: RandGameScene?
     
     // swiftlint:disable:next large_tuple
@@ -103,7 +110,6 @@ class RandGameLevel {
             if index == 0 {
                 GKAchievement.unlock(id: "playRandomBalloons")
             }
-            save()
             unlockNextLevel()
         } else {
             stars = 0
@@ -114,20 +120,10 @@ class RandGameLevel {
     func unlockNextLevel() {
         if let next = next, next.status == .unlockable || next.status == .locked {
             next.status = .unlocked
-            next.save()
             if let after = next.next, after.status == .locked {
                 after.status = .unlockable
-                after.save()
             }
         }
-    }
-    
-    func save() {
-        PlayerProgress.current.randomLevelStatus[index] = status
-    }
-    
-    func load() {
-        status = PlayerProgress.current.randomLevelStatus[index]
     }
     
     var playable: Bool {

@@ -54,11 +54,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // INIT RANDOM BALOONS LEVELS
-        for level in RandGameLevel.levels {
-            level.load()
-        }
-        
         print("Path:", FileSaveHelper(fileName: "", fileExtension: .none).fullyQualifiedPath)
         loadMusicAndStartScene()
         
