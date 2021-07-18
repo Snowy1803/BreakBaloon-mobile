@@ -24,20 +24,17 @@ class RandGameBonusLevel: RandGameLevel {
     }
     
     override func end(_ missing: Int) {
-        let bonusXP: Int
-        if !status.finished {
-            let xp = Double(numberOfBaloons - missing) * (status.finished ? 1 : modifier)
-            gamescene!.gvc.addXP(xp)
-            bonusXP = Int(xp)
-        } else {
-            bonusXP = -1
+        guard !status.finished else {
+            super.end(missing)
+            return
         }
-        
-        let stars = missing == 0 ? 3 : (numberOfBaloons - maxMissingBaloonToWin) < gamescene!.points ? 2 : 1
+        let xp = Double(max(0, numberOfBaloons - missing)) * modifier
+        gamescene!.gvc.addXP(xp)
+        let stars = missing == 0 ? 3 : missing <= maxMissingBaloonToWin / 2 ? 2 : 1
         status = RandGameLevelStatus.getFinished(stars: stars)
         save()
         unlockNextLevel()
-        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: bonusXP))
+        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: Int(xp)))
     }
     
     override func createNode() -> RandGameLevelNode {
