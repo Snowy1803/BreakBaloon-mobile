@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class BBStoreScene: SKScene, UISearchBarDelegate {
-    let start: StartScene
+    let start: SKScene
     let gvc: GameViewController
     var downloads: [Downloadable]?
     var loading: SKLabelNode
@@ -24,11 +24,11 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
     var upper = SKShapeNode()
     var search = UISearchBar()
     
-    convenience init(start: StartScene) {
+    convenience init(start: SKScene) {
         self.init(start: start, size: start.view!.frame.size, gvc: start.view!.gvc)
     }
     
-    init(start: StartScene, size: CGSize, gvc: GameViewController) {
+    init(start: SKScene, size: CGSize, gvc: GameViewController) {
         self.start = start
         self.gvc = gvc
         
@@ -85,7 +85,7 @@ class BBStoreScene: SKScene, UISearchBarDelegate {
         self.title.zPosition = 6
         self.addChild(self.title)
         self.title.run(SKAction.fadeIn(withDuration: 1))
-        self.back.text = UIDevice.current.orientation.isLandscape ? NSLocalizedString("back", comment: "") : "⬅︎  "
+        self.back.text = (view?.frame.width ?? 0 > 400) ? NSLocalizedString("back", comment: "") : "⬅︎  "
         self.back.fontColor = .foreground
         self.back.fontSize = 20
         self.back.position = CGPoint(x: 5 + (self.view?.safeAreaInsets.left ?? 0), y: top - 25)

@@ -376,7 +376,8 @@ class StartScene: SKScene {
         if UIDevice.current.userInterfaceIdiom == .pad {
             position -= height * (2 + 1.5 * CGFloat(indexFromTop - 1))
         } else {
-            position -= height * CGFloat(indexFromTop) + (UIDevice.current.orientation.isLandscape ? 0 : 100)
+            let landscape = view?.frame.width ?? 0 > view?.frame.height ?? 0
+            position -= height * CGFloat(indexFromTop) + (landscape ? 0 : 100)
         }
         return text ? position - 45 : position - 30
     }
