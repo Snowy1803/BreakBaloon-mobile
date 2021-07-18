@@ -17,11 +17,6 @@ class RandGameBonusLevel: RandGameLevel {
         super.init(index)
     }
     
-    override var playable: Bool {
-        // Can only play one time
-        status.unlocked && !status.finished
-    }
-    
     override func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {
         gamescene = RandGameScene(view: view, level: self)
         view.presentScene(gamescene!, transition: transition)
@@ -29,14 +24,20 @@ class RandGameBonusLevel: RandGameLevel {
     }
     
     override func end(_ missing: Int) {
-        let xp = Double(numberOfBaloons - missing) * modifier
-        gamescene!.gvc.addXP(xp)
+        let bonusXP: Int
+        if !status.finished {
+            let xp = Double(numberOfBaloons - missing) * (status.finished ? 1 : modifier)
+            gamescene!.gvc.addXP(xp)
+            bonusXP = Int(xp)
+        } else {
+            bonusXP = -1
+        }
         
         let stars = missing == 0 ? 3 : (numberOfBaloons - maxMissingBaloonToWin) < gamescene!.points ? 2 : 1
         status = RandGameLevelStatus.getFinished(stars: stars)
         save()
         unlockNextLevel()
-        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: Int(xp)))
+        gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: bonusXP))
     }
     
     override func createNode() -> RandGameLevelNode {

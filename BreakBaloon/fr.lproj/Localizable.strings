@@ -42,6 +42,8 @@
 "gameinfo.fakeBaloonRate.high" = "Contient beaucoup de faux ballons";
 "gameinfo.fakeBaloonRate.extreme" = "Contient énormément de faux ballons";
 "gameinfo.requirePoints" = "%d points pour gagner";
+"gameinfo.bonus.replay" = "Rejouer un niveau bonus ne booste pas votre XP";
+"gameinfo.bonus.extraxp" = "Ce niveau bonus vous fait gagner de l'XP en plus !";
 "gameinfo.end.finished" = "TERMINÉ";
 "gameinfo.end.failed" = "ÉCHEC";
 "gameinfo.end.bonus" = "Niveau bonus terminé avec un bonus de %d XP";

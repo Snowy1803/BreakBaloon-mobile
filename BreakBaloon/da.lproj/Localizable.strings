@@ -42,9 +42,11 @@
 "gameinfo.fakeBaloonRate.high" = "Indholder mange falske balloner";
 "gameinfo.fakeBaloonRate.extreme" = "Indholer masser af falske balloner";
 "gameinfo.requirePoints" = "%d points til at vinde";
+"gameinfo.bonus.replay" = "Spille en bonusniveau igen booster ikke dit XP";
+"gameinfo.bonus.extraxp" = "Dette bonusniveau giver dig mere XP!";
 "gameinfo.end.finished" = "FÆRDIG";
 "gameinfo.end.failed" = "MISLYKKEDES";
-"gameinfo.end.bonus" = "Bonus niveau færdig med %d bonus XP";
+"gameinfo.end.bonus" = "Bonusniveau færdig med %d bonus XP";
 "gameinfo.end.remaining" = "%d balloner mere til 3 stjerner";
 "gameinfo.end.remaining.one" = "En ballon mere til 3 stjerner";
 "gameinfo.complete" = "%d / %d";

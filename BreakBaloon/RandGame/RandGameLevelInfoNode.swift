@@ -11,6 +11,8 @@ import SpriteKit
 
 class RandGameLevelInfoNode: SKNode {
     let level: RandGameLevel
+    let tlevel = SKLabelNode()
+    let treq = SKLabelNode()
     
     init(level: RandGameLevel, scene: RandGameScene) {
         self.level = level
@@ -19,7 +21,7 @@ class RandGameLevelInfoNode: SKNode {
         let rect = SKShapeNode(rect: CGRect(x: scene.frame.width / 6, y: scene.frame.height / 6, width: scene.frame.width / 1.5, height: scene.frame.height / 1.5))
         rect.fillColor = SKColor.lightGray
         addChild(rect)
-        let tlevel = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.level", comment: "Level n"), level.index + 1))
+        tlevel.text = String(format: NSLocalizedString("gameinfo.level", comment: "Level n"), level.index + 1)
         tlevel.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 32)
         tlevel.fontSize = 24
         tlevel.fontColor = SKColor.black
@@ -45,7 +47,7 @@ class RandGameLevelInfoNode: SKNode {
             tfakeRate.fontName = "HelveticaNeue-Bold"
             addChild(tfakeRate)
         }
-        let treq = SKLabelNode(text: String(format: NSLocalizedString("gameinfo.requirePoints", comment: "n points for win"), level.numberOfBaloons - level.maxMissingBaloonToWin))
+        treq.text = String(format: NSLocalizedString("gameinfo.requirePoints", comment: "n points for win"), level.numberOfBaloons - level.maxMissingBaloonToWin)
         treq.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 + 32)
         treq.fontSize = 24
         treq.fontColor = SKColor.black

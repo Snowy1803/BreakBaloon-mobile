@@ -8,7 +8,7 @@
 "gamesize.medium" = "Medium (7x7)";
 "gamesize.large" = "Large (10x10)";
 "gamesize.adaptive" = "Adaptive (%dx%d)";
-"gamesize.error" = "This size needs a a bigger screen";
+"gamesize.error" = "This size needs a bigger screen";
 "error" = "Error";
 "cancel" = "Cancel";
 "ok" = "Ok";
@@ -42,6 +42,8 @@
 "gameinfo.fakeBaloonRate.high" = "Contains many fake baloons";
 "gameinfo.fakeBaloonRate.extreme" = "Contains a lot of fake baloons";
 "gameinfo.requirePoints" = "%d points to win";
+"gameinfo.bonus.replay" = "Replaying a bonus level doesn't boost your XP";
+"gameinfo.bonus.extraxp" = "This bonus level will give you more XP!";
 "gameinfo.end.finished" = "FINISHED";
 "gameinfo.end.failed" = "FAILED";
 "gameinfo.end.bonus" = "Bonus level finished with %d bonus XP";
