@@ -104,18 +104,22 @@ class RandGameLevel {
                 GKAchievement.unlock(id: "playRandomBalloons")
             }
             save()
-            if next != nil, next!.status == .unlockable || next!.status == .locked {
-                next!.status = .unlocked
-                next!.save()
-                if next!.next != nil, next!.next!.status == .locked {
-                    next!.next!.status = .unlockable
-                    next!.next!.save()
-                }
-            }
+            unlockNextLevel()
         } else {
             stars = 0
         }
         gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars))
+    }
+    
+    func unlockNextLevel() {
+        if let next = next, next.status == .unlockable || next.status == .locked {
+            next.status = .unlocked
+            next.save()
+            if let after = next.next, after.status == .locked {
+                after.status = .unlockable
+                after.save()
+            }
+        }
     }
     
     func save() {

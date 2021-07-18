@@ -35,14 +35,7 @@ class RandGameBonusLevel: RandGameLevel {
         let stars = missing == 0 ? 3 : (numberOfBaloons - maxMissingBaloonToWin) < gamescene!.points ? 2 : 1
         status = RandGameLevelStatus.getFinished(stars: stars)
         save()
-        if next != nil, next!.status == .unlockable || next!.status == .locked {
-            next!.status = .unlocked
-            next!.save()
-            if next!.next != nil, next!.next!.status == .locked {
-                next!.next!.status = .unlockable
-                next!.next!.save()
-            }
-        }
+        unlockNextLevel()
         gamescene?.addChild(RandGameLevelEndNode(level: self, scene: gamescene!, stars: stars, xpBonus: Int(xp)))
     }
     
