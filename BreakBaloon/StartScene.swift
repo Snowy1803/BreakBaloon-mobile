@@ -299,7 +299,7 @@ class StartScene: SKScene {
         txpLabel.position = CGPoint(x: size.width / 2, y: 0 + bottomSA)
         switch currentPane {
         case .selectGameType:
-            let bottomPadding = bottomSA - lowerButtonMinus()
+            let bottomPadding = bottomSA - lowerButtonsOffset
             let translation = cancelled ? frame.width : 0
             soloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: false))
             multiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: false))
@@ -347,11 +347,11 @@ class StartScene: SKScene {
     
     // MARK: - Utils
     
-    func littleScreen() -> Bool {
+    var heightIsShort: Bool {
         frame.height < 575
     }
     
-    func lowerButtonMinus() -> CGFloat {
+    var lowerButtonsOffset: CGFloat {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return 50
         }
@@ -434,7 +434,7 @@ class StartScene: SKScene {
             let safeSize = frame.inset(by: view!.safeAreaInsets).size
             newGame(gametype, width: Int(safeSize.width / 75), height: Int((safeSize.height - 20) / 75))
         } else if onNode(prefsButton, point: point) {
-            if littleScreen() {
+            if heightIsShort {
                 view?.presentScene(IPhoneSettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: 1))
             } else {
                 view?.presentScene(SettingScene(previous: self), transition: SKTransition.doorsOpenHorizontal(withDuration: 1))
@@ -556,10 +556,12 @@ class StartScene: SKScene {
         for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
             transitionJoinCenter(node)
         }
-        transitionJoinAt(prefsButton, at: CGPoint(x: frame.width / 4, y: 170))
-        transitionJoinAt(bbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 170))
-        transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160))
-        transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160))
+        let bottomSA = view?.safeAreaInsets.bottom ?? 0
+        let bottomPadding = bottomSA - lowerButtonsOffset
+        transitionJoinAt(prefsButton, at: CGPoint(x: frame.width / 4, y: 170 + bottomPadding))
+        transitionJoinAt(bbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 170 + bottomPadding))
+        transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160 + bottomPadding))
+        transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160 + bottomPadding))
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.currentPane = .selectGameType
         }]))

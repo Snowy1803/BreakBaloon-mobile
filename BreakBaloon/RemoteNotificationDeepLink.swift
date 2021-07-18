@@ -61,7 +61,7 @@ class RemoteNotificationDeepLinkSettings: RemoteNotificationDeepLink {
             let start = StartScene(size: gvc.view!.frame.size)
             var scene: SKScene?
                 
-            if start.littleScreen() {
+            if start.heightIsShort {
                 let root = IPhoneSettingScene(previous: start)
                 if self.param == "music" {
                     scene = IPhoneMusicSettingScene(root)
