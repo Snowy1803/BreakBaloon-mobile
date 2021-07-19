@@ -14,7 +14,15 @@ class PlayerProgress: Codable {
     static let current: PlayerProgress = {
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(PlayerProgress.self, from: try savefile.getData())
+            let decoded = try decoder.decode(PlayerProgress.self, from: try savefile.getData())
+            if decoded.randomLevelStatus[0] == .locked {
+                // data loss with TF build 6, be nice and unlock 10 levels
+                for i in 0..<10 {
+                    decoded.randomLevelStatus[i] = .unlocked
+                }
+                decoded.randomLevelStatus[10] = .unlockable
+            }
+            return decoded
         } catch {
             print("failed to read player progress file, falling back on user defaults", error)
             return PlayerProgress(loadFromUserDefaults: UserDefaults.standard)

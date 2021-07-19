@@ -91,7 +91,6 @@ class RandGameLevel {
     
     internal init(_ index: Int) {
         self.index = index
-        status = .locked
     }
     
     func start(_ view: SKView, transition: SKTransition = SKTransition.flipVertical(withDuration: 1)) {
