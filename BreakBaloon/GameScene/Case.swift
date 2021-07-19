@@ -69,7 +69,7 @@ class Case: SKSpriteNode {
     func showHintArrow(game: GameScene) {
         let shape = SKShapeNode(path: polygon([(-15, 0), (-3, -15), (-3, -3), (15, -3), (15, 3), (-3, 3), (-3, 15)]))
         let deltaWinX = game.winCaseNumber % game.width - index % game.width
-        let deltaWinY = game.winCaseNumber / game.height - index / game.height
+        let deltaWinY = game.winCaseNumber / game.width - index / game.width
         
         let theta = atan2(Double(-deltaWinY), Double(deltaWinX))
         
