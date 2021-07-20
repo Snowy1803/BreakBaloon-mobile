@@ -10,36 +10,22 @@ import GameKit
 import SpriteKit
 
 class StartScene: SKScene {
-    static let buttonFont = "ChalkboardSE-Light"
-    let buttonTexture = SKTexture(imageNamed: "buttonbg")
-    let minibuttonTexture = SKTexture(imageNamed: "buttonminibg")
     
     var bbLabel = SKLabelNode()
     var cLabel = SKLabelNode()
     var hsLabel = SKLabelNode()
     var bsLabel = SKLabelNode()
     
-    var soloButton = SKSpriteNode()
-    var multiButton = SKSpriteNode()
-    var timedButton = SKSpriteNode()
-    var randButton = SKSpriteNode()
-    var smallButton = SKSpriteNode()
-    var mediumButton = SKSpriteNode()
-    var bigButton = SKSpriteNode()
-    var adaptButton = SKSpriteNode()
-    var prefsButton = SKSpriteNode()
-    var bbstoreButton = SKSpriteNode()
-    
-    var tsoloButton = SKLabelNode()
-    var tmultiButton = SKLabelNode()
-    var ttimedButton = SKLabelNode()
-    var trandButton = SKLabelNode()
-    var tsmallButton = SKLabelNode()
-    var tmediumButton = SKLabelNode()
-    var tbigButton = SKLabelNode()
-    var tadaptButton = SKLabelNode()
-    var tprefsButton = SKLabelNode()
-    var tbbstoreButton = SKLabelNode()
+    var soloButton: Button!
+    var multiButton: Button!
+    var timedButton: Button!
+    var randButton: Button!
+    var smallButton: Button!
+    var mediumButton: Button!
+    var bigButton: Button!
+    var adaptButton: Button!
+    var prefsButton: Button!
+    var bbstoreButton: Button!
     
     var xpLabel = SKShapeNode()
     var txpLabel = SKLabelNode()
@@ -137,43 +123,20 @@ class StartScene: SKScene {
     // MARK: - Pane initializers
     
     func initGameTypePane(_ cancelled: Bool) {
-        soloButton = SKSpriteNode(texture: buttonTexture)
-        soloButton.zPosition = 1
+        soloButton = Button(size: .normal, text: NSLocalizedString("gametype.singleplayer", comment: "Singleplayer"))
         addChild(soloButton)
-        tsoloButton.text = NSLocalizedString("gametype.singleplayer", comment: "Singleplayer")
-        tsoloButton.fontSize = 35
-        tsoloButton.fontName = StartScene.buttonFont
-        tsoloButton.fontColor = SKColor.black
-        tsoloButton.zPosition = 2
-        addChild(tsoloButton)
         
-        multiButton = SKSpriteNode(texture: buttonTexture)
-        multiButton.zPosition = 1
+        multiButton = Button(size: .normal, text: NSLocalizedString("gametype.computer", comment: "Versus computer"))
         addChild(multiButton)
-        tmultiButton.text = NSLocalizedString("gametype.computer", comment: "Versus computer")
-        tmultiButton.fontSize = 35
-        tmultiButton.fontName = StartScene.buttonFont
-        tmultiButton.fontColor = SKColor.black
-        tmultiButton.zPosition = 2
-        addChild(tmultiButton)
         
-        timedButton = SKSpriteNode(texture: buttonTexture)
-        timedButton.zPosition = 1
+        timedButton = Button(size: .normal, text: NSLocalizedString("gametype.timed", comment: "Timed game"))
         addChild(timedButton)
-        ttimedButton.text = NSLocalizedString("gametype.timed", comment: "Timed game")
-        ttimedButton.fontSize = 35
-        ttimedButton.fontName = StartScene.buttonFont
-        ttimedButton.fontColor = SKColor.black
-        ttimedButton.zPosition = 2
-        addChild(ttimedButton)
         
-        randButton = SKSpriteNode(texture: buttonTexture)
-        randButton.zPosition = 1
+        randButton = Button(size: .normal, text: NSLocalizedString("gametype.rand", comment: "Game with random baloons spawning"))
         if PlayerProgress.current.currentLevel < RandGameScene.requirement {
             grey(randButton)
             let level = SKSpriteNode(imageNamed: "level")
             level.position = CGPoint(x: min(randButton.frame.width / 2, frame.width / 2) - 30, y: randButton.frame.midY)
-            print(level.position)
             level.zPosition = 1
             level.setScale(1.5)
             randButton.addChild(level)
@@ -186,85 +149,33 @@ class StartScene: SKScene {
             randButton.addChild(tlevel)
         }
         addChild(randButton)
-        trandButton.text = NSLocalizedString("gametype.rand", comment: "Game with random baloons spawning")
-        trandButton.fontSize = 35
-        trandButton.fontName = StartScene.buttonFont
-        trandButton.fontColor = SKColor.black
-        trandButton.zPosition = 2
-        addChild(trandButton)
         
-        prefsButton = SKSpriteNode(texture: minibuttonTexture)
-        prefsButton.zPosition = 1
+        prefsButton = Button(size: .mini, text: NSLocalizedString("settings.title", comment: "Settings"))
         addChild(prefsButton)
-        tprefsButton.text = NSLocalizedString("settings.title", comment: "Settings")
-        tprefsButton.fontSize = 20
-        tprefsButton.fontName = StartScene.buttonFont
-        tprefsButton.fontColor = SKColor.black
-        tprefsButton.zPosition = 2
-        addChild(tprefsButton)
         
-        bbstoreButton = SKSpriteNode(texture: minibuttonTexture)
-        bbstoreButton.zPosition = 1
+        bbstoreButton = Button(size: .mini, text: NSLocalizedString("bbstore.button", comment: "BBStore"))
         addChild(bbstoreButton)
-        tbbstoreButton.text = NSLocalizedString("bbstore.button", comment: "BBStore")
-        tbbstoreButton.fontSize = 20
-        tbbstoreButton.fontName = StartScene.buttonFont
-        tbbstoreButton.fontColor = SKColor.black
-        tbbstoreButton.zPosition = 2
-        addChild(tbbstoreButton)
 
         currentPane = .selectGameType
         adjustPosition(cancelled)
     }
     
     func initSizeSelectionPane() {
-        smallButton = SKSpriteNode(texture: buttonTexture)
-        smallButton.zPosition = 1
+        smallButton = Button(size: .normal, text: NSLocalizedString("gamesize.small", comment: "Small"))
         greyIfNotFill(smallButton, size: 5)
         addChild(smallButton)
-        tsmallButton = SKLabelNode()
-        tsmallButton.text = NSLocalizedString("gamesize.small", comment: "Small")
-        tsmallButton.fontSize = 35
-        tsmallButton.fontName = StartScene.buttonFont
-        tsmallButton.fontColor = SKColor.black
-        tsmallButton.zPosition = 2
-        addChild(tsmallButton)
         
-        mediumButton = SKSpriteNode(texture: buttonTexture)
-        mediumButton.zPosition = 1
+        mediumButton = Button(size: .normal, text: NSLocalizedString("gamesize.medium", comment: "Normal"))
         greyIfNotFill(mediumButton, size: 7)
         addChild(mediumButton)
-        tmediumButton = SKLabelNode()
-        tmediumButton.text = NSLocalizedString("gamesize.medium", comment: "Normal")
-        tmediumButton.fontSize = 35
-        tmediumButton.fontName = StartScene.buttonFont
-        tmediumButton.fontColor = SKColor.black
-        tmediumButton.zPosition = 2
-        addChild(tmediumButton)
         
-        bigButton = SKSpriteNode(texture: buttonTexture)
-        bigButton.zPosition = 1
+        bigButton = Button(size: .normal, text: NSLocalizedString("gamesize.large", comment: "Large"))
         greyIfNotFill(bigButton, size: 10)
         addChild(bigButton)
-        tbigButton = SKLabelNode()
-        tbigButton.text = NSLocalizedString("gamesize.large", comment: "Large")
-        tbigButton.fontSize = 35
-        tbigButton.fontName = StartScene.buttonFont
-        tbigButton.fontColor = SKColor.black
-        tbigButton.zPosition = 2
-        addChild(tbigButton)
         
-        adaptButton = SKSpriteNode(texture: buttonTexture)
-        adaptButton.zPosition = 1
-        addChild(adaptButton)
-        tadaptButton = SKLabelNode()
         let safeSize = frame.inset(by: view!.safeAreaInsets).size
-        tadaptButton.text = String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int(safeSize.width / 75), Int((safeSize.height - 35) / 75))
-        tadaptButton.fontSize = 35
-        tadaptButton.fontName = StartScene.buttonFont
-        tadaptButton.fontColor = SKColor.black
-        tadaptButton.zPosition = 2
-        addChild(tadaptButton)
+        adaptButton = Button(size: .normal, text: String(format: NSLocalizedString("gamesize.adaptive", comment: "Adaptive"), Int(safeSize.width / 75), Int((safeSize.height - 35) / 75)))
+        addChild(adaptButton)
         
         currentPane = .selectSize
         adjustPosition(false)
@@ -301,30 +212,18 @@ class StartScene: SKScene {
         case .selectGameType:
             let bottomPadding = bottomSA - lowerButtonsOffset
             let translation = cancelled ? frame.width : 0
-            soloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: false))
-            multiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: false))
-            timedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2, text: false))
-            randButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3, text: false))
+            soloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0))
+            multiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1))
+            timedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2))
+            randButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3))
             prefsButton.position = CGPoint(x: frame.width / 4 - translation, y: 170 + bottomPadding)
             bbstoreButton.position = CGPoint(x: frame.width / 4 * 3 - translation, y: 170 + bottomPadding)
-            
-            tsoloButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(0, text: true))
-            tmultiButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(1, text: true))
-            ttimedButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(2, text: true))
-            trandButton.position = CGPoint(x: frame.midX - translation, y: getPositionYForButton(3, text: true))
-            tprefsButton.position = CGPoint(x: frame.width / 4 - translation, y: 160 + bottomPadding)
-            tbbstoreButton.position = CGPoint(x: frame.width / 4 * 3 - translation, y: 160 + bottomPadding)
         case .selectSize:
             let translation = sizeChange ? 0 : frame.size.width
-            smallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0, text: false))
-            mediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1, text: false))
-            bigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2, text: false))
-            adaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3, text: false))
-            
-            tsmallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0, text: true))
-            tmediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1, text: true))
-            tbigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2, text: true))
-            tadaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3, text: true))
+            smallButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(0))
+            mediumButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(1))
+            bigButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(2))
+            adaptButton.position = CGPoint(x: frame.midX + translation, y: getPositionYForButton(3))
         case .selectLevel:
             if sizeChange {
                 for child in children {
@@ -370,16 +269,16 @@ class StartScene: SKScene {
         }
     }
     
-    func getPositionYForButton(_ indexFromTop: Int, text: Bool) -> CGFloat {
+    func getPositionYForButton(_ indexFromTop: Int) -> CGFloat {
         var position: CGFloat = frame.size.height - (view?.safeAreaInsets.top ?? 0)
-        let height = buttonTexture.size().height
+        let height = Button.textures[.normal]!.size().height
         if UIDevice.current.userInterfaceIdiom == .pad {
             position -= height * (2 + 1.5 * CGFloat(indexFromTop - 1))
         } else {
             let landscape = view?.frame.width ?? 0 > view?.frame.height ?? 0
             position -= height * CGFloat(indexFromTop) + (landscape ? 0 : 100)
         }
-        return text ? position - 45 : position - 30
+        return position - 30
     }
     
     // MARK: - Events
@@ -451,8 +350,11 @@ class StartScene: SKScene {
         }
     }
     
-    func onNode(_ node: SKNode, point: CGPoint) -> Bool {
-        node.frame.contains(point) && node.parent != nil
+    func onNode(_ node: SKNode?, point: CGPoint) -> Bool {
+        if let node = node {
+            return node.frame.contains(point) && node.parent != nil
+        }
+        return false
     }
    
     override func update(_: TimeInterval) {
@@ -501,7 +403,7 @@ class StartScene: SKScene {
         transitionLeaveGameType()
         initSizeSelectionPane()
         currentPane = .inTransition
-        for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
+        for node in [smallButton, mediumButton, bigButton, adaptButton] as [Button] {
             transitionJoinCenter(node)
         }
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
@@ -525,7 +427,7 @@ class StartScene: SKScene {
     
     func transitionSizeSelectionToGameType() {
         currentPane = .inTransition
-        for node in [smallButton, mediumButton, bigButton, adaptButton, tsmallButton, tmediumButton, tbigButton, tadaptButton] {
+        for node in [smallButton, mediumButton, bigButton, adaptButton] as [Button] {
             transitionQuitRight(node)
         }
         transitionEnterGameType()
@@ -544,8 +446,7 @@ class StartScene: SKScene {
             GKAccessPoint.shared.isActive = false
         }
         currentPane = .inTransition
-        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton,
-                     tsoloButton, tmultiButton, ttimedButton, trandButton, tprefsButton, tbbstoreButton] {
+        for node in [soloButton, multiButton, timedButton, randButton, prefsButton, bbstoreButton] as [Button] {
             transitionQuit(node)
         }
     }
@@ -553,15 +454,13 @@ class StartScene: SKScene {
     func transitionEnterGameType() {
         initGameTypePane(true)
         currentPane = .inTransition
-        for node in [soloButton, multiButton, timedButton, randButton, tsoloButton, tmultiButton, ttimedButton, trandButton] {
+        for node in [soloButton, multiButton, timedButton, randButton] as [Button] {
             transitionJoinCenter(node)
         }
         let bottomSA = view?.safeAreaInsets.bottom ?? 0
         let bottomPadding = bottomSA - lowerButtonsOffset
         transitionJoinAt(prefsButton, at: CGPoint(x: frame.width / 4, y: 170 + bottomPadding))
         transitionJoinAt(bbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 170 + bottomPadding))
-        transitionJoinAt(tprefsButton, at: CGPoint(x: frame.width / 4, y: 160 + bottomPadding))
-        transitionJoinAt(tbbstoreButton, at: CGPoint(x: frame.width / 4 * 3, y: 160 + bottomPadding))
         run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.run {
             self.currentPane = .selectGameType
         }]))

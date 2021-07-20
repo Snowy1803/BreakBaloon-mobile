@@ -21,8 +21,7 @@ class ExtensionSettingScene: SKScene {
     ]
     let previous: SKScene
     
-    var ok = SKSpriteNode()
-    let tok = SKLabelNode()
+    var ok: Button!
     
     var animation: CheckBox
     var hintarrow: CheckBox
@@ -39,17 +38,10 @@ class ExtensionSettingScene: SKScene {
         let bottom = previous.view?.safeAreaInsets.bottom ?? 0
         let left = previous.view?.safeAreaInsets.left ?? 0
         
-        ok = SKSpriteNode(imageNamed: "buttonminibg")
+        ok = Button(size: .mini, text: NSLocalizedString("ok", comment: "Ok"))
         ok.position = CGPoint(x: frame.width / 2, y: 50 + bottom)
-        ok.zPosition = 1
         addChild(ok)
-        tok.text = NSLocalizedString("ok", comment: "Ok")
-        tok.fontName = StartScene.buttonFont
-        tok.fontColor = SKColor.black
-        tok.fontSize = 20
-        tok.position = CGPoint(x: frame.width / 2, y: 40 + bottom)
-        tok.zPosition = 2
-        addChild(tok)
+        
         let array = [String](sortArray.values)
         animation.enabled = (PlayerProgress.current.currentLevel >= animationLevelRequirement)
         animation.position = CGPoint(x: 32 + left, y: top - sort(sortArray["animation"]!, in: array))

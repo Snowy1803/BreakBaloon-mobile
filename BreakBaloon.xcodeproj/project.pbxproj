@@ -37,6 +37,7 @@
 		20263AB41D5CC2A4005E596B /* fake-opened3.png in Resources */ = {isa = PBXBuildFile; fileRef = 20263AAE1D5CC2A4005E596B /* fake-opened3.png */; };
 		20263AB51D5CC2A4005E596B /* fake-opened4.png in Resources */ = {isa = PBXBuildFile; fileRef = 20263AAF1D5CC2A4005E596B /* fake-opened4.png */; };
 		20263AB61D5CC2A4005E596B /* fake-opened5.png in Resources */ = {isa = PBXBuildFile; fileRef = 20263AB01D5CC2A4005E596B /* fake-opened5.png */; };
+		203EE36626A70A450014EAAA /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203EE36526A70A450014EAAA /* Button.swift */; };
 		203EEC75234A6438002D81F2 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC73234A6438002D81F2 /* Interface.storyboard */; };
 		203EEC77234A6439002D81F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203EEC76234A6439002D81F2 /* Assets.xcassets */; };
 		203EEC7E234A6439002D81F2 /* BreakBaloon Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 203EEC7D234A6439002D81F2 /* BreakBaloon Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -217,6 +218,7 @@
 		20263AAE1D5CC2A4005E596B /* fake-opened3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-opened3.png"; sourceTree = "<group>"; };
 		20263AAF1D5CC2A4005E596B /* fake-opened4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-opened4.png"; sourceTree = "<group>"; };
 		20263AB01D5CC2A4005E596B /* fake-opened5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-opened5.png"; sourceTree = "<group>"; };
+		203EE36526A70A450014EAAA /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		203EEC71234A6438002D81F2 /* BreakBaloon Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BreakBaloon Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203EEC74234A6438002D81F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		203EEC76234A6439002D81F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -351,6 +353,16 @@
 			path = BreakBaloonStickers;
 			sourceTree = "<group>";
 		};
+		203EE36426A70A1F0014EAAA /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				2067367A1D16E26300FB9FFF /* StartScene.sks */,
+				20C9957D1D23EC2F0029312F /* StartScene.swift */,
+				203EE36526A70A450014EAAA /* Button.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
 		203EEC72234A6438002D81F2 /* BreakBaloon Watch */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,10 +428,9 @@
 				20FDCD9B2690A30300493C8E /* Theming */,
 				20FDCD9A2690A29900493C8E /* Settings */,
 				20FDCD9D2690A3B300493C8E /* BBStore */,
+				203EE36426A70A1F0014EAAA /* Start */,
 				206736781D16E26300FB9FFF /* AppDelegate.swift */,
 				20F188161D2679F40099F717 /* RemoteNotificationDeepLink.swift */,
-				2067367A1D16E26300FB9FFF /* StartScene.sks */,
-				20C9957D1D23EC2F0029312F /* StartScene.swift */,
 				205CADBA26921C6900C0C508 /* GameType.swift */,
 				20C995901D23ED300029312F /* GameViewController.swift */,
 				20A9AE7B2694B49400F94859 /* ECLoginManager.swift */,
@@ -879,6 +890,7 @@
 				2044493E1D4F6439000EE217 /* RandGameLevelNode.swift in Sources */,
 				20C995821D23EC620029312F /* SettingScene.swift in Sources */,
 				20F89AE11D4D4A01004EA75E /* RandGameLevelInfoNode.swift in Sources */,
+				203EE36626A70A450014EAAA /* Button.swift in Sources */,
 				20F188171D2679F40099F717 /* RemoteNotificationDeepLink.swift in Sources */,
 				204289201D4E670300BDEE39 /* RandGameLevelEndNode.swift in Sources */,
 				20C995841D23EC710029312F /* Selector.swift in Sources */,

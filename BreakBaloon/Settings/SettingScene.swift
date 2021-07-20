@@ -11,14 +11,10 @@ import SpriteKit
 
 class SettingScene: SKScene, ECLoginDelegate {
     var previous: StartScene
-    var ok = SKSpriteNode()
-    var tok = SKLabelNode()
-    var reset = SKSpriteNode()
-    var treset = SKLabelNode()
-    var extensions = SKSpriteNode()
-    var textensions = SKLabelNode()
-    var login = SKSpriteNode()
-    var tlogin = SKLabelNode()
+    var ok: Button!
+    var reset: Button!
+    var extensions: Button!
+    var login: Button!
     
     var audioSetting: AudioSlider
     var musicSetting: AudioSlider
@@ -40,7 +36,7 @@ class SettingScene: SKScene, ECLoginDelegate {
         let top = frame.height - (gvc.skView?.safeAreaInsets.top ?? 0)
         
         let name = SKLabelNode(text: NSLocalizedString("settings.title", comment: "Settings"))
-        name.fontName = StartScene.buttonFont
+        name.fontName = Button.fontName
         name.fontColor = SKColor.black
         name.position = CGPoint(x: frame.midX, y: top - 50)
         addChild(name)
@@ -56,54 +52,22 @@ class SettingScene: SKScene, ECLoginDelegate {
         themeIndexSetting.position = CGPoint(x: frame.width / 2, y: top - 400)
         addChild(themeIndexSetting)
         
-        extensions = SKSpriteNode(imageNamed: "buttonminibg")
+        extensions = Button(size: .mini, text: NSLocalizedString("settings.extensions", comment: "Extensions"))
         extensions.position = CGPoint(x: frame.width / 3, y: top - 500)
-        extensions.zPosition = 1
         addChild(extensions)
-        textensions = SKLabelNode(text: NSLocalizedString("settings.extensions", comment: "Extensions"))
-        textensions.fontName = StartScene.buttonFont
-        textensions.fontColor = SKColor.black
-        textensions.fontSize = 20
-        textensions.position = CGPoint(x: frame.width / 3, y: top - 510)
-        textensions.zPosition = 2
-        addChild(textensions)
         
-        login = SKSpriteNode(imageNamed: "buttonminibg")
+        login = Button(size: .mini, text: NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out"))
         login.position = CGPoint(x: frame.width / 3 * 2, y: top - 500)
-        login.zPosition = 1
         addChild(login)
-        tlogin = SKLabelNode(text: NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out"))
-        tlogin.fontName = StartScene.buttonFont
-        tlogin.fontColor = SKColor.black
-        tlogin.fontSize = 20
-        tlogin.position = CGPoint(x: frame.width / 3 * 2, y: top - 510)
-        tlogin.zPosition = 2
-        addChild(tlogin)
         
         let bottom = gvc.skView?.safeAreaInsets.bottom ?? 0
-        ok = SKSpriteNode(imageNamed: "buttonminibg")
+        ok = Button(size: .mini, text: NSLocalizedString("ok", comment: "Ok"))
         ok.position = CGPoint(x: frame.width / 3, y: 50 + bottom)
-        ok.zPosition = 1
         addChild(ok)
-        tok = SKLabelNode(text: NSLocalizedString("ok", comment: "Ok"))
-        tok.fontName = StartScene.buttonFont
-        tok.fontColor = SKColor.black
-        tok.fontSize = 20
-        tok.position = CGPoint(x: frame.width / 3, y: 40 + bottom)
-        tok.zPosition = 2
-        addChild(tok)
         
-        reset = SKSpriteNode(imageNamed: "buttonminibg")
+        reset = Button(size: .mini, text: NSLocalizedString("reset", comment: "Reset settings"))
         reset.position = CGPoint(x: frame.width / 3 * 2, y: 50 + bottom)
-        reset.zPosition = 1
         addChild(reset)
-        treset = SKLabelNode(text: NSLocalizedString("reset", comment: "Reset settings"))
-        treset.fontName = StartScene.buttonFont
-        treset.fontColor = SKColor.black
-        treset.fontSize = 20
-        treset.position = CGPoint(x: frame.width / 3 * 2, y: 40 + bottom)
-        treset.zPosition = 2
-        addChild(treset)
     }
     
     @available(*, unavailable)
@@ -147,7 +111,7 @@ class SettingScene: SKScene, ECLoginDelegate {
     }
     
     func loginDidComplete() {
-        tlogin.text = NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out")
+        login.label.text = NSLocalizedString("settings.log\(ECLoginManager.shared.loggedIn ? "out" : "in")", comment: "login/out")
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with _: UIEvent?) {
