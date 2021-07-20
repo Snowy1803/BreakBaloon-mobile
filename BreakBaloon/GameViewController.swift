@@ -67,14 +67,7 @@ class GameViewController: UIViewController, WCSessionDelegate {
     }
     
     func loadMusicAndStartScene() {
-        if GameViewController.getMusicURLs().isEmpty {
-            do {
-                try Downloadable(type: .m4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil, wait: true)
-            } catch {
-                print("Couldn't download Race.m4a :(")
-                print(error)
-            }
-        }
+        loadBackgroundMusic()
         let data = UserDefaults.standard
         if data.string(forKey: "currentMusic") == nil {
             data.set("Race.m4a", forKey: "currentMusic")
@@ -139,6 +132,23 @@ class GameViewController: UIViewController, WCSessionDelegate {
         }
     }
     
+    func loadBackgroundMusic() {
+        if GameViewController.getMusicURLs().isEmpty {
+            Downloadable(type: .m4aMusic, name: "Race", author: "Snowy", id: "Race.m4a", version: "x", description: "", levelRequirement: 0).download(nil) { error in
+                if error != nil {
+                    print("Couldn't download Race.m4a :(")
+                } else {
+                    self.reloadBackgroundMusic()
+                }
+            }
+            let placeholder = AVAudioPlayer()
+            placeholder.volume = UserDefaults.standard.float(forKey: "audio-true")
+            backgroundMusicPlayer = placeholder
+        } else {
+            reloadBackgroundMusic()
+        }
+    }
+    
     func reloadBackgroundMusic() {
         currentMusicFileName = UserDefaults.standard.string(forKey: "currentMusic") ?? "Race.m4a"
         guard let bgMusicURL = GameViewController.getMusicURL(currentMusicFileName) else {
@@ -161,9 +171,6 @@ class GameViewController: UIViewController, WCSessionDelegate {
                 print(error)
             }
             UserDefaults.standard.set("Race.m4a", forKey: "currentMusic")
-            // placeholder
-            backgroundMusicPlayer = AVAudioPlayer()
-            backgroundMusicPlayer.volume = UserDefaults.standard.float(forKey: "audio-true")
         }
     }
     

@@ -41,7 +41,7 @@ class Downloadable: SKNode {
     }
     
     func construct(_ gvc: GameViewController) {
-        rect = SKShapeNode(rect: CGRect(x: position.x, y: position.y, width: Downloadable.WIDTH, height: Downloadable.HEIGHT))
+        rect = SKShapeNode(rect: CGRect(x: 0, y: 0, width: Downloadable.WIDTH, height: Downloadable.HEIGHT))
         rect.fillColor = .groupTableViewBackground
         rect.strokeColor = .clear
         rect.zPosition = 1
@@ -49,7 +49,7 @@ class Downloadable: SKNode {
         let name = SKLabelNode(text: dlname)
         name.fontColor = .foreground
         name.fontSize = 20
-        name.position = CGPoint(x: rect.frame.minX + name.frame.width / 2 + 5, y: rect.frame.maxY - 20)
+        name.position = CGPoint(x: name.frame.width / 2 + 5, y: rect.frame.maxY - 20)
         name.zPosition = 2
         addChild(name)
         let auth = SKLabelNode(text: dlauthor)
@@ -61,20 +61,20 @@ class Downloadable: SKNode {
         let type = SKLabelNode(text: dltype.localizedDescription)
         type.fontColor = SKColor.gray
         type.fontSize = 20
-        type.position = CGPoint(x: rect.frame.minX + type.frame.width / 2 + 5, y: rect.frame.maxY - 45)
+        type.position = CGPoint(x: type.frame.width / 2 + 5, y: rect.frame.maxY - 45)
         type.zPosition = 2
         addChild(type)
         let btn = SKLabelNode(text: NSLocalizedString("bbstore.clickToDownload", comment: "button"))
         btn.fontColor = .foreground
         btn.fontSize = 16
-        btn.position = CGPoint(x: rect.frame.midX, y: rect.frame.minY + 5)
+        btn.position = CGPoint(x: rect.frame.midX, y: 5)
         btn.zPosition = 2
         addChild(btn)
         
         let desc = SKLabelNode(text: dldescription)
         desc.fontColor = .foreground
         desc.fontSize = 18
-        desc.position = CGPoint(x: rect.frame.minX + 5, y: rect.frame.maxY - 50)
+        desc.position = CGPoint(x: 5, y: rect.frame.maxY - 50)
         desc.horizontalAlignmentMode = .left
         desc.verticalAlignmentMode = .top
         desc.preferredMaxLayoutWidth = Downloadable.WIDTH - 10
@@ -135,13 +135,12 @@ class Downloadable: SKNode {
         if levelRequirement <= PlayerProgress.current.currentLevel {
             let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.text", comment: ""), dlname), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default) { _ in
-                do {
-                    try self.download(scene, wait: false)
-                } catch {
-                    let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: String(format: NSLocalizedString("bbstore.download.error", comment: ""), self.dlname), preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("bbstore.download.button", comment: ""), style: .default, handler: nil))
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
-                    scene.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
+                self.download(scene) { error in
+                    if let error = error {
+                        let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: error.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: nil))
+                        scene.view!.window!.rootViewController!.present(alert, animated: true, completion: nil)
+                    }
                 }
             })
             alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
@@ -149,7 +148,7 @@ class Downloadable: SKNode {
         }
     }
     
-    func download(_ scene: BBStoreScene?, wait: Bool) throws {
+    func download(_ scene: BBStoreScene?, completion: ((Error?) -> Void)?) {
         if !dltype.supported {
             if scene != nil {
                 let alert = UIAlertController(title: NSLocalizedString("bbstore.download.title", comment: ""), message: NSLocalizedString("bbstore.download.unsupported", comment: ""), preferredStyle: .alert)
@@ -160,23 +159,14 @@ class Downloadable: SKNode {
         }
         print("Beginning download of", dlname)
         let file = FileSaveHelper(fileName: dlid, fileExtension: .none)
-        var unblock = false
         file.download(URL(string: "http://elementalcube.infos.st/api/bbstore-dl.php?id=\(dlid)")!) { error in
-            if wait {
-                unblock = true
-            } else {
-                do {
-                    try self.afterDownload(file)
-                } catch {
-                    print("Errored treating download asynchronisously:", error)
-                }
+            do {
+                try self.afterDownload(file)
+                completion?(error)
+            } catch let err {
+                print("Errored treating download asynchronisously:", err)
+                completion?(error ?? err)
             }
-        }
-        if wait {
-            while !unblock {
-                Thread.sleep(forTimeInterval: 1/1000)
-            }
-            try afterDownload(file)
         }
     }
     
@@ -187,6 +177,8 @@ class Downloadable: SKNode {
                 // remove previous version (same name without .zip extension)
                 let zipFile = URL(fileURLWithPath: file.fullyQualifiedPath).lastPathComponent
                 try FileManager.default.removeItem(atPath: "\(dir)/\(zipFile.dropLast(4))")
+            } catch CocoaError.fileNoSuchFile {
+                // ignore
             } catch {
                 print(error)
             }
@@ -196,6 +188,12 @@ class Downloadable: SKNode {
             try FileManager.default.unzipItem(at: zip, to: URL(fileURLWithPath: dir))
             AbstractThemeUtils.reloadThemeList()
             try FileManager.default.removeItem(at: zip)
+        }
+        if let view = self.scene?.view {
+            DispatchQueue.main.async { [self] in
+                removeAllChildren()
+                construct(view.gvc)
+            }
         }
     }
     
