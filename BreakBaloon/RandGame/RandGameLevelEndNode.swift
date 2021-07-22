@@ -58,10 +58,10 @@ class RandGameLevelEndNode: SKNode {
             tcomplete.fontColor = SKColor.black
             tcomplete.fontName = "HelveticaNeue-Bold"
             addChild(tcomplete)
-            
-            replay.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 12 * 3)
-            addChild(replay)
         }
+        
+        replay.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 12 * 3)
+        addChild(replay)
         
         back.position = CGPoint(x: scene.frame.width / 2 - 80, y: scene.frame.height / 12 * 3)
         addChild(back)
@@ -81,7 +81,7 @@ class RandGameLevelEndNode: SKNode {
                 remaining.position = CGPoint(x: scene.frame.width / 2, y: scene.frame.height / 6 * 5 - 275)
                 addChild(remaining)
             }
-        } else if !isBonusLevel {
+        } else {
             replay.run(SKAction.repeatForever(SKAction.sequence([SKAction.resize(toWidth: 80, height: 80, duration: 0.6), SKAction.resize(toWidth: 64, height: 64, duration: 0.6)])))
         }
     }
