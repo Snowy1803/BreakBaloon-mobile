@@ -18,6 +18,8 @@ class Case: SKSpriteNode {
         status != .closed
     }
     
+    weak var hintArrow: SKShapeNode?
+    
     init(gvc: GameViewController, index: Int) {
         type = Int.random(in: 0..<gvc.currentTheme.baloonCount)
         self.index = index
@@ -79,6 +81,7 @@ class Case: SKSpriteNode {
         shape.zPosition = 2
         shape.run(SKAction.sequence([SKAction.wait(forDuration: 0.4), SKAction.removeFromParent()]))
         addChild(shape)
+        hintArrow = shape
     }
     
     func polygon(_ points: [(CGFloat, CGFloat)]) -> CGPath {

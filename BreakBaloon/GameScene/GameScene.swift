@@ -143,6 +143,17 @@ class GameScene: AbstractGameScene {
                     unbreakedIndices.append(index)
                 }
                 
+                if let hint = touched.hintArrow?.zRotation {
+                    unbreakedIndices = unbreakedIndices.filter { aCase in
+                        let deltaWinX = aCase % width - index % width
+                        let deltaWinY = aCase / width - index / width
+                        
+                        let theta = atan2(Double(-deltaWinY), Double(deltaWinX))
+                        
+                        return abs(hint - CGFloat(theta + .pi)) < 0.2
+                    }
+                }
+                
                 if let wherebreak = unbreakedIndices.randomElement() {
                     self.breakBaloon(wherebreak, touch: self.cases[wherebreak].position, computer: true)
                     self.waitingForComputer = false
