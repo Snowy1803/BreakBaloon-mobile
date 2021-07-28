@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class Case: SKSpriteNode {
-    let gvc: GameViewController
+    let game: AbstractGameScene
     let type: Int
     let index: Int
     var status: CaseStatus = .closed
@@ -20,11 +20,11 @@ class Case: SKSpriteNode {
     
     weak var hintArrow: SKShapeNode?
     
-    init(gvc: GameViewController, index: Int) {
-        type = Int.random(in: 0..<gvc.currentTheme.baloonCount)
+    init(game: AbstractGameScene, index: Int) {
+        type = Int.random(in: 0..<game.theme.baloonCount)
         self.index = index
-        self.gvc = gvc
-        let texture = gvc.currentTheme.getBaloonTexture(status: status, type: type, fake: false)
+        self.game = game
+        let texture = game.theme.getBaloonTexture(status: status, type: type, fake: false)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
     }
     
@@ -35,14 +35,14 @@ class Case: SKSpriteNode {
     
     func breakBaloon(_ winner: Bool) {
         status = winner ? .winnerOpened : .opened
-        texture = gvc.currentTheme.getBaloonTexture(case: self)
+        texture = game.theme.getBaloonTexture(case: self)
         if UserDefaults.standard.bool(forKey: "extension.animation.enabled") {
             triggerAnimationExtension()
         }
     }
     
     func baloonBreaked() {
-        if let game = gvc.currentGame as? GameScene,
+        if let game = game as? GameScene,
            game.gametype != .timed,
            UserDefaults.standard.bool(forKey: "extension.hintarrow.enabled") {
             showHintArrow(game: game)
@@ -51,7 +51,7 @@ class Case: SKSpriteNode {
     
     func triggerAnimationExtension() {
         let action = SKAction.run {
-            self.animate(self.gvc.currentTheme.animationColor(type: self.type))
+            self.animate(self.game.theme.animationColor(type: self.type))
         }
         run(SKAction.sequence([action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action, SKAction.wait(forDuration: 0.2), action]))
     }

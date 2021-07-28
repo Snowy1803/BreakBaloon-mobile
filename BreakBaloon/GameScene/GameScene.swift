@@ -32,7 +32,7 @@ class GameScene: AbstractGameScene {
         let top = frame.size.height - (gvc.view?.safeAreaInsets.top ?? 0)
         let left = gvc.view?.safeAreaInsets.left ?? 0
         for i in 0..<(width * height) {
-            let theCase = Case(gvc: gvc, index: i)
+            let theCase = Case(game: self, index: i)
             theCase.position = CGPoint(x: left + CGFloat(i % width * 75 + 35), y: top - CGFloat(i / width * 75 + 35))
             theCase.zPosition = 1
             addChild(theCase)

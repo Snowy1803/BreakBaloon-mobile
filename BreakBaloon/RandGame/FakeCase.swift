@@ -9,9 +9,9 @@
 import Foundation
 
 class FakeCase: Case {
-    override init(gvc: GameViewController, index: Int) {
-        super.init(gvc: gvc, index: index)
-        texture = gvc.currentTheme.getBaloonTexture(status: status, type: type, fake: true)
+    override init(game: AbstractGameScene, index: Int) {
+        super.init(game: game, index: index)
+        texture = game.theme.getBaloonTexture(status: status, type: type, fake: true)
     }
     
     @available(*, unavailable)
@@ -21,6 +21,6 @@ class FakeCase: Case {
     
     override func breakBaloon(_ winner: Bool) {
         super.breakBaloon(winner)
-        gvc.currentGame?.points -= 2
+        game.points -= 2
     }
 }

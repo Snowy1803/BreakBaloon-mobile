@@ -18,11 +18,14 @@ class AbstractGameScene: SKScene {
     var endTime: TimeInterval?
     fileprivate var pauseTime: TimeInterval?
     
+    var theme: AbstractTheme
+    
     private var normalPumpPlayers: Set<AVAudioPlayer> = []
     private var winnerPumpPlayers: Set<AVAudioPlayer> = []
     
     init(view: SKView, gametype: GameType) {
         self.gametype = gametype
+        self.theme = view.gvc.currentTheme
         super.init(size: view.bounds.size)
         construct(view.gvc)
         view.gvc.currentGame = self
@@ -34,7 +37,7 @@ class AbstractGameScene: SKScene {
     }
     
     func construct(_ gvc: GameViewController) {
-        backgroundColor = gvc.currentTheme.background
+        backgroundColor = theme.background
     }
     
     func pauseGame() {
@@ -62,7 +65,7 @@ class AbstractGameScene: SKScene {
     
     private func preparePlayer(winner: Bool) -> AVAudioPlayer? {
         do {
-            let avplayer = try AVAudioPlayer(data: view!.gvc.currentTheme.pumpSound(winner))
+            let avplayer = try AVAudioPlayer(data: theme.pumpSound(winner))
             avplayer.volume = view!.gvc.audioVolume
             avplayer.prepareToPlay()
             if winner {

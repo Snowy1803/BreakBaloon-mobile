@@ -54,6 +54,12 @@ class RandGameScene: AbstractGameScene {
             addChild(errors)
         }
         
+        if level.fakeBaloonsRate > 0,
+           theme.getBaloonTexture(status: .closed, type: 0, fake: true).size() == .zero {
+            // fake balloons aren't supported in current theme
+            theme = DefaultTheme()
+        }
+        
         pause = SKSpriteNode(imageNamed: "pause")
         pause.position = CGPoint(
             x: frame.width - view.safeAreaInsets.right - pause.frame.width / 4 * 3,
@@ -168,9 +174,9 @@ class RandGameScene: AbstractGameScene {
     func spawnBaloon(point: CGPoint) {
         let aCase: Case
         if level.fakeBaloonsRate > Float.random(in: 0..<1) {
-            aCase = FakeCase(gvc: gvc, index: -1)
+            aCase = FakeCase(game: self, index: -1)
         } else {
-            aCase = Case(gvc: gvc, index: -1)
+            aCase = Case(game: self, index: -1)
         }
         aCase.position = point
         aCase.zPosition = 0
