@@ -115,7 +115,7 @@ class StartScene: SKScene {
         xpLabel.run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.scaleX(to: CGFloat(PlayerProgress.current.levelProgression) / growXPFrom, duration: 1.0)])) { [self] in
             xpLabel.path = CGPath(rect: CGRect(x: 0, y: view?.safeAreaInsets.bottom ?? 0, width: CGFloat(PlayerProgress.current.levelProgression) * size.width, height: 15), transform: nil)
             xpLabel.xScale = 1
-            levelProgressionShown = PlayerProgress.current.levelProgression
+            levelProgressionShown = CGFloat(PlayerProgress.current.levelProgression)
             txpLabel.text = String(format: NSLocalizedString("level.label", comment: "Level x"), PlayerProgress.current.currentLevel)
         }
     }
