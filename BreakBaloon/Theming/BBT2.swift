@@ -48,6 +48,8 @@ class BBT2: AbstractTheme {
         constants["COLOR_PINK"] = "16711935"
         constants["COLOR_PURPLE"] = "8388736"
         constants["COLOR_AQUA"] = "65535"
+        constants["null"] = null
+        
         properties["theme.id"] = null
         properties["theme.name"] = null
         properties["theme.description"] = null
@@ -69,6 +71,7 @@ class BBT2: AbstractTheme {
         functions["imageByConcat"] = concatImage
         functions["isset_set"] = issetSet
         functions["localized"] = localized
+        
         methods["grayscale"] = grayscale
         methods["toLower"] = toLower
         methods["toUpper"] = toUpper
@@ -109,9 +112,9 @@ class BBT2: AbstractTheme {
     }
     
     func exec(_ cmd: String, properties: inout [String: String?]) throws -> String? {
-        if cmd.trimmingCharacters(in: CharacterSet.whitespaces).hasPrefix("image.baloons"), cmd.contains("=") {
+        if cmd.trimmingCharacters(in: .whitespaces).hasPrefix("image.baloons"), cmd.contains("=") {
             let vals = cmd.components(separatedBy: "=")
-            if vals[1].trimmingCharacters(in: CharacterSet.whitespaces) == "[" {
+            if vals[1].trimmingCharacters(in: .whitespaces) == "[" {
                 try parseBaloonBlock()
             } else {
                 print("Invalid baloons declaration syntax")
@@ -119,9 +122,9 @@ class BBT2: AbstractTheme {
             }
         } else if cmd.contains("+=") {
             let varAndValToConcat = cmd.components(separatedBy: "+=")
-            let variable = varAndValToConcat[0].trimmingCharacters(in: CharacterSet.whitespaces)
+            let variable = varAndValToConcat[0].trimmingCharacters(in: .whitespaces)
             if (properties[variable] != nil && properties[variable]! != nil) || (self.properties[variable] != nil && self.properties[variable]! != nil) {
-                try set(variable, value: properties[variable]!! + execIfNeeds(varAndValToConcat[1].trimmingCharacters(in: CharacterSet.whitespaces))!)
+                try set(variable, value: properties[variable]!! + execIfNeeds(varAndValToConcat[1].trimmingCharacters(in: .whitespaces))!)
                 return properties[variable]!
             }
             print("Tried to concat a value to the undeclared variable \(variable)")
@@ -142,7 +145,7 @@ class BBT2: AbstractTheme {
             }
         } else if cmd.contains("(") {
             var components = cmd.components(separatedBy: "(")
-            let methodName = components[0].trimmingCharacters(in: CharacterSet.whitespaces)
+            let methodName = components[0].trimmingCharacters(in: .whitespaces)
             if functions[methodName] != nil {
                 components.removeFirst()
                 var arg = components.joined(separator: "(")
@@ -205,14 +208,12 @@ class BBT2: AbstractTheme {
     }
     
     func execIfNeeds(_ cmd: String) throws -> String? {
-        if cmd.lowercased() == "null" {
-            return null
-        } else if localVariables[cmd] != nil {
-            return localVariables[cmd]!
-        } else if constants[cmd] != nil {
-            return constants[cmd]!
-        } else if properties[cmd] != nil {
-            return properties[cmd]!
+        if let content = localVariables[cmd] {
+            return content
+        } else if let content = constants[cmd] {
+            return content
+        } else if let content = properties[cmd] {
+            return content
         } else if cmd.hasPrefix("\"") && cmd.hasSuffix("\"") && cmd.components(separatedBy: "\"").count == 3 {
             return cmd.replacingOccurrences(of: "\\\\", with: "\\").replacingOccurrences(of: "\\n", with: "\n").replacingOccurrences(of: "\\t", with: "\t").replacingOccurrences(of: "\\r", with: "\r").replacingOccurrences(of: "\"", with: "")
         } else if cmd.contains("(") || cmd.contains("=") {
@@ -220,13 +221,13 @@ class BBT2: AbstractTheme {
         } else if cmd.contains("++") {
             var valsToConcat = cmd.components(separatedBy: "++")
             for i in 0..<valsToConcat.count {
-                valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: CharacterSet.whitespaces))!
+                valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: .whitespaces))!
             }
             return valsToConcat.joined(separator: " ")
         } else if cmd.contains("+") {
             var valsToConcat = cmd.components(separatedBy: "+")
             for i in 0..<valsToConcat.count {
-                valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: CharacterSet.whitespaces))!
+                valsToConcat[i] = try execIfNeeds(valsToConcat[i].trimmingCharacters(in: .whitespaces))!
             }
             return valsToConcat.joined(separator: "")
         }
@@ -265,9 +266,9 @@ class BBT2: AbstractTheme {
                 }
             } else {
                 if line.contains(":") {
-                    let cmps = line.trimmingCharacters(in: CharacterSet.whitespaces).components(separatedBy: ":")
-                    let baloon = Int(cmps[0].trimmingCharacters(in: CharacterSet.whitespaces))
-                    if cmps[1].trimmingCharacters(in: CharacterSet.whitespaces) == "{", baloon != nil {
+                    let cmps = line.components(separatedBy: ":")
+                    let baloon = Int(cmps[0].trimmingCharacters(in: .whitespaces))
+                    if cmps[1].trimmingCharacters(in: .whitespaces) == "{", baloon != nil {
                         inBaloonBlock = baloon!
                         localVariables["closed"] = null
                         localVariables["opened"] = null
@@ -322,7 +323,7 @@ class BBT2: AbstractTheme {
             throw ExecErrors.syntaxError
         }
         do {
-            try set(cmps[0].trimmingCharacters(in: CharacterSet.whitespaces), value: execIfNeeds(cmps[1].trimmingCharacters(in: CharacterSet.whitespaces))!)
+            try set(cmps[0].trimmingCharacters(in: .whitespaces), value: execIfNeeds(cmps[1].trimmingCharacters(in: .whitespaces))!)
         } catch {
             print("isset_set failed at line \(line)")
         }
@@ -338,16 +339,16 @@ class BBT2: AbstractTheme {
                 print("There must be a ':' in each arguments of localized")
                 throw ExecErrors.syntaxError
             }
-            values[vals[0].trimmingCharacters(in: CharacterSet.whitespaces)] = try execIfNeeds(vals[1].trimmingCharacters(in: CharacterSet.whitespaces))
+            values[vals[0].trimmingCharacters(in: .whitespaces)] = try execIfNeeds(vals[1].trimmingCharacters(in: .whitespaces))
         }
-        if values[NSLocalizedString("lang.code", comment: "")] != nil {
-            return values[NSLocalizedString("lang.code", comment: "")]
-        }
-        if values["default"] != nil {
-            return values["default"]
-        }
-        if values["en_US"] != nil {
-            return values["en_US"]
+        if let content = values[NSLocalizedString("lang.code", comment: "")] {
+            return content
+        } else if let def = values["default"] {
+            return def
+        } else if let english = values["en_US"] {
+            return english
+        } else if let english = values["en"] {
+            return english
         }
         return nil
     }
@@ -463,10 +464,10 @@ class BBT2: AbstractTheme {
             print("Invalid argument count")
             throw ExecErrors.syntaxError
         }
-        var image = getImage(value: try execIfNeeds(images[0].trimmingCharacters(in: CharacterSet.whitespaces)))
+        var image = getImage(value: try execIfNeeds(images[0].trimmingCharacters(in: .whitespaces)))
         
         for i in 1..<images.count {
-            image = concatImageImpl(image, getImage(value: try execIfNeeds(images[i].trimmingCharacters(in: CharacterSet.whitespaces))))
+            image = concatImageImpl(image, getImage(value: try execIfNeeds(images[i].trimmingCharacters(in: .whitespaces))))
         }
         
         return image.pngData()!.base64EncodedString(options: .lineLength64Characters)
@@ -535,10 +536,10 @@ class BBT2: AbstractTheme {
     }
     
     func parseColor(_ string: String) throws -> RGBA32 {
-        if Int(string) != nil {
-            return RGBA32(color: SKColor(rgbValue: UInt(string)!))
-        } else if get(string) != nil {
-            return try parseColor(get(string)!)
+        if let rgb = UInt(string) {
+            return RGBA32(color: SKColor(rgbValue: rgb))
+        } else if let content = get(string) {
+            return try parseColor(content)
         }
         print("Invalid color: \(string)")
         throw ExecErrors.syntaxError
