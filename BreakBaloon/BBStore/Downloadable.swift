@@ -159,7 +159,7 @@ class Downloadable: SKNode {
         }
         print("Beginning download of", dlname)
         let file = FileSaveHelper(fileName: dlid, fileExtension: .none)
-        file.download(URL(string: "http://elementalcube.infos.st/api/bbstore-dl.php?id=\(dlid)")!) { error in
+        file.download(URL(string: "https://ec.emil.codes/api/bbstore-dl.php?id=\(dlid)")!) { error in
             do {
                 try self.afterDownload(file)
                 completion?(error)
@@ -222,7 +222,7 @@ class Downloadable: SKNode {
     
     class func loadAll(gvc: GameViewController, completion: @escaping ([Downloadable], Error?) -> Void) {
         let fsh = FileSaveHelper(fileName: "bbstore", fileExtension: .txt, subDirectory: "", directory: .cachesDirectory)
-        fsh.download(URL(string: "http://elementalcube.infos.st/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!) { err in
+        fsh.download(URL(string: "https://ec.emil.codes/api/bbstore.php?mobile&v2&lang=\(NSLocalizedString("lang.code", comment: "lang code (example: en_US)"))")!) { err in
             if let err = err {
                 print(err)
                 completion([], err)

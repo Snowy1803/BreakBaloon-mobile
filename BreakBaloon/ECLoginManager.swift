@@ -40,7 +40,7 @@ class ECLoginManager {
     }
     
     func logIn(query: String, username: String? = nil, password: String? = nil, delegate: Delegate?) {
-        var request = URLRequest(url: URL(string: "http://elementalcube.infos.st/api/auth.php")!)
+        var request = URLRequest(url: URL(string: "https://ec.emil.codes/api/auth.php")!)
         request.httpMethod = "POST"
         request.httpBody = query.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
